@@ -266,10 +266,12 @@ header {
     font-size: 0.9rem;
 }
 
+/* Alphabet Grid - Left To Right Order (LTR) */
 .alphabet-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    direction: ltr; /* الترتيب يبدأ من اليسار للليمين */
 }
 
 .letter-card {
