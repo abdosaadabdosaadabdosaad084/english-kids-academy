@@ -1,9 +1,18 @@
-{"name": "English Kids Academy - أكاديمية الإنجليزية للأطفال",
+{
+  "name": "English Kids Academy - أكاديمية الإنجليزية للأطفال",
   "short_name": "Kids Academy",
-  "description": "تعليم انجليزي للاطفال - قاموس 400 كلمة - قواعد - محادثات - مترجم صوتي",
-  "start_url": ".",
+  "description": "تعليم انجليزي للاطفال",
+  "start_url": "/english-kids-academy/",
+  "scope": "/english-kids-academy/",
   "display": "standalone",
   "background_color": "#0a0a1a",
   "theme_color": "#06d6a0",
-  "icons": [{"src":"https://cdn-icons-png.flaticon.com/512/3135/3135755.png","sizes":"512x512","type":"image/png"}]
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
