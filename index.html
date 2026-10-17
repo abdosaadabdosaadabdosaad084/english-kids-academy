@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy – أكاديمية الإنجليزية للأطفال</title>
+    <title>English Kids Academy – الموسوعة الشاملة</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1c2e">
     <link rel="stylesheet" href="style.css">
@@ -56,31 +56,31 @@
                 <div class="card-menu" onclick="showSection('sec-alphabet')">
                     <div class="card-icon">🔤</div>
                     <div class="card-title">الحروف والسبورة</div>
-                    <div class="card-desc">نطق وسماع وتتبع الحروف على السبورة</div>
+                    <div class="card-desc">نطق وسماع وتتبع الحروف والتنقل التلقائي</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-dictionary')">
-                    <div class="card-icon">📚</div>
-                    <div class="card-title">القاموس التفاعلي</div>
-                    <div class="card-desc">كلمات مصورة مع النطق الفوري والمعنى</div>
+                    <div class="card-icon">📖</div>
+                    <div class="card-title">القاموس الشامل (المورد)</div>
+                    <div class="card-desc">قاموس ضخم وموسع وشامل لجميع المفردات</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-grammar')">
                     <div class="card-icon">🧩</div>
-                    <div class="card-title">قواعد الإنجليزية</div>
-                    <div class="card-desc">شرح مبسط للقواعد والضمائر والأزمنة</div>
+                    <div class="card-title">الموسوعة القواعدية الشاملة</div>
+                    <div class="card-desc">شرح وافٍ ومفصل لجميع القواعد والأزمنة</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-stories')">
-                    <div class="card-icon">📖</div>
-                    <div class="card-title">القصص والحوارات</div>
-                    <div class="card-desc">قصص قصيرة ومحادثات يومية ممتعة</div>
+                    <div class="card-icon">💬</div>
+                    <div class="card-title">المحادثات والحوارات</div>
+                    <div class="card-desc">محادثات يومية واحترافية واسعة</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-games')">
                     <div class="card-icon">🎮</div>
                     <div class="card-title">الألعاب والتحديات</div>
-                    <div class="card-desc">اختبارات تفاعلية واكتسب نقاطاً</div>
+                    <div class="card-desc">اختبارات تفاعلية بنطق وتغذية راجعة صوتیة</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-parents')">
@@ -95,7 +95,7 @@
         <div id="sec-alphabet" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
             <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🔤 الحروف الأبجدية</h2>
-            <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 15px;">اضغط على أي حرف لسماعه وتدرب على كتابته على السبورة بالأسفل:</p>
+            <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 15px;">اضغط على الحرف للتعلم والتدرب، وسينتقل للكلمة/الحرف التالي فوراً عند الضغط على التالي:</p>
             
             <div class="alphabet-grid" id="alphabet-container"></div>
 
@@ -105,7 +105,7 @@
                 <canvas id="draw-canvas" width="280" height="200"></canvas>
                 <div class="canvas-controls">
                     <button class="stage-btn" style="background: var(--accent-pink); color: white;" onclick="clearCanvas()">مسح السبورة 🗑️</button>
-                    <button class="stage-btn" style="background: var(--accent-green); color: white;" onclick="speakCurrentLetter()">إعادة النطق 🔊</button>
+                    <button class="stage-btn" style="background: var(--accent-green); color: white;" onclick="nextLetter()">الحرف التالي ➡</button>
                 </div>
             </div>
         </div>
@@ -113,32 +113,27 @@
         <!-- DICTIONARY SECTION -->
         <div id="sec-dictionary" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">📚 القاموس المصور</h2>
-            <div class="word-list" id="dict-container"></div>
+            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">📖 القاموس الشامل (Al-Mawrid)</h2>
+            <div id="dict-container"></div>
         </div>
 
         <!-- GRAMMAR SECTION -->
         <div id="sec-grammar" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">🧩 قواعد مبسطة</h2>
             <div id="grammar-container"></div>
         </div>
 
         <!-- STORIES SECTION -->
         <div id="sec-stories" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">📖 قصص ومحادثات</h2>
+            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">💬 المحادثات والحوارات الشاملة</h2>
             <div id="stories-container"></div>
         </div>
 
         <!-- GAMES SECTION -->
         <div id="sec-games" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">🎮 لعبة التحدي السريع</h2>
-            <div class="interactive-card" id="quiz-box">
-                <div id="quiz-q" style="font-size: 1.2rem; margin-bottom: 15px;"></div>
-                <div id="quiz-options"></div>
-            </div>
+            <div class="interactive-card" id="quiz-box"></div>
         </div>
 
         <!-- PARENTS & SETTINGS SECTION -->
