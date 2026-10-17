@@ -47,19 +47,19 @@
                 <div class="card-menu" onclick="showSection('sec-alphabet')">
                     <div class="card-icon">🔤</div>
                     <div class="card-title">الحروف والسبورة</div>
-                    <div class="card-desc">نطق وسماع وتتبع الحروف والتنقل التلقائي</div>
+                    <div class="card-desc">نطق وسماع وتتبع الحروف مع التنقل التلقائي</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-dictionary')">
                     <div class="card-icon">📖</div>
                     <div class="card-title">قاموس المورد الشامل</div>
-                    <div class="card-desc">قاموس ضخم وموسع وشامل لجميع المفردات</div>
+                    <div class="card-desc">قاموس شامل وموسع للمفردات مع الأمثلة</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-grammar')">
                     <div class="card-icon">🧩</div>
                     <div class="card-title">قواعد اللغة الإنجليزية</div>
-                    <div class="card-desc">شرح مستفيض وافٍ من البداية حتى الاحتراف</div>
+                    <div class="card-desc">شرح مفصل ومبوب لكل قاعدة بالكامل</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-stories')">
@@ -71,7 +71,7 @@
                 <div class="card-menu" onclick="showSection('sec-games')">
                     <div class="card-icon">🎮</div>
                     <div class="card-title">الألعاب والتحديات</div>
-                    <div class="card-desc">اختبارات تفاعلية بنطق وتغذية راجعة صوتیة</div>
+                    <div class="card-desc">تحدي سريع وتقييم صوتي مباشر بدون رسائل</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-parents')">
@@ -85,12 +85,10 @@
         <!-- ALPHABET & DRAWING BOARD SECTION -->
         <div id="sec-alphabet" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🔤 الحروف الأبجدية</h2>
-            <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 15px;">اضغط على الحرف للتعلم والتتبع، وينتقل تلقائياً للحرف التالي عند ضغط التالي:</p>
+            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🔤 الحروف الأبجدية والسبورة</h2>
             
             <div class="alphabet-grid" id="alphabet-container"></div>
 
-            <!-- BOARD / السبورة التفاعلية -->
             <div class="canvas-card">
                 <h3 style="color: var(--accent-green);" id="current-letter-title">✏️ سبورة الرسم والتتبع (الحرف: A)</h3>
                 <canvas id="draw-canvas" width="280" height="200"></canvas>
@@ -104,13 +102,14 @@
         <!-- DICTIONARY SECTION -->
         <div id="sec-dictionary" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">📖 قاموس المورد الشامل</h2>
+            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">📖 قاموس المورد الشامل والأمثلة</h2>
             <div id="dict-container"></div>
         </div>
 
         <!-- GRAMMAR SECTION -->
         <div id="sec-grammar" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
+            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">🧩 قواعد اللغة الإنجليزية الشاملة</h2>
             <div id="grammar-container"></div>
         </div>
 
@@ -134,9 +133,6 @@
             
             <div class="interactive-card">
                 <h3 style="color: var(--accent-green); margin-bottom: 10px;">🔑 تغيير الرقم السري الخاص بجهتك</h3>
-                <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
-                    الرقم السري يتم حفظه على هاتفك فقط، ولن يؤثر على أي جهاز آخر.
-                </p>
                 <input type="password" id="new-pin-input" placeholder="أدخل الرقم السري الجديد" maxlength="8">
                 <button class="btn-action" onclick="changePin()">حفظ الرقم السري الجديد</button>
                 <div id="change-pin-msg" style="margin-top: 10px; font-size: 0.85rem;"></div>
