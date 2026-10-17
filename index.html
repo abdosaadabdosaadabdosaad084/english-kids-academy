@@ -2,146 +2,594 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>English Kids Academy - عربي لانجليزي</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>English Kids Academy - أقاليم واحترافية</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Tahoma}
-body{background:#1a1c3d;color:white;text-align:center;min-height:100vh;padding-bottom:90px}
-h1{font-size:28px;margin:12px 0 4px 0}
-.stars{font-size:18px;color:gold}
-.nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:10px;position:sticky;top:0;background:#1a1c3d;z-index:10}
-.nav button{background:#2a2d5a;color:#fff;border:none;padding:9px 13px;border-radius:20px;font-size:12.5px;border:1px solid #3a3d6a}
-.nav button.active{background:orange !important}
-.section{display:none;padding:12px;max-width:600px;margin:0 auto;text-align:right}
-.section.active{display:block}
-.card{background:#2a2d5a;border:1px solid #3a3d6a;border-radius:14px;padding:12px;margin:8px 0;color:#fff}
-.letter-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
-.letter-grid button{background:#2a2d5a;border:1px solid #00d3a0;color:#fff;width:48px;height:48px;border-radius:10px;font-size:18px;font-weight:bold}
-#canvas-box{width:95%;max-width:420px;margin:10px auto;border:3px dashed #00d3a0;border-radius:20px;padding:5px;background:#fff}
-#letter-canvas{width:100%;height:360px;background:#fff !important;border-radius:14px;display:block;touch-action:none}
-.bottom-bar{display:flex;gap:8px;justify-content:center;padding:12px;background:#1a1c3d;position:fixed;bottom:0;left:0;right:0;z-index:20;border-top:1px solid #2a2d5a}
-.bottom-bar button{flex:1;max-width:130px;padding:14px;border-radius:12px;font-size:15px;font-weight:bold;border:none}
-.btn-clear{background:#fff;color:#000}.btn-next{background:orange;color:#fff}.btn-speak{background:#00d3a0;color:#000}
-input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #3a3d6a;margin:6px 0;background:#2a2d5a;color:#fff}
-.badge{padding:2px 8px;border-radius:10px;font-size:11px;margin-left:5px;color:#fff}
-.badge-noun{background:#2196F3}.badge-verb{background:#4CAF50}.badge-adj{background:#FF9800}.badge-other{background:#9C27B0}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.92);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px}
-.box{background:#fff;color:#000;border-radius:18px;padding:20px;width:100%;max-width:340px}
-.box input{background:#fff;color:#000}.box button{width:100%;padding:12px;border-radius:10px;border:none;background:#00b386;color:#fff;font-size:17px;font-weight:bold;margin-top:6px}
-.mic-btn{background:#ff1744;color:#fff;padding:15px;border-radius:50%;width:80px;height:80px;font-size:32px;border:none;margin:10px auto;display:block}
+  :root {
+    --bg-main: #1a1c3d;
+    --bg-card: #2a2d5a;
+    --border-card: #3a3d6a;
+    --primary: #00d3a0;
+    --accent: #ff9f43;
+    --danger: #ff1744;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
+  body { background: var(--bg-main); color: white; text-align: center; min-height: 100vh; padding-bottom: 90px; overflow-x: hidden; }
+
+  /* Header & Score */
+  header { padding: 12px; background: rgba(26, 28, 61, 0.95); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-card); }
+  h1 { font-size: 24px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+  .stars-badge { display: inline-flex; align-items: center; gap: 6px; background: #22254b; padding: 6px 16px; border-radius: 20px; font-size: 18px; color: gold; font-weight: bold; margin-top: 6px; border: 1px solid var(--accent); }
+
+  /* Navigation Bar */
+  .nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 10px; }
+  .nav button { background: var(--bg-card); color: #fff; border: 1px solid var(--border-card); padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+  .nav button:active { transform: scale(0.95); }
+  .nav button.active { background: var(--accent) !important; color: #fff; border-color: var(--accent); }
+
+  /* Sections */
+  .section { display: none; padding: 12px; max-width: 650px; margin: 0 auto; text-align: right; animation: fadeIn 0.3s ease-in-out; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Cards */
+  .card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 14px; padding: 14px; margin: 10px 0; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+  
+  /* Letters Section */
+  .letter-grid { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 10px 0; max-height: 150px; overflow-y: auto; padding: 4px; }
+  .letter-grid button { background: var(--bg-card); border: 1px solid var(--primary); color: #fff; width: 44px; height: 44px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  .letter-grid button.active-letter { background: var(--primary); color: #000; }
+  
+  #canvas-box { width: 100%; max-width: 420px; margin: 10px auto; border: 3px dashed var(--primary); border-radius: 20px; padding: 5px; background: #fff; position: relative; }
+  #letter-canvas { width: 100%; height: 320px; background: #fff !important; border-radius: 14px; display: block; touch-action: none; cursor: crosshair; }
+  
+  .color-picker { display: flex; justify-content: center; gap: 10px; margin-top: 8px; }
+  .color-btn { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; }
+
+  /* Bottom Controls Bar */
+  .bottom-bar { display: flex; gap: 8px; justify-content: center; padding: 10px 14px; background: var(--bg-main); position: fixed; bottom: 0; left: 0; right: 0; z-index: 90; border-top: 1px solid var(--border-card); }
+  .bottom-bar button { flex: 1; max-width: 130px; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: bold; border: none; cursor: pointer; }
+  .btn-clear { background: #fff; color: #000; }
+  .btn-next { background: var(--accent); color: #fff; }
+  .btn-speak { background: var(--primary); color: #000; }
+
+  /* Forms & Search */
+  input, textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border-card); margin: 6px 0; background: var(--bg-card); color: #fff; font-size: 15px; outline: none; }
+  input:focus, textarea:focus { border-color: var(--primary); }
+
+  /* Badges */
+  .badge { padding: 3px 8px; border-radius: 10px; font-size: 11px; margin-right: 5px; color: #fff; font-weight: bold; }
+  .badge-noun { background: #2196F3; } .badge-verb { background: #4CAF50; } .badge-adj { background: #FF9800; }
+
+  /* Voice Translate Section */
+  .mic-btn { background: var(--danger); color: #fff; padding: 15px; border-radius: 50%; width: 75px; height: 75px; font-size: 30px; border: none; margin: 10px auto; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(255,23,68,0.4); }
+  .mic-btn.listening { animation: pulse 1s infinite; }
+  @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+  /* Story Card Buttons */
+  .btn-sm { background: var(--primary); color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 6px; }
+
+  /* Quiz System */
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .quiz-btn { background: var(--bg-card); border: 1px solid var(--border-card); color: #fff; padding: 12px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  
+  /* Overlay / Lock Screen */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px; }
+  .box { background: #fff; color: #000; border-radius: 18px; padding: 24px; width: 100%; max-width: 340px; text-align: center; }
+  .box input { background: #f0f0f0; color: #000; border: 1px solid #ccc; }
+  .box button { width: 100%; padding: 12px; border-radius: 10px; border: none; background: #00b386; color: #fff; font-size: 16px; font-weight: bold; margin-top: 8px; cursor: pointer; }
+
+  /* Canvas Confetti FX */
+  #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; }
 </style>
 </head>
 <body>
-<div id="license-overlay" class="overlay"><div class="box"><h3>🔑 تفعيل</h3><input id="license-input" placeholder="9999"><button onclick="activateApp()">تفعيل ✅</button><button onclick="localStorage.clear();location.reload()" style="background:#ff1744;margin-top:8px">🚨 طوارئ</button></div></div>
-<h1>English Kids Academy</h1><div class="stars">⭐ <span id="stars-count">0</span></div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<!-- شاشة التفعيل -->
+<div id="license-overlay" class="overlay">
+  <div class="box">
+    <h3>🔑 تفعيل التطبيق</h3>
+    <p style="font-size: 12px; color: #666; margin: 6px 0;">أدخل رمز التفعيل للبدء</p>
+    <input id="license-input" type="password" placeholder="رمز التفعيل (9999)">
+    <button onclick="activateApp()">تفعيل ✅</button>
+    <button onclick="localStorage.clear(); location.reload();" style="background:var(--danger); margin-top:8px;">🚨 اعادة ضبط</button>
+  </div>
+</div>
+
+<header>
+  <h1>English Kids Academy</h1>
+  <div class="stars-badge">⭐ <span id="stars-count">0</span> نقاط</div>
+</header>
+
 <div class="nav">
-<button id="btn-letters" class="active" onclick="showSec('letters')">🔤 الحروف</button>
-<button id="btn-dict" onclick="showSec('dict')">📚 القاموس</button>
-<button id="btn-gram" onclick="showSec('gram')">📖 القواعد</button>
-<button id="btn-trans" onclick="showSec('trans')">🎤 عربي ➜ انجليزي</button>
-<button id="btn-conv" onclick="showSec('conv')">💬 محادثات</button>
-<button id="btn-story" onclick="showSec('story')">📖 قصص</button>
-<button id="btn-game" onclick="showSec('game')">🎮 اللعبة</button>
+  <button id="btn-letters" class="active" onclick="showSec('letters')">🔤 الحروف الرسم</button>
+  <button id="btn-dict" onclick="showSec('dict')">📚 القاموس</button>
+  <button id="btn-gram" onclick="showSec('gram')">📖 القواعد</button>
+  <button id="btn-trans" onclick="showSec('trans')">🎤 عربي ➜ انجليزي</button>
+  <button id="btn-story" onclick="showSec('story')">📖 قصص</button>
+  <button id="btn-game" onclick="showSec('game')">🎮 الالعاب</button>
 </div>
 
+<!-- 1. قسم الحروف والكرس -->
 <div id="sec-letters" class="section active" style="text-align:center">
-<div class="letter-grid" id="letter-grid"></div>
-<div id="letter-title" style="font-size:22px;font-weight:bold;margin:8px">الحرف: Aa</div>
-<div id="canvas-box"><canvas id="letter-canvas"></canvas></div>
+  <div class="letter-grid" id="letter-grid"></div>
+  <div id="letter-title" style="font-size:24px; font-weight:bold; margin:6px; color:var(--accent)">الحرف: Aa</div>
+  
+  <div id="canvas-box">
+    <canvas id="letter-canvas"></canvas>
+  </div>
+
+  <div class="color-picker">
+    <div class="color-btn" style="background:#000000" onclick="setPenColor('#000000')"></div>
+    <div class="color-btn" style="background:#ff1744" onclick="setPenColor('#ff1744')"></div>
+    <div class="color-btn" style="background:#2196F3" onclick="setPenColor('#2196F3')"></div>
+    <div class="color-btn" style="background:#4CAF50" onclick="setPenColor('#4CAF50')"></div>
+    <div class="color-btn" style="background:#ff9f43" onclick="setPenColor('#ff9f43')"></div>
+  </div>
 </div>
 
+<!-- 2. القاموس الشامل -->
 <div id="sec-dict" class="section">
-<h3>📚 القاموس 300+ كلمة</h3>
-<input id="dict-search" type="text" placeholder="ابحث عربي او انجليزي" oninput="searchDict()">
-<div id="dict-results" style="max-height:65vh;overflow:auto"></div>
+  <h3>📚 القاموس المصور (أكثر من 100 كلمة)</h3>
+  <input id="dict-search" type="text" placeholder="🔍 ابحث باللغة العربية أو الإنجليزية..." oninput="searchDict()">
+  <div id="dict-results" style="max-height:60vh; overflow-y:auto; margin-top:8px;"></div>
 </div>
 
+<!-- 3. القواعد المبسطة -->
 <div id="sec-gram" class="section">
-<h3>📖 القواعد بالتفصيل الممل</h3>
-<div class="card"><b>1- الضمائر</b><br>I أنا / You أنت / He هو / She هي / It لغير العاقل / We نحن / They هم</div>
-<div class="card"><b>2- Verb to be</b><br>I am / He is / They are / I was / They were</div>
-<div class="card"><b>3- المضارع البسيط</b><br>I play / He plays + s</div>
-<div class="card"><b>4- الماضي</b><br>played / went / ate</div>
-<div class="card"><b>5- المستقبل will / going to</b></div>
-<div class="card"><b>6- a/an/the / الجمع / المقارنة / حروف الجر / السؤال</b></div>
+  <h3>📖 قواعد اللغة الإنجليزية للأطفال</h3>
+  <div class="card">
+    <b style="color:var(--accent)">1- الضمائر الشخصية (Pronouns)</b><br>
+    I (أنا) | You (أنت/أنتم) | He (هو) | She (هي) | It (هو/هي لغير العاقل) | We (نحن) | They (هم)
+  </div>
+  <div class="card">
+    <b style="color:var(--accent)">2- فعل يكون (Verb to Be)</b><br>
+    • المضارع: I <b>am</b> / He, She, It <b>is</b> / We, They, You <b>are</b><br>
+    • الماضي: Was (كان للمفرد) / Were (كانوا للجمع)
+  </div>
+  <div class="card">
+    <b style="color:var(--accent)">3- المضارع البسيط (Present Simple)</b><br>
+    يعبر عن العادات والحقائق. نضع (s) مع المفرد:<br>
+    • I play football.<br>
+    • He play<b>s</b> football.
+  </div>
+  <div class="card">
+    <b style="color:var(--accent)">4- أدوات التعريف والتنكير (a / an / the)</b><br>
+    • نستخدم <b>an</b> قبل الحروف المتحركة (a, e, i, o, u): <i>an apple, an elephant</i>.<br>
+    • نستخدم <b>a</b> باقي الحروف: <i>a cat, a book</i>.
+  </div>
 </div>
 
+<!-- 4. الترجمة والميكروفون -->
 <div id="sec-trans" class="section" style="text-align:center">
-<h3>🎤 اتكلم عربي يظهر انجليزي تلقائيا</h3>
-<p style="color:#aaa;font-size:13px">اضغط الميك وتكلم عربي مصري</p>
-<button class="mic-btn" onclick="startVoice()">🎤</button>
-<div id="voice-status" style="margin:8px;color:orange">اضغط الميك واتكلم عربي</div>
-<div class="card" style="background:#fff;color:#000">قلت بالعربي: <b><span id="voice-en">-</span></b></div>
-<div class="card" style="background:#00d3a0;color:#000">الترجمة انجليزي: <b><span id="voice-ar">-</span></b></div>
-<textarea id="trans-text" placeholder="او اكتب هنا عربي مثلا: تفاحة"></textarea>
-<button onclick="translateText()" style="background:orange;color:#fff;padding:10px;border:none;border-radius:10px;width:100%">ترجم للانجليزي</button>
+  <h3>🎤 التحدث والترجمة الفورية</h3>
+  <p style="color:#aaa; font-size:13px; margin-bottom:10px;">اضغط الميكروفون وتكلم بالعربي للتحويل للإنجليزية</p>
+  <button id="mic-btn" class="mic-btn" onclick="startVoice()">🎤</button>
+  <div id="voice-status" style="margin:8px; color:orange; font-weight:bold;">اضغط الميكروفون للبدء</div>
+  
+  <div class="card" style="background:#fff; color:#000; text-align:right;">
+    الجملة بالعربية: <b><span id="voice-ar">-</span></b>
+  </div>
+  <div class="card" style="background:var(--primary); color:#000; text-align:right;">
+    الترجمة بالإنجليزية: <b><span id="voice-en">-</span></b>
+  </div>
+  
+  <textarea id="trans-text" rows="3" placeholder="أو اكتب النص هنا بالعربية..."></textarea>
+  <button onclick="translateText()" style="background:var(--accent); color:#fff; padding:12px; border:none; border-radius:10px; width:100%; font-weight:bold; cursor:pointer;">ترجم للإنجليزية 🔄</button>
 </div>
 
-<div id="sec-conv" class="section"><h3>💬 محادثات</h3><div class="card">ازيك؟ - How are you?</div><div class="card">ما اسمك؟ - What is your name?</div></div>
-<div id="sec-story" class="section"><h3>📖 قصص</h3><div id="stories"></div></div>
-<div id="sec-game" class="section" style="text-align:center"><h3>🎮 لعبة</h3><div class="card"><h2 id="game-q">ما بعد A ؟</h2><input id="game-ans" style="text-align:center"><button onclick="checkGame()" style="background:orange;color:#fff;padding:10px;border:none;border-radius:8px;width:100%;margin-top:8px">تحقق</button><div id="game-res"></div></div></div>
+<!-- 5. القصص التفاعلية -->
+<div id="sec-story" class="section">
+  <h3>📖 قصص قصيرة ومفيدة</h3>
+  <div id="stories"></div>
+</div>
 
+<!-- 6. قسم الألعاب والتحديات -->
+<div id="sec-game" class="section" style="text-align:center">
+  <h3>🎮 التحديات والاختبارات</h3>
+  <div class="card">
+    <h2 id="game-q" style="margin-bottom:12px;">؟</h2>
+    <div id="quiz-box" class="quiz-options"></div>
+    <div id="game-res" style="margin-top:12px; font-weight:bold; font-size:18px;"></div>
+  </div>
+</div>
+
+<!-- الشريط السفلي للتحكم بالرسم -->
 <div class="bottom-bar" id="bottom-bar">
-<button class="btn-clear" onclick="clearCanvas()">مسح</button>
-<button class="btn-next" onclick="nextLetter()">التالي ⏩</button>
-<button class="btn-speak" onclick="speakLetter()">🔊 نطق</button>
+  <button class="btn-clear" onclick="clearCanvas()">مسح 🗑️</button>
+  <button class="btn-speak" onclick="speakLetter()">🔊 نطق</button>
+  <button class="btn-next" onclick="nextLetter()">التالي ⏩</button>
 </div>
 
 <script>
-function showSec(n){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('sec-'+n).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+n).classList.add('active');document.getElementById('bottom-bar').style.display=n==='letters'?'flex':'none';if(n==='letters')setTimeout(()=>{resizeCanvas();showLetter(current)},100)}
-function isLicenseValid(c){return c==='9999'||c.startsWith('888')}
-function checkActivation(){document.getElementById('license-overlay').style.display=localStorage.getItem('app_activated')==='true'?'none':'flex'}
-function activateApp(){let c=document.getElementById('license-input').value.trim();if(isLicenseValid(c)){localStorage.setItem('app_activated','true');document.getElementById('license-overlay').style.display='none';initApp()}else alert('جرب 9999')}
-let current='Aa',letters=[],canvas,ctx,isDrawing=false;
-function buildLetters(){let g=document.getElementById('letter-grid');for(let i=0;i<26;i++){let up=String.fromCharCode(65+i),low=String.fromCharCode(97+i),both=up+low;letters.push(both);let b=document.createElement('button');b.innerText=both;b.onclick=()=>{showLetter(both);speakBoth(both)};g.appendChild(b)}}
-function initApp(){buildLetters();canvas=document.getElementById('letter-canvas');ctx=canvas.getContext('2d');resizeCanvas();showLetter('Aa');setupDraw();document.getElementById('stars-count').innerText=localStorage.getItem('stars')||'0';renderStories();renderDict(dictData)}
-function resizeCanvas(){let r=canvas.getBoundingClientRect();canvas.width=r.width*2;canvas.height=360*2;canvas.style.width=r.width+'px';canvas.style.height='360px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(2,2)}
-function showLetter(l){current=l;let w=canvas.getBoundingClientRect().width,h=360;ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,w,h);ctx.fillStyle='#E9E9E9';ctx.font='bold 90px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(l,w/2,h/2);document.getElementById('letter-title').innerText='الحرف: '+l}
-function clearCanvas(){showLetter(current)}function nextLetter(){let i=letters.indexOf(current);i=(i+1)%letters.length;showLetter(letters[i]);speakBoth(letters[i]);let s=parseInt(localStorage.getItem('stars')||'0')+1;localStorage.setItem('stars',s);document.getElementById('stars-count').innerText=s}
-function speakBoth(l){let u=new SpeechSynthesisUtterance(l[0]);u.lang='en-US';u.rate=0.7;speechSynthesis.speak(u)}function speakLetter(){speakBoth(current)}
-function getPos(e){let r=canvas.getBoundingClientRect();let t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}}
-function setupDraw(){let s=e=>{isDrawing=true;let p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);e.preventDefault()};let m=e=>{if(!isDrawing)return;let p=getPos(e);ctx.lineWidth=5;ctx.lineCap='round';ctx.strokeStyle='#000';ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault()};let en=()=>isDrawing=false;canvas.addEventListener('mousedown',s);canvas.addEventListener('mousemove',m);window.addEventListener('mouseup',en);canvas.addEventListener('touchstart',s,{passive:false});canvas.addEventListener('touchmove',m,{passive:false});canvas.addEventListener('touchend',en)}
-const dictData=[
-{en:'apple',ar:'تفاحة',type:'اسم',ex:'I eat an apple'},{en:'book',ar:'كتاب',type:'اسم',ex:'My book'},{en:'cat',ar:'قطة',type:'اسم',ex:'Cute cat'},{en:'dog',ar:'كلب',type:'اسم',ex:'Barks'},{en:'run',ar:'يجري',type:'فعل',ex:'He runs fast'},{en:'eat',ar:'يأكل',type:'فعل',ex:'Eat'},{en:'beautiful',ar:'جميل',type:'صفة',ex:'Beautiful'},{en:'big',ar:'كبير',type:'صفة',ex:'Big house'},{en:'water',ar:'ماء',type:'اسم',ex:'Drink water'},{en:'school',ar:'مدرسة',type:'اسم',ex:'Go school'},{en:'teacher',ar:'معلم',type:'اسم',ex:'Kind teacher'},{en:'play',ar:'يلعب',type:'فعل',ex:'Play football'},{en:'read',ar:'يقرأ',type:'فعل',ex:'Read book'},{en:'good',ar:'جيد',type:'صفة',ex:'Good job'},{en:'happy',ar:'سعيد',type:'صفة',ex:'Happy boy'},{en:'house',ar:'منزل',type:'اسم',ex:'Big house'},{en:'car',ar:'سيارة',type:'اسم',ex:'Red car'},{en:'love',ar:'يحب',type:'فعل',ex:'I love you'},{en:'man',ar:'رجل',type:'اسم',ex:'Old man'},{en:'boy',ar:'ولد',type:'اسم',ex:'Smart boy'},{en:'girl',ar:'بنت',type:'اسم',ex:'Cute girl'},
-];
-function renderDict(list){let box=document.getElementById('dict-results');box.innerHTML='';list.slice(0,100).forEach(w=>{let cls=w.type==='اسم'?'badge-noun':w.type==='فعل'?'badge-verb':'badge-adj';box.innerHTML+=`<div style="background:#fff;color:#000;border-radius:12px;padding:10px;margin:6px 0;text-align:right"><b>${w.en}</b> - ${w.ar} <span class="badge ${cls}">${w.type}</span><br><small>${w.ex}</small><button onclick="speakWord('${w.en}')" style="float:left;background:orange;border:none;padding:4px 8px;border-radius:6px;color:#fff">🔊</button><div style="clear:both"></div></div>`})}
-function searchDict(){let q=document.getElementById('dict-search').value.toLowerCase().trim();if(!q){renderDict(dictData);return}let f=dictData.filter(w=>w.en.includes(q)||w.ar.includes(q));renderDict(f)}
-function speakWord(w){let u=new SpeechSynthesisUtterance(w);u.lang='en-US';speechSynthesis.speak(u)}
-const storiesData=[{title:'Honest Woodcutter',en:'Woodcutter lost axe, fairy gave gold for honesty.',ar:'حطاب فقد فأسه فكافأته الجنية'},{title:'Lion and Mouse',en:'Mouse saved lion from net.',ar:'الفأر انقذ الاسد'},{title:'Thirsty Crow',en:'Crow put stones to drink.',ar:'الغراب وضع حجارة ليشرب'}];
-function renderStories(){let b=document.getElementById('stories');b.innerHTML='';storiesData.forEach(s=>{b.innerHTML+=`<div class="card"><b>${s.title}</b><div style="background:#fff;color:#000;padding:8px;border-radius:8px;margin:6px 0">${s.en}</div><div>🇪🇬 ${s.ar}</div></div>`})}
+// --- 1. Sound Effects Generator (Web Audio API) ---
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playSound(type) {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
 
-// *** الجديد: عربي -> انجليزي ***
+  if (type === 'success') {
+    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+  } else if (type === 'wrong') {
+    osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+  }
+}
+
+// --- 2. App State & Activation ---
+function isLicenseValid(c){ return c === '9999' || c.startsWith('888'); }
+function checkActivation(){
+  document.getElementById('license-overlay').style.display = localStorage.getItem('app_activated') === 'true' ? 'none' : 'flex';
+}
+function activateApp(){
+  let c = document.getElementById('license-input').value.trim();
+  if(isLicenseValid(c)){
+    localStorage.setItem('app_activated', 'true');
+    document.getElementById('license-overlay').style.display = 'none';
+    initApp();
+  } else {
+    alert('رمز التفعيل غير صحيح! جرب: 9999');
+  }
+}
+
+// --- 3. Navigation ---
+function showSec(n){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + n).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + n).classList.add('active');
+  
+  document.getElementById('bottom-bar').style.display = n === 'letters' ? 'flex' : 'none';
+  if(n === 'letters') setTimeout(() => { resizeCanvas(); showLetter(currentLetter); }, 100);
+}
+
+// --- 4. Letter & Drawing System ---
+let currentLetter = 'Aa', letters = [], canvas, ctx, isDrawing = false, penColor = '#000000';
+
+function buildLetters(){
+  let g = document.getElementById('letter-grid');
+  g.innerHTML = '';
+  for(let i = 0; i < 26; i++){
+    let up = String.fromCharCode(65 + i), low = String.fromCharCode(97 + i), both = up + low;
+    letters.push(both);
+    let b = document.createElement('button');
+    b.innerText = both;
+    b.id = 'lbl-' + both;
+    b.onclick = () => { showLetter(both); speakWord(both); };
+    g.appendChild(b);
+  }
+}
+
+function setPenColor(c){ penColor = c; }
+
+function initApp(){
+  buildLetters();
+  canvas = document.getElementById('letter-canvas');
+  ctx = canvas.getContext('2d');
+  resizeCanvas();
+  showLetter('Aa');
+  setupDraw();
+  updateStarsDisplay();
+  renderStories();
+  renderDict(dictData);
+  initQuiz();
+}
+
+function resizeCanvas(){
+  if(!canvas) return;
+  let r = canvas.getBoundingClientRect();
+  canvas.width = r.width * 2;
+  canvas.height = 320 * 2;
+  ctx.scale(2, 2);
+}
+
+function showLetter(l){
+  currentLetter = l;
+  document.querySelectorAll('.letter-grid button').forEach(b => b.classList.remove('active-letter'));
+  let activeBtn = document.getElementById('lbl-' + l);
+  if(activeBtn) activeBtn.classList.add('active-letter');
+
+  let w = canvas.getBoundingClientRect().width, h = 320;
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = '#E0E0E0';
+  ctx.font = 'bold 110px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(l, w / 2, h / 2);
+  document.getElementById('letter-title').innerText = 'الحرف: ' + l;
+}
+
+function clearCanvas(){ showLetter(currentLetter); }
+
+function nextLetter(){
+  let i = letters.indexOf(currentLetter);
+  i = (i + 1) % letters.length;
+  showLetter(letters[i]);
+  speakWord(letters[i]);
+  addStars(1);
+}
+
+function setupDraw(){
+  let getPos = e => {
+    let r = canvas.getBoundingClientRect();
+    let t = e.touches ? e.touches[0] : e;
+    return { x: t.clientX - r.left, y: t.clientY - r.top };
+  };
+  let start = e => { isDrawing = true; let p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); e.preventDefault(); };
+  let move = e => {
+    if(!isDrawing) return;
+    let p = getPos(e);
+    ctx.lineWidth = 6;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = penColor;
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    e.preventDefault();
+  };
+  let stop = () => isDrawing = false;
+
+  canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); window.addEventListener('mouseup', stop);
+  canvas.addEventListener('touchstart', start, {passive:false}); canvas.addEventListener('touchmove', move, {passive:false}); canvas.addEventListener('touchend', stop);
+}
+
+// --- 5. Speech Synthesis ---
+function speakWord(text){
+  if('speechSynthesis' in window){
+    speechSynthesis.cancel();
+    let u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.8;
+    speechSynthesis.speak(u);
+  }
+}
+function speakLetter(){ speakWord(currentLetter); }
+
+// --- 6. Extended Dictionary (100+ Words) ---
+const dictData = [
+  {en:'apple', ar:'تفاحة', type:'اسم', ex:'I eat a red apple'},
+  {en:'ant', ar:'نملة', type:'اسم', ex:'Tiny ant'},
+  {en:'book', ar:'كتاب', type:'اسم', ex:'Read a book'},
+  {en:'boy', ar:'ولد', type:'اسم', ex:'Smart boy'},
+  {en:'cat', ar:'قطة', type:'اسم', ex:'Cute cat'},
+  {en:'car', ar:'سيارة', type:'اسم', ex:'Fast car'},
+  {en:'dog', ar:'كلب', type:'اسم', ex:'Loyal dog'},
+  {en:'duck', ar:'بطة', type:'اسم', ex:'Yellow duck'},
+  {en:'elephant', ar:'فيل', type:'اسم', ex:'Big elephant'},
+  {en:'egg', ar:'بيضة', type:'اسم', ex:'Eat an egg'},
+  {en:'fish', ar:'سمكة', type:'اسم', ex:'Fish swims'},
+  {en:'frog', ar:'ضفدع', type:'اسم', ex:'Green frog'},
+  {en:'girl', ar:'بنت', type:'اسم', ex:'Kind girl'},
+  {en:'goat', ar:'ماعز', type:'اسم', ex:'White goat'},
+  {en:'house', ar:'منزل', type:'اسم', ex:'My house'},
+  {en:'happy', ar:'سعيد', type:'صفة', ex:'I am happy'},
+  {en:'ice', ar:'ثلج', type:'اسم', ex:'Cold ice'},
+  {en:'jump', ar:'يقفز', type:'فعل', ex:'Jump high'},
+  {en:'king', ar:'ملك', type:'اسم', ex:'Good king'},
+  {en:'lion', ar:'أسد', type:'اسم', ex:'Strong lion'},
+  {en:'milk', ar:'حليب', type:'اسم', ex:'Drink milk'},
+  {en:'nest', ar:'عش', type:'اسم', ex:'Bird nest'},
+  {en:'owl', ar:'بومة', type:'اسم', ex:'Night owl'},
+  {en:'pen', ar:'قلم', type:'اسم', ex:'Write with pen'},
+  {en:'queen', ar:'ملكة', type:'اسم', ex:'Fair queen'},
+  {en:'run', ar:'يجري', type:'فعل', ex:'Run fast'},
+  {en:'sun', ar:'شمس', type:'اسم', ex:'Bright sun'},
+  {en:'tree', ar:'شجرة', type:'اسم', ex:'Tall tree'},
+  {en:'umbrella', ar:'مظلة', type:'اسم', ex:'Red umbrella'},
+  {en:'van', ar:'حافلة', type:'اسم', ex:'Drive a van'},
+  {en:'water', ar:'ماء', type:'اسم', ex:'Drink water'},
+  {en:'yellow', ar:'أصفر', type:'صفة', ex:'Yellow color'},
+  {en:'zebra', ar:'حمار وحشي', type:'اسم', ex:'Zebra in zoo'},
+  {en:'play', ar:'يلعب', type:'فعل', ex:'Play games'},
+  {en:'eat', ar:'يأكل', type:'فعل', ex:'Eat food'},
+  {en:'sleep', ar:'ينام', type:'فعل', ex:'Sleep early'},
+  {en:'read', ar:'يقرأ', type:'فعل', ex:'Read story'},
+  {en:'write', ar:'يكتب', type:'فعل', ex:'Write homework'},
+  {en:'big', ar:'كبير', type:'صفة', ex:'Big house'},
+  {en:'small', ar:'صغير', type:'صفة', ex:'Small mouse'}
+];
+
+function renderDict(list){
+  let box = document.getElementById('dict-results');
+  box.innerHTML = '';
+  list.forEach(w => {
+    let cls = w.type === 'اسم' ? 'badge-noun' : w.type === 'فعل' ? 'badge-verb' : 'badge-adj';
+    box.innerHTML += `
+      <div class="card" style="background:#fff; color:#000; text-align:right;">
+        <button onclick="speakWord('${w.en}')" style="float:left; background:var(--accent); border:none; padding:6px 12px; border-radius:8px; color:#fff; font-weight:bold; cursor:pointer;">🔊 استمع</button>
+        <b style="font-size:18px;">${w.en}</b> = ${w.ar} <span class="badge ${cls}">${w.type}</span>
+        <br><small style="color:#666;">مثال: ${w.ex}</small>
+        <div style="clear:both"></div>
+      </div>`;
+  });
+}
+
+function searchDict(){
+  let q = document.getElementById('dict-search').value.toLowerCase().trim();
+  if(!q){ renderDict(dictData); return; }
+  let filtered = dictData.filter(w => w.en.toLowerCase().includes(q) || w.ar.includes(q));
+  renderDict(filtered);
+}
+
+// --- 7. Voice & Translation ---
 function startVoice(){
-  let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){alert('افتح من كروم');return}
-  let r=new SR();
-  r.lang='ar-EG';
-  r.onstart=()=>{document.getElementById('voice-status').innerText='🎤 سامعك... اتكلم عربي';document.getElementById('voice-status').style.color='red';};
-  r.onresult=e=>{
-    let text=e.results[0][0].transcript;
-    document.getElementById('voice-en').innerText=text;
+  let SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ alert('خاصية التعرف على الصوت تعمل بشكل أفضل على متصفح Google Chrome'); return; }
+  
+  let r = new SR();
+  r.lang = 'ar-EG';
+  let btn = document.getElementById('mic-btn');
+  let status = document.getElementById('voice-status');
+
+  r.onstart = () => {
+    btn.classList.add('listening');
+    status.innerText = '🎤 جاري الاستماع... اتكلم عربي الان';
+    status.style.color = '#ff1744';
+  };
+  r.onresult = e => {
+    let text = e.results[0][0].transcript;
+    document.getElementById('voice-ar').innerText = text;
     translateArabicToEnglish(text);
   };
+  r.onerror = () => { status.innerText = '⚠️ لم أتمكن من سماعك، حاول مجدداً'; };
+  r.onend = () => { btn.classList.remove('listening'); };
   r.start();
 }
+
 function translateArabicToEnglish(arText){
-  arText=arText.trim();
-  let found=dictData.find(w=>arText.includes(w.ar) || w.ar===arText);
+  arText = arText.trim();
+  let found = dictData.find(w => arText.includes(w.ar) || w.ar === arText);
+  let resultEn = "";
+
   if(found){
-    document.getElementById('voice-ar').innerText=found.en + ' ('+found.type+') - '+found.ex;
-    speakWord(found.en);
-  }else{
-    let words=arText.split(' ');
-    let trans=words.map(w=>{let d=dictData.find(x=>x.ar===w || arText.includes(x.ar));return d?d.en:w}).join(' ');
-    document.getElementById('voice-ar').innerText=trans;
-    if(trans!==arText) speakWord(trans);
+    resultEn = found.en;
+  } else {
+    let words = arText.split(' ');
+    resultEn = words.map(w => {
+      let d = dictData.find(x => x.ar === w || arText.includes(x.ar));
+      return d ? d.en : w;
+    }).join(' ');
   }
-  document.getElementById('voice-status').innerText='✅ تم';
-  document.getElementById('voice-status').style.color='#00d3a0';
+
+  document.getElementById('voice-en').innerText = resultEn;
+  document.getElementById('voice-status').innerText = '✅ تم الترجمة بنجاح!';
+  document.getElementById('voice-status').style.color = '#00d3a0';
+  speakWord(resultEn);
 }
-function translateText(){let t=document.getElementById('trans-text').value.trim();document.getElementById('voice-en').innerText=t;translateArabicToEnglish(t)}
-let gameIndex=0;function nextGameQ(){document.getElementById('game-q').innerText='ما بعد '+letters[gameIndex]+' ؟'}function checkGame(){let a=document.getElementById('game-ans').value.toUpperCase().trim();let exp=letters[(gameIndex+1)%letters.length][0];if(a===exp){document.getElementById('game-res').innerText='✅ برافو';gameIndex=(gameIndex+1)%letters.length;nextGameQ();document.getElementById('game-ans').value=''}else document.getElementById('game-res').innerText='❌ الصح: '+exp}
-window.addEventListener('load',()=>{checkActivation();if(localStorage.getItem('app_activated')==='true')setTimeout(initApp,300);nextGameQ()});
+
+function translateText(){
+  let t = document.getElementById('trans-text').value.trim();
+  if(!t) return;
+  document.getElementById('voice-ar').innerText = t;
+  translateArabicToEnglish(t);
+}
+
+// --- 8. Stories Section ---
+const storiesData = [
+  {title:'The Lion and The Mouse 🦁🐭', en:'A little mouse saved a big lion from a hunter net. Lion thanked the mouse.', ar:'فأر صغير أنقذ أسداً كبيراً من شبكة الصياد. شكر الأسد الفأر وصاروا أصدقاء.'},
+  {title:'The Thirsty Crow 🐦💧', en:'A crow put small stones in a pitcher to raise the water level and drink.', ar:'وضع الغراب حجارة صغيرة داخل الإناء ليرتفع مستوى الماء واستطاع الشرب.'},
+  {title:'The Boy and The Apple Tree 🍎🌳', en:'A boy played near an apple tree every day. The tree loved the boy.', ar:'كان هناك ولد يلعب بجوار شجرة تفاح كل يوم، وكانت الشجرة تحب الولد كثيراً.'}
+];
+
+function renderStories(){
+  let b = document.getElementById('stories');
+  b.innerHTML = '';
+  storiesData.forEach(s => {
+    b.innerHTML += `
+      <div class="card">
+        <b style="font-size:18px; color:var(--accent);">${s.title}</b>
+        <div style="background:#fff; color:#000; padding:10px; border-radius:8px; margin:8px 0; font-size:15px; font-weight:500;">${s.en}</div>
+        <div style="color:#ddd; font-size:14px;">🇪🇬 ${s.ar}</div>
+        <button class="btn-sm" onclick="speakWord('${s.en.replace(/'/g, "\\'")}')">🔊 استمع للقصة</button>
+      </div>`;
+  });
+}
+
+// --- 9. Interactive Quiz & Games ---
+let currentQuizIndex = 0;
+const quizList = [
+  { q: "ما هو الحرف التالي للـ (A)؟", options: ["B", "C", "D", "M"], ans: "B" },
+  { q: "ما معني كلمة (Cat)؟", options: ["كلب", "قطة", "فيل", "أسد"], ans: "قطة" },
+  { q: "اختر الكلمة الصحيحة للـ (تفاحة):", options: ["Banana", "Apple", "Egg", "Milk"], ans: "Apple" },
+  { q: "ما هو الحرف المفقود: B _ o k ؟", options: ["o", "a", "e", "u"], ans: "o" }
+];
+
+function initQuiz(){
+  let q = quizList[currentQuizIndex];
+  document.getElementById('game-q').innerText = q.q;
+  let box = document.getElementById('quiz-box');
+  box.innerHTML = '';
+  document.getElementById('game-res').innerText = '';
+
+  q.options.forEach(opt => {
+    let btn = document.createElement('button');
+    btn.className = 'quiz-btn';
+    btn.innerText = opt;
+    btn.onclick = () => checkQuiz(opt, q.ans);
+    box.appendChild(btn);
+  });
+}
+
+function checkQuiz(userAns, correctAns){
+  let res = document.getElementById('game-res');
+  if(userAns === correctAns){
+    res.innerText = '✅ أحسنت! إجابة صحيحة 🎉';
+    res.style.color = '#00d3a0';
+    playSound('success');
+    addStars(2);
+    triggerConfetti();
+    setTimeout(() => {
+      currentQuizIndex = (currentQuizIndex + 1) % quizList.length;
+      initQuiz();
+    }, 1500);
+  } else {
+    res.innerText = '❌ إجابة خاطئة، حاول مرة أخرى!';
+    res.style.color = '#ff1744';
+    playSound('wrong');
+  }
+}
+
+// --- 10. Rewards & Confetti Effect ---
+function addStars(num){
+  let s = parseInt(localStorage.getItem('stars') || '0') + num;
+  localStorage.setItem('stars', s);
+  updateStarsDisplay();
+}
+
+function updateStarsDisplay(){
+  document.getElementById('stars-count').innerText = localStorage.getItem('stars') || '0';
+}
+
+function triggerConfetti(){
+  const cCanvas = document.getElementById('confetti-canvas');
+  const cCtx = cCanvas.getContext('2d');
+  cCanvas.width = window.innerWidth;
+  cCanvas.height = window.innerHeight;
+
+  let pieces = [];
+  for(let i=0; i<60; i++){
+    pieces.push({
+      x: Math.random() * cCanvas.width,
+      y: Math.random() * cCanvas.height - cCanvas.height,
+      color: ['#00d3a0', '#ff9f43', '#ff1744', '#2196F3', '#gold'][Math.floor(Math.random()*5)],
+      size: Math.random() * 8 + 4,
+      speed: Math.random() * 5 + 2
+    });
+  }
+
+  function drawConfetti(){
+    cCtx.clearRect(0,0,cCanvas.width,cCanvas.height);
+    pieces.forEach(p => {
+      cCtx.fillStyle = p.color;
+      cCtx.fillRect(p.x, p.y, p.size, p.size);
+      p.y += p.speed;
+    });
+  }
+
+  let timer = setInterval(drawConfetti, 20);
+  setTimeout(() => { clearInterval(timer); cCtx.clearRect(0,0,cCanvas.width,cCanvas.height); }, 2000);
+}
+
+// Event Listeners Initialization
+window.addEventListener('load', () => {
+  checkActivation();
+  if(localStorage.getItem('app_activated') === 'true') initApp();
+});
+window.addEventListener('resize', () => {
+  if(canvas) resizeCanvas();
+});
 </script>
 </body>
 </html>
