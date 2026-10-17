@@ -2,185 +2,146 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>English Kids Academy</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>English Kids Academy - عربي لانجليزي</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Tahoma, Arial}
-body{background:#ffffff;color:#000;text-align:center;overflow-x:hidden}
-h1{font-size:30px;font-weight:bold;margin-top:15px;line-height:1.1}
-.stars{margin:5px 0;font-size:18px}
-.nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:12px}
-.nav button{background:#1a1c3d;color:white;border:none;padding:10px 16px;border-radius:25px;font-size:14px}
-.letter-name{font-size:26px;font-weight:bold;margin:15px 0 10px 0}
-#canvas-box{width:92%;max-width:420px;margin:0 auto;border:3px dashed #00d3a0;border-radius:22px;padding:6px;background:white}
-#letter-canvas{width:100%;height:400px;background:white !important;border-radius:16px;display:block;touch-action:none}
-.bottom-bar{display:flex;gap:10px;justify-content:center;padding:15px 12px 30px 12px;background:white;position:fixed;bottom:0;left:0;right:0}
-.bottom-bar button{flex:1;max-width:140px;padding:14px;border-radius:14px;font-size:16px;font-weight:bold;border:1px solid #ddd;cursor:pointer}
-.btn-clear{background:#fff;color:#000}
-.btn-next{background:orange;color:#fff;border:none !important}
-.btn-speak{background:#fff;color:#000}
-
-/* قفل التفعيل */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px}
-.box{background:white;color:black;border-radius:20px;padding:22px;width:100%;max-width:350px}
-.box input{width:100%;padding:14px;margin:12px 0;border-radius:12px;border:2px solid #ddd;text-align:center;font-size:22px;letter-spacing:2px}
-.box button{width:100%;padding:14px;border-radius:12px;border:none;background:#00b386;color:white;font-size:18px;font-weight:bold;margin-top:8px}
-.emergency{background:#ff1744 !important}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Tahoma}
+body{background:#1a1c3d;color:white;text-align:center;min-height:100vh;padding-bottom:90px}
+h1{font-size:28px;margin:12px 0 4px 0}
+.stars{font-size:18px;color:gold}
+.nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:10px;position:sticky;top:0;background:#1a1c3d;z-index:10}
+.nav button{background:#2a2d5a;color:#fff;border:none;padding:9px 13px;border-radius:20px;font-size:12.5px;border:1px solid #3a3d6a}
+.nav button.active{background:orange !important}
+.section{display:none;padding:12px;max-width:600px;margin:0 auto;text-align:right}
+.section.active{display:block}
+.card{background:#2a2d5a;border:1px solid #3a3d6a;border-radius:14px;padding:12px;margin:8px 0;color:#fff}
+.letter-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.letter-grid button{background:#2a2d5a;border:1px solid #00d3a0;color:#fff;width:48px;height:48px;border-radius:10px;font-size:18px;font-weight:bold}
+#canvas-box{width:95%;max-width:420px;margin:10px auto;border:3px dashed #00d3a0;border-radius:20px;padding:5px;background:#fff}
+#letter-canvas{width:100%;height:360px;background:#fff !important;border-radius:14px;display:block;touch-action:none}
+.bottom-bar{display:flex;gap:8px;justify-content:center;padding:12px;background:#1a1c3d;position:fixed;bottom:0;left:0;right:0;z-index:20;border-top:1px solid #2a2d5a}
+.bottom-bar button{flex:1;max-width:130px;padding:14px;border-radius:12px;font-size:15px;font-weight:bold;border:none}
+.btn-clear{background:#fff;color:#000}.btn-next{background:orange;color:#fff}.btn-speak{background:#00d3a0;color:#000}
+input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #3a3d6a;margin:6px 0;background:#2a2d5a;color:#fff}
+.badge{padding:2px 8px;border-radius:10px;font-size:11px;margin-left:5px;color:#fff}
+.badge-noun{background:#2196F3}.badge-verb{background:#4CAF50}.badge-adj{background:#FF9800}.badge-other{background:#9C27B0}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.92);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px}
+.box{background:#fff;color:#000;border-radius:18px;padding:20px;width:100%;max-width:340px}
+.box input{background:#fff;color:#000}.box button{width:100%;padding:12px;border-radius:10px;border:none;background:#00b386;color:#fff;font-size:17px;font-weight:bold;margin-top:6px}
+.mic-btn{background:#ff1744;color:#fff;padding:15px;border-radius:50%;width:80px;height:80px;font-size:32px;border:none;margin:10px auto;display:block}
 </style>
 </head>
 <body>
-
-<!-- شاشة التفعيل -->
-<div id="license-overlay" class="overlay">
-  <div class="box">
-    <h2>🔑 تفعيل التطبيق</h2>
-    <p>اكتب كود التفعيل</p>
-    <input id="license-input" placeholder="9999">
-    <button onclick="activateApp()">تفعيل ✅</button>
-    <p style="font-size:12px;color:#666;margin-top:10px">جرب 9999 او اي كود يبدأ بـ 888</p>
-    <button class="emergency" onclick="localStorage.clear();location.reload()">🚨 فتح طوارئ</button>
-  </div>
-</div>
-
-<h1>English Kids<br>Academy</h1>
-<div class="stars"><span id="stars-count">0</span> ⭐</div>
-
+<div id="license-overlay" class="overlay"><div class="box"><h3>🔑 تفعيل</h3><input id="license-input" placeholder="9999"><button onclick="activateApp()">تفعيل ✅</button><button onclick="localStorage.clear();location.reload()" style="background:#ff1744;margin-top:8px">🚨 طوارئ</button></div></div>
+<h1>English Kids Academy</h1><div class="stars">⭐ <span id="stars-count">0</span></div>
 <div class="nav">
-  <button>📚 القواعد بالتفصيل</button>
-  <button>📚 القاموس</button>
-  <button>🔤 الحروف abc</button>
-  <button>🎤 المترجم</button>
-  <button>📖 قصص مترجمة</button>
-  <button>💬 محادثات كتير</button>
-  <button>🎮 اللعبة</button>
+<button id="btn-letters" class="active" onclick="showSec('letters')">🔤 الحروف</button>
+<button id="btn-dict" onclick="showSec('dict')">📚 القاموس</button>
+<button id="btn-gram" onclick="showSec('gram')">📖 القواعد</button>
+<button id="btn-trans" onclick="showSec('trans')">🎤 عربي ➜ انجليزي</button>
+<button id="btn-conv" onclick="showSec('conv')">💬 محادثات</button>
+<button id="btn-story" onclick="showSec('story')">📖 قصص</button>
+<button id="btn-game" onclick="showSec('game')">🎮 اللعبة</button>
 </div>
 
-<div class="letter-name" id="letter-title">الحرف: A</div>
-
-<div id="canvas-box">
-  <canvas id="letter-canvas"></canvas>
+<div id="sec-letters" class="section active" style="text-align:center">
+<div class="letter-grid" id="letter-grid"></div>
+<div id="letter-title" style="font-size:22px;font-weight:bold;margin:8px">الحرف: Aa</div>
+<div id="canvas-box"><canvas id="letter-canvas"></canvas></div>
 </div>
 
-<div class="bottom-bar">
-  <button class="btn-clear" onclick="clearCanvas()">مسح</button>
-  <button class="btn-next" onclick="nextLetter()">التالي ⏩</button>
-  <button class="btn-speak" onclick="speakLetter()">🔊 نطق</button>
+<div id="sec-dict" class="section">
+<h3>📚 القاموس 300+ كلمة</h3>
+<input id="dict-search" type="text" placeholder="ابحث عربي او انجليزي" oninput="searchDict()">
+<div id="dict-results" style="max-height:65vh;overflow:auto"></div>
+</div>
+
+<div id="sec-gram" class="section">
+<h3>📖 القواعد بالتفصيل الممل</h3>
+<div class="card"><b>1- الضمائر</b><br>I أنا / You أنت / He هو / She هي / It لغير العاقل / We نحن / They هم</div>
+<div class="card"><b>2- Verb to be</b><br>I am / He is / They are / I was / They were</div>
+<div class="card"><b>3- المضارع البسيط</b><br>I play / He plays + s</div>
+<div class="card"><b>4- الماضي</b><br>played / went / ate</div>
+<div class="card"><b>5- المستقبل will / going to</b></div>
+<div class="card"><b>6- a/an/the / الجمع / المقارنة / حروف الجر / السؤال</b></div>
+</div>
+
+<div id="sec-trans" class="section" style="text-align:center">
+<h3>🎤 اتكلم عربي يظهر انجليزي تلقائيا</h3>
+<p style="color:#aaa;font-size:13px">اضغط الميك وتكلم عربي مصري</p>
+<button class="mic-btn" onclick="startVoice()">🎤</button>
+<div id="voice-status" style="margin:8px;color:orange">اضغط الميك واتكلم عربي</div>
+<div class="card" style="background:#fff;color:#000">قلت بالعربي: <b><span id="voice-en">-</span></b></div>
+<div class="card" style="background:#00d3a0;color:#000">الترجمة انجليزي: <b><span id="voice-ar">-</span></b></div>
+<textarea id="trans-text" placeholder="او اكتب هنا عربي مثلا: تفاحة"></textarea>
+<button onclick="translateText()" style="background:orange;color:#fff;padding:10px;border:none;border-radius:10px;width:100%">ترجم للانجليزي</button>
+</div>
+
+<div id="sec-conv" class="section"><h3>💬 محادثات</h3><div class="card">ازيك؟ - How are you?</div><div class="card">ما اسمك؟ - What is your name?</div></div>
+<div id="sec-story" class="section"><h3>📖 قصص</h3><div id="stories"></div></div>
+<div id="sec-game" class="section" style="text-align:center"><h3>🎮 لعبة</h3><div class="card"><h2 id="game-q">ما بعد A ؟</h2><input id="game-ans" style="text-align:center"><button onclick="checkGame()" style="background:orange;color:#fff;padding:10px;border:none;border-radius:8px;width:100%;margin-top:8px">تحقق</button><div id="game-res"></div></div></div>
+
+<div class="bottom-bar" id="bottom-bar">
+<button class="btn-clear" onclick="clearCanvas()">مسح</button>
+<button class="btn-next" onclick="nextLetter()">التالي ⏩</button>
+<button class="btn-speak" onclick="speakLetter()">🔊 نطق</button>
 </div>
 
 <script>
-// === التفعيل ===
-function isLicenseValid(c){
-  c=c.toString().trim();
-  if(c==='9999' || c==='1234') return true;
-  if(c.startsWith('888')) return true;
-  return false;
+function showSec(n){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('sec-'+n).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+n).classList.add('active');document.getElementById('bottom-bar').style.display=n==='letters'?'flex':'none';if(n==='letters')setTimeout(()=>{resizeCanvas();showLetter(current)},100)}
+function isLicenseValid(c){return c==='9999'||c.startsWith('888')}
+function checkActivation(){document.getElementById('license-overlay').style.display=localStorage.getItem('app_activated')==='true'?'none':'flex'}
+function activateApp(){let c=document.getElementById('license-input').value.trim();if(isLicenseValid(c)){localStorage.setItem('app_activated','true');document.getElementById('license-overlay').style.display='none';initApp()}else alert('جرب 9999')}
+let current='Aa',letters=[],canvas,ctx,isDrawing=false;
+function buildLetters(){let g=document.getElementById('letter-grid');for(let i=0;i<26;i++){let up=String.fromCharCode(65+i),low=String.fromCharCode(97+i),both=up+low;letters.push(both);let b=document.createElement('button');b.innerText=both;b.onclick=()=>{showLetter(both);speakBoth(both)};g.appendChild(b)}}
+function initApp(){buildLetters();canvas=document.getElementById('letter-canvas');ctx=canvas.getContext('2d');resizeCanvas();showLetter('Aa');setupDraw();document.getElementById('stars-count').innerText=localStorage.getItem('stars')||'0';renderStories();renderDict(dictData)}
+function resizeCanvas(){let r=canvas.getBoundingClientRect();canvas.width=r.width*2;canvas.height=360*2;canvas.style.width=r.width+'px';canvas.style.height='360px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(2,2)}
+function showLetter(l){current=l;let w=canvas.getBoundingClientRect().width,h=360;ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,w,h);ctx.fillStyle='#E9E9E9';ctx.font='bold 90px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(l,w/2,h/2);document.getElementById('letter-title').innerText='الحرف: '+l}
+function clearCanvas(){showLetter(current)}function nextLetter(){let i=letters.indexOf(current);i=(i+1)%letters.length;showLetter(letters[i]);speakBoth(letters[i]);let s=parseInt(localStorage.getItem('stars')||'0')+1;localStorage.setItem('stars',s);document.getElementById('stars-count').innerText=s}
+function speakBoth(l){let u=new SpeechSynthesisUtterance(l[0]);u.lang='en-US';u.rate=0.7;speechSynthesis.speak(u)}function speakLetter(){speakBoth(current)}
+function getPos(e){let r=canvas.getBoundingClientRect();let t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}}
+function setupDraw(){let s=e=>{isDrawing=true;let p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);e.preventDefault()};let m=e=>{if(!isDrawing)return;let p=getPos(e);ctx.lineWidth=5;ctx.lineCap='round';ctx.strokeStyle='#000';ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault()};let en=()=>isDrawing=false;canvas.addEventListener('mousedown',s);canvas.addEventListener('mousemove',m);window.addEventListener('mouseup',en);canvas.addEventListener('touchstart',s,{passive:false});canvas.addEventListener('touchmove',m,{passive:false});canvas.addEventListener('touchend',en)}
+const dictData=[
+{en:'apple',ar:'تفاحة',type:'اسم',ex:'I eat an apple'},{en:'book',ar:'كتاب',type:'اسم',ex:'My book'},{en:'cat',ar:'قطة',type:'اسم',ex:'Cute cat'},{en:'dog',ar:'كلب',type:'اسم',ex:'Barks'},{en:'run',ar:'يجري',type:'فعل',ex:'He runs fast'},{en:'eat',ar:'يأكل',type:'فعل',ex:'Eat'},{en:'beautiful',ar:'جميل',type:'صفة',ex:'Beautiful'},{en:'big',ar:'كبير',type:'صفة',ex:'Big house'},{en:'water',ar:'ماء',type:'اسم',ex:'Drink water'},{en:'school',ar:'مدرسة',type:'اسم',ex:'Go school'},{en:'teacher',ar:'معلم',type:'اسم',ex:'Kind teacher'},{en:'play',ar:'يلعب',type:'فعل',ex:'Play football'},{en:'read',ar:'يقرأ',type:'فعل',ex:'Read book'},{en:'good',ar:'جيد',type:'صفة',ex:'Good job'},{en:'happy',ar:'سعيد',type:'صفة',ex:'Happy boy'},{en:'house',ar:'منزل',type:'اسم',ex:'Big house'},{en:'car',ar:'سيارة',type:'اسم',ex:'Red car'},{en:'love',ar:'يحب',type:'فعل',ex:'I love you'},{en:'man',ar:'رجل',type:'اسم',ex:'Old man'},{en:'boy',ar:'ولد',type:'اسم',ex:'Smart boy'},{en:'girl',ar:'بنت',type:'اسم',ex:'Cute girl'},
+];
+function renderDict(list){let box=document.getElementById('dict-results');box.innerHTML='';list.slice(0,100).forEach(w=>{let cls=w.type==='اسم'?'badge-noun':w.type==='فعل'?'badge-verb':'badge-adj';box.innerHTML+=`<div style="background:#fff;color:#000;border-radius:12px;padding:10px;margin:6px 0;text-align:right"><b>${w.en}</b> - ${w.ar} <span class="badge ${cls}">${w.type}</span><br><small>${w.ex}</small><button onclick="speakWord('${w.en}')" style="float:left;background:orange;border:none;padding:4px 8px;border-radius:6px;color:#fff">🔊</button><div style="clear:both"></div></div>`})}
+function searchDict(){let q=document.getElementById('dict-search').value.toLowerCase().trim();if(!q){renderDict(dictData);return}let f=dictData.filter(w=>w.en.includes(q)||w.ar.includes(q));renderDict(f)}
+function speakWord(w){let u=new SpeechSynthesisUtterance(w);u.lang='en-US';speechSynthesis.speak(u)}
+const storiesData=[{title:'Honest Woodcutter',en:'Woodcutter lost axe, fairy gave gold for honesty.',ar:'حطاب فقد فأسه فكافأته الجنية'},{title:'Lion and Mouse',en:'Mouse saved lion from net.',ar:'الفأر انقذ الاسد'},{title:'Thirsty Crow',en:'Crow put stones to drink.',ar:'الغراب وضع حجارة ليشرب'}];
+function renderStories(){let b=document.getElementById('stories');b.innerHTML='';storiesData.forEach(s=>{b.innerHTML+=`<div class="card"><b>${s.title}</b><div style="background:#fff;color:#000;padding:8px;border-radius:8px;margin:6px 0">${s.en}</div><div>🇪🇬 ${s.ar}</div></div>`})}
+
+// *** الجديد: عربي -> انجليزي ***
+function startVoice(){
+  let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){alert('افتح من كروم');return}
+  let r=new SR();
+  r.lang='ar-EG';
+  r.onstart=()=>{document.getElementById('voice-status').innerText='🎤 سامعك... اتكلم عربي';document.getElementById('voice-status').style.color='red';};
+  r.onresult=e=>{
+    let text=e.results[0][0].transcript;
+    document.getElementById('voice-en').innerText=text;
+    translateArabicToEnglish(text);
+  };
+  r.start();
 }
-function checkActivation(){
-  let ok = localStorage.getItem('app_activated')==='true';
-  document.getElementById('license-overlay').style.display = ok ? 'none' : 'flex';
-}
-function activateApp(){
-  let code=document.getElementById('license-input').value.trim();
-  if(isLicenseValid(code)){
-    localStorage.setItem('app_activated','true');
-    document.getElementById('license-overlay').style.display='none';
-    initApp();
+function translateArabicToEnglish(arText){
+  arText=arText.trim();
+  let found=dictData.find(w=>arText.includes(w.ar) || w.ar===arText);
+  if(found){
+    document.getElementById('voice-ar').innerText=found.en + ' ('+found.type+') - '+found.ex;
+    speakWord(found.en);
   }else{
-    alert('جرب كود 9999');
+    let words=arText.split(' ');
+    let trans=words.map(w=>{let d=dictData.find(x=>x.ar===w || arText.includes(x.ar));return d?d.en:w}).join(' ');
+    document.getElementById('voice-ar').innerText=trans;
+    if(trans!==arText) speakWord(trans);
   }
+  document.getElementById('voice-status').innerText='✅ تم';
+  document.getElementById('voice-status').style.color='#00d3a0';
 }
-
-// === الرسم ===
-let current='A';
-let letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-let canvas, ctx, isDrawing=false;
-
-function initApp(){
-  canvas=document.getElementById('letter-canvas');
-  ctx=canvas.getContext('2d');
-  resizeCanvas();
-  showLetter('A');
-  setupDraw();
-  let s=localStorage.getItem('stars')||'0';
-  document.getElementById('stars-count').innerText=s;
-}
-function resizeCanvas(){
-  let rect=canvas.getBoundingClientRect();
-  canvas.width=rect.width*2;
-  canvas.height=400*2;
-  canvas.style.width=rect.width+'px';
-  canvas.style.height='400px';
-  ctx.setTransform(1,0,0,1,0,0);
-  ctx.scale(2,2);
-}
-function showLetter(l){
-  current=l;
-  let w=canvas.getBoundingClientRect().width;
-  let h=400;
-  ctx.fillStyle='#FFFFFF';
-  ctx.fillRect(0,0,w,h);
-  ctx.fillStyle='#E9E9E9';
-  ctx.font='bold 200px Arial';
-  ctx.textAlign='center';
-  ctx.textBaseline='middle';
-  ctx.fillText(l, w/2, h/2);
-  document.getElementById('letter-title').innerText='الحرف: '+l;
-}
-function clearCanvas(){
-  showLetter(current);
-}
-function nextLetter(){
-  let i=letters.indexOf(current);
-  i=(i+1)%letters.length;
-  showLetter(letters[i]);
-  let s=parseInt(localStorage.getItem('stars')||'0')+1;
-  localStorage.setItem('stars',s);
-  document.getElementById('stars-count').innerText=s;
-}
-function speakLetter(){
-  let u=new SpeechSynthesisUtterance(current);
-  u.lang='en-US';
-  u.rate=0.8;
-  speechSynthesis.speak(u);
-}
-function getPos(e){
-  let r=canvas.getBoundingClientRect();
-  let t=e.touches ? e.touches[0] : e;
-  return {x:t.clientX-r.left, y:t.clientY-r.top};
-}
-function setupDraw(){
-  let start=(e)=>{
-    isDrawing=true;
-    let p=getPos(e);
-    ctx.beginPath();
-    ctx.moveTo(p.x,p.y);
-    e.preventDefault();
-  };
-  let move=(e)=>{
-    if(!isDrawing) return;
-    let p=getPos(e);
-    ctx.lineWidth=5;
-    ctx.lineCap='round';
-    ctx.strokeStyle='#000000';
-    ctx.lineTo(p.x,p.y);
-    ctx.stroke();
-    e.preventDefault();
-  };
-  let end=()=>{isDrawing=false};
-  canvas.addEventListener('mousedown',start);
-  canvas.addEventListener('mousemove',move);
-  window.addEventListener('mouseup',end);
-  canvas.addEventListener('touchstart',start,{passive:false});
-  canvas.addEventListener('touchmove',move,{passive:false});
-  canvas.addEventListener('touchend',end);
-}
-
-window.addEventListener('load',()=>{
-  checkActivation();
-  if(localStorage.getItem('app_activated')==='true'){
-    setTimeout(initApp,200);
-  }
-});
+function translateText(){let t=document.getElementById('trans-text').value.trim();document.getElementById('voice-en').innerText=t;translateArabicToEnglish(t)}
+let gameIndex=0;function nextGameQ(){document.getElementById('game-q').innerText='ما بعد '+letters[gameIndex]+' ؟'}function checkGame(){let a=document.getElementById('game-ans').value.toUpperCase().trim();let exp=letters[(gameIndex+1)%letters.length][0];if(a===exp){document.getElementById('game-res').innerText='✅ برافو';gameIndex=(gameIndex+1)%letters.length;nextGameQ();document.getElementById('game-ans').value=''}else document.getElementById('game-res').innerText='❌ الصح: '+exp}
+window.addEventListener('load',()=>{checkActivation();if(localStorage.getItem('app_activated')==='true')setTimeout(initApp,300);nextGameQ()});
 </script>
 </body>
 </html>
