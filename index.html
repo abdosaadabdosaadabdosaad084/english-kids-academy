@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>English Kids Academy - النسخة الاحترافية الشاملة</title>
+<title>English Kids Academy</title>
 <style>
   :root {
     --bg-main: #1a1c3d;
@@ -29,7 +29,6 @@
 
   .card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 12px; margin: 8px 0; color: #fff; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
 
-  /* Letters Grid Layout */
   .letter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); gap: 6px; justify-content: center; margin: 8px 0; padding: 4px; max-height: 200px; overflow-y: auto; }
   .letter-grid button { background: var(--bg-card); border: 1px solid var(--primary); color: #fff; height: 42px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; }
   .letter-grid button.active-letter { background: var(--primary); color: #000; }
@@ -58,28 +57,12 @@
   .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .quiz-btn { background: var(--bg-card); border: 1px solid var(--border-card); color: #fff; padding: 10px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; }
 
-  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px; }
-  .box { background: #fff; color: #000; border-radius: 16px; padding: 20px; width: 100%; max-width: 320px; text-align: center; }
-  .box input { background: #f0f0f0; color: #000; border: 1px solid #ccc; }
-  .box button { width: 100%; padding: 10px; border-radius: 8px; border: none; background: #00b386; color: #fff; font-size: 15px; font-weight: bold; margin-top: 6px; cursor: pointer; }
-
   #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; }
 </style>
 </head>
 <body>
 
 <canvas id="confetti-canvas"></canvas>
-
-<!-- شاشة تثبيت التطبيق والأمان -->
-<div id="license-overlay" class="overlay">
-  <div class="box">
-    <h3>📱 تثبيت وتفعيل التطبيق</h3>
-    <p style="font-size: 12px; color: #666; margin: 8px 0;">أدخل رمز التفعيل لتثبيت وتشغيل الأكاديمية بنجاح</p>
-    <input id="license-input" type="password" placeholder="رمز التفعيل (مثال: 9999)">
-    <button onclick="activateApp()">تثبيت ودخول ✅</button>
-    <button onclick="installPWA()" style="background:var(--accent); margin-top:6px;">📲 إضافة للشاشة الرئيسية</button>
-  </div>
-</div>
 
 <header>
   <h1>English Kids Academy</h1>
@@ -94,7 +77,6 @@
   <button id="btn-conv" onclick="switchSection('conv')">💬 محادثات</button>
   <button id="btn-story" onclick="switchSection('story')">📖 قصص</button>
   <button id="btn-game" onclick="switchSection('game')">🎮 الألعاب</button>
-  <button id="btn-settings" onclick="switchSection('settings')" style="background:var(--danger)">⚙️ الإعدادات والتثبيت</button>
 </div>
 
 <!-- 1. الحروف -->
@@ -118,14 +100,14 @@
   <div id="dict-results" style="max-height:55vh; overflow-y:auto; margin-top:6px;"></div>
 </div>
 
-<!-- 3. القواعد المفصلة بالتفصيل الممل -->
+<!-- 3. القواعد المفصلة -->
 <div id="sec-gram" class="section">
   <h3>📖 القواعد الإنجليزية الشاملة</h3>
-  <div class="card"><b style="color:var(--accent)">1- الضمائر الشخصية (Pronouns):</b><br>I (أنا) - You (أنت/أنتم) - He (هو) - She (هي) - It (غير العاقل) - We (نحن) - They (هم). تستخدم كفاعل أساسي للجملة.</div>
+  <div class="card"><b style="color:var(--accent)">1- الضمائر الشخصية (Pronouns):</b><br>I (أنا) - You (أنت/أنتم) - He (هو) - She (هي) - It (غير العاقل) - We (نحن) - They (هم).</div>
   <div class="card"><b style="color:var(--accent)">2- الأفعال المساعدة (Verb to Be):</b><br>• المضارع: I am / He,She,It is / We,You,They are.<br>• الماضي: Was (للمفرد) / Were (للجمع).</div>
-  <div class="card"><b style="color:var(--accent)">3- الزمن المضارع البسيط (Present Simple):</b><br>يستخدم للتعبير عن الحقائق والعادات. نضيف (s) مع ضمائر المفرد الغائب (He, She, It):<br><i>I play football. / He plays football.</i></div>
-  <div class="card"><b style="color:var(--accent)">4- الماضي البسيط (Past Simple):</b><br>يعبر عن أحدث انتهت. الأفعال المنتظمة تأخذ (ed) مثل (played)، والأفعال غير المنتظمة تتغير كلياً مثل (go ➜ went).</div>
-  <div class="card"><b style="color:var(--accent)">5- أدوات التنكير والتعريف (A / An / The):</b><br>نستخدم (an) قبل الحروف المتحركة (a, e, i, o, u) مثل (an apple)، و(a) مع باقي الحروف، و(The) للشيء المحدد والمعروف.</div>
+  <div class="card"><b style="color:var(--accent)">3- الزمن المضارع البسيط (Present Simple):</b><br>نضيف (s) مع ضمائر المفرد الغائب (He, She, It):<br><i>I play football. / He plays football.</i></div>
+  <div class="card"><b style="color:var(--accent)">4- الماضي البسيط (Past Simple):</b><br>الأفعال المنتظمة تأخذ (ed) مثل (played)، والأفعال غير المنتظمة تتغير مثل (go ➜ went).</div>
+  <div class="card"><b style="color:var(--accent)">5- أدوات التنكير والتعريف (A / An / The):</b><br>نستخدم (an) قبل الحروف المتحركة (a, e, i, o, u) و(a) مع باقي الحروف.</div>
 </div>
 
 <!-- 4. الترجمة الفورية -->
@@ -169,16 +151,6 @@
   </div>
 </div>
 
-<!-- 8. إعدادات وتثبيت التطبيق -->
-<div id="sec-settings" class="section" style="text-align:center">
-  <h3>⚙️ إعدادات وتثبيت التطبيق</h3>
-  <div class="card">
-    <b>حالة التثبيت:</b> مسجل ومفعل بنجاح ✅<br><br>
-    <button onclick="installPWA()" style="background:var(--primary); color:#000; padding:12px; border:none; border-radius:10px; font-weight:bold; width:100%; margin-bottom:8px; cursor:pointer;">📲 تثبيت التطبيق على الشاشة الرئيسية</button>
-    <button onclick="localStorage.clear(); location.reload();" style="background:var(--danger); color:#fff; padding:12px; border:none; border-radius:10px; font-weight:bold; width:100%; cursor:pointer;">🚨 إعادة ضبط المصنع والتثبيت</button>
-  </div>
-</div>
-
 <!-- شريط التحكم السفلي -->
 <div class="bottom-bar" id="bottom-bar">
   <button class="btn-clear" onclick="clearCanvas()">مسح 🗑️</button>
@@ -204,7 +176,6 @@ function switchSection(n, pushHistory = true){
   }
 }
 
-// منع الخروج المفاجئ وإدارة زر الرجوع الداخلي
 window.addEventListener('popstate', (e) => {
   if(navigationHistory.length > 1){
     navigationHistory.pop();
@@ -212,26 +183,6 @@ window.addEventListener('popstate', (e) => {
     switchSection(prev, false);
   }
 });
-
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-function installPWA(){
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        alert('تم تثبيت التطبيق بنجاح على هاتفك!');
-      }
-      deferredPrompt = null;
-    });
-  } else {
-    alert('يمكنك تثبيت التطبيق يدويًا من إعدادات متصفح كروم (إضافة إلى الشاشة الرئيسية / Add to Home screen)');
-  }
-}
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 function playSound(type) {
@@ -260,17 +211,6 @@ function speakText(text, lang='en-US', rate=0.8){
     u.lang = lang;
     u.rate = rate;
     speechSynthesis.speak(u);
-  }
-}
-
-function activateApp(){
-  let c = document.getElementById('license-input').value.trim();
-  if(c === '9999' || c.startsWith('888')){
-    localStorage.setItem('app_activated', 'true');
-    document.getElementById('license-overlay').style.display = 'none';
-    initApp();
-  } else {
-    alert('رمز التفعيل غير صحيح (جرب 9999)');
   }
 }
 
@@ -418,7 +358,6 @@ function renderConversations(){
         <div style="background:#fff; color:#000; padding:10px; border-radius:8px; margin-top:6px; font-size:14px; line-height:1.6;">${c.dialogue}</div>
       </div>`;
   });
-});
 }
 
 function startVoice(){
@@ -532,10 +471,7 @@ function updateStars(){
 }
 
 window.addEventListener('load', () => {
-  if(localStorage.getItem('app_activated') === 'true'){
-    document.getElementById('license-overlay').style.display = 'none';
-    initApp();
-  }
+  initApp();
 });
 window.addEventListener('resize', () => { if(canvas) resizeCanvas(); });
 </script>
