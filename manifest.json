@@ -1,0 +1,15 @@
+{
+  "name": "English Kids Academy",
+  "short_name": "Kids Academy",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#1a1c2e",
+  "theme_color": "#1a1c2e",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3426/3426653.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
