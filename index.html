@@ -2,68 +2,185 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>English Kids Academy</title>
 <style>
-body{margin:0;background:#fff;color:#000;font-family:Tahoma;text-align:center}
-h1{margin:20px 0 5px 0;font-size:28px}
-.nav button{background:#1a1c3d;color:#fff;border:none;padding:10px 16px;border-radius:25px;margin:4px;font-size:14px}
-#letter-canvas{background:#fff !important;border:3px dashed #00c8a0;border-radius:20px;width:90% !important;max-width:400px;height:380px !important;display:block;margin:15px auto}
-.controls button{padding:10px 20px;border-radius:10px;border:1px solid #ccc;background:#fff;margin:5px;font-size:16px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Tahoma, Arial}
+body{background:#ffffff;color:#000;text-align:center;overflow-x:hidden}
+h1{font-size:30px;font-weight:bold;margin-top:15px;line-height:1.1}
+.stars{margin:5px 0;font-size:18px}
+.nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:12px}
+.nav button{background:#1a1c3d;color:white;border:none;padding:10px 16px;border-radius:25px;font-size:14px}
+.letter-name{font-size:26px;font-weight:bold;margin:15px 0 10px 0}
+#canvas-box{width:92%;max-width:420px;margin:0 auto;border:3px dashed #00d3a0;border-radius:22px;padding:6px;background:white}
+#letter-canvas{width:100%;height:400px;background:white !important;border-radius:16px;display:block;touch-action:none}
+.bottom-bar{display:flex;gap:10px;justify-content:center;padding:15px 12px 30px 12px;background:white;position:fixed;bottom:0;left:0;right:0}
+.bottom-bar button{flex:1;max-width:140px;padding:14px;border-radius:14px;font-size:16px;font-weight:bold;border:1px solid #ddd;cursor:pointer}
+.btn-clear{background:#fff;color:#000}
+.btn-next{background:orange;color:#fff;border:none !important}
+.btn-speak{background:#fff;color:#000}
+
+/* قفل التفعيل */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px}
+.box{background:white;color:black;border-radius:20px;padding:22px;width:100%;max-width:350px}
+.box input{width:100%;padding:14px;margin:12px 0;border-radius:12px;border:2px solid #ddd;text-align:center;font-size:22px;letter-spacing:2px}
+.box button{width:100%;padding:14px;border-radius:12px;border:none;background:#00b386;color:white;font-size:18px;font-weight:bold;margin-top:8px}
+.emergency{background:#ff1744 !important}
 </style>
 </head>
 <body>
-<h1>English Kids Academy</h1>
-<div>⭐ <span id="stars">0</span></div>
 
-<div class="nav">
-<button>📚 القواعد بالتفصيل</button>
-<button>📚 القاموس</button>
-<button>🔤 الحروف abc</button>
-<button>🎤 المترجم</button>
-<button>📖 قصص مترجمة</button>
-<button>💬 محادثات كتير</button>
-<button>🎮 اللعبة</button>
+<!-- شاشة التفعيل -->
+<div id="license-overlay" class="overlay">
+  <div class="box">
+    <h2>🔑 تفعيل التطبيق</h2>
+    <p>اكتب كود التفعيل</p>
+    <input id="license-input" placeholder="9999">
+    <button onclick="activateApp()">تفعيل ✅</button>
+    <p style="font-size:12px;color:#666;margin-top:10px">جرب 9999 او اي كود يبدأ بـ 888</p>
+    <button class="emergency" onclick="localStorage.clear();location.reload()">🚨 فتح طوارئ</button>
+  </div>
 </div>
 
-<h2 id="title">الحرف: A</h2>
-<canvas id="letter-canvas"></canvas>
+<h1>English Kids<br>Academy</h1>
+<div class="stars"><span id="stars-count">0</span> ⭐</div>
 
-<div class="controls">
-<button onclick="speakLetter()">🔊 نطق</button>
-<button onclick="nextLetter()" style="background:orange;color:#fff">⏩ التالي</button>
-<button onclick="clearCanvas()">مسح</button>
+<div class="nav">
+  <button>📚 القواعد بالتفصيل</button>
+  <button>📚 القاموس</button>
+  <button>🔤 الحروف abc</button>
+  <button>🎤 المترجم</button>
+  <button>📖 قصص مترجمة</button>
+  <button>💬 محادثات كتير</button>
+  <button>🎮 اللعبة</button>
+</div>
+
+<div class="letter-name" id="letter-title">الحرف: A</div>
+
+<div id="canvas-box">
+  <canvas id="letter-canvas"></canvas>
+</div>
+
+<div class="bottom-bar">
+  <button class="btn-clear" onclick="clearCanvas()">مسح</button>
+  <button class="btn-next" onclick="nextLetter()">التالي ⏩</button>
+  <button class="btn-speak" onclick="speakLetter()">🔊 نطق</button>
 </div>
 
 <script>
-let cur='A', letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), ctx, canvas;
-function init(){
- canvas=document.getElementById('letter-canvas');
- ctx=canvas.getContext('2d');
- resize(); show(cur);
- canvas.addEventListener('touchstart',start,{passive:false});
- canvas.addEventListener('touchmove',move,{passive:false});
- canvas.addEventListener('touchend',()=>isDraw=false);
- canvas.addEventListener('mousedown',start);
- canvas.addEventListener('mousemove',move);
- window.addEventListener('mouseup',()=>isDraw=false);
+// === التفعيل ===
+function isLicenseValid(c){
+  c=c.toString().trim();
+  if(c==='9999' || c==='1234') return true;
+  if(c.startsWith('888')) return true;
+  return false;
 }
-function resize(){let r=canvas.getBoundingClientRect();canvas.width=r.width*2;canvas.height=380*2;ctx.scale(2,2);}
-function show(l){
- cur=l; let w=canvas.width/2, h=380;
- ctx.fillStyle='#FFFFFF'; ctx.fillRect(0,0,w,h);
- ctx.fillStyle='#E0E0E0'; ctx.font='bold 200px Arial'; ctx.textAlign='center'; ctx.textBaseline='middle';
- ctx.fillText(l,w/2/2,h/2);
- document.getElementById('title').innerText='الحرف: '+l;
+function checkActivation(){
+  let ok = localStorage.getItem('app_activated')==='true';
+  document.getElementById('license-overlay').style.display = ok ? 'none' : 'flex';
 }
-let isDraw=false;
-function getP(e){let r=canvas.getBoundingClientRect();let t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}}
-function start(e){isDraw=true;let p=getP(e);ctx.beginPath();ctx.moveTo(p.x,p.y);e.preventDefault()}
-function move(e){if(!isDraw)return;let p=getP(e);ctx.lineWidth=5;ctx.lineCap='round';ctx.strokeStyle='#000';ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault()}
-function clearCanvas(){show(cur)}
-function nextLetter(){let i=letters.indexOf(cur);i=(i+1)%letters.length;show(letters[i])}
-function speakLetter(){let u=new SpeechSynthesisUtterance(cur);u.lang='en-US';speechSynthesis.speak(u)}
-window.onload=init;
+function activateApp(){
+  let code=document.getElementById('license-input').value.trim();
+  if(isLicenseValid(code)){
+    localStorage.setItem('app_activated','true');
+    document.getElementById('license-overlay').style.display='none';
+    initApp();
+  }else{
+    alert('جرب كود 9999');
+  }
+}
+
+// === الرسم ===
+let current='A';
+let letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+let canvas, ctx, isDrawing=false;
+
+function initApp(){
+  canvas=document.getElementById('letter-canvas');
+  ctx=canvas.getContext('2d');
+  resizeCanvas();
+  showLetter('A');
+  setupDraw();
+  let s=localStorage.getItem('stars')||'0';
+  document.getElementById('stars-count').innerText=s;
+}
+function resizeCanvas(){
+  let rect=canvas.getBoundingClientRect();
+  canvas.width=rect.width*2;
+  canvas.height=400*2;
+  canvas.style.width=rect.width+'px';
+  canvas.style.height='400px';
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.scale(2,2);
+}
+function showLetter(l){
+  current=l;
+  let w=canvas.getBoundingClientRect().width;
+  let h=400;
+  ctx.fillStyle='#FFFFFF';
+  ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='#E9E9E9';
+  ctx.font='bold 200px Arial';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText(l, w/2, h/2);
+  document.getElementById('letter-title').innerText='الحرف: '+l;
+}
+function clearCanvas(){
+  showLetter(current);
+}
+function nextLetter(){
+  let i=letters.indexOf(current);
+  i=(i+1)%letters.length;
+  showLetter(letters[i]);
+  let s=parseInt(localStorage.getItem('stars')||'0')+1;
+  localStorage.setItem('stars',s);
+  document.getElementById('stars-count').innerText=s;
+}
+function speakLetter(){
+  let u=new SpeechSynthesisUtterance(current);
+  u.lang='en-US';
+  u.rate=0.8;
+  speechSynthesis.speak(u);
+}
+function getPos(e){
+  let r=canvas.getBoundingClientRect();
+  let t=e.touches ? e.touches[0] : e;
+  return {x:t.clientX-r.left, y:t.clientY-r.top};
+}
+function setupDraw(){
+  let start=(e)=>{
+    isDrawing=true;
+    let p=getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+    e.preventDefault();
+  };
+  let move=(e)=>{
+    if(!isDrawing) return;
+    let p=getPos(e);
+    ctx.lineWidth=5;
+    ctx.lineCap='round';
+    ctx.strokeStyle='#000000';
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+    e.preventDefault();
+  };
+  let end=()=>{isDrawing=false};
+  canvas.addEventListener('mousedown',start);
+  canvas.addEventListener('mousemove',move);
+  window.addEventListener('mouseup',end);
+  canvas.addEventListener('touchstart',start,{passive:false});
+  canvas.addEventListener('touchmove',move,{passive:false});
+  canvas.addEventListener('touchend',end);
+}
+
+window.addEventListener('load',()=>{
+  checkActivation();
+  if(localStorage.getItem('app_activated')==='true'){
+    setTimeout(initApp,200);
+  }
+});
 </script>
 </body>
 </html>
