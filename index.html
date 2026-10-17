@@ -43,16 +43,7 @@
         
         <!-- MAIN DASHBOARD -->
         <div id="sec-dashboard" class="section-view active">
-            <div class="stage-selector">
-                <h3>🎯 حدد المرحلة التعليمية المناسبة:</h3>
-                <div class="stage-btns">
-                    <button class="stage-btn active" onclick="setStage(1, this)">المرحلة 1 (5-7 سنوات)</button>
-                    <button class="stage-btn" onclick="setStage(2, this)">المرحلة 2 (8-10 سنوات)</button>
-                    <button class="stage-btn" onclick="setStage(3, this)">المرحلة 3 (11-13 سنة)</button>
-                </div>
-            </div>
-
-            <div class="grid-menu">
+            <div class="grid-menu" style="margin-top: 10px;">
                 <div class="card-menu" onclick="showSection('sec-alphabet')">
                     <div class="card-icon">🔤</div>
                     <div class="card-title">الحروف والسبورة</div>
@@ -61,20 +52,20 @@
 
                 <div class="card-menu" onclick="showSection('sec-dictionary')">
                     <div class="card-icon">📖</div>
-                    <div class="card-title">القاموس الشامل (المورد)</div>
+                    <div class="card-title">قاموس المورد الشامل</div>
                     <div class="card-desc">قاموس ضخم وموسع وشامل لجميع المفردات</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-grammar')">
                     <div class="card-icon">🧩</div>
-                    <div class="card-title">الموسوعة القواعدية الشاملة</div>
-                    <div class="card-desc">شرح وافٍ ومفصل لجميع القواعد والأزمنة</div>
+                    <div class="card-title">قواعد اللغة الإنجليزية</div>
+                    <div class="card-desc">شرح مستفيض وافٍ من البداية حتى الاحتراف</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-stories')">
                     <div class="card-icon">💬</div>
                     <div class="card-title">المحادثات والحوارات</div>
-                    <div class="card-desc">محادثات يومية واحترافية واسعة</div>
+                    <div class="card-desc">حوارات تفاعلية (سؤال وجواب) في كل المجالات</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-games')">
@@ -95,7 +86,7 @@
         <div id="sec-alphabet" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
             <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🔤 الحروف الأبجدية</h2>
-            <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 15px;">اضغط على الحرف للتعلم والتدرب، وسينتقل للكلمة/الحرف التالي فوراً عند الضغط على التالي:</p>
+            <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 15px;">اضغط على الحرف للتعلم والتتبع، وينتقل تلقائياً للحرف التالي عند ضغط التالي:</p>
             
             <div class="alphabet-grid" id="alphabet-container"></div>
 
@@ -113,7 +104,7 @@
         <!-- DICTIONARY SECTION -->
         <div id="sec-dictionary" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">📖 القاموس الشامل (Al-Mawrid)</h2>
+            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">📖 قاموس المورد الشامل</h2>
             <div id="dict-container"></div>
         </div>
 
@@ -126,7 +117,7 @@
         <!-- STORIES SECTION -->
         <div id="sec-stories" class="section-view">
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">💬 المحادثات والحوارات الشاملة</h2>
+            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">💬 المحادثات والحوارات (سؤال وجواب)</h2>
             <div id="stories-container"></div>
         </div>
 
