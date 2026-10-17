@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Hearo</title>
+<style>
+body{background:#0f172a;color:#fff;text-align:center;font-family:system-ui;padding:20px}
+video{width:100%;border-radius:14px;margin:20px 0}
+button{background:#22c55e;color:#000;padding:16px 28px;border:none;border-radius:12px;font-size:18px;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>🎧 Hearo - اسمع وكرر</h1>
+<video controls src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+<p id="text">This is a sample - اسمع الفيديو وكرر الجملة</p>
+<button onclick="alert('هنضيف التسجيل هنا بعدين')">🎤 سجل صوتك</button>
+</body>
+</html>
