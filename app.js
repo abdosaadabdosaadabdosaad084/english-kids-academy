@@ -396,3 +396,32 @@ renderGrammar();
 renderStories();
 generateInfiniteQuestion();
 if (canvas) clearCanvas();
+// === اضافة Hearo - تسجيل وتصحيح ===
+const hearoLessons = [
+  { word: "Hello", video: "https://www.w3schools.com/html/mov_bbb.mp4" },
+  { word: "Water", video: "https://www.w3schools.com/html/movie.mp4" }
+];
+
+function startHearoRec(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ alert("افتح بـ Chrome"); return; }
+  const rec = new SR();
+  rec.lang = 'en-US';
+  rec.onresult = (e)=>{
+    let said = e.results[0][0].transcript.toLowerCase();
+    let target = document.getElementById('word')?.innerText.toLowerCase() || "hello";
+    let r = document.getElementById('result');
+    if(r){
+      if(said.includes(target)){
+        r.innerHTML = "✅ صح: " + said;
+        r.style.color = "green";
+        // يصحح بالنطق الصح
+        speechSynthesis.speak(new SpeechSynthesisUtterance(target));
+      } else {
+        r.innerHTML = "❌ قلت: " + said + " - حاول: " + target;
+        r.style.color = "red";
+      }
+    }
+  };
+  rec.start();
+}
