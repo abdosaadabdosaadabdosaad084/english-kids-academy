@@ -52,11 +52,11 @@ function changePin() {
 }
 
 // Speech Engine
-function speak(text) {
+function speak(text, lang = 'en-US') {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
+        utterance.lang = lang;
         utterance.rate = 0.85;
         window.speechSynthesis.speak(utterance);
     }
@@ -77,39 +77,42 @@ function showSection(id) {
     document.getElementById(id).classList.add('active');
 }
 
-// ==================== 1. القاموس الشامل الضخم ====================
+// ==================== 1. القاموس الضخم والبحث الشامل ====================
 const COMPREHENSIVE_DICTIONARY = [
-    // الأساسيات والحيوانات
     {en: 'Apple', ar: 'تفاحة', cat: 'فواكه'}, {en: 'Banana', ar: 'موز', cat: 'فواكه'}, {en: 'Orange', ar: 'برتقال', cat: 'فواكه'},
     {en: 'Cat', ar: 'قطة', cat: 'حيوانات'}, {en: 'Dog', ar: 'كلب', cat: 'حيوانات'}, {en: 'Elephant', ar: 'فيل', cat: 'حيوانات'},
-    {en: 'Lion', ar: 'أسد', cat: 'حيوانات'}, {en: 'Tiger', ar: 'نمر', cat: 'حيوانات'}, {en: 'Giraffe', ar: 'زرافة', cat: 'حيوانات'},
-    // المدرسة والعلم
-    {en: 'School', ar: 'مدرسة', cat: 'تعليم'}, {en: 'Teacher', ar: 'معلم', cat: 'تعليم'}, {en: 'Student', ar: 'طالب', cat: 'تعليم'},
-    {en: 'Book', ar: 'كتاب', cat: 'تعليم'}, {en: 'Pencil', ar: 'قلم رصاص', cat: 'تعليم'}, {en: 'Classroom', ar: 'فصل دراسي', cat: 'تعليم'},
-    {en: 'Library', ar: 'مكتبة', cat: 'تعليم'}, {en: 'University', ar: 'جامعة', cat: 'تعليم'}, {en: 'Science', ar: 'علوم', cat: 'تعليم'},
-    // المهن والحرف
-    {en: 'Doctor', ar: 'طبيب', cat: 'مهن'}, {en: 'Nurse', ar: 'ممرضة', cat: 'مهن'}, {en: 'Engineer', ar: 'مهندس', cat: 'مهن'},
-    {en: 'Pilot', ar: 'طيار', cat: 'مهن'}, {en: 'Chef', ar: 'طباخ', cat: 'مهن'}, {en: 'Officer', ar: 'ضابط', cat: 'مهن'},
-    {en: 'Driver', ar: 'سائق', cat: 'مهن'}, {en: 'Accountant', ar: 'محاسب', cat: 'مهن'}, {en: 'Artist', ar: 'فنان', cat: 'مهن'},
-    // التكنولوجيا والحديث
-    {en: 'Computer', ar: 'حاسوب', cat: 'تكنولوجيا'}, {en: 'Internet', ar: 'إنترنت', cat: 'تكنولوجيا'}, {en: 'Software', ar: 'برمجيات', cat: 'تكنولوجيا'},
-    {en: 'Application', ar: 'تطبيق', cat: 'تكنولوجيا'}, {en: 'Data', ar: 'بيانات', cat: 'تكنولوجيا'}, {en: 'Screen', ar: 'شاشة', cat: 'تكنولوجيا'},
-    // الأفعال الشائعة
-    {en: 'Read', ar: 'يقرأ', cat: 'أفعال'}, {en: 'Write', ar: 'يكتب', cat: 'أفعال'}, {en: 'Speak', ar: 'يتحدث', cat: 'أفعال'},
-    {en: 'Listen', ar: 'يستمع', cat: 'أفعال'}, {en: 'Learn', ar: 'يتعلم', cat: 'أفعال'}, {en: 'Understand', ar: 'يفهم', cat: 'أفعال'},
-    {en: 'Create', ar: 'يبتكر / ينشئ', cat: 'أفعال'}, {en: 'Develop', ar: 'يطور', cat: 'أفعال'}, {en: 'Achieve', ar: 'يحقق / ينجز', cat: 'أفعال'},
-    // الصفات والمشاعر
-    {en: 'Happy', ar: 'سعيد', cat: 'صفات'}, {en: 'Smart', ar: 'ذكي', cat: 'صفات'}, {en: 'Strong', ar: 'قوي', cat: 'صفات'},
-    {en: 'Beautiful', ar: 'جميل', cat: 'صفات'}, {en: 'Important', ar: 'هام', cat: 'صفات'}, {en: 'Successful', ar: 'ناجح', cat: 'صفات'}
+    {en: 'Lion', ar: 'أسد', cat: 'حيوانات'}, {en: 'Tiger', ar: 'نمر', cat: 'حيوانات'}, {en: 'School', ar: 'مدرسة', cat: 'تعليم'},
+    {en: 'Teacher', ar: 'معلم', cat: 'تعليم'}, {en: 'Student', ar: 'طالب', cat: 'تعليم'}, {en: 'Book', ar: 'كتاب', cat: 'تعليم'},
+    {en: 'Doctor', ar: 'طبيب', cat: 'مهن'}, {en: 'Engineer', ar: 'مهندس', cat: 'مهن'}, {en: 'Computer', ar: 'حاسوب', cat: 'تكنولوجيا'},
+    {en: 'Internet', ar: 'إنترنت', cat: 'تكنولوجيا'}, {en: 'Read', ar: 'يقرأ', cat: 'أفعال'}, {en: 'Write', ar: 'يكتب', cat: 'أفعال'},
+    {en: 'Happy', ar: 'سعيد', cat: 'صفات'}, {en: 'Smart', ar: 'ذكي', cat: 'صفات'}
 ];
 
 function renderDictionary(filterText = '') {
     const dictContainer = document.getElementById('dict-container');
-    const filtered = COMPREHENSIVE_DICTIONARY.filter(w => 
-        w.en.toLowerCase().includes(filterText.toLowerCase()) || w.ar.includes(filterText)
+    const cleanFilter = filterText.trim().toLowerCase();
+    
+    let filtered = COMPREHENSIVE_DICTIONARY.filter(w => 
+        w.en.toLowerCase().includes(cleanFilter) || w.ar.includes(cleanFilter)
     );
+
+    let customSearchHTML = '';
+    // إمكانية البحث المفتوح الشامل لو الكلمة من خارج التطبيق
+    if (cleanFilter.length > 0 && filtered.length === 0) {
+        customSearchHTML = `
+            <div class="interactive-card" style="border:2px solid var(--accent-green); text-align:center;">
+                <h3 style="color:var(--accent-yellow);">🔍 نتيجة البحث الشامل للكلمة: "${filterText}"</h3>
+                <p style="margin:10px 0; color:var(--text-dim);">يمكنك النطق الفوري للكلمة التي كتبت للتعلم:</p>
+                <button class="btn-action" onclick="speak('${filterText}')">🔊 نطق الكلمة المكتوبة (${filterText})</button>
+            </div>
+        `;
+    }
+
     dictContainer.innerHTML = `
-        <input type="text" placeholder="🔍 إبحث عن أي كلمة (عربي / إنجليزي)..." style="width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border:1px solid var(--accent-blue); background:#121324; color:#fff;" oninput="renderDictionary(this.value)">
+        <div style="margin-bottom:15px;">
+            <input type="text" id="dict-search-input" value="${filterText}" placeholder="🔍 اكتب أي كلمة بالإنجليزية أو العربية هنا للبحث والتعلم..." style="width:100%; padding:12px; border-radius:10px; border:2px solid var(--accent-blue); background:#121324; color:#fff; font-size:1rem;" oninput="renderDictionary(this.value)">
+        </div>
+        ${customSearchHTML}
         <div class="word-list">
             ${filtered.map(w => `
                 <div class="word-card" onclick="speak('${w.en}')">
@@ -124,57 +127,83 @@ function renderDictionary(filterText = '') {
     `;
 }
 
-// ==================== 2. القواعد الشاملة المفصلة ====================
+// ==================== 2. قسم القواعد الشامل المفصل جداً ====================
 function renderGrammar() {
     const container = document.getElementById('grammar-container');
     container.innerHTML = `
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 1. الضمائر وأنواعها (Pronouns)</h3>
-            <p style="color:var(--text-dim); margin-top:8px; line-height:1.6;">
-                • <b>ضمائر الفاعل (Subject):</b> I, He, She, It, We, You, They.<br>
-                • <b>ضمائر المفعول (Object):</b> Me, Him, Her, It, Us, You, Them.<br>
-                • <b>صفات الملكية (Possessive):</b> My, His, Her, Its, Our, Your, Their.
-            </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I like English. She helps me. This is my book.')">استمع لأمثلة الضمائر 🔊</button>
+            <h2 style="color:var(--accent-yellow); margin-bottom:10px;">📚 الموسوعة القواعدية الشاملة للغة الإنجليزية</h2>
+            <p style="color:var(--text-dim); line-height:1.6;">شرح وافٍ ومفصل لجميع أركان القواعد من التأسيس حتى الاحتراف.</p>
         </div>
 
+        <!-- 1. الضمائر -->
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 2. الأزمنة بالتفصيل (Verb Tenses)</h3>
+            <h3 style="color:var(--accent-green);">1. ضمائر اللغة الإنجليزية الشاملة (Pronouns)</h3>
             <p style="color:var(--text-dim); margin-top:8px; line-height:1.6;">
-                <b>1. المضارع البسيط (Present Simple):</b> للحقائق والعادات. (الفعل + s مع المفرد).<br>
-                <b>2. المضارع المستمر (Present Continuous):</b> حدث يقع الآن. (am/is/are + v-ing).<br>
-                <b>3. الماضي البسيط (Past Simple):</b> حدث وانتهى في الماضي. (v2).<br>
-                <b>4. المستقبل (Future):</b> ما سيحدث لاحقاً. (will + v1).
+                الضمير هو كلمة تُستخدم للتعويض عن الاسم لمنع التكرار، وتنقسم إلى 4 أنواع رئيسية:<br><br>
+                <b>أ. ضمائر الفاعل (Subject Pronouns):</b> تأتي في بداية الجملة قبل الفعل.<br>
+                • <b>I</b> (أنا) | <b>He</b> (هو) | <b>She</b> (هي) | <b>It</b> (هو/هي لغير العاقل)<br>
+                • <b>We</b> (نحن) | <b>You</b> (أنت/أنتِ/أنتم) | <b>They</b> (هم/هن)<br><br>
+                <b>ب. ضمائر المفعول به (Object Pronouns):</b> تأتي بعد الفعل أو حرف الجر.<br>
+                • Me, Him, Her, It, Us, You, Them.<br><br>
+                <b>ج. صفات الملكية (Possessive Adjectives):</b> يأتي بعدها اسم يمتلكه الشخص.<br>
+                • My book (كتابي), His car (سيارته), Her pen (قلمها).
             </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I study daily. I am studying now. I studied yesterday. I will study tomorrow.')">استمع لتطبيق الأزمنة 🔊</button>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I am a student. He plays football. She helps me. This is my book.')">🔊 استمع لشرح الضمائر</button>
         </div>
 
+        <!-- 2. الأزمنة بالتفصيل -->
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 3. الأفعال المساعدة والناقصة (Modals)</h3>
+            <h3 style="color:var(--accent-green);">2. شرح الأزمنة الرئيسية بالتفصيل (English Tenses)</h3>
             <p style="color:var(--text-dim); margin-top:8px; line-height:1.6;">
-                • <b>Can / Could:</b> للقدرة والاستطاعة (I can speak English).<br>
-                • <b>Must / Should:</b> للالزام والنصيحة (You should study).<br>
-                • <b>May / Might:</b> لاحتمالية حدوث الشيء.
+                <b>أولاً: زمن المضارع البسيط (Present Simple Tense)</b><br>
+                • <b>الاستخدام:</b> يعبر عن الحقائق العلمية والعادات اليومية الثابتة.<br>
+                • <b>التكوين:</b> مع (I/We/They/You) نضع الفعل مجرد. مع (He/She/It) نُضيف للفعل (s) أو (es).<br>
+                • <b>أمثلة:</b> He plays tennis every Friday. / Earth goes around the Sun.<br><br>
+                
+                <b>ثانياً: زمن المضارع المستمر (Present Continuous Tense)</b><br>
+                • <b>الاستخدام:</b> يعبر عن حدث يقع الآن في هذه اللحظة أثناء الكلام.<br>
+                • <b>التكوين:</b> (am / is / are) + الفعل + ing.<br>
+                • <b>أمثلة:</b> She is reading a book right now. / They are playing.<br><br>
+
+                <b>ثالثاً: زمن الماضي البسيط (Past Simple Tense)</b><br>
+                • <b>الاستخدام:</b> يعبر عن حدث بدأ وانتهى تماماً في الماضي في وقت محدد.<br>
+                • <b>التكوين:</b> التصريف الثاني للفعل (إضافة ed للأفعال المنتظمة أو حفظ الشاذ).<br>
+                • <b>أمثلة:</b> I visited Alexandria yesterday.<br><br>
+
+                <b>رابعاً: زمن المستقبل البسيط (Future Simple Tense)</b><br>
+                • <b>الاستخدام:</b> يعبر عن أحداث وخطط مستقبلية أو قرارات سريعة.<br>
+                • <b>التكوين:</b> Will + الفعل في المصدر.<br>
+                • <b>أمثلة:</b> I will travel next week.
             </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I can do it. You should try. It might rain.')">استمع لأمثلة الأفعال الناقصة 🔊</button>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I play football. She is reading now. I visited Alexandria yesterday. I will travel next week.')">🔊 استمع لأمثلة الأزمنة</button>
         </div>
 
+        <!-- 3. الأفعال الناقصة وحروف الجر -->
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 4. أسلوب الشرط والمبني للمجهول (Advanced Grammar)</h3>
+            <h3 style="color:var(--accent-green);">3. الأفعال الناقصة وحروف الجر (Modals & Prepositions)</h3>
             <p style="color:var(--text-dim); margin-top:8px; line-height:1.6;">
-                • <b>قاعدة If الشرطية:</b> If you study hard, you will succeed.<br>
-                • <b>المبني للمجهول (Passive):</b> التركيز على المفعول به (The glass was broken).
+                <b>أ. الأفعال الناقصة (Modals):</b> أفعال تأتي بعدها الأفعال في المصدر:<br>
+                • <b>Can:</b> للقدرة (I can speak English).<br>
+                • <b>Must:</b> للالزام والضرورة (You must follow rules).<br>
+                • <b>Should:</b> للنصيحة (You should eat healthy food).<br><br>
+
+                <b>ب. حروف الجر الزمانية والمكانية (Prepositions):</b><br>
+                • <b>In:</b> مع الأشهر والسنوات والأجواء (in 2026, in the morning).<br>
+                • <b>On:</b> مع الأيام والتواريخ (on Friday, on my birthday).<br>
+                • <b>At:</b> مع الأوقات المحددة (at 5 o'clock, at night).
             </p>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I can speak English. You should study. We meet at 5 o clock on Friday.')">🔊 استمع للتطبيقات</button>
         </div>
     `;
 }
 
-// ==================== 3. المحادثات الشاملة المتعددة ====================
+// ==================== 3. المحادثات الشاملة ====================
 const CONVERSATIONS = [
     {
         title: "💬 1. التعارف واللقاء الأول (Greetings & Introductions)",
-        text: "Hello! Good morning. My name is Alex. What is your name? Nice to meet you. I am fine, thank you!",
-        desc: "حوار المبتدئين في التعريف عن النفس والاستقبال."
+        text: "Hello! Good morning. My name is Alex. What is your name? My name is Ghazaal. Nice to meet you. I am fine, thank you!",
+        desc: "حوار شامل في التعريف عن النفس والاستقبال."
     },
     {
         title: "💬 2. في المدرسة والمكتبة (At School & Library)",
@@ -183,13 +212,8 @@ const CONVERSATIONS = [
     },
     {
         title: "💬 3. في المطعم والتسوق (Restaurant & Shopping)",
-        text: "Welcome! May I take your order? Yes, I would like a chicken sandwich and fresh orange juice, please.",
+        text: "Welcome! May I take your order? Yes, I would like a chicken sandwich and fresh orange juice, please. Here you are!",
         desc: "حوار الطلب والتعامل الشائع في المطاعم والمحلات."
-    },
-    {
-        title: "💬 4. إجراء مقابلة عمل (Job Interview Basics)",
-        text: "Tell me about yourself. I am a dedicated data worker with high skills in computer systems and problem solving.",
-        desc: "حوار احترافي متقدم للتعريف بالخبرات المهنية."
     }
 ];
 
@@ -204,38 +228,53 @@ function renderStories() {
     `).join('');
 }
 
-// ==================== 4. مولّد الألعاب والاختبارات اللا نهائي ====================
+// ==================== 4. قسم الألعاب مع الصوت التفاعلي المباشر ====================
+let currentQuizWord = null;
+
 function generateInfiniteQuestion() {
     const quizBox = document.getElementById('quiz-box');
-    const randomWord = COMPREHENSIVE_DICTIONARY[Math.floor(Math.random() * COMPREHENSIVE_DICTIONARY.length)];
+    currentQuizWord = COMPREHENSIVE_DICTIONARY[Math.floor(Math.random() * COMPREHENSIVE_DICTIONARY.length)];
     
-    // إنشاء خيارات عشوائية خائطة
-    let wrongOptions = COMPREHENSIVE_DICTIONARY.filter(w => w.en !== randomWord.en)
+    let wrongOptions = COMPREHENSIVE_DICTIONARY.filter(w => w.en !== currentQuizWord.en)
                                              .sort(() => 0.5 - Math.random())
                                              .slice(0, 3);
     
-    let allOptions = [...wrongOptions, randomWord].sort(() => 0.5 - Math.random());
+    let allOptions = [...wrongOptions, currentQuizWord].sort(() => 0.5 - Math.random());
 
     quizBox.innerHTML = `
-        <h3 style="color:var(--accent-yellow); margin-bottom:10px;">🎮 اختبار المفردات اللا نهائي</h3>
-        <div style="font-size:1.3rem; margin-bottom:15px; color:#fff;">ما المعنى العربي الصحيح لكلمة: <b style="color:var(--accent-green);">${randomWord.en}</b>؟</div>
+        <h3 style="color:var(--accent-yellow); margin-bottom:10px;">🎮 لعبة النطق والتحدي التفاعلي</h3>
+        <p style="color:var(--text-dim); margin-bottom:10px;">استمع للكلمة جيداً واختر معناها الصحيح:</p>
+        
+        <div style="text-align:center; margin:15px 0;">
+            <button class="btn-action" style="background:var(--accent-purple); font-size:1.2rem;" onclick="speak('${currentQuizWord.en}')">🔊 إعادة نطق الكلمة (${currentQuizWord.en})</button>
+        </div>
+
         <div style="display:flex; flex-direction:column; gap:10px;">
             ${allOptions.map(opt => `
-                <button class="btn-action" style="background:#2d3154;" onclick="checkInfiniteAnswer('${opt.en}', '${randomWord.en}')">${opt.ar}</button>
+                <button class="btn-action" style="background:#2d3154;" onclick="checkInfiniteAnswer('${opt.en}', '${currentQuizWord.en}')">${opt.ar}</button>
             `).join('')}
         </div>
     `;
+
+    // نطق الكلمة للطفل تلقائياً فور ظهور السؤال!
+    setTimeout(() => {
+        speak(currentQuizWord.en);
+    }, 300);
 }
 
 function checkInfiniteAnswer(selectedEn, correctEn) {
     if (selectedEn === correctEn) {
-        alert('إجابة ممتازة وصحيحة! 🎉 +10 نقاط');
+        // نطق صوتي للإجابة الصحيحة!
+        speak('Well done! Excellent!');
+        alert('إجابة صحيحة! 🎉 أحسنت ممتاز! +10 نقاط');
         addPoints(10);
-        speak('Excellent! Correct answer.');
     } else {
-        alert(`إجابة خاطئة! الإجابة الصحيحة كانت: ${COMPREHENSIVE_DICTIONARY.find(w => w.en === correctEn).ar}`);
+        // نطق صوتي عند الخطأ!
+        speak('Try again');
+        alert(`إجابة خاطئة! ❌ الإجابة الصحيحة هي: ${COMPREHENSIVE_DICTIONARY.find(w => w.en === correctEn).ar}`);
     }
-    generateInfiniteQuestion(); // توليد سؤال جديد فوراً دون توقف!
+    // الانتقال للكلمة التالية
+    generateInfiniteQuestion();
 }
 
 // ==================== Alphabet Board Code ====================
