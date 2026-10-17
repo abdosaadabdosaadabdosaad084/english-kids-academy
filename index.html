@@ -37,7 +37,7 @@
 
   #canvas-box { width: 100%; max-width: 380px; margin: 4px auto; border: 2px dashed var(--primary); border-radius: 14px; padding: 4px; background: #fff; cursor: pointer; }
   #letter-canvas { width: 100%; height: 220px; background: #fff !important; border-radius: 10px; display: block; touch-action: none; }
-  
+
   .color-picker { display: flex; justify-content: center; gap: 8px; margin-top: 4px; }
   .color-btn { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; }
 
@@ -82,7 +82,7 @@
   </div>
 </div>
 
-<!-- 1. الحروف والسبورة (النقر عليها يأتي بالحرف التالي) -->
+<!-- 1. الحروف والسبورة -->
 <div id="sec-letters" class="section" style="text-align:center">
   <div class="letter-grid" id="letter-grid"></div>
   <div id="letter-title" style="font-size:18px; font-weight:bold; margin:2px; color:var(--accent)">الحرف: A</div>
@@ -96,21 +96,21 @@
   </div>
 </div>
 
-<!-- 2. القاموس (بحث جوجل + تخزين تلقائي بدون نت) -->
+<!-- 2. القاموس -->
 <div id="sec-dict" class="section">
   <h3>📚 القاموس الذكي (بحث جوجل والتخزين التلقائي)</h3>
   <input id="dict-search" type="text" placeholder="🔍 اكتب أي كلمة بالعربية أو الإنجليزية للبحث..." oninput="searchGoogleDict()">
   <div id="dict-results" style="max-height:60vh; overflow-y:auto; margin-top:8px;"></div>
 </div>
 
-<!-- 3. القواعد بالتفصيل الممل والشرح الوافي -->
+<!-- 3. القواعد -->
 <div id="sec-gram" class="section">
   <h3>📖 قواعد اللغة الإنجليزية (بالتفصيل الممل)</h3>
-  <div class="card"><b style="color:var(--accent)">1- الضمائر الشخصية (Personal Pronouns):</b><br>• I (أنا): للمتكلم المفرد.<br>• You (أنت / أنتم / أنتِ): للمخاطب بنوعيه مفرد وجمع.<br>• He (هو): لتعويض الاسم المفرد المذكر العاقل.<br>• She (هي): لتعويض الاسم المفرد المؤنث العاقل.<br>• It (هو / هي): لغير العاقل (جماد أو حيوان مفرد).<br>• We (نحن): لجمع المتكلمين.<br>• They (هم / هن): لجمع الغائبين عاقل وغير عاقل.<br><i>ملاحظة: تاتي هذه الضمائر دائماً في بداية الجملة الإنجليزية كفاعل رئيسي.</i></div>
-  <div class="card"><b style="color:var(--accent)">2- أفعال الكينة المساعدة (Verb to Be):</b><br>• في المضارع: (I am) مع أنا | (He, She, It is) مع المفرد | (We, You, They are) مع الجمع.<br>• في الماضي: (Was) للمفرد (I, He, She, It) | (We, You, They were) للجمع.<br><i>تستخدم لوصف الحالة أو الوظيفة أو المكان. مثال: I am a teacher / They were happy.</i></div>
-  <div class="card"><b style="color:var(--accent)">3- الزمن المضارع البسيط (Present Simple Details):</b><br>يستخدم للتعبير عن الحقائق الثابتة والعادات المتكررة. القاعدة الأساسية: الفاعل + الفعل في المصدر.<br>• القاعدة الهامة: مع ضمائر المفرد الغائب (He, She, It) أو أي اسم مفرد، يجب إضافة حرف (s) أو (es) لنهاية الفعل.<br>• أمثلة مفصلة:<br> - I play football every day. (أنا ألعب كرة القدم كل يوم)<br> - He play<b>s</b> football every day. (هو يلعب كرة القدم كل يوم)</div>
-  <div class="card"><b style="color:var(--accent)">4- الماضي البسيط (Past Simple Details):</b><br>يعبر عن حدث وقع وانتهى في الماضي. ينقسم الأفعال إلى نوعين:<br>• أفعال منتظمة (Regular): نضيف لها (ed) مثل (play ➔ played / watch ➔ watched).<br>• أفعال شاذة غير منتظمة (Irregular): تتغير كلمتها بالكامل ويجب حفظها (go ➔ went / eat ➔ ate / see ➔ saw).</div>
-  <div class="card"><b style="color:var(--accent)">5- أدوات النكرة والمعرفة (A / An / The):</b><br>• نستخدم (An) قبل الكلمات التي تبدأ بحرف متحرك (a, e, i, o, u) مثل: (an apple, an egg, an orange).<br>• نستخدم (A) قبل الكلمات التي تبدأ بحرف ساكن مثل: (a cat, a book, a dog).<br>• نستخدم (The) لتحديد شيء معين ومحدد معروف للمتكلم والسامع مثل: (The sun, The school).</div>
+  <div class="card"><b style="color:var(--accent)">1- الضمائر الشخصية (Personal Pronouns):</b><br>• I (أنا): للمتكلم المفرد.<br>• You (أنت / أنتم / أنتِ): للمخاطب بنوعيه مفرد وجمع.<br>• He (هو): لتعويض الاسم المفرد المذكر العاقل.<br>• She (هي): لتعويض الاسم المفرد المؤنث العاقل.<br>• It (هو / هي): لغير العاقل (جماد أو حيوان مفرد).<br>• We (نحن): لجمع المتكلمين.<br>• They (هم / هن): لجمع الغائبين عاقل وغير عاقل.<br><i>ملاحظة: تأتي هذه الضمائر عادةً في بداية الجملة الإنجليزية كفاعل رئيسي.</i></div>
+  <div class="card"><b style="color:var(--accent)">2- أفعال الكينونة (Verb to Be):</b><br>• في المضارع: (I am) مع أنا | (He, She, It is) مع المفرد | (We, You, They are) مع الجمع.<br>• في الماضي: (Was) للمفرد (I, He, She, It) | (We, You, They were) للجمع.<br><i>تستخدم لوصف الحالة أو الوظيفة أو المكان. مثال: I am a teacher / They were happy.</i></div>
+  <div class="card"><b style="color:var(--accent)">3- المضارع البسيط (Present Simple):</b><br>يستخدم للتعبير عن الحقائق والعادات المتكررة. مع (He, She, It) نضيف غالبًا (s) أو (es).<br>• I play football every day. (أنا ألعب كرة القدم كل يوم)<br>• He plays football every day. (هو يلعب كرة القدم كل يوم)</div>
+  <div class="card"><b style="color:var(--accent)">4- الماضي البسيط (Past Simple):</b><br>يعبر عن حدث وقع وانتهى في الماضي. الأفعال المنتظمة نضيف لها (ed)، مثل play → played، أما الأفعال الشاذة فتتغير، مثل go → went و eat → ate.</div>
+  <div class="card"><b style="color:var(--accent)">5- أدوات النكرة والمعرفة (A / An / The):</b><br>• نستخدم (An) قبل الكلمات التي يبدأ نطقها بصوت متحرك مثل an apple و an egg.<br>• نستخدم (A) قبل الكلمات التي يبدأ نطقها بصوت ساكن مثل a cat و a book.<br>• نستخدم (The) عند الحديث عن شيء محدد ومعروف مثل the sun.</div>
 </div>
 
 <!-- 4. الترجمة الفورية -->
@@ -119,27 +119,21 @@
   <p style="color:#aaa; font-size:13px; margin-bottom:8px;">اضغط الزر وتكلم باللغة العربية بوضوح (مثل: تعال، أكل، مدرسة...)</p>
   <button id="mic-btn" class="mic-btn" onclick="startVoice()">🎤</button>
   <div id="voice-status" style="margin:6px; color:orange; font-weight:bold;">جاهز للاستماع</div>
-  
-  <div class="card" style="background:#fff; color:#000; text-align:right;">
-    النص باللغة العربية: <b><span id="voice-ar">-</span></b>
-  </div>
-  <div class="card" style="background:var(--primary); color:#000; text-align:right;">
-    الترجمة بالإنجليزية: <b><span id="voice-en">-</span></b>
-  </div>
-  
+  <div class="card" style="background:#fff; color:#000; text-align:right;">النص باللغة العربية: <b><span id="voice-ar">-</span></b></div>
+  <div class="card" style="background:var(--primary); color:#000; text-align:right;">الترجمة بالإنجليزية: <b><span id="voice-en">-</span></b></div>
   <textarea id="trans-text" rows="2" placeholder="أو اكتب النص هنا بالعربية..."></textarea>
-  <button onclick="translateText()" style="background:var(--accent); color:#fff; padding:10px; border:none; border-radius:10px; width:100%; font-weight:bold; cursor:pointer;">ترجم للانجليزي 🔄</button>
+  <button onclick="translateText()" style="background:var(--accent); color:#fff; padding:10px; border:none; border-radius:10px; width:100%; font-weight:bold; cursor:pointer;">ترجم للإنجليزي 🔄</button>
 </div>
 
-<!-- 5. المحادثات (موسعة وكثيرة) -->
+<!-- 5. المحادثات -->
 <div id="sec-conv" class="section">
-  <h3>💬 محادثات الحياة اليومية (موسعة وشاملة)</h3>
+  <h3>💬 محادثات الحياة اليومية</h3>
   <div id="conversations-box"></div>
 </div>
 
-<!-- 6. القصص الموسعة بالتفصيل -->
+<!-- 6. القصص -->
 <div id="sec-story" class="section">
-  <h3>📖 قصص تعليمية للأطفال (موسعة)</h3>
+  <h3>📖 قصص تعليمية للأطفال</h3>
   <div id="stories"></div>
 </div>
 
@@ -154,7 +148,7 @@
   </div>
 </div>
 
-<!-- شريط التحكم السفلي لحروف السبورة -->
+<!-- شريط التحكم السفلي للحروف -->
 <div class="bottom-bar" id="bottom-bar" style="display:none;">
   <button class="btn-clear" onclick="clearCanvas()">مسح 🗑️</button>
   <button class="btn-speak" onclick="speakCurrentLetterName()">🔊 نطق</button>
@@ -187,18 +181,21 @@ function playCustomSound(isCorrect) {
 let historyStack = ['home'];
 
 function openSection(secId) {
+  const target = document.getElementById('sec-' + secId);
+  if (!target) return;
+
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById('sec-' + secId).classList.add('active');
+  target.classList.add('active');
   document.getElementById('back-btn').style.display = secId === 'home' ? 'none' : 'block';
   document.getElementById('bottom-bar').style.display = secId === 'letters' ? 'flex' : 'none';
-  
+
   if (secId === 'letters') setTimeout(() => { resizeCanvas(); showLetter(currentLetter); }, 100);
   if (secId === 'game') initQuiz();
   if (secId === 'dict') renderSavedDict();
 
   if (historyStack[historyStack.length - 1] !== secId) {
     historyStack.push(secId);
-    history.pushState({ section: secId }, '');
+    history.pushState({ section: secId }, '', '#' + secId);
   }
 }
 
@@ -206,14 +203,31 @@ function goBack() {
   if (historyStack.length > 1) {
     historyStack.pop();
     let prevSec = historyStack[historyStack.length - 1];
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById('sec-' + prevSec).classList.add('active');
-    document.getElementById('back-btn').style.display = prevSec === 'home' ? 'none' : 'block';
-    document.getElementById('bottom-bar').style.display = prevSec === 'letters' ? 'flex' : 'none';
+    openSectionWithoutHistory(prevSec);
+  } else {
+    openSectionWithoutHistory('home');
   }
 }
 
-window.addEventListener('popstate', () => { goBack(); });
+function openSectionWithoutHistory(secId) {
+  const target = document.getElementById('sec-' + secId);
+  if (!target) return;
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  target.classList.add('active');
+  document.getElementById('back-btn').style.display = secId === 'home' ? 'none' : 'block';
+  document.getElementById('bottom-bar').style.display = secId === 'letters' ? 'flex' : 'none';
+  if (secId === 'letters') setTimeout(() => { resizeCanvas(); showLetter(currentLetter); }, 100);
+  if (secId === 'game') initQuiz();
+  if (secId === 'dict') renderSavedDict();
+}
+
+window.addEventListener('popstate', () => {
+  const secId = (location.hash || '#home').slice(1);
+  if (document.getElementById('sec-' + secId)) {
+    openSectionWithoutHistory(secId);
+    historyStack = secId === 'home' ? ['home'] : ['home', secId];
+  }
+});
 
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
@@ -247,19 +261,19 @@ function buildLetters() {
     b.onclick = () => { showLetter(up); speakText(up); };
     g.appendChild(b);
   }
-}
-
-function setPenColor(c) { penColor = c; }
+}function setPenColor(c) { penColor = c; }
 
 function resizeCanvas() {
-  if (!canvas) return;
+  if (!canvas || !ctx) return;
   let r = canvas.getBoundingClientRect();
+  if (!r.width) return;
   canvas.width = r.width * 2;
   canvas.height = 220 * 2;
-  ctx.scale(2, 2);
+  ctx.setTransform(2, 0, 0, 2, 0, 0);
 }
 
 function showLetter(l) {
+  if (!canvas || !ctx) return;
   currentLetter = l;
   document.querySelectorAll('.letter-grid button').forEach(b => b.classList.remove('active-letter'));
   let btn = document.getElementById('lbl-' + l);
@@ -277,6 +291,7 @@ function showLetter(l) {
 }
 
 function clearCanvas() { showLetter(currentLetter); }
+
 function nextLetter() {
   let i = letters.indexOf(currentLetter);
   i = (i + 1) % letters.length;
@@ -284,6 +299,7 @@ function nextLetter() {
   speakText(letters[i]);
   addStars(1);
 }
+
 function speakCurrentLetterName() { speakText(currentLetter); }
 
 function setupDraw() {
@@ -292,7 +308,15 @@ function setupDraw() {
     let t = e.touches ? e.touches[0] : e;
     return { x: t.clientX - r.left, y: t.clientY - r.top };
   };
-  let start = e => { isDrawing = true; let p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); e.preventDefault(); };
+
+  let start = e => {
+    isDrawing = true;
+    let p = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+    e.preventDefault();
+  };
+
   let move = e => {
     if (!isDrawing) return;
     let p = getPos(e);
@@ -303,26 +327,33 @@ function setupDraw() {
     ctx.stroke();
     e.preventDefault();
   };
+
   let stop = () => isDrawing = false;
 
-  canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); window.addEventListener('mouseup', stop);
-  canvas.addEventListener('touchstart', start, {passive:false}); canvas.addEventListener('touchmove', move, {passive:false}); canvas.addEventListener('touchend', stop);
+  canvas.addEventListener('mousedown', start);
+  canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', stop);
+  canvas.addEventListener('touchstart', start, { passive: false });
+  canvas.addEventListener('touchmove', move, { passive: false });
+  canvas.addEventListener('touchend', stop);
 }
 
-// القاموس الذكي (بحث جوجل وتخزين تلقائي بدون نت)
+// القاموس الذكي
 let localDict = JSON.parse(localStorage.getItem('my_offline_dict') || '[]');
 
 function renderSavedDict() {
   let box = document.getElementById('dict-results');
   box.innerHTML = '<div style="color:var(--accent); font-size:13px; margin-bottom:6px;">💾 الكلمات المخزنة للاستخدام بدون إنترنت:</div>';
+
   if (localDict.length === 0) {
-    box.innerHTML += '<div class="card" style="background:#fff; color:#000;">لم تقم بالبحث عن كلمات بعد. اكتب أي كلمة بالأعلى للبحث والتخزين التلقائي!</div>';
+    box.innerHTML += '<div class="card" style="background:#fff; color:#000;">لم تبحث عن كلمات بعد. اكتب كلمة بالأعلى للبحث والتخزين التلقائي.</div>';
     return;
   }
+
   localDict.forEach(w => {
     box.innerHTML += `
       <div class="card" style="background:#fff; color:#000; text-align:right;">
-        <button onclick="speakText('${w.en}')" style="float:left; background:var(--accent); border:none; padding:4px 10px; border-radius:6px; color:#fff; font-weight:bold; cursor:pointer;">🔊 استمع</button>
+        <button onclick="speakText('${w.en}')" style="float:left; background:var(--accent); border:none; padding:4px 10px; border-radius:6px; color:#fff; font-weight:bold;">🔊 استمع</button>
         <b style="font-size:16px;">${w.en}</b> = ${w.ar}
         <div style="clear:both"></div>
       </div>`;
@@ -332,18 +363,23 @@ function renderSavedDict() {
 function searchGoogleDict() {
   let q = document.getElementById('dict-search').value.trim();
   let box = document.getElementById('dict-results');
-  if (!q) { renderSavedDict(); return; }
 
-  // قاموس أساسي قوي مع التخزين التلقائي
+  if (!q) {
+    renderSavedDict();
+    return;
+  }
+
   const instantMap = {
-    'تعال': 'Come', 'تعالى': 'Come', 'تفاحة': 'Apple', 'كتاب': 'Book', 'قطة': 'Cat', 'كلب': 'Dog',
-    'مدرسة': 'School', 'ماء': 'Water', 'يجري': 'Run', 'يأكل': 'Eat', 'سعيد': 'Happy', 'شمس': 'Sun',
-    'قلم': 'Pen', 'سيارة': 'Car', 'منزل': 'House', 'ولد': 'Boy', 'بنت': 'Girl', 'حليب': 'Milk'
+    'تعال': 'Come', 'تعالى': 'Come', 'تفاحة': 'Apple',
+    'كتاب': 'Book', 'قطة': 'Cat', 'كلب': 'Dog',
+    'مدرسة': 'School', 'ماء': 'Water', 'يجري': 'Run',
+    'يأكل': 'Eat', 'سعيد': 'Happy', 'شمس': 'Sun',
+    'قلم': 'Pen', 'سيارة': 'Car', 'منزل': 'House',
+    'ولد': 'Boy', 'بنت': 'Girl', 'حليب': 'Milk'
   };
 
-  let translated = instantMap[q] || (/[أ-ي]/.test(q) ? q : q);
-  
-  // حفظ تلقائي للعمل بدون نت
+  let translated = instantMap[q] || q;
+
   if (!localDict.some(item => item.ar === q || item.en.toLowerCase() === q.toLowerCase())) {
     localDict.push({ en: translated, ar: q });
     localStorage.setItem('my_offline_dict', JSON.stringify(localDict));
@@ -351,39 +387,59 @@ function searchGoogleDict() {
 
   box.innerHTML = `
     <div class="card" style="background:#fff; color:#000; text-align:right;">
-      <button onclick="speakText('${translated}')" style="float:left; background:var(--accent); border:none; padding:6px 12px; border-radius:8px; color:#fff; font-weight:bold; cursor:pointer;">🔊 نطق</button>
-      <b style="font-size:18px;">${translated}</b> = ${q} <span class="badge badge-noun">مخزن تلقائياً ✅</span>
+      <button onclick="speakText('${translated}')" style="float:left; background:var(--accent); border:none; padding:6px 12px; border-radius:8px; color:#fff; font-weight:bold;">🔊 نطق</button>
+      <b style="font-size:18px;">${translated}</b> = ${q}
+      <span class="badge badge-noun">مخزن تلقائياً ✅</span>
       <div style="clear:both"></div>
     </div>
-    <div style="margin-top:10px;"><a href="https://www.google.com/search?q=meaning+of+${encodeURIComponent(q)}" target="_blank" style="color:var(--primary); font-weight:bold;">🌐 اضغط هنا للبحث المفصل في جوجل عن (${q})</a></div>`;
+    <div style="margin-top:10px;">
+      <a href="https://www.google.com/search?q=meaning+of+${encodeURIComponent(q)}" target="_blank" rel="noopener" style="color:var(--primary); font-weight:bold;">🌐 البحث المفصل في جوجل عن (${q})</a>
+    </div>`;
 }
 
 // الترجمة الفورية
 function startVoice() {
   let SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) { alert('المتصفح لا يدعم الميكروفون المباشر'); return; }
+  if (!SR) {
+    alert('المتصفح لا يدعم الميكروفون المباشر');
+    return;
+  }
+
   let r = new SR();
   r.lang = 'ar-EG';
   let status = document.getElementById('voice-status');
   let btn = document.getElementById('mic-btn');
 
-  r.onstart = () => { btn.classList.add('listening'); status.innerText = '🎤 جاري الاستماع...'; };
+  r.onstart = () => {
+    btn.classList.add('listening');
+    status.innerText = '🎤 جاري الاستماع...';
+  };
+
   r.onresult = e => {
     let txt = e.results[0][0].transcript;
     document.getElementById('voice-ar').innerText = txt;
     translateTextCore(txt);
   };
-  r.onerror = () => { status.innerText = '⚠️ لم يتم التعرف على الصوت'; };
-  r.onend = () => { btn.classList.remove('listening'); };
+
+  r.onerror = () => {
+    status.innerText = '⚠️ لم يتم التعرف على الصوت';
+  };
+
+  r.onend = () => btn.classList.remove('listening');
   r.start();
 }
 
 function translateTextCore(text) {
   let clean = text.trim();
-  const transMap = { 'تعال': 'Come', 'تعالى': 'Come', 'تفاحة': 'Apple', 'كتاب': 'Book', 'قطة': 'Cat', 'كلب': 'Dog', 'مدرسة': 'School', 'ماء': 'Water' };
-  let resEn = transMap[clean] || (/[أ-ي]/.test(clean) ? 'Translation: ' + clean : clean);
+  const transMap = {
+    'تعال': 'Come', 'تعالى': 'Come', 'تفاحة': 'Apple',
+    'كتاب': 'Book', 'قطة': 'Cat', 'كلب': 'Dog',
+    'مدرسة': 'School', 'ماء': 'Water'
+  };
+
+  let resEn = transMap[clean] || clean;
   document.getElementById('voice-en').innerText = resEn;
-  document.getElementById('voice-status').innerText = '✅ تمت الترجمة بنجاح';
+  document.getElementById('voice-status').innerText = '✅ تمت الترجمة';
   speakText(resEn);
 }
 
@@ -394,17 +450,30 @@ function translateText() {
   translateTextCore(t);
 }
 
-// محادثات موسعة
+// المحادثات
 const conversationsData = [
-  { title: "1. التعارف والترحيب (Greeting)", dialogue: "<b>Person A:</b> Hello! Good morning.<br><b>Person B:</b> Good morning! How are you?<br><b>Person A:</b> I am fine, thank you. What is your name?<br><b>Person B:</b> My name is Ahmed. Nice to meet you." },
-  { title: "2. في المدرسة (At School)", dialogue: "<b>Person A:</b> Where is my English book?<br><b>Person B:</b> It is on the wooden desk.<br><b>Person A:</b> Thank you very much my friend.<br><b>Person B:</b> You are welcome anytime." },
-  { title: "3. في المطعم (At The Restaurant)", dialogue: "<b>Person A:</b> I want to order pizza and juice please.<br><b>Person B:</b> Sure, would you like anything else?<br><b>Person A:</b> No thank you, how much is it?<br><b>Person B:</b> It is fifty pounds." },
-  { title: "4. السؤال عن الوقت (Asking Time)", dialogue: "<b>Person A:</b> Excuse me, what time is it?<br><b>Person B:</b> It is ten o'clock.<br><b>Person A:</b> Thank you for your help.<br><b>Person B:</b> Don't mention it." }
+  {
+    title: "1. التعارف والترحيب (Greeting)",
+    dialogue: "<b>Person A:</b> Hello! Good morning.<br><b>Person B:</b> Good morning! How are you?<br><b>Person A:</b> I am fine, thank you. What is your name?<br><b>Person B:</b> My name is Ahmed. Nice to meet you."
+  },
+  {
+    title: "2. في المدرسة (At School)",
+    dialogue: "<b>Person A:</b> Where is my English book?<br><b>Person B:</b> It is on the wooden desk.<br><b>Person A:</b> Thank you, my friend.<br><b>Person B:</b> You are welcome."
+  },
+  {
+    title: "3. في المطعم (At The Restaurant)",
+    dialogue: "<b>Person A:</b> I want to order pizza and juice, please.<br><b>Person B:</b> Sure, would you like anything else?<br><b>Person A:</b> No, thank you. How much is it?<br><b>Person B:</b> It is fifty pounds."
+  },
+  {
+    title: "4. السؤال عن الوقت (Asking Time)",
+    dialogue: "<b>Person A:</b> Excuse me, what time is it?<br><b>Person B:</b> It is ten o'clock.<br><b>Person A:</b> Thank you for your help.<br><b>Person B:</b> You're welcome."
+  }
 ];
 
 function renderConversations() {
   let box = document.getElementById('conversations-box');
   box.innerHTML = '';
+
   conversationsData.forEach(c => {
     box.innerHTML += `
       <div class="card">
@@ -414,28 +483,38 @@ function renderConversations() {
   });
 }
 
-// قصص موسعة
+// القصص التعليمية
 const storiesData = [
-  {title:'The Clever Crow 🐦', en:'A thirsty crow found a pitcher with little water. He dropped stones inside until water rose up and he drank happily.', ar:'وجد غراب عطشان إناء فيه قليل من الماء. ألقى حجارة بداخله حتى ارتفع الماء واستطاع الشرب بفرح.'},
-  {title:'The Brave Lion 🦁', en:'A tiny mouse woke up a sleeping lion. Later, the mouse saved the lion from a hunter net and they became best friends.', ar:'أيقظ فأر صغير أسداً نائماً. لاحقاً، أنقذ الفأر الأسد من شبكة صياد وأصبحا صديقين حميمين للأبد.'}
+  {
+    title: 'The Clever Crow 🐦',
+    en: 'A thirsty crow found a pitcher with little water. He dropped stones inside until water rose up and he drank happily.',
+    ar: 'وجد غراب عطشان إناء فيه قليل من الماء. ألقى حجارة بداخله حتى ارتفع الماء واستطاع الشرب.'
+  },
+  {
+    title: 'The Brave Lion 🦁',
+    en: 'A tiny mouse woke up a sleeping lion. Later, the mouse saved the lion from a hunter net and they became best friends.',
+    ar: 'أيقظ فأر صغير أسداً نائماً. لاحقاً، أنقذ الفأر الأسد من شبكة صياد وأصبحا صديقين.'
+  }
 ];
 
 function renderStories() {
   let box = document.getElementById('stories');
   box.innerHTML = '';
+
   storiesData.forEach(s => {
     box.innerHTML += `
       <div class="card">
         <b style="color:var(--accent); font-size:17px;">${s.title}</b>
         <div style="background:#fff; color:#000; padding:12px; border-radius:10px; margin:8px 0; font-size:15px;">${s.en}</div>
         <div style="font-size:14px; color:#ddd;">🇪🇬 ${s.ar}</div>
-        <button onclick="speakText('${s.en.replace(/'/g, "\\'")}')" style="margin-top:8px; background:var(--primary); border:none; padding:8px 14px; border-radius:8px; color:#000; font-weight:bold; cursor:pointer;">🔊 استمع للقصة</button>
+        <button onclick="speakText('${s.en.replace(/'/g, "\\'")}')" style="margin-top:8px; background:var(--primary); border:none; padding:8px 14px; border-radius:8px; color:#000; font-weight:bold;">🔊 استمع للقصة</button>
       </div>`;
   });
 }
 
 // الألعاب الصوتية
 let quizIndex = 0;
+
 const quizList = [
   { soundPrompt: "Cat", options: ["قطة", "كلب", "أسد"], ans: "قطة" },
   { soundPrompt: "Apple", options: ["موز", "تفاحة", "ماء"], ans: "تفاحة" },
@@ -444,11 +523,11 @@ const quizList = [
 
 function initQuiz() {
   let item = quizList[quizIndex];
-  document.getElementById('game-q').innerText = "🔊 استمع للصوت واختار المعنى الصحيح:";
+  document.getElementById('game-q').innerText = "🔊 استمع للصوت واختر المعنى الصحيح:";
   let box = document.getElementById('quiz-box');
   box.innerHTML = '';
   document.getElementById('game-res').innerText = '';
-  
+
   setTimeout(() => speakText(item.soundPrompt), 300);
 
   item.options.forEach(opt => {
@@ -460,16 +539,22 @@ function initQuiz() {
   });
 }
 
-function speakCurrentQuizWord() { speakText(quizList[quizIndex].soundPrompt); }
+function speakCurrentQuizWord() {
+  speakText(quizList[quizIndex].soundPrompt);
+}
 
 function checkQuiz(userAns, correctAns) {
   let res = document.getElementById('game-res');
+
   if (userAns === correctAns) {
-    res.innerText = '✅ أحسنت إجابة صحيحة!';
+    res.innerText = '✅ أحسنت! إجابة صحيحة';
     res.style.color = '#00d3a0';
     playCustomSound(true);
     addStars(2);
-    setTimeout(() => { quizIndex = (quizIndex + 1) % quizList.length; initQuiz(); }, 1500);
+    setTimeout(() => {
+      quizIndex = (quizIndex + 1) % quizList.length;
+      initQuiz();
+    }, 1500);
   } else {
     res.innerText = '❌ إجابة خاطئة، حاول مرة أخرى';
     res.style.color = '#ff1744';
@@ -482,7 +567,10 @@ function addStars(num) {
   localStorage.setItem('stars', s);
   updateStars();
 }
-function updateStars() { document.getElementById('stars-count').innerText = localStorage.getItem('stars') || '0'; }
+
+function updateStars() {
+  document.getElementById('stars-count').innerText = localStorage.getItem('stars') || '0';
+}
 
 function initApp() {
   buildLetters();
@@ -494,8 +582,43 @@ function initApp() {
   renderConversations();
 }
 
-window.addEventListener('load', () => { initApp(); });
-window.addEventListener('resize', () => { if (canvas) resizeCanvas(); });
+// إصلاح فتح القسم المطلوب مباشرة من الرابط مثل #letters
+function openInitialSectionFromHash() {
+  const secId = (window.location.hash || '').replace(/^#/, '');
+  const allowedSections = ['home', 'letters', 'dict', 'gram', 'trans', 'conv', 'story', 'game'];
+
+  if (!allowedSections.includes(secId)) return;
+
+  const target = document.getElementById('sec-' + secId);
+  if (!target) return;
+
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  target.classList.add('active');
+
+  document.getElementById('back-btn').style.display = secId === 'home' ? 'none' : 'block';
+  document.getElementById('bottom-bar').style.display = secId === 'letters' ? 'flex' : 'none';
+
+  historyStack = secId === 'home' ? ['home'] : ['home', secId];
+
+  if (secId === 'letters') {
+    setTimeout(() => {
+      resizeCanvas();
+      showLetter(currentLetter);
+    }, 150);
+  }
+
+  if (secId === 'game') initQuiz();
+  if (secId === 'dict') renderSavedDict();
+}
+
+window.addEventListener('load', () => {
+  initApp();
+  openInitialSectionFromHash();
+});
+
+window.addEventListener('resize', () => {
+  if (canvas) resizeCanvas();
+});
 </script>
 </body>
 </html>
