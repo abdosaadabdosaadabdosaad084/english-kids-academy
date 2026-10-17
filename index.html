@@ -4,126 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>English Kids Academy</title>
-<link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
 <style>
-/* تصليح الخانات الكبيرة */
-.translator-box{max-height:60vh!important;overflow-y:auto!important}
-.translator-box div{padding:10px!important;margin:6px 0!important;font-size:15px!important}
-.interactive-card{padding:12px!important;margin:8px!important}
-.word-card{padding:10px 12px!important;margin:5px 0!important}
-.story-card{background:#1e1e3a;border-radius:12px;padding:14px;margin:10px 0;border-right:4px solid #06d6a0;text-align:left}
-.story-en{color:#ffd60a;font-weight:bold;line-height:1.8}
-.story-ar{color:#aaa;margin-top:8px;line-height:1.9;border-top:1px dashed #333;padding-top:8px;text-align:right;direction:rtl}
-#pin-overlay,#license-overlay,#admin-panel,#first-time-change{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column}
-#license-overlay{display:none}
-#admin-panel{display:none}
-#first-time-change{display:none}
-.nav-buttons{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:10px}
-.nav-buttons button{padding:8px 12px;border-radius:20px;border:none;background:#2a2a4a;color:#fff;font-size:13px;cursor:pointer}
-.nav-buttons button:hover{background:#06d6a0}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Tahoma}
+body{background:#1a1c3d;color:white;min-height:100vh}
+.header{background:#1e2145;padding:15px;text-align:center;position:relative}
+.header h1{font-size:22px}
+.star{position:absolute;left:15px;top:18px;color:gold;text-align:center}
+.nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:12px}
+.nav button{background:#2a2d5a;color:#fff;border:none;padding:8px 14px;border-radius:20px;font-size:13px}
+.main{padding:12px}
+.card{background:#2a2d5a;border-radius:16px;padding:12px;text-align:center}
+.letter-title{font-size:20px;margin-bottom:10px;font-weight:bold}
+.canvas-wrap{border:2px dashed #00e5c0;border-radius:15px;background:white;padding:4px}
+canvas{width:100%;height:320px;background:white;border-radius:12px;touch-action:none;display:block}
+.btns{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.btn{padding:14px;border:none;border-radius:14px;font-size:18px;font-weight:bold}
+.btn-clear{background:#00d3a0;color:white}
+.btn-next{background:#00bfa5;color:white}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+.box{background:#fff;color:#000;border-radius:20px;padding:20px;width:100%;max-width:340px;text-align:center}
+.box input{width:100%;padding:14px;border-radius:12px;border:2px solid #ddd;margin:12px 0;text-align:center;font-size:22px}
+.box button{width:100%;padding:14px;border-radius:12px;border:none;background:#00b386;color:#fff;font-size:18px;font-weight:bold}
+.emergency{background:#ff1744 !important;margin-top:12px}
 </style>
 </head>
 <body>
-
-<!-- شاشة القفل العادية -->
-<div id="pin-overlay">
-<h2 onclick="adminTap()" style="color:#fff">🔒 English Kids Academy</h2>
-<p style="color:#ccc">ادخل الباسورد</p>
-<input id="pin-input" type="password" placeholder="الباسورد" style="padding:12px;border-radius:10px;width:200px;text-align:center">
-<button onclick="checkPin()" class="btn-action" style="margin-top:10px">دخول</button>
-<p id="pin-error" style="color:red;display:none">باسورد غلط</p>
-<button onclick="localStorage.clear(); location.reload();" style="margin-top:15px;background:#ff0000;color:#fff;padding:10px 20px;border-radius:20px;border:none;width:100%">🚨 نسيت الباسورد؟ اضغط هنا لفتح التطبيق</button>
+<div id="license-overlay" class="overlay">
+  <div class="box">
+    <h3>🔑 تفعيل التطبيق</h3>
+    <input id="license-input" placeholder="اكتب 9999">
+    <button onclick="activateApp()">تفعيل ✅</button>
+    <button class="emergency" onclick="localStorage.clear();location.reload()">🚨 فتح طوارئ</button>
+  </div>
 </div>
 
-<!-- شاشة التفعيل للبيع -->
-<div id="license-overlay">
-<h2 style="color:#ffd60a">🎫 تفعيل التطبيق</h2>
-<p style="color:#fff">ادخل كود التفعيل اللي اشتريته</p>
-<input id="license-input" type="text" placeholder="مثال: 888257" style="padding:12px;border-radius:10px;width:200px;text-align:center;letter-spacing:2px">
-<button onclick="activateApp()" class="btn-action" style="margin-top:10px">تفعيل</button>
-<p id="license-msg" style="color:#ff6b6b;margin-top:10px"></p>
-<p style="color:#888;font-size:12px;margin-top:20px">للتواصل للشراء: 010xxxxxxxx</p>
+<div class="header">
+  <div class="star">⭐<br><span id="stars-count">0</span></div>
+  <h1>English Kids<br>Academy</h1>
 </div>
 
-<!-- تغيير الباسورد اول مرة -->
-<div id="first-time-change">
-<h2 style="color:#fff">✅ تم التفعيل</h2>
-<p style="color:#ccc">كودك هو: <b id="welcome-code" style="color:#ffd60a"></b></p>
-<p style="color:#fff">اعمل باسورد جديد خاص بيك من 4 ارقام</p>
-<input id="first-pin-input" type="password" placeholder="مثال: 1234" style="padding:12px;border-radius:10px;width:200px;text-align:center">
-<button onclick="setFirstPassword()" class="btn-action" style="margin-top:10px">حفظ الباسورد</button>
+<div class="nav">
+  <button>abc الحروف</button><button>📚 القاموس</button><button>📖 القواعد</button>
+  <button>💬 محادثات</button><button>📖 قصص</button><button>🎤 المترجم</button><button>🎮 اللعبة</button>
 </div>
 
-<!-- لوحة تحكم البيع - انت بس اللي تشوفها -->
-<div id="admin-panel">
-<h2 style="color:#fff">👑 لوحة تحكم البيع</h2>
-<div class="interactive-card" style="text-align:center">
-<p>الماستر كود بتاعك: 9999</p>
-<button onclick="generateLicense()" class="btn-action">🎫 توليد كود جديد لزبون</button>
-<h1 id="generated-code" style="display:none;color:#ffd60a;letter-spacing:3px;margin-top:15px;background:#000;padding:15px;border-radius:10px"></h1>
-<p style="color:#888;font-size:12px;margin-top:10px">انسخ الكود وابعته للزبون</p>
-<hr>
-<p>تغيير باسورد الادمن:</p>
-<input id="new-pin-input" type="text" placeholder="باسورد جديد" style="padding:8px;border-radius:8px">
-<button onclick="changePin()">حفظ</button>
-<button onclick="document.getElementById('admin-panel').style.display='none'" style="margin-top:20px;background:red;color:#fff;padding:8px;border-radius:8px">اغلاق</button>
-</div>
+<div class="main">
+  <div class="card">
+    <div class="letter-title" id="letter-title">الحرف: A</div>
+    <div class="canvas-wrap"><canvas id="letter-canvas"></canvas></div>
+    <div class="btns">
+      <button class="btn btn-clear" onclick="clearCanvas()">مسح</button>
+      <button class="btn btn-next" onclick="nextLetter()">⏩ التالي</button>
+    </div>
+  </div>
 </div>
 
-<header style="text-align:center;padding:10px">
-<h1 onclick="adminTap()" style="cursor:pointer">English Kids Academy</h1>
-<div id="points-display" style="color:#ffd60a;font-weight:bold">⭐ 0</div>
-<div id="install-banner" style="display:none;background:#06d6a0;padding:8px;border-radius:10px;margin:10px"><button onclick="installPWA()" style="background:#000;color:#fff;padding:6px 12px;border-radius:8px;border:none">📲 ثبّت التطبيق</button></div>
-</header>
+<script>
+const MASTER_KEY="9999";
+let currentLetter='A';
+const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+let ctx,canvas,isDrawing=false;
 
-<div class="nav-buttons">
-<button onclick="showSection('alphabet')">🔤 الحروف</button>
-<button onclick="showSection('dictionary')">📚 القاموس</button>
-<button onclick="showSection('grammar')">📖 القواعد بالتفصيل</button>
-<button onclick="showSection('stories')">💬 محادثات كتير</button>
-<button onclick="showSection('english-stories')">📖 قصص مترجمة</button>
-<button onclick="showSection('translator')">🎙️ المترجم</button>
-<button onclick="showSection('quiz')">🎮 اللعبة</button>
-</div>
-
-<!-- الاقسام -->
-<div id="alphabet" class="section-view active">
-<div id="alphabet-container" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
-<div class="interactive-card" style="text-align:center">
-<h2 id="current-letter-title">الحرف: A</h2>
-<canvas id="draw-canvas" width="300" height="300" style="background:#000;border-radius:15px;touch-action:none"></canvas>
-<br>
-<button onclick="clearCanvas()" class="btn-action">مسح</button>
-<button onclick="nextLetter()" class="btn-action">التالي ⏭️</button>
-<button onclick="speak(String.fromCharCode(curCode))" class="btn-action">🔊 نطق</button>
-</div>
-</div>
-
-<div id="dictionary" class="section-view"><div id="dict-container"></div></div>
-<div id="grammar" class="section-view"><div id="grammar-container"></div></div>
-<div id="stories" class="section-view"><div id="stories-container"></div></div>
-<div id="english-stories" class="section-view"><div id="english-stories-container"></div></div>
-
-<div id="translator" class="section-view">
-<div class="interactive-card translator-box">
-<h2>🎙️ المترجم الفوري - عربي ↔ إنجليزي</h2>
-<div style="background:#121324;padding:12px;border-radius:10px;margin:10px 0">
-<b>🇪🇬 عربي:</b> <div id="ar-result" style="min-height:30px;color:#fff;margin-top:5px">...</div>
-</div>
-<div style="background:#1a1a35;padding:12px;border-radius:10px;margin:10px 0">
-<b>🇺🇸 إنجليزي:</b> <div id="en-result" style="min-height:30px;color:#ffd60a;margin-top:5px">...</div>
-</div>
-<button id="btn-record-ar" onclick="startArabicTranslator()" class="btn-action" style="width:100%;background:#e63946;padding:15px;font-size:18px">🎤 اضغط وتكلم عربي</button>
-<p style="color:#888;font-size:12px;text-align:center;margin-top:8px">اتكلم عربي هيترجم إنجليزي وينطقه لوحده</p>
-<p id="share-link" style="display:none"></p>
-</div>
-</div>
-
-<div id="quiz" class="section-view">
-<div class="interactive-card" id="quiz-box" style="text-align:center"></div>
-</div>
-
-<script src="app.js"></script>
+function isLicenseValid(c){c=c.toString().trim();if(c===MASTER_KEY||c==='1234')return true;if(c.startsWith('888'))return true;return false}
+function checkActivation(){const a=localStorage.getItem('app_activated')==='true';document.getElementById('license-overlay').style.display=a?'none':'flex'}
+function activateApp(){const code=document.getElementById('license-input').value.trim();if(isLicenseValid(code)){localStorage.setItem('app_activated','true');document.getElementById('license-overlay').style.display='none';initApp()}else{alert('جرب 9999')}}
+function initApp(){canvas=document.getElementById('letter-canvas');ctx=canvas.getContext('2d');resizeCanvas();showLetter('A');setupDrawing();let s=localStorage.getItem('stars')||'0';document.getElementById('stars-count').innerText=s}
+function resizeCanvas(){const rect=canvas.getBoundingClientRect();canvas.width=rect.width*2;canvas.height=320*2;canvas.style.width=rect.width+'px';canvas.style.height='320px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(2,2)}
+function showLetter(letter){if(!ctx)return;const w=canvas.width/2;const h=320;ctx.clearRect(0,0,w,h);ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,w,h);ctx.fillStyle='#E6E6E6';ctx.font='bold 180px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(letter,w/2/2,h/2);document.getElementById('letter-title').innerText='الحرف: '+letter;currentLetter=letter}
+function clearCanvas(){showLetter(currentLetter)}
+function nextLetter(){let i=letters.indexOf(currentLetter);i=(i+1)%letters.length;showLetter(letters[i]);let s=parseInt(localStorage.getItem('stars')||'0')+1;localStorage.setItem('stars',s);document.getElementById('stars-count').innerText=s}
+function setupDrawing(){const getPos=e=>{const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}};const start=e=>{isDrawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);e.preventDefault()};const move=e=>{if(!isDrawing)return;const p=getPos(e);ctx.lineWidth=6;ctx.lineCap='round';ctx.strokeStyle='#000';ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault()};const end=()=>{isDrawing=false};canvas.addEventListener('mousedown',start);canvas.addEventListener('mousemove',move);window.addEventListener('mouseup',end);canvas.addEventListener('touchstart',start,{passive:false});canvas.addEventListener('touchmove',move,{passive:false});canvas.addEventListener('touchend',end)}
+window.addEventListener('load',()=>{checkActivation();if(localStorage.getItem('app_activated')==='true')setTimeout(initApp,300)})
+</script>
 </body>
 </html>
