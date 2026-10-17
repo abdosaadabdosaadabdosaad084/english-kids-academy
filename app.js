@@ -396,32 +396,82 @@ renderGrammar();
 renderStories();
 generateInfiniteQuestion();
 if (canvas) clearCanvas();
-// === اضافة Hearo - تسجيل وتصحيح ===
-const hearoLessons = [
-  { word: "Hello", video: "https://www.w3schools.com/html/mov_bbb.mp4" },
-  { word: "Water", video: "https://www.w3schools.com/html/movie.mp4" }
-];
+// === Hearo Pro - تقييم ذكي بدرجة % ===
+function similarity(s1, s2){
+  s1 = s1.toLowerCase().trim();
+  s2 = s2.toLowerCase().trim();
+  if(s1 === s2) return 100;
+  if(s1.includes(s2) || s2.includes(s1)) return 85;
+  
+  let longer = s1.length > s2.length ? s1 : s2;
+  let shorter = s1.length > s2.length ? s2 : s1;
+  if(longer.length === 0) return 100;
+  let costs = [];
+  for(let i=0; i<=shorter.length; i++){
+    let lastValue = i;
+    for(let j=0; j<=longer.length; j++){
+      if(i===0) costs[j]=j;
+      else if(j>0){
+        let newValue = costs[j-1];
+        if(shorter.charAt(i-1) != longer.charAt(j-1))
+          newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+        costs[j-1]=lastValue;
+        lastValue=newValue;
+      }
+    }
+    if(i>0) costs[longer.length]=lastValue;
+  }
+  return Math.round((1 - costs[longer.length]/longer.length)*100);
+}
 
 function startHearoRec(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){ alert("افتح بـ Chrome"); return; }
+  if(!SR){ alert("افتح بـ Chrome - الأندرويد فقط"); return; }
+  
   const rec = new SR();
   rec.lang = 'en-US';
+  rec.interimResults = false;
+  
+  let r = document.getElementById('result');
+  if(r){
+    r.innerHTML = "🎤 اسمعك... تكلم الآن";
+    r.style.color = "#facc15";
+  }
+
   rec.onresult = (e)=>{
-    let said = e.results[0][0].transcript.toLowerCase();
-    let target = document.getElementById('word')?.innerText.toLowerCase() || "hello";
-    let r = document.getElementById('result');
-    if(r){
-      if(said.includes(target)){
-        r.innerHTML = "✅ صح: " + said;
-        r.style.color = "green";
-        // يصحح بالنطق الصح
-        speechSynthesis.speak(new SpeechSynthesisUtterance(target));
-      } else {
-        r.innerHTML = "❌ قلت: " + said + " - حاول: " + target;
-        r.style.color = "red";
-      }
+    let said = e.results[0][0].transcript.toLowerCase().trim();
+    let target = (document.getElementById('word')?.innerText || "hello").toLowerCase().trim();
+    
+    let score = similarity(said, target);
+
+    if(!r) return;
+
+    if(score >= 80){
+      r.innerHTML = `✅ ممتاز ${score}%<br>قلت: "${said}"`;
+      r.style.color = "#22c55e";
+      speak("Excellent! " + target);
+      addPoints(20);
+      if(score === 100) speak("Perfect pronunciation!");
+    } 
+    else if(score >= 50){
+      r.innerHTML = `🟡 جيد ${score}%<br>قلت: "${said}"<br>حاول: "${target}"`;
+      r.style.color = "#f59e0b";
+      setTimeout(()=> speak(target), 500);
+      addPoints(5);
+    } 
+    else {
+      r.innerHTML = `❌ حاول تاني ${score}%<br>قلت: "${said}"<br>الصح: "${target}"`;
+      r.style.color = "#ef4444";
+      setTimeout(()=> speak(target), 800);
     }
   };
+
+  rec.onerror = ()=>{
+    if(r){
+      r.innerHTML = "❌ مسمعتش كويس، دوس تاني";
+      r.style.color = "red";
+    }
+  };
+
   rec.start();
 }
