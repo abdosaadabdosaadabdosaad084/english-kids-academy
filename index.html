@@ -1,740 +1,106 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية الإنجليزية للأطفال | English Kids Academy</title>
-    <!-- Tajawal Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary: #4F46E5;
-            --primary-light: #EEF2FF;
-            --secondary: #10B981;
-            --accent: #F59E0B;
-            --danger: #EF4444;
-            --bg: #F8FAFC;
-            --card-bg: #FFFFFF;
-            --text-main: #1E293B;
-            --text-muted: #64748B;
-            --radius: 18px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            padding-bottom: 40px;
-        }
-
-        /* Top Header */
-        header {
-            background: linear-gradient(135deg, #6366F1, #4F46E5);
-            color: white;
-            padding: 20px 16px 30px 16px;
-            border-bottom-left-radius: 28px;
-            border-bottom-right-radius: 28px;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .user-stats {
-            display: flex;
-            gap: 10px;
-        }
-
-        .stat-badge {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .stat-badge i {
-            color: #FBBF24;
-        }
-
-        /* Container & Layout */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-
-        /* Hero Banner */
-        .hero-banner {
-            background: white;
-            margin-top: -15px;
-            border-radius: var(--radius);
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 25px;
-        }
-
-        .hero-img {
-            width: 90px;
-            height: 90px;
-            border-radius: 14px;
-            object-fit: cover;
-        }
-
-        .hero-text h2 {
-            font-size: 18px;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .hero-text p {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        /* Section Title */
-        .section-title {
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .section-title span {
-            font-size: 13px;
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        /* Grid Cards */
-        .modules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 16px;
-            margin-bottom: 30px;
-        }
-
-        .module-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid #E2E8F0;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .module-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-        }
-
-        .card-content {
-            padding: 15px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
-
-        .card-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.4;
-            margin-bottom: 12px;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 10px;
-            border-top: 1px solid #F1F5F9;
-        }
-
-        .btn-learn {
-            background: var(--primary-light);
-            color: var(--primary);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        /* Interactive Lesson Modal/Area */
-        .lesson-viewer {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 1000;
-            overflow-y: auto;
-            padding-bottom: 30px;
-        }
-
-        .lesson-header {
-            background: var(--primary);
-            color: white;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-        }
-
-        .btn-close {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .lesson-body {
-            padding: 20px 16px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .explain-box {
-            background: var(--primary-light);
-            border-right: 4px solid var(--primary);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .vocab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .vocab-card {
-            background: #F1F5F9;
-            border-radius: 12px;
-            padding: 14px;
-            text-align: center;
-            position: relative;
-        }
-
-        .vocab-en {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .vocab-ar {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .btn-audio {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-top: 8px;
-            cursor: pointer;
-        }
-
-        .quiz-section {
-            background: #FFFBEB;
-            border: 1px solid #FCD34D;
-            border-radius: 14px;
-            padding: 16px;
-            margin-top: 20px;
-        }
-
-        .quiz-question {
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .quiz-opt {
-            background: white;
-            border: 1px solid #CBD5E1;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: right;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .quiz-opt:hover {
-            border-color: var(--primary);
-            background: var(--primary-light);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>English Kids Academy - أكاديمية الإنجليزية للأطفال</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#06d6a0">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&family=Nunito:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a1a;--card:#1c1c32;--card2:#252545;--green:#06d6a0;--yellow:#ffd166;--text:#f0f0f5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:'Tajawal',sans-serif;padding:0 0 80px 0}
+header{position:sticky;top:0;z-index:10;background:rgba(10,10,26,0.9);backdrop-filter:blur(10px);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222}
+.logo{font-weight:800;font-size:18px}.logo span{color:var(--green)}
+.points{background:#222245;padding:6px 12px;border-radius:20px;font-size:14px}
+.hero{padding:16px;text-align:center}
+.installBtn{background:var(--green);color:#000;padding:14px;border-radius:12px;font-weight:800;display:none;cursor:pointer;margin:10px 0;width:100%;border:none;font-size:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+.cardBig{grid-column:span 2}
+.card{background:var(--card);border-radius:18px;padding:16px;cursor:pointer;border:1px solid #2a2a4a}
+.card h3{margin:8px 0 4px 0;font-size:16px}
+.card p{margin:0;font-size:12px;opacity:.7}
+.icon{font-size:28px}
+.page{display:none;padding:12px}
+.page.active{display:block}
+.backBtn{background:#222245;border:none;color:#fff;padding:10px 16px;border-radius:10px;margin-bottom:12px}
+.item{background:var(--card);border-radius:14px;padding:12px;margin:10px 0;display:flex;justify-content:space-between;align-items:center;border:1px solid #2a2a4a}
+.item .en{font-family:'Nunito';font-weight:800;font-size:18px}
+.item .ar{font-size:13px;opacity:.8}
+.speakBtn{background:var(--card2);border:none;font-size:18px;width:40px;height:40px;border-radius:50%;cursor:pointer}
+.quizOpt{background:var(--card2);padding:12px;border-radius:10px;margin:6px 0;cursor:pointer}
+.quizOpt.correct{border-color:var(--green);background:rgba(6,214,160,.15)}
+.quizOpt.wrong{border-color:#ef476f;background:rgba(239,71,111,.15)}
+.searchBox{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:var(--card);color:#fff;font-size:16px;margin-bottom:10px}
+.story{background:var(--card);border-radius:14px;padding:14px;margin:10px 0;line-height:1.8}
+</style>
 </head>
 <body>
+<header>
+<div class="logo">English <span>Kids Academy</span></div>
+<div class="points">⭐ <span id="pts">0</span></div>
+</header>
 
-    <!-- Header -->
-    <header>
-        <div class="header-top">
-            <div class="logo-area">
-                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                <div>
-                    <h1 style="font-size: 18px;">أكاديمية عبده للإنجليزي</h1>
-                    <p style="font-size: 11px; opacity: 0.8;">من سن 5 إلى 13 سنة</p>
-                </div>
-            </div>
-            <div class="user-stats">
-                <div class="stat-badge"><i class="fa-solid fa-star"></i> <span id="score">120</span></div>
-            </div>
-        </div>
-    </header>
+<div id="home">
+<div class="hero">
+<button id="installBtn" class="installBtn">📲 تثبيت التطبيق على الهاتف - دوس هنا</button>
+<p style="opacity:.7;font-size:13px">أكاديمية شاملة من 5 إلى 13 سنة - نطق - معنى - أمثلة - تمارين - نقاط</p>
+</div>
+<div class="grid">
+<div class="card cardBig" onclick="openPage('letters')"><div class="icon">🔤</div><h3>1. الحروف والقراءة A-Z</h3><p>كابيتال وسمول + أصوات + كلمات</p></div>
+<div class="card" onclick="openPage('numbers')"><div class="icon">🔢</div><h3>2. الأرقام</h3><p>0-1000 + نطق</p></div>
+<div class="card" onclick="openPage('animals')"><div class="icon">🦁</div><h3>3. الحيوانات</h3><p>مزرعة - غابة - بحر</p></div>
+<div class="card" onclick="openPage('colors')"><div class="icon">🎨</div><h3>4. الألوان والأشكال</h3><p>Colors & Shapes</p></div>
+<div class="card" onclick="openPage('time')"><div class="icon">📅</div><h3>5. الأيام والوقت</h3><p>أيام - شهور - فصول</p></div>
+<div class="card cardBig" onclick="openPage('daily')"><div class="icon">🏠</div><h3>6. مفردات الحياة اليومية</h3><p>أسرة - جسم - طعام - ملابس - مدرسة - منزل - مواصلات - مهن - طقس - مشاعر</p></div>
+<div class="card" onclick="openPage('grammar')"><div class="icon">📝</div><h3>7. القواعد</h3><p>ضمائر - أزمنة - سؤال - نفي</p></div>
+<div class="card" onclick="openPage('conversation')"><div class="icon">🎧</div><h3>8. محادثة وقصص</h3><p>قصص + ترجمة صوتية</p></div>
+<div class="card cardBig" onclick="openPage('dictionary')"><div class="icon">📚</div><h3>القاموس الشامل</h3><p>400 كلمة + بحث فوري</p></div>
+</div>
+</div>
 
-    <div class="container">
+<div id="letters" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الحروف A-Z</h2><div id="lettersList"></div></div>
+<div id="numbers" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الأرقام</h2><div id="numbersList"></div></div>
+<div id="animals" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الحيوانات</h2><div id="animalsList"></div></div>
+<div id="colors" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الألوان والأشكال</h2><div id="colorsList"></div></div>
+<div id="time" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الأيام والوقت</h2><div id="timeList"></div></div>
+<div id="daily" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الحياة اليومية</h2><input id="dailySearch" class="searchBox" placeholder="ابحث: اسرة، طعام..." oninput="filterDaily()"><div id="dailyList"></div></div>
+<div id="grammar" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>القواعد</h2><div id="grammarList"></div></div>
+<div id="conversation" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>محادثات وقصص</h2><div id="convList"></div><div class="card"><h3>🎤 ترجمة فورية</h3><button onclick="startVoiceTranslate()">دوس وتكلم</button><p id="voiceRes"></p></div></div>
+<div id="dictionary" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>القاموس</h2><input id="dictSearch" class="searchBox" placeholder="ابحث..." oninput="filterDict()"><div id="dictList"></div></div>
 
-        <!-- Hero / Info Banner -->
-        <div class="hero-banner">
-            <img src="https://images.openai.com/static-rsc-4/4l29uZhWowH-q2Z9atlcjFDps_07jpDSZJf3KgndPw6Y6RbUHi8PxaFyj0iUjN36B9JivZkPIrJJ7BBlaZfA3mdkhvGcDDfllputLZkwtWvvx-zK_A0gC1sLpVdecIgp3GEy7yYk8U_FhFCydvZ9eQtwho7MSh2dq8gKAIzeWkgPLwQHboikfrJeQsNNIjSL?purpose=fullsize" alt="English Banner" class="hero-img">
-            <div class="hero-text">
-                <h2>أهلاً بك يا بطل! 🌟</h2>
-                <p>تعلم الإنجليزية خطوة بخطوة مع الشرح بالعربي، النطق الصوتي، والتمارين التفاعلية.</p>
-            </div>
-        </div>
-
-        <div class="section-title">
-            الأقسام التعليمية الشاملة
-            <span>8 أقسام رئيسية</span>
-        </div>
-
-        <!-- Modules Grid -->
-        <div class="modules-grid">
-
-            <!-- Card 1 -->
-            <div class="module-card" onclick="openLesson(1)">
-                <img src="https://images.openai.com/static-rsc-4/4l29uZhWowH-q2Z9atlcjFDps_07jpDSZJf3KgndPw6Y6RbUHi8PxaFyj0iUjN36B9JivZkPIrJJ7BBlaZfA3mdkhvGcDDfllputLZkwtWvvx-zK_A0gC1sLpVdecIgp3GEy7yYk8U_FhFCydvZ9eQtwho7MSh2dq8gKAIzeWkgPLwQHboikfrJeQsNNIjSL?purpose=fullsize" class="card-img" alt="الحروف والقراءة">
-                <div class="card-content">
-                    <div>
-                        <div class="card-title">1. الحروف والقراءة</div>
-                        <div class="card-desc">الحروف A–Z، أصوات الحروف، والتهجئة القراءة التدريجية.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span style="font-size: 11px; color: var(--text-muted);">26 حرفًا + أصوات</span>
-                        <button class="btn-learn">ابدأ الآن</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="module-card" onclick="openLesson(2)">
-                <img src="https://images.openai.com/static-rsc-4/oXbonW4z4oc-GvmquigoKUKMbTQae7jt0FCIQSA6IMqH0NICfVd1aYROwp3bA3xWZH1_zaPSeIDJc4w5y7RI6r_KZ-KTonzxJROcCFXqPeeFITu6LaGgEB0_KM5QRC32wU1pcunxsdAaeraHwwTkbGhMkD0jKWIQyWvtMMlmHJFOCVkR_KMBsQAGc6VtKJ3O?purpose=fullsize" class="card-img" alt="الأرقام والأعداد">
-                <div class="card-content">
-                    <div>
-                        <div class="card-title">2. الأرقام والأعداد</div>
-                        <div class="card-desc">من 0 إلى 100 والمئات والآلاف، النطق والتمارين.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span style="font-size: 11px; color: var(--text-muted);">أرقام وعدّ</span>
-                        <button class="btn-learn">ابدأ الآن</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="module-card" onclick="openLesson(3)">
-                <img src="https://images.openai.com/static-rsc-4/MQ9pQwjHJbGYHOFoF33-xyqnPWkiq_HOWgvptmBc3lTworKgOQWzycijpc5R2k_lKz-ououOnDhTO1PiN8XfuAMXqqqbPUp3xo78ThTwol0l0dTWRLJp8cSVfN5-HABHmskLjwJMQqDAkf-WSlE-_JXRl-Rg1R4VDwDOepWq8MkWb2NQtlg0p3loqKdoCBtg?purpose=fullsize" class="card-img" alt="الحيوانات">
-                <div class="card-content">
-                    <div>
-                        <div class="card-title">3. عالم الحيوانات</div>
-                        <div class="card-desc">الحيوانات الأليفة، المزرعة، الغابة، والطيور والحشرات.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span style="font-size: 11px; color: var(--text-muted);">مفردات + أصوات</span>
-                        <button class="btn-learn">ابدأ الآن</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="module-card" onclick="openLesson(4)">
-                <img src="https://images.openai.com/static-rsc-4/UdlKAKN5hegH9h4_5ggIdzLLY-vkkynqlyJ31jEIEnoygDU1Kft51DBZ40s-SmxTAJsNrq34h1SE1Ka2bMamREf9tuQmyeRzWeutKjlqOt9NjMiIv_lI8Z6ucVCooH1shEx3NQhoBOu7VATqr6M4dxDobcBZbLxEN5EEBHqRNoKfFex7XNv3EQ1_ElByXwfW?purpose=fullsize" class="card-img" alt="الألوان والأشكال">
-                <div class="card-content">
-                    <div>
-                        <div class="card-title">4. الألوان والأشكال</div>
-                        <div class="card-desc">الألوان الأساسية والأشكال الهندسية مع أمثلة.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span style="font-size: 11px; color: var(--text-muted);">أشكال وألوان</span>
-                        <button class="btn-learn">ابدأ الآن</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="module-card" onclick="openLesson(5)">
-                <img src="https://images.openai.com/static-rsc-4/Z7LQvmgeEfjRzCvOAVizPLKab4yFHPOVO_ptvP5rSbQBTIVc07nzM1FVhH67SC0TFoEP63Q0ju3Od7L_upnqLd9UMjTAcbQbUKmsbFfskBpl4aYY79p5uzCbngWTbUoAJcOi585uZu5p_RzCOm-w5nW_NskJ6S2H1WLTqNYS8Mw1cN8UQvNThvW6U05hd2yp?purpose=fullsize" class="card-img" alt="الأيام والشهور والتاريخ">
-                <div class="card-content">
-                    <div>
-                        <div class="card-title">5. الأيام والشهور والتاريخ</div>
-                        <div class="card-desc">أيام الأسبوع، الفصول، الساعة ومفردات الوقت.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span style="font-size: 11px; color: var(--text-muted);">الوقت والتقويم</span>
-                        <button class="btn-learn">ابدأ الآن</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="module-card" onclick="openLesson(6)">
-                <img src="https://images.openai.com/static-rsc-4/e5cGFDcg6Yml8myvpPYWorJkhHL44b5K6cJ5soJqdqpubafl4tuUNjZuKl23qZuvUlfuitXAyDLu3fZXKWJ_qH-suHZd96de4c6IMUIuNLx1CNEvGenCuKqUGgCDne1pkSIW1roM09aIXTyBgnu4uDhSU1n11qUMncKq566FVIM0mKtb3PgSW0WTUE2-V8DX?purpose=fullsize" class="card-img" alt="مفردات الحياة اليومية">
-                <div class="card-content">
-                    <div>
-                        <div class="card-title">6. مفردات الحياة اليومية</div>
-                        <div class="card-desc">الأسرة، الجسم، الطعام، المدرسة، والمهن.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span style="font-size: 11px; color: var(--text-muted);">مفردات هامة</span>
-                        <button class="btn-learn">ابدأ الآن</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="module-card" onclick="openLesson(7)">
-                <img src="https://images.openai.com/static-rsc-4/XmgRAUtHOtaDV86eU1NjtHABH3O190pwQJ181Y4kbwZcbP8PffFE9dNKsM-tZSnImn_sSP-FjQuhSdr--hBhbncwYOf_zNqZeLoBE14XlOv2oO3r0OUlvSSJZ-Fajo2WYjPdCQBXV00YzrlNB5ujigPl--c2dFHShb7yaiNPnE5FKgKxYUq8c4DyxlY_exyg?purpose=fullsize" class="card-img" alt="القواعد وتكوين الجمل">
-                <div class="card-content">
-                    <div>
-                        <div class="card-title">7. القواعد وتكوين الجمل</div>
-                        <div class="card-desc">الضمائر، الأفعال، الأزمنة، وتكوين الجمل ببساطة.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span style="font-size: 11px; color: var(--text-muted);">Grammar</span>
-                        <button class="btn-learn">ابدأ الآن</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="module-card" onclick="openLesson(8)">
-                <img src="https://images.openai.com/static-rsc-4/g_oK1NFD52gyD01ChDkakBlu4iZng8ioALetv04hckNu9sk0PQb1mY0JLBeLcqKP1atBJ4caCwhINqdQZ8FkhmweU-hWNrOzGG9MGYuueUdqSQPptFKySE_05SBfr2AChThopBvhLc0EF4DjG6Y8e9zO72jSwYkguuF5fGjpBOBq4meGc7TT8Gwx3Ze4hp0Y?purpose=fullsize" class="card-img" alt="المحادثة والقصص">
-                <div class="card-content">
-                    <div>
-                        <div class="card-title">8. الاستماع والمحادثة والقصص</div>
-                        <div class="card-desc">مواقف يومية، قصص قصيرة، واختبارات تفاعلية.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span style="font-size: 11px; color: var(--text-muted);">تحدث واستماع</span>
-                        <button class="btn-learn">ابدأ الآن</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Lesson Viewer Modal -->
-    <div id="lessonViewer" class="lesson-viewer">
-        <div class="lesson-header">
-            <h3 id="lessonTitle">عنوان الدرس</h3>
-            <button class="btn-close" onclick="closeLesson()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="lesson-body">
-            <div class="explain-box" id="lessonExplain">
-                شرح الدرس هنا بالعربية...
-            </div>
-
-            <h4 style="margin-bottom: 12px;">المفردات والنطق:</h4>
-            <div class="vocab-grid" id="vocabGrid">
-                <!-- Vocab cards dynamically inserted -->
-            </div>
-
-            <div class="quiz-section">
-                <div class="quiz-question" id="quizQuestion">اختبار سريع: ما معنى كلمة "Apple"؟</div>
-                <div class="quiz-options" id="quizOptions">
-                    <!-- Options inserted dynamically -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        أكاديمية اللغة الإنجليزية للأطفال © 2026 - جميع الحقوق محفوظة
-    </footer>
-
-    <script>
-        // Sample Data for Lessons
-        const lessonsData = {
-            1: {
-                title: "1. الحروف والقراءة (Alphabet)",
-                explain: "في هذا الدرس نتعلم حروف اللغة الإنجليزية الأبجدية من A إلى Z. لكل حرف شكل كبير (Capital) وشكل صغير (Small) وصوت خاص به.",
-                vocab: [
-                    { en: "Apple", ar: "تفاحة" },
-                    { en: "Ball", ar: "كرة" },
-                    { en: "Cat", ar: "قطة" },
-                    { en: "Dog", ar: "كلب" }
-                ],
-                quiz: {
-                    q: "ما معنى كلمة Cat؟",
-                    options: ["تفاحة", "قطة", "كلب"],
-                    correct: 1
-                }
-            },
-            2: {
-                title: "2. الأرقام والأعداد (Numbers)",
-                explain: "الأرقام تساعدنا في العد وحساب الأشكال والأشياء من حولنا. لنبدأ بالأرقام الأساسية.",
-                vocab: [
-                    { en: "One (1)", ar: "واحد" },
-                    { en: "Two (2)", ar: "اثنان" },
-                    { en: "Three (3)", ar: "ثلاثة" },
-                    { en: "Ten (10)", ar: "عشرة" }
-                ],
-                quiz: {
-                    q: "ما هو الرقم Three؟",
-                    options: ["1", "2", "3"],
-                    correct: 2
-                }
-            },
-            3: {
-                title: "3. عالم الحيوانات (Animals)",
-                explain: "تعتبر الحيوانات من أمتع الموضوعات! نتعلم أسماء الحيوانات الأليفة وحيوانات المزرعة والغابة.",
-                vocab: [
-                    { en: "Lion", ar: "أسد" },
-                    { en: "Elephant", ar: "فيل" },
-                    { en: "Cow", ar: "بقرة" },
-                    { en: "Bird", ar: "طائر" }
-                ],
-                quiz: {
-                    q: "ما معنى كلمة Lion؟",
-                    options: ["أسد", "فيل", "طائر"],
-                    correct: 0
-                }
-            },
-            4: {
-                title: "4. الألوان والأشكال (Colors & Shapes)",
-                explain: "تعلم وصف الأشياء بالألوان مثل: Red Car (سيارة حمراء)، والأشكال مثل Circle (دائرة).",
-                vocab: [
-                    { en: "Red", ar: "أحمر" },
-                    { en: "Blue", ar: "أزرق" },
-                    { en: "Circle", ar: "دائرة" },
-                    { en: "Square", ar: "مربع" }
-                ],
-                quiz: {
-                    q: "ما ترجمة: Red Ball؟",
-                    options: ["كرة أزرق", "كرة حمراء", "مربع أحمر"],
-                    correct: 1
-                }
-            },
-            5: {
-                title: "5. الأيام والشهور (Days & Months)",
-                explain: "تعلم أيام الأسبوع وفصول السنة وكيفية الإجابة عن السؤال عن الوقت واليوم.",
-                vocab: [
-                    { en: "Sunday", ar: "الأحد" },
-                    { en: "Monday", ar: "الإثنين" },
-                    { en: "Summer", ar: "الصيف" },
-                    { en: "Winter", ar: "الشتاء" }
-                ],
-                quiz: {
-                    q: "ما معنى كلمة Sunday؟",
-                    options: ["السبت", "الأحد", "الإثنين"],
-                    correct: 1
-                }
-            },
-            6: {
-                title: "6. مفردات الحياة اليومية (Daily Life)",
-                explain: "كلمات نستخدمها يومياً عند الحديث عن العائلة، المدرسة، الطعام، والأماكن.",
-                vocab: [
-                    { en: "Father", ar: "أب" },
-                    { en: "Mother", ar: "أم" },
-                    { en: "School", ar: "مدرسة" },
-                    { en: "Water", ar: "ماء" }
-                ],
-                quiz: {
-                    q: "ما معنى School؟",
-                    options: ["بيت", "مدرسة", "حديقة"],
-                    correct: 1
-                }
-            },
-            7: {
-                title: "7. القواعد وتكوين الجمل (Grammar)",
-                explain: "القواعد تساعدنا على بناء جملة صحيحة. مثل ضمائر الفاعل: I (أنا)، You (أنت)، He (هو)، She (هي).",
-                vocab: [
-                    { en: "I am", ar: "أنا أكون" },
-                    { en: "He is", ar: "هو يكون" },
-                    { en: "She is", ar: "هي تكون" },
-                    { en: "They are", ar: "هم يكونوا" }
-                ],
-                quiz: {
-                    q: "اختر الكلمة المناسبة: She ___ a girl.",
-                    options: ["am", "is", "are"],
-                    correct: 1
-                }
-            },
-            8: {
-                title: "8. المحادثة والقصص (Stories)",
-                explain: "استمع إلى محادثات قصيرة وبسيطة لممارسة النطق والتحدث بثقة.",
-                vocab: [
-                    { en: "Hello!", ar: "مرحباً!" },
-                    { en: "How are you?", ar: "كيف حالك؟" },
-                    { en: "Thank you", ar: "شكراً لك" },
-                    { en: "Goodbye", ar: "إلى اللقاء" }
-                ],
-                quiz: {
-                    q: "كيف تقول 'شكراً لك' بالإنجليزي؟",
-                    options: ["Hello", "Thank you", "Goodbye"],
-                    correct: 1
-                }
-            }
-        };
-
-        // Text To Speech Function
-        function speak(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.85; // Slightly slower for kids
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert('عذراً، متصفحك لا يدعم خاصية نطق الصوت.');
-            }
-        }
-
-        // Open Lesson Modal
-        function openLesson(id) {
-            const lesson = lessonsData[id];
-            if (!lesson) return;
-
-            document.getElementById('lessonTitle').innerText = lesson.title;
-            document.getElementById('lessonExplain').innerText = lesson.explain;
-
-            // Render Vocab Cards
-            const vocabGrid = document.getElementById('vocabGrid');
-            vocabGrid.innerHTML = '';
-            lesson.vocab.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'vocab-card';
-                card.innerHTML = `
-                    <div class="vocab-en">${item.en}</div>
-                    <div class="vocab-ar">${item.ar}</div>
-                    <button class="btn-audio" onclick="speak('${item.en}')"><i class="fa-solid fa-volume-high"></i></button>
-                `;
-                vocabGrid.appendChild(card);
-            });
-
-            // Render Quiz
-            document.getElementById('quizQuestion').innerText = lesson.quiz.q;
-            const quizOptions = document.getElementById('quizOptions');
-            quizOptions.innerHTML = '';
-            lesson.quiz.options.forEach((opt, idx) => {
-                const optBtn = document.createElement('button');
-                optBtn.className = 'quiz-opt';
-                optBtn.innerText = opt;
-                optBtn.onclick = () => checkAnswer(idx, lesson.quiz.correct);
-                quizOptions.appendChild(optBtn);
-            });
-
-            document.getElementById('lessonViewer').style.display = 'block';
-        }
-
-        // Close Lesson
-        function closeLesson() {
-            document.getElementById('lessonViewer').style.display = 'none';
-        }
-
-        // Check Answer & Add Points
-        function checkAnswer(selected, correct) {
-            if (selected === correct) {
-                alert('إجابة صحيحة! أحسنت يا بطل! 🎉 +10 نقاط');
-                let currentScore = parseInt(document.getElementById('score').innerText);
-                document.getElementById('score').innerText = currentScore + 10;
-            } else {
-                alert('إجابة خاطئة، حاول مرة أخرى! 💪');
-            }
-        }
-    </script>
+<script>
+let points=parseInt(localStorage.getItem('ek_pts')||'0');document.getElementById('pts').innerText=points;
+function addPts(n){points+=n;localStorage.setItem('ek_pts',points);document.getElementById('pts').innerText=points;}
+function speak(t,lang='en-US'){let u=new SpeechSynthesisUtterance(t);u.lang=lang;u.rate=0.9;speechSynthesis.speak(u);}
+function openPage(id){document.getElementById('home').style.display='none';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function goHome(){document.getElementById('home').style.display='block';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))}
+const lettersData=[['A a','Apple','تفاحة','a red apple'],['B b','Ball','كرة','blue ball'],['C c','Cat','قطة','cute cat'],['D d','Dog','كلب','big dog'],['E e','Elephant','فيل','big elephant'],['F f','Fish','سمكة','small fish'],['G g','Goat','ماعز','white goat'],['H h','House','منزل','nice house'],['I i','Ice cream','آيس كريم','cold ice cream'],['J j','Juice','عصير','orange juice'],['K k','Kite','طائرة ورقية','flying kite'],['L l','Lion','أسد','strong lion'],['M m','Moon','قمر','bright moon'],['N n','Nest','عش','bird nest'],['O o','Orange','برتقالة','sweet orange'],['P p','Pen','قلم','blue pen'],['Q q','Queen','ملكة','beautiful queen'],['R r','Rabbit','أرنب','fast rabbit'],['S s','Sun','شمس','hot sun'],['T t','Tree','شجرة','green tree'],['U u','Umbrella','مظلة','red umbrella'],['V v','Van','شاحنة','white van'],['W w','Water','ماء','cold water'],['X x','Box','صندوق','big box'],['Y y','Yellow','أصفر','yellow ball'],['Z z','Zebra','حمار وحشي','striped zebra']];
+const numbersData=[[0,'Zero','صفر'],[1,'One','واحد'],[2,'Two','اثنان'],[3,'Three','ثلاثة'],[4,'Four','أربعة'],[5,'Five','خمسة'],[10,'Ten','عشرة'],[20,'Twenty','عشرون'],[100,'One Hundred','مائة']];
+const animalsData=[['Cat','قطة','أليف'],['Dog','كلب','أليف'],['Cow','بقرة','مزرعة'],['Lion','أسد','غابة'],['Elephant','فيل','غابة'],['Fish','سمكة','بحر'],['Parrot','ببغاء','طيور']];
+const colorsData=[['Red','أحمر','a red ball'],['Blue','أزرق','blue sky'],['Green','أخضر','green tree'],['Yellow','أصفر','yellow sun'],['Circle','دائرة',''],['Square','مربع','']];
+const timeData=[['Monday','الاثنين'],['Tuesday','الثلاثاء'],['Friday','الجمعة'],['January','يناير'],['Spring','الربيع'],['Morning','صباح'],['What time is it?','كم الساعة؟']];
+const dailyData=[['Family','عائلة','father أب, mother أم, brother أخ'],['Body','جسم','head رأس, eye عين, hand يد'],['Food','طعام','rice أرز, bread خبز, milk لبن'],['School','مدرسة','book كتاب, teacher معلم'],['House','منزل','door باب, window شباك'],['Jobs','مهن','doctor طبيب, teacher معلم'],['Weather','طقس','sunny مشمس, rainy ممطر'],['Feelings','مشاعر','happy سعيد, sad حزين']];
+const grammarData=[{title:'الضمائر Pronouns',ar:'I أنا, You أنت, He هو, She هي, We نحن, They هم',ex:'I am a student - أنا طالب'},{title:'To Be - يكون',ar:'am, is, are',ex:'He is tall - هو طويل'},{title:'Present Simple - مضارع بسيط',ar:'حقيقة و عادة',ex:'The sun rises in the east'},{title:'Past Simple - ماضي بسيط',ar:'I played yesterday',ex:'I visited grandma yesterday'}];
+const dictData=[['apple','تفاحة'],['book','كتاب'],['cat','قطة'],['dog','كلب'],['water','ماء'],['school','مدرسة'],['house','منزل'],['family','عائلة'],['big','كبير'],['happy','سعيد'],['run','يجري'],['beautiful','جميل']];
+function renderList(id,data,isNum=false){
+let c=document.getElementById(id);let h='';
+data.forEach(d=>{
+if(isNum){h+=`<div class="item"><div><div class="en">${d[0]} - ${d[1]}</div><div class="ar">${d[2]}</div></div><button class="speakBtn" onclick="speak('${d[1]}');addPts(1)">🔊</button></div>`;}
+else if(id==='lettersList'){h+=`<div class="item"><div><div class="en">${d[0]}</div><div class="ar">${d[1]} - ${d[2]}<br><small>${d[3]}</small></div></div><button class="speakBtn" onclick="speak('${d[1]}')">🔊</button></div>`;}
+else{h+=`<div class="item"><div><div class="en">${d[0]}</div><div class="ar">${d[1]} ${d[2]||''}</div></div><button class="speakBtn" onclick="speak('${d[0]}')">🔊</button></div>`;}
+});c.innerHTML=h;
+}
+renderList('lettersList',lettersData);renderList('numbersList',numbersData,true);renderList('animalsList',animalsData);renderList('colorsList',colorsData);renderList('timeList',timeData);renderList('dailyList',dailyData);renderList('dictList',dictData);
+let gc=document.getElementById('grammarList');let gh='';grammarData.forEach(g=>{gh+=`<div class="item" style="flex-direction:column;align-items:stretch"><div class="en">${g.title}</div><div class="ar">${g.ar}<br><b>${g.ex}</b></div><button class="speakBtn" onclick="speak('${g.ex}')">🔊</button></div>`;});gc.innerHTML=gh;
+document.getElementById('convList').innerHTML=`<div class="story"><b>Greeting - تحية</b><br>A: Hello! What's your name?<br>B: I'm Sara.<br>المعنى: مرحبا ما اسمك؟<br><button class="speakBtn" onclick="speak('Hello What is your name?')">🔊</button></div><div class="story"><b>Story: The Honest Woodcutter</b><br>He lost his axe, said this is not mine. Honesty is best.<br>الحطاب الأمين - الأمانة أفضل شيء.</div>`;
+function filterDaily(){let q=document.getElementById('dailySearch').value.toLowerCase();let f=dailyData.filter(d=>d[0].toLowerCase().includes(q)||d[1].includes(q));renderList('dailyList',f);}
+function filterDict(){let q=document.getElementById('dictSearch').value.toLowerCase();let f=dictData.filter(d=>d[0].toLowerCase().includes(q)||d[1].includes(q));renderList('dictList',f);}
+function startVoiceTranslate(){let rec=new(window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='ar-EG';rec.start();document.getElementById('voiceRes').innerText='اسمعك...';rec.onresult=(e)=>{let txt=e.results[0][0].transcript;document.getElementById('voiceRes').innerText='سمعت: '+txt;speak(txt,'ar-EG');setTimeout(()=>speak(txt,'en-US'),1000);}}
+let deferredPrompt;const btn=document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;btn.style.display='block';});
+btn.addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;btn.style.display='none';}});
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
+</script>
 </body>
 </html>
