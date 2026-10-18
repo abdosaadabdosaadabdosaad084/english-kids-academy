@@ -22,10 +22,9 @@ body {
     background-color: var(--bg-main);
     color: var(--text-light);
     min-height: 100vh;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
 }
 
-/* Pin Screen Overlay */
 #pin-overlay {
     position: fixed;
     top: 0;
@@ -44,7 +43,7 @@ body {
 
 .pin-box {
     background: var(--card-bg);
-    padding: 30px;
+    padding: 25px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     max-width: 350px;
@@ -60,12 +59,12 @@ body {
 .pin-box p {
     color: var(--text-dim);
     font-size: 0.9rem;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .pin-input {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     font-size: 1.5rem;
     text-align: center;
     letter-spacing: 5px;
@@ -81,8 +80,8 @@ body {
     background: linear-gradient(135deg, var(--accent-green), #049a73);
     color: #fff;
     border: none;
-    padding: 12px 25px;
-    font-size: 1.1rem;
+    padding: 10px 20px;
+    font-size: 1rem;
     font-weight: bold;
     border-radius: 12px;
     cursor: pointer;
@@ -101,37 +100,29 @@ body {
     display: none;
 }
 
-/* Install Banner */
 #install-banner {
     background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-    padding: 12px 20px;
+    padding: 8px 15px;
     display: none;
     justify-content: space-between;
     align-items: center;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-#install-banner span {
-    font-weight: bold;
-    font-size: 0.95rem;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .btn-install-banner {
     background: var(--accent-yellow);
     color: #1a1c2e;
     border: none;
-    padding: 6px 15px;
-    border-radius: 8px;
+    padding: 5px 12px;
+    border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
 }
 
-/* App Layout */
 header {
     background: var(--card-bg);
-    padding: 15px 20px;
+    padding: 10px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -141,82 +132,27 @@ header {
     z-index: 100;
 }
 
-.logo-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
 .logo-title h1 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--accent-yellow);
-}
-
-.points-badge {
-    background: rgba(255, 209, 102, 0.2);
-    border: 1px solid var(--accent-yellow);
-    padding: 5px 12px;
-    border-radius: 20px;
-    color: var(--accent-yellow);
-    font-weight: bold;
-    font-size: 0.9rem;
 }
 
 .container {
-    padding: 20px;
+    padding: 10px 12px;
     max-width: 800px;
     margin: 0 auto;
-}
-
-.stage-selector {
-    background: var(--card-bg);
-    border-radius: 15px;
-    padding: 15px;
-    margin-bottom: 20px;
-    text-align: center;
-    border: 1px dashed var(--accent-purple);
-}
-
-.stage-selector h3 {
-    margin-bottom: 10px;
-    font-size: 1rem;
-    color: var(--accent-yellow);
-}
-
-.stage-btns {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.stage-btn {
-    background: #1f223c;
-    color: var(--text-dim);
-    border: 1px solid #3d4168;
-    padding: 8px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 0.85rem;
-}
-
-.stage-btn.active {
-    background: var(--accent-purple);
-    color: #fff;
-    border-color: var(--accent-purple);
-    font-weight: bold;
 }
 
 .grid-menu {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 8px;
 }
 
 .card-menu {
     background: var(--card-bg);
-    border-radius: 18px;
-    padding: 20px 15px;
+    border-radius: 12px;
+    padding: 10px 8px;
     text-align: center;
     cursor: pointer;
     transition: 0.2s;
@@ -225,7 +161,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 4px;
 }
 
 .card-menu:active {
@@ -233,17 +169,17 @@ header {
 }
 
 .card-icon {
-    font-size: 2.2rem;
+    font-size: 1.6rem;
 }
 
 .card-title {
     font-weight: bold;
     color: var(--text-light);
-    font-size: 1.05rem;
+    font-size: 0.95rem;
 }
 
 .card-desc {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-dim);
 }
 
@@ -259,66 +195,69 @@ header {
     background: #2d3154;
     color: #fff;
     border: none;
-    padding: 8px 15px;
-    border-radius: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
     cursor: pointer;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    width: 100%;
+    font-weight: bold;
 }
 
 .alphabet-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    direction: ltr;
 }
 
 .letter-card {
     background: var(--card-bg);
     border: 1px solid var(--accent-blue);
-    border-radius: 12px;
-    padding: 15px 5px;
+    border-radius: 10px;
+    padding: 10px 5px;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: var(--accent-yellow);
     cursor: pointer;
 }
 
-/* Drawing Canvas / السبورة التفاعلية */
 .canvas-card {
     background: var(--card-bg);
-    padding: 20px;
-    border-radius: 20px;
+    padding: 12px;
+    border-radius: 15px;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 12px;
     border: 2px solid var(--accent-yellow);
 }
 
 #draw-canvas {
     background: #000;
-    border-radius: 15px;
+    border-radius: 12px;
     border: 2px dashed var(--accent-green);
     touch-action: none;
-    margin: 15px 0;
+    margin: 10px 0;
     cursor: crosshair;
 }
 
 .canvas-controls {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
 }
 
 .word-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .word-card {
     background: var(--card-bg);
-    padding: 15px;
-    border-radius: 12px;
+    padding: 12px;
+    border-radius: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -327,27 +266,27 @@ header {
 }
 
 .word-en {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: var(--accent-yellow);
 }
 
 .word-ar {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-dim);
 }
 
 .interactive-card {
     background: var(--card-bg);
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
 }
 
 .interactive-card input {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
+    margin: 8px 0;
     border-radius: 8px;
     border: 1px solid var(--accent-blue);
     background: #121324;
