@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فيديوهات تعليمية 5 ثواني</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080818;color:#fff;font-family:'Tajawal'}
+header{position:sticky;top:0;z-index:10;background:#11112a;padding:12px;display:flex;justify-content:space-between;border-bottom:1px solid #222}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+.videoCard{background:#1a1a32;border:1.5px solid #333;border-radius:16px;overflow:hidden;cursor:pointer;min-height:180px}
+.thumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:48px;background:radial-gradient(circle at 30% 30%,#2a2a5a,#151530);position:relative}
+.thumb .letter{font-size:64px;font-weight:800}
+.playBtn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.6);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.progress{height:4px;background:#333}.progressBar{height:100%;background:linear-gradient(90deg,#06d6a0,#118ab2);width:0%}
+.videoCard.playing{border-color:#06d6a0;box-shadow:0 0 15px rgba(6,214,160,.4)}
+.info{padding:8px 10px}.info .en{font-weight:800;font-size:14px}.info .ar{font-size:12px;opacity:.7}
+.filterBar{display:flex;gap:6px;overflow-x:auto;padding:10px}
+.filter{flex:0 0 auto;padding:8px 14px;border-radius:20px;background:#1a1a32;border:1px solid #333;font-size:12px;cursor:pointer}
+.filter.active{background:#06d6a0;color:#000;font-weight:800}
+</style>
+</head>
+<body>
+<header><div>🎬 <b>فيديوهات 5 ثواني</b></div><div><a href="index.html" style="color:#06d6a0">⬅ الأكاديمية</a></div></header>
+<div class="filterBar" id="filterBar"></div>
+<div class="grid" id="grid"></div>
+<script>
+function speak(t,l){let u=new SpeechSynthesisUtterance(t);u.lang=l||'en-US';u.rate=0.85;speechSynthesis.speak(u);}
+const videos=[
+...Array.from({length:26},(_,i)=>{let L=String.fromCharCode(65+i);let map={A:['Apple','تفاحة','🍎'],B:['Ball','كرة','⚽'],C:['Cat','قطة','🐱'],D:['Dog','كلب','🐶'],E:['Elephant','فيل','🐘'],F:['Fish','سمكة','🐟'],G:['Goat','ماعز','🐐'],H:['House','منزل','🏠'],I:['Ice cream','آيس كريم','🍦'],J:['Juice','عصير','🧃'],K:['Kite','طائرة ورقية','🪁'],L:['Lion','أسد','🦁'],M:['Moon','قمر','🌙'],N:['Nest','عش','🪹'],O:['Orange','برتقالة','🍊'],P:['Pen','قلم','🖊️'],Q:['Queen','ملكة','👸'],R:['Rabbit','أرنب','🐰'],S:['Sun','شمس','☀️'],T:['Tree','شجرة','🌳'],U:['Umbrella','مظلة','☂️'],V:['Van','شاحنة','🚐'],W:['Water','ماء','💧'],X:['Box','صندوق','📦'],Y:['Yellow','أصفر','💛'],Z:['Zebra','حمار وحشي','🦓']}[L];return {id:L,cat:'حروف',en:L+' - '+map[0],ar:map[1],emoji:map[2],speak:L+' for '+map[0]}}),
+...Array.from({length:21},(_,i)=>({id:'N'+i,cat:'أرقام',en:i+'',ar:['صفر','واحد','اثنان','ثلاثة','أربعة','خمسة','ستة','سبعة','ثمانية','تسعة','عشرة','أحد عشر','اثنا عشر','ثلاثة عشر','أربعة عشر','خمسة عشر','ستة عشر','سبعة عشر','ثمانية عشر','تسعة عشر','عشرون'][i],emoji:'🔢',speak:''+i})),
+...[['Red','أحمر','🔴'],['Blue','أزرق','🔵'],['Green','أخضر','🟢'],['Yellow','أصفر','🟡']].map(c=>({id:c[0],cat:'ألوان',en:c[0],ar:c[1],emoji:c[2],speak:c[0]})),
+...[['Cat','قطة','🐱'],['Dog','كلب','🐶'],['Lion','أسد','🦁'],['Cow','بقرة','🐄'],['Fish','سمكة','🐟']].map(a=>({id:a[0],cat:'حيوانات',en:a[0],ar:a[1],emoji:a[2],speak:a[0]})),
+...[['Father','أب','👨'],['Mother','أم','👩'],['Family','عائلة','👨‍👩‍👧‍👦']].map(a=>({id:a[0],cat:'عائلة',en:a[0],ar:a[1],emoji:a[2],speak:a[0]})),
+...[['Book','كتاب','📚'],['School','مدرسة','🏫']].map(a=>({id:a[0],cat:'مدرسة',en:a[0],ar:a[1],emoji:a[2],speak:a[0]})),
+...[['Car','سيارة','🚗'],['House','منزل','🏠'],['Sun','شمس','☀️']].map(a=>({id:a[0],cat:'شارع',en:a[0],ar:a[1],emoji:a[2],speak:a[0]}))
+];
+const cats=['الكل','حروف','أرقام','ألوان','حيوانات','عائلة','مدرسة','شارع'];let active='الكل';
+function renderFilters(){document.getElementById('filterBar').innerHTML=cats.map(c=>`<div class="filter ${c===active?'active':''}" onclick="setCat('${c}')">${c}</div>`).join('');}
+function setCat(c){active=c;renderFilters();renderGrid();}
+function renderGrid(){let f=active==='الكل'?videos:videos.filter(v=>v.cat===active);document.getElementById('grid').innerHTML=f.map(v=>`<div class="videoCard" id="card-${v.id}" onclick="playVideo('${v.id}')"><div class="thumb"><div style="font-size:50px">${v.emoji}</div><div class="playBtn">▶️</div></div><div class="progress"><div class="progressBar" id="bar-${v.id}"></div></div><div class="info"><div class="en">${v.en}</div><div class="ar">${v.ar}</div></div></div>`).join('');}
+let current=null;
+function playVideo(id){let v=videos.find(x=>x.id===id);let card=document.getElementById('card-'+id);let bar=document.getElementById('bar-'+id);if(current){document.getElementById('card-'+current)?.classList.remove('playing');}current=id;card.classList.add('playing');bar.style.width='0%';void bar.offsetWidth;bar.style.transition='width 5s linear';bar.style.width='100%';speak(v.speak||v.en);setTimeout(()=>{card.classList.remove('playing');bar.style.transition='none';bar.style.width='0%';let list=active==='الكل'?videos:videos.filter(x=>x.cat===active);let idx=list.findIndex(x=>x.id===id);if(idx>=0 && idx<list.length-1){playVideo(list[idx+1].id);}},5000);}
+renderFilters();renderGrid();
+</script>
+</body>
+</html>
