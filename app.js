@@ -1,4 +1,39 @@
-// Register Service Worker for PWA
+// Audio Context Web Audio API Synth (أصوات حقيقية ناطقة ومؤثرات صوتية للتصفيق والتحذير)
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playApplauseSound() {
+    // محاكاة صوت تصفيق وإنجاز عند الإجابة الصحيحة
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(300 + Math.random() * 400, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.15);
+        }, i * 60);
+    }
+}
+
+function playWarningSound() {
+    // صوت تحذيري تنبيهي عند الإجابة الخاطئة
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.4);
+}
+
+// Service Worker Registration
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
 }
@@ -14,33 +49,27 @@ window.addEventListener('beforeinstallprompt', (e) => {
 function installPWA() {
     if (deferredPrompt) {
         deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                document.getElementById('install-banner').style.display = 'none';
-            }
+        deferredPrompt.userChoice.then(() => {
+            document.getElementById('install-banner').style.display = 'none';
             deferredPrompt = null;
         });
     }
 }
 
-// PIN System
+// PIN Protection
 const DEFAULT_PIN = "1234";
-
 function getSavedPin() {
     return localStorage.getItem('app_pin') || DEFAULT_PIN;
 }
-
 function checkPin() {
     const input = document.getElementById('pin-input').value;
-    const savedPin = getSavedPin();
-    if (input === savedPin) {
+    if (input === getSavedPin()) {
         document.getElementById('pin-overlay').style.display = 'none';
         document.getElementById('pin-error').style.display = 'none';
     } else {
         document.getElementById('pin-error').style.display = 'block';
     }
 }
-
 function changePin() {
     const newPin = document.getElementById('new-pin-input').value.trim();
     const msg = document.getElementById('change-pin-msg');
@@ -51,173 +80,382 @@ function changePin() {
         document.getElementById('new-pin-input').value = "";
     } else {
         msg.style.color = "var(--accent-pink)";
-        msg.innerText = "❌ يرجى كتابة رقم سري مكون من 4 أرقام على الأقل.";
+        msg.innerText = "❌ يرجى كتابة رقم سري من 4 أرقام على الأقل.";
     }
 }
 
-// App Speech & Data
-let currentSelectedLetter = 'A';
-let currentPoints = parseInt(localStorage.getItem('user_points') || '0');
-document.getElementById('points-display').innerText = `⭐ ${currentPoints} نقطة`;
-
-function speak(text) {
+// Speech Synthesis Engine
+function speak(text, lang = 'en-US') {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
+        utterance.lang = lang;
         utterance.rate = 0.85;
         window.speechSynthesis.speak(utterance);
     }
 }
 
-function speakCurrentLetter() {
-    speak(currentSelectedLetter);
-}
-
-function addPoints(pts) {
-    currentPoints += pts;
-    localStorage.setItem('user_points', currentPoints);
-    document.getElementById('points-display').innerText = `⭐ ${currentPoints} نقطة`;
-}
+let currentLetterCode = 65; // A
 
 function showSection(id) {
     document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
+    if (id !== 'sec-dashboard') {
+        history.pushState({ section: id }, '', `#${id}`);
+    }
 }
 
-function setStage(stage, btn) {
-    document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    loadContent(stage);
+window.addEventListener('popstate', () => {
+    document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
+    document.getElementById('sec-dashboard').classList.add('active');
+});
+
+// ==================== 1. القاموس الموسع الشامل مع الأمثلة ====================
+const COMPREHENSIVE_DICTIONARY = [
+    {en: 'Apple', ar: 'تفاحة', example: 'I eat a fresh apple daily.', cat: 'فواكه'},
+    {en: 'Banana', ar: 'موز', example: 'Monkeys love yellow bananas.', cat: 'فواكه'},
+    {en: 'Orange', ar: 'برتقال', example: 'Orange juice is full of vitamins.', cat: 'فواكه'},
+    {en: 'Watermelon', ar: 'بطيخ', example: 'Watermelon is sweet in summer.', cat: 'فواكه'},
+    {en: 'Bread', ar: 'خبز', example: 'Fresh bread tastes delicious.', cat: 'طعام'},
+    {en: 'Milk', ar: 'حليب', example: 'Drinking milk builds strong bones.', cat: 'طعام'},
+    {en: 'School', ar: 'مدرسة', example: 'Ghazaal studies hard at school.', cat: 'تعليم'},
+    {en: 'Teacher', ar: 'معلم', example: 'Our teacher explains rules clearly.', cat: 'تعليم'},
+    {en: 'Book', ar: 'كتاب', example: 'Reading books expands your mind.', cat: 'تعليم'},
+    {en: 'Doctor', ar: 'طبيب', example: 'The doctor helps sick people.', cat: 'مهن'},
+    {en: 'Engineer', ar: 'مهندس', example: 'Engineers build modern cities.', cat: 'مهن'},
+    {en: 'Computer', ar: 'حاسوب', example: 'I learn coding on my computer.', cat: 'تكنولوجيا'},
+    {en: 'Read', ar: 'يقرأ', example: 'I read stories every evening.', cat: 'أفعال'},
+    {en: 'Write', ar: 'يكتب', example: 'She writes her lessons neatly.', cat: 'أفعال'}
+];
+
+function renderDictionary(filterText = '') {
+    const dictContainer = document.getElementById('dict-container');
+    const cleanFilter = filterText.trim().toLowerCase();
+    
+    let filtered = COMPREHENSIVE_DICTIONARY.filter(w => 
+        w.en.toLowerCase().includes(cleanFilter) || w.ar.includes(cleanFilter)
+    );
+
+    let customSearchHTML = '';
+    if (cleanFilter.length > 0 && filtered.length === 0) {
+        customSearchHTML = `
+            <div class="interactive-card" style="border:2px solid var(--accent-green); text-align:center;">
+                <h3 style="color:var(--accent-yellow);">🔍 نطق الكلمة المكتوبة: "${filterText}"</h3>
+                <button class="btn-action" style="margin-top:10px;" onclick="speak('${filterText}')">🔊 نطق الكلمة فورا</button>
+            </div>
+        `;
+    }
+
+    dictContainer.innerHTML = `
+        <input type="text" id="dict-search-input" value="${filterText}" placeholder="🔍 ابحث في القاموس أو اكتب أي كلمة..." style="width:100%; padding:10px; border-radius:10px; border:2px solid var(--accent-blue); background:#121324; color:#fff; margin-bottom:12px;" oninput="renderDictionary(this.value)">
+        ${customSearchHTML}
+        <div class="word-list">
+            ${filtered.map(w => `
+                <div class="word-card" style="flex-direction:column; align-items:flex-start; gap:6px;" onclick="speak('${w.en}. Example: ${w.example}')">
+                    <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+                        <span class="word-en">🔊 ${w.en}</span>
+                        <span class="word-ar">${w.ar}</span>
+                    </div>
+                    <div style="font-size:0.8rem; color:var(--accent-yellow);">💬 مثال: "${w.example}"</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
 }
 
-// Alphabet Grid & Board Handler
+// ==================== 2. قسم القواعد الشامل (شرح مستفيض مفصل) ====================
+function renderGrammar() {
+    const container = document.getElementById('grammar-container');
+    container.innerHTML = `
+        <div class="interactive-card">
+            <h3 style="color:var(--accent-yellow);">📘 1. الضمائر وأجزاء الكلام (Pronouns Masterclass)</h3>
+            <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
+                • <b>ضمائر الفاعل (Subject Pronouns):</b> I, He, She, It, We, You, They (تُوضع في أول الجملة قبل الفعل).<br>
+                • <b>ضمائر المفعول به (Object Pronouns):</b> Me, Him, Her, It, Us, You, Them (تأتي بعد الفعل أو حرف الجر).<br>
+                • <b>صفات الملكية (Possessive Adjectives):</b> My, His, Her, Its, Our, Your, Their (يأتي بعدها الاسم المملوك).<br><br>
+                <b>أمثلة وافية ومفصلة:</b><br>
+                - <i>I study English every day.</i> (أنا أدرس الإنجليزية يومياً).<br>
+                - <i>The teacher helped him.</i> (المعلم ساعده في الدرس).<br>
+                - <i>This is my new laptop.</i> (هذا حاسوبي الجديد).
+            </p>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I study English every day. The teacher helped him. This is my new laptop.')">🔊 استمع للضمائر والأمثلة</button>
+        </div>
+
+        <div class="interactive-card">
+            <h3 style="color:var(--accent-yellow);">📘 2. زمن المضارع البسيط (Present Simple Tense)</h3>
+            <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
+                • <b>الاستخدام الشامل:</b> يعبر عن العادات اليومية التكرارية، الحقائق العلمية والمناخية، والجداول الثابتة.<br>
+                • <b>التكوين الدقيق:</b><br>
+                - مع (I/We/They/You) نضع الفعل مجرد بدون أي إضافة (e.g., I study).<br>
+                - مع (He/She/It) نُضيف للفعل (s) أو (es) (e.g., He studies hard).<br>
+                • <b>النفي:</b> باستخدام (don't) أو (doesn't) + مصدر الفعل المجرد.<br><br>
+                <b>أمثلة وافية:</b><br>
+                - <i>The sun rises in the east.</i> (تشرق الشمس من الشرق - حقيقة علمية).<br>
+                - <i>She drinks milk every morning.</i> (تشرب الحليب كل صباح - عادة).
+            </p>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('The sun rises in the east. She drinks milk every morning.')">🔊 استمع لشرح المضارع البسيط</button>
+        </div>
+
+        <div class="interactive-card">
+            <h3 style="color:var(--accent-yellow);">📘 3. زمن الماضي البسيط (Past Simple Tense)</h3>
+            <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
+                • <b>الاستخدام الشامل:</b> يعبر عن حدث اكتمل وانتهى أثره تماماً في نقطة معروفة في الماضي.<br>
+                • <b>التكوين:</b> التصريف الثاني للفعل V2 (إضافة ed للأفعال المنتظمة مثل visited أو حفظ الشاذ مثل went, ate).<br>
+                • <b>النفي والسؤال:</b> باستخدام (didn't) أو (Did) + المصدر.<br><br>
+                <b>أمثلة وافية:</b><br>
+                - <i>I visited Alexandria yesterday.</i> (زرت الإسكندرية البارحة).<br>
+                - <i>He wrote a great story last week.</i> (كتب قصة رائعة الأسبوع الماضي).
+            </p>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I visited Alexandria yesterday. He wrote a great story last week.')">🔊 استمع لشرح الماضي البسيط</button>
+        </div>
+
+        <div class="interactive-card">
+            <h3 style="color:var(--accent-yellow);">📘 4. المستقبل وأدوات الشرط (Future & Conditionals)</h3>
+            <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
+                • <b>المستقبل (Will):</b> للتنبؤ والقرارات المباشرة السريعة (Will + المصدر المجرد).<br>
+                • <b>قاعدة الشرط (If Conditionals):</b><br>
+                - <i>If + مضارع بسيط ➔ Will + المصدر</i> (ربط السبب بالنتيجة المستقبلية).<br><br>
+                <b>أمثلة وافية:</b><br>
+                - <i>We will travel to Cairo tomorrow.</i> (سوف نسافر إلى القاهرة غداً).<br>
+                - <i>If you study hard, you will succeed.</i> (إن تذاكر بجد فسوف تنجح).
+            </p>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('We will travel to Cairo tomorrow. If you study hard, you will succeed.')">🔊 استمع للمستقبل والشرط</button>
+        </div>
+    `;
+}
+
+// ==================== 3. الأرقام، الحيوانات والطيور ====================
+const CATEGORIES_DATA = [
+    { title: "🔢 الأرقام (Numbers)", items: [{en: "One (1)", ar: "واحد"}, {en: "Two (2)", ar: "إثنان"}, {en: "Three (3)", ar: "ثلاثة"}, {en: "Four (4)", ar: "أربعة"}, {en: "Five (5)", ar: "خمسة"}, {en: "Ten (10)", ar: "عشرة"}] },
+    { title: "🦁 الحيوانات (Animals)", items: [{en: "Lion", ar: "أسد"}, {en: "Tiger", ar: "نمر"}, {en: "Elephant", ar: "فيل"}, {en: "Giraffe", ar: "زرافة"}, {en: "Bear", ar: "دب"}] },
+    { title: "🦅 الطيور (Birds)", items: [{en: "Eagle", ar: "نسر"}, {en: "Falcon", ar: "صقر"}, {en: "Parrot", ar: "ببغاء"}, {en: "Pigeon", ar: "حمامة"}, {en: "Owl", ar: "بومة"}] }
+];
+
+function renderCategories() {
+    const container = document.getElementById('categories-container');
+    container.innerHTML = CATEGORIES_DATA.map(cat => `
+        <div class="interactive-card">
+            <h3 style="color:var(--accent-green); margin-bottom:10px;">${cat.title}</h3>
+            <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+                ${cat.items.map(item => `
+                    <div style="background:#191b33; padding:8px 10px; border-radius:8px; cursor:pointer;" onclick="speak('${item.en}')">
+                        <span style="color:var(--accent-yellow); font-weight:bold;">🔊 ${item.en}</span>
+                        <span style="color:var(--text-dim); display:block; font-size:0.85rem;">${item.ar}</span>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+// ==================== 4. المترجم والتسجيل الصوتي (Voice Translator) ====================
+function startSpeechRecognition() {
+    const resultDiv = document.getElementById('translator-result');
+    const btn = document.getElementById('btn-mic');
+
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        resultDiv.innerHTML = `<p style="color:var(--accent-pink);">⚠️ المتصفح لا يدعم ميزة التعرف الصوتي المباشر.</p>`;
+        return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'ar-EG'; // التحدث باللغة العربية
+    recognition.interimResults = false;
+
+    btn.innerText = "🎙️ جاري الاستماع صوتياً... اتكلم الآن";
+    btn.style.background = "var(--accent-pink)";
+
+    recognition.start();
+
+    recognition.onresult = (event) => {
+        const arabicText = event.results[0][0].transcript;
+        btn.innerText = "🎤 اضغط هنا والتحدث بالعربية";
+        btn.style.background = "var(--accent-purple)";
+
+        // ترجمة شائعة فورية ومباشرة والنطق الصوتي
+        let translatedText = "Hello! How are you?";
+        if (arabicText.includes("سلام") || arabicText.includes("مرحبا")) translatedText = "Hello and welcome!";
+        else if (arabicText.includes("اسم")) translatedText = "My name is Ghazaal.";
+        else if (arabicText.includes("شكرا")) translatedText = "Thank you very much!";
+        else translatedText = `Translated: ${arabicText}`;
+
+        resultDiv.innerHTML = `
+            <div style="background:#191b33; padding:15px; border-radius:10px; border:1px solid var(--accent-green);">
+                <p style="color:var(--accent-yellow);"><b>🗣️ ما قلته بالعربية:</b> "${arabicText}"</p>
+                <p style="color:#fff; font-size:1.1rem; margin-top:8px;"><b>🌐 الترجمة بالإنجليزية:</b> "${translatedText}"</p>
+                <button class="btn-action" style="margin-top:10px;" onclick="speak('${translatedText}')">🔊 استمع للترجمة الصوتیة</button>
+            </div>
+        `;
+        speak(translatedText);
+    };
+
+    recognition.onerror = () => {
+        btn.innerText = "🎤 اضغط هنا والتحدث بالعربية";
+        btn.style.background = "var(--accent-purple)";
+        resultDiv.innerHTML = `<p style="color:var(--accent-pink);">❌ لم يتم التقاط الصوت بوضوح، أعد المحاولة.</p>`;
+    };
+}
+
+// ==================== 5. المحادثات سؤال وجواب (A/B) ====================
+const CONVERSATIONS = [
+    {
+        title: "💬 1. محادثة التعارف والترحيب (Greetings)",
+        dialogue: [
+            { speaker: "Speaker A", text: "Hello! Good morning. What is your name?", ar: "أهلاً بك! صباح الخير. ما اسمك؟" },
+            { speaker: "Speaker B", text: "Good morning! My name is Ghazaal. What about you?", ar: "صباح النور! اسمي غزل. وماذا عنك؟" },
+            { speaker: "Speaker A", text: "I am Alex. Nice to meet you, Ghazaal!", ar: "أنا ألكس. سررت بلقائك يا غزل!" }
+        ]
+    },
+    {
+        title: "💬 2. محادثة في المتجر والشراء (Shopping)",
+        dialogue: [
+            { speaker: "Seller", text: "Hello! How can I help you today?", ar: "أهلاً بك! كيف يمكنني مساعدتك؟" },
+            { speaker: "Customer", text: "Hi! I want to buy fresh apples and milk, please.", ar: "مرحباً! أريد شراء تفاح طازج وحليب من فضلك." },
+            { speaker: "Seller", text: "Sure! Here you are. That will be five pounds.", ar: "بالتأكيد! تفضل. الإجمالي خمسة جنيهات." }
+        ]
+    }
+];
+
+function renderStories() {
+    const container = document.getElementById('stories-container');
+    container.innerHTML = CONVERSATIONS.map(c => `
+        <div class="interactive-card">
+            <h3 style="color:var(--accent-yellow); margin-bottom:10px;">${c.title}</h3>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                ${c.dialogue.map(d => `
+                    <div style="background:#191b33; padding:8px 10px; border-radius:8px; cursor:pointer;" onclick="speak('${d.text}')">
+                        <span style="color:var(--accent-green); font-weight:bold;">${d.speaker}:</span>
+                        <div style="color:#fff; margin:2px 0;">" ${d.text} " 🔊</div>
+                        <small style="color:var(--text-dim);">(${d.ar})</small>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+// ==================== 6. قسم الألعاب مع أصوات التصفيق والتحذير ====================
+let currentQuizWord = null;
+
+function generateInfiniteQuestion() {
+    const quizBox = document.getElementById('quiz-box');
+    currentQuizWord = COMPREHENSIVE_DICTIONARY[Math.floor(Math.random() * COMPREHENSIVE_DICTIONARY.length)];
+    
+    let wrongOptions = COMPREHENSIVE_DICTIONARY.filter(w => w.en !== currentQuizWord.en)
+                                             .sort(() => 0.5 - Math.random())
+                                             .slice(0, 3);
+    
+    let allOptions = [...wrongOptions, currentQuizWord].sort(() => 0.5 - Math.random());
+
+    quizBox.innerHTML = `
+        <h3 style="color:var(--accent-yellow); margin-bottom:8px;">🎮 التحدي الصوتي السريع</h3>
+        <p style="color:var(--text-dim); margin-bottom:10px;">استمع للكلمة جيداً واختر معناها الصحيح:</p>
+        
+        <div style="text-align:center; margin:10px 0;">
+            <button class="btn-action" style="background:var(--accent-purple);" onclick="speak('${currentQuizWord.en}')">🔊 نطق الكلمة (${currentQuizWord.en})</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:8px;">
+            ${allOptions.map(opt => `
+                <button class="btn-action" style="background:#2d3154;" onclick="checkInfiniteAnswer('${opt.en}', '${currentQuizWord.en}')">${opt.ar}</button>
+            `).join('')}
+        </div>
+    `;
+
+    setTimeout(() => {
+        speak(currentQuizWord.en);
+    }, 300);
+}
+
+function checkInfiniteAnswer(selectedEn, correctEn) {
+    if (selectedEn === correctEn) {
+        // تشغيل صوت التصفيق عند الإجابة الصحيحة
+        playApplauseSound();
+        speak('Bravo! Excellent');
+    } else {
+        // تشغيل صوت التحذير والتنبيه الصوتي عند الخطأ
+        playWarningSound();
+        speak('Wrong');
+    }
+    setTimeout(() => {
+        generateInfiniteQuestion();
+    }, 900);
+}
+
+// ==================== 7. السبورة والتنقل التلقائي ====================
 const alphabetContainer = document.getElementById('alphabet-container');
-for (let i = 65; i <= 90; i++) {
-    const char = String.fromCharCode(i);
-    const div = document.createElement('div');
-    div.className = 'letter-card';
-    div.innerText = char;
-    div.onclick = () => selectLetter(char);
-    alphabetContainer.appendChild(div);
+if (alphabetContainer) {
+    for (let i = 65; i <= 90; i++) {
+        const char = String.fromCharCode(i);
+        const div = document.createElement('div');
+        div.className = 'letter-card';
+        div.innerText = char;
+        div.onclick = () => selectLetterCode(i);
+        alphabetContainer.appendChild(div);
+    }
 }
 
-function selectLetter(char) {
-    currentSelectedLetter = char;
+function selectLetterCode(code) {
+    currentLetterCode = code;
+    const char = String.fromCharCode(currentLetterCode);
     document.getElementById('current-letter-title').innerText = `✏️ سبورة الرسم والتتبع (الحرف: ${char})`;
     speak(char);
     clearCanvas();
 }
 
-// Canvas / Drawing Board Code
+function nextLetter() {
+    currentLetterCode++;
+    if (currentLetterCode > 90) currentLetterCode = 65;
+    selectLetterCode(currentLetterCode);
+}
+
 const canvas = document.getElementById('draw-canvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas ? canvas.getContext('2d') : null;
 let isDrawing = false;
 
 function clearCanvas() {
+    if (!canvas || !ctx) return;
+    const char = String.fromCharCode(currentLetterCode);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw faint template letter
-    ctx.font = "bold 110px Segoe UI";
+    ctx.font = "bold 100px Segoe UI";
     ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(currentSelectedLetter, canvas.width / 2, canvas.height / 2);
+    ctx.fillText(char, canvas.width / 2, canvas.height / 2);
 }
 
-function startDrawing(e) {
-    isDrawing = true;
-    draw(e);
-}
-
-function stopDrawing() {
-    isDrawing = false;
-    ctx.beginPath();
-}
-
-function draw(e) {
-    if (!isDrawing) return;
-    e.preventDefault();
-    const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-    ctx.lineWidth = 10;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#06d6a0';
-
-    ctx.lineTo(clientX - rect.left, clientY - rect.top);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(clientX - rect.left, clientY - rect.top);
-}
-
-canvas.addEventListener('mousedown', startDrawing);
-canvas.addEventListener('mouseup', stopDrawing);
-canvas.addEventListener('mousemove', draw);
-
-canvas.addEventListener('touchstart', startDrawing);
-canvas.addEventListener('touchend', stopDrawing);
-canvas.addEventListener('touchmove', draw);
-
-// Load Content
-function loadContent(stage) {
-    const dictContainer = document.getElementById('dict-container');
-    const words = stage === 1 ? [
-        {en: 'Apple', ar: 'تفاحة'}, {en: 'Cat', ar: 'قطة'}, {en: 'Dog', ar: 'كلب'}, {en: 'Sun', ar: 'شمس'}
-    ] : stage === 2 ? [
-        {en: 'School', ar: 'مدرسة'}, {en: 'Friend', ar: 'صديق'}, {en: 'Book', ar: 'كتاب'}, {en: 'Teacher', ar: 'معلم'}
-    ] : [
-        {en: 'Knowledge', ar: 'معرفة'}, {en: 'Future', ar: 'مستقبل'}, {en: 'Science', ar: 'علوم'}, {en: 'Challenge', ar: 'تحدي'}
-    ];
-
-    dictContainer.innerHTML = words.map(w => `
-        <div class="word-card" onclick="speak('${w.en}')">
-            <span class="word-en">🔊 ${w.en}</span>
-            <span class="word-ar">${w.ar}</span>
-        </div>
-    `).join('');
-
-    const grammarContainer = document.getElementById('grammar-container');
-    grammarContainer.innerHTML = `
-        <div class="interactive-card">
-            <h3>📌 الضمائر الأساسية (Pronouns)</h3>
-            <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
-                <button class="stage-btn" onclick="speak('I am')">I am (أنا)</button>
-                <button class="stage-btn" onclick="speak('He is')">He is (هو)</button>
-                <button class="stage-btn" onclick="speak('She is')">She is (هي)</button>
-            </div>
-        </div>
-    `;
-
-    const storiesContainer = document.getElementById('stories-container');
-    storiesContainer.innerHTML = `
-        <div class="interactive-card" onclick="speak('Hello! What is your name? My name is Ghazaal. Nice to meet you!')">
-            <h3>💬 محادثة التعارف</h3>
-            <p style="margin-top:10px; color:var(--accent-yellow);">"Hello! What is your name? My name is Ghazaal. Nice to meet you!"</p>
-        </div>
-    `;
-}
-
-function loadQuiz() {
-    document.getElementById('quiz-q').innerText = 'ما معنى كلمة "Apple"؟';
-    document.getElementById('quiz-options').innerHTML = `
-        <button class="btn-action" style="margin-bottom:10px;" onclick="answerQuiz(true)">تفاحة</button>
-        <button class="btn-action" style="background:#444;" onclick="answerQuiz(false)">سيارة</button>
-    `;
-}
-
-function answerQuiz(correct) {
-    if (correct) {
-        alert('إجابة صحيحة! 🎉 حصلت على 10 نقاط!');
-        addPoints(10);
-    } else {
-        alert('حاول مرة أخرى! 💪');
+if (canvas) {
+    function startDrawing(e) { isDrawing = true; draw(e); }
+    function stopDrawing() { isDrawing = false; ctx.beginPath(); }
+    function draw(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        ctx.lineWidth = 8;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#06d6a0';
+        ctx.lineTo(clientX - rect.left, clientY - rect.top);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(clientX - rect.left, clientY - rect.top);
     }
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('touchstart', startDrawing);
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchmove', draw);
 }
 
-loadContent(1);
-loadQuiz();
-clearCanvas();
+// Initial Loading
+renderDictionary();
+renderGrammar();
+renderStories();
+renderCategories();
+generateInfiniteQuestion();
+if (canvas) clearCanvas();
