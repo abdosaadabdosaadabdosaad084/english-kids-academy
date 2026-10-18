@@ -1,49 +1,486 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>قاموس المورد - 1000 كلمة</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102a43">
+<title>قاموس المورد العربي الإنجليزي</title>
 <style>
-body{margin:0;background:#0a0a1a;color:#fff;font-family:'Tajawal'}
-header{padding:12px;background:#11112a;position:sticky;top:0;display:flex;justify-content:space-between}
-.searchWrap{padding:12px;position:sticky;top:48px;background:#0a0a1a}
-.searchBox{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#1c1c32;color:#fff;font-size:16px}
-.item{background:#1c1c32;border-radius:12px;padding:12px;margin:8px 12px;border:1px solid #2a2a4a;display:flex;justify-content:space-between}
-.en{font-weight:800;font-size:17px}.ar{font-size:13px;opacity:.8}
-.speakBtn{background:#252545;border:none;width:40px;height:40px;border-radius:50%}
+:root {
+  --bg:#f2f6fc; --card:#fff; --primary:#155eef;
+  --dark:#102a43; --green:#087f5b; --border:#dbe5f0;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; font-family:Tahoma,Arial,sans-serif;
+  background:var(--bg); color:var(--dark); line-height:1.8;
+}
+header {
+  background:linear-gradient(135deg,#102a43,#155eef);
+  color:white; text-align:center; padding:25px 15px;
+}
+header h1 { margin:0 0 6px; font-size:27px; }
+header p { margin:0; }
+.container { width:min(100% - 24px,900px); margin:18px auto; }
+.panel {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:16px; margin-bottom:15px;
+  box-shadow:0 4px 14px #102a4310;
+}
+input,select,button {
+  font:inherit; border-radius:10px; padding:11px;
+}
+input,select {
+  border:1px solid #cbd5e1; background:white; width:100%;
+  margin:5px 0 10px;
+}
+button {
+  border:0; background:var(--primary); color:white;
+  cursor:pointer; font-weight:bold;
+}
+button:active { transform:scale(.98); }
+.tools { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.stats { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.stat {
+  background:#e8f0ff; color:#174ea6; padding:7px 12px;
+  border-radius:20px; font-size:14px;
+}
+.word {
+  background:white; border:1px solid var(--border);
+  border-radius:13px; padding:13px; margin:9px 0;
+}
+.word-top { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.english { color:#155eef; font-size:21px; font-weight:bold; direction:ltr; }
+.arabic { font-size:19px; font-weight:bold; color:var(--green); }
+.pron { color:#64748b; font-size:14px; }
+.word-actions { display:flex; gap:7px; margin-top:8px; flex-wrap:wrap; }
+.word-actions button { padding:6px 11px; font-size:14px; }
+.meaning { margin-top:8px; background:#f0fdf4; padding:8px; border-radius:8px; }
+.hidden { display:none; }
+footer { text-align:center; color:#64748b; padding:20px; font-size:13px; }
+#message { text-align:center; color:#64748b; padding:18px; }
+@media(min-width:650px) {
+  #results { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .word { margin:0; }
+}
 </style>
 </head>
 <body>
-<header><div>📚 قاموس المورد - 1000 كلمة</div><div><a href="index.html" style="color:#06d6a0">⬅ الأكاديمية</a></div></header>
-<div class="searchWrap">
-<input id="search" class="searchBox" placeholder="ابحث عربي أو انجليزي: تفاحة، كتاب، Apple..." oninput="filterDict()">
-<div id="stats" style="text-align:center;opacity:.6;font-size:12px;margin-top:6px"></div>
-</div>
-<div id="list"></div>
+
+<header>
+  <h1>📚 قاموس المورد العربي الإنجليزي</h1>
+  <p>ابحث عن الكلمات وتعلّم معناها واستمع إلى نطقها</p>
+</header>
+
+<main class="container">
+  <section class="panel">
+    <label for="search"><strong>🔎 ابحث بالعربية أو الإنجليزية</strong></label>
+    <input id="search" type="search"
+      placeholder="مثال: apple أو تفاحة أو book..."
+      autocomplete="off">
+
+    <div class="tools">
+      <div>
+        <label for="category">تصنيف الكلمات</label>
+        <select id="category">
+          <option value="all">جميع التصنيفات</option>
+          <option value="أساسيات">أساسيات</option>
+          <option value="الأسرة">الأسرة</option>
+          <option value="المدرسة">المدرسة</option>
+          <option value="الطعام">الطعام</option>
+          <option value="الحيوانات">الحيوانات</option>
+          <option value="الألوان">الألوان</option>
+          <option value="الأرقام">الأرقام</option>
+          <option value="الطبيعة">الطبيعة</option>
+          <option value="الأفعال">الأفعال</option>
+          <option value="الصفات">الصفات</option>
+          <option value="الوقت">الوقت</option>
+          <option value="المنزل">المنزل</option>
+          <option value="الجسم">الجسم</option>
+          <option value="المواصلات">المواصلات</option>
+          <option value="المهن">المهن</option>
+          <option value="التقنية">التقنية</option>
+        </select>
+      </div>
+      <div>
+        <label for="sort">ترتيب النتائج</label>
+        <select id="sort">
+          <option value="default">الترتيب الأصلي</option>
+          <option value="az">إنجليزي A إلى Z</option>
+          <option value="za">إنجليزي Z إلى A</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="tools">
+      <button id="clear">مسح البحث</button>
+      <button id="showAll">عرض الكلمات</button>
+    </div>
+
+    <div class="stats">
+      <span class="stat" id="total">الكلمات: 0</span>
+      <span class="stat" id="shown">النتائج: 0</span>
+      <span class="stat" id="saved">المفضلة: 0</span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>📖 الكلمات ومعانيها</h2>
+    <p>اضغط على زر النطق لسماع الكلمة الإنجليزية، أو أظهر معناها عند الحاجة.</p>
+    <div id="results"></div>
+    <div id="message"></div>
+    <button id="more" style="display:none;width:100%;margin-top:12px">
+      عرض المزيد
+    </button>
+  </section>
+
+  <section class="panel">
+    <h3>⭐ الكلمات المفضلة</h3>
+    <p>يمكنك حفظ الكلمات المهمة والرجوع إليها لاحقًا على الجهاز نفسه.</p>
+    <button id="favorites">عرض المفضلة</button>
+    <button id="allWords" style="background:#087f5b">العودة لكل الكلمات</button>
+  </section>
+</main>
+
+<footer>
+  قاموس تعليمي عربي–إنجليزي. النطق الصوتي يعتمد على الأصوات المتاحة في جهازك.
+</footer>
+
 <script>
-const dictData = [
-["تفاحة","Apple","noun","I eat an apple"],
-["موزة","Banana","noun","Yellow banana"],
-["كتاب","Book","noun","This book is new"],
-["قطة","Cat","noun","Cute cat"],
-["كلب","Dog","noun","Loyal dog"],
-["بيت","House","noun","Big house"],
-["سيارة","Car","noun","Red car"],
-["مدرسة","School","noun","Go to school"],
-["سعيد","Happy","adj","I am happy"],
-["كبير","Big","adj","Big house"]
-// ... كمل لحد 1000 كلمة - الملف الكامل 48KB جهزتهولك
+"use strict";
+
+/*
+  تنبيه:
+  هذا الملف ينشئ قاموسًا تعليميًا من 1000 مدخل.
+  الكلمات الأساسية أدناه مترجمة يدويًا، وتُستكمل بقية المداخل
+  بعبارات تعليمية مرقمة بدلًا من اختلاق ترجمات غير صحيحة.
+  يمكن استبدال المداخل المرقمة بقائمة كلمات مترجمة موثقة.
+*/
+
+const base = [
+["hello","مرحبًا","هِلّو","أساسيات"],
+["goodbye","إلى اللقاء","جود باي","أساسيات"],
+["please","من فضلك","بليز","أساسيات"],
+["thank you","شكرًا لك","ثانك يو","أساسيات"],
+["yes","نعم","يِس","أساسيات"],
+["no","لا","نو","أساسيات"],
+["sorry","آسف","سوري","أساسيات"],
+["welcome","أهلًا وسهلًا","وِلكَم","أساسيات"],
+["friend","صديق","فريند","أساسيات"],
+["name","اسم","نيم","أساسيات"],
+["family","عائلة","فاميلي","الأسرة"],
+["father","أب","فاذَر","الأسرة"],
+["mother","أم","ماذَر","الأسرة"],
+["brother","أخ","براذَر","الأسرة"],
+["sister","أخت","سِستَر","الأسرة"],
+["son","ابن","سَن","الأسرة"],
+["daughter","ابنة","دوثَر","الأسرة"],
+["baby","طفل رضيع","بيبي","الأسرة"],
+["parents","الوالدان","بيرَنتس","الأسرة"],
+["grandfather","جد","جراند فاذَر","الأسرة"],
+["grandmother","جدة","جراند ماذَر","الأسرة"],
+["school","مدرسة","سكول","المدرسة"],
+["teacher","معلّم","تيتشر","المدرسة"],
+["student","طالب","ستيودنت","المدرسة"],
+["book","كتاب","بُك","المدرسة"],
+["pen","قلم حبر","بِن","المدرسة"],
+["pencil","قلم رصاص","بِنسِل","المدرسة"],
+["paper","ورق","بيبر","المدرسة"],
+["desk","مكتب دراسي","دِسك","المدرسة"],
+["chair","كرسي","تشير","المنزل"],
+["classroom","فصل دراسي","كلاس روم","المدرسة"],
+["apple","تفاحة","آبُل","الطعام"],
+["banana","موزة","بَنانا","الطعام"],
+["orange","برتقالة","أورِنْج","الطعام"],
+["bread","خبز","برِد","الطعام"],
+["milk","حليب","مِلك","الطعام"],
+["water","ماء","ووتر","الطعام"],
+["rice","أرز","رايس","الطعام"],
+["egg","بيضة","إج","الطعام"],
+["cheese","جبن","تشيز","الطعام"],
+["chicken","دجاج","تشيكِن","الطعام"],
+["cat","قطة","كات","الحيوانات"],
+["dog","كلب","دوج","الحيوانات"],
+["bird","طائر","بيرد","الحيوانات"],
+["fish","سمكة","فِش","الحيوانات"],
+["horse","حصان","هورس","الحيوانات"],
+["cow","بقرة","كاو","الحيوانات"],
+["sheep","خروف","شيب","الحيوانات"],
+["lion","أسد","لايَن","الحيوانات"],
+["elephant","فيل","إلِفَنت","الحيوانات"],
+["rabbit","أرنب","رابِت","الحيوانات"],
+["red","أحمر","رِد","الألوان"],
+["blue","أزرق","بلو","الألوان"],
+["green","أخضر","جرين","الألوان"],
+["yellow","أصفر","يِلّو","الألوان"],
+["black","أسود","بلاك","الألوان"],
+["white","أبيض","وايت","الألوان"],
+["brown","بني","براون","الألوان"],
+["pink","وردي","بِنك","الألوان"],
+["purple","بنفسجي","بِربُل","الألوان"],
+["gray","رمادي","جراي","الألوان"],
+["one","واحد","وَن","الأرقام"],
+["two","اثنان","تو","الأرقام"],
+["three","ثلاثة","ثري","الأرقام"],
+["four","أربعة","فور","الأرقام"],
+["five","خمسة","فايف","الأرقام"],
+["six","ستة","سِكس","الأرقام"],
+["seven","سبعة","سِفِن","الأرقام"],
+["eight","ثمانية","إيت","الأرقام"],
+["nine","تسعة","ناين","الأرقام"],
+["ten","عشرة","تِن","الأرقام"],
+["sun","شمس","سَن","الطبيعة"],
+["moon","قمر","مون","الطبيعة"],
+["star","نجمة","ستار","الطبيعة"],
+["sky","سماء","سكاي","الطبيعة"],
+["sea","بحر","سي","الطبيعة"],
+["river","نهر","رِفَر","الطبيعة"],
+["mountain","جبل","ماونتِن","الطبيعة"],
+["tree","شجرة","تري","الطبيعة"],
+["flower","زهرة","فلاوَر","الطبيعة"],
+["rain","مطر","رين","الطبيعة"],
+["go","يذهب","جو","الأفعال"],
+["come","يأتي","كَم","الأفعال"],
+["eat","يأكل","إيت","الأفعال"],
+["drink","يشرب","درينك","الأفعال"],
+["read","يقرأ","ريد","الأفعال"],
+["write","يكتب","رايت","الأفعال"],
+["speak","يتحدث","سبيك","الأفعال"],
+["listen","يستمع","لِسِن","الأفعال"],
+["learn","يتعلم","ليرن","الأفعال"],
+["play","يلعب","بلاي","الأفعال"],
+["big","كبير","بِج","الصفات"],
+["small","صغير","سمول","الصفات"],
+["happy","سعيد","هابي","الصفات"],
+["sad","حزين","ساد","الصفات"],
+["beautiful","جميل","بيوتيفُل","الصفات"],
+["easy","سهل","إيزي","الصفات"],
+["difficult","صعب","دِفِكُلت","الصفات"],
+["fast","سريع","فاست","الصفات"],
+["slow","بطيء","سلو","الصفات"],
+["strong","قوي","سترونج","الصفات"],
+["day","يوم","داي","الوقت"],
+["night","ليل","نايت","الوقت"],
+["morning","صباح","مورنينج","الوقت"],
+["evening","مساء","إيفنينج","الوقت"],
+["today","اليوم","توداي","الوقت"],
+["tomorrow","غدًا","تومورو","الوقت"],
+["yesterday","أمس","يِستَرداي","الوقت"],
+["week","أسبوع","ويك","الوقت"],
+["month","شهر","مَنث","الوقت"],
+["year","سنة","يير","الوقت"],
+["house","منزل","هاوس","المنزل"],
+["room","غرفة","روم","المنزل"],
+["door","باب","دور","المنزل"],
+["window","نافذة","وِندو","المنزل"],
+["bed","سرير","بِد","المنزل"],
+["table","طاولة","تيبُل","المنزل"],
+["kitchen","مطبخ","كِتشن","المنزل"],
+["bathroom","حمّام","باث روم","المنزل"],
+["key","مفتاح","كي","المنزل"],
+["light","ضوء","لايت","المنزل"],
+["head","رأس","هِد","الجسم"],
+["eye","عين","آي","الجسم"],
+["ear","أذن","إير","الجسم"],
+["nose","أنف","نوز","الجسم"],
+["mouth","فم","ماوث","الجسم"],
+["hand","يد","هاند","الجسم"],
+["foot","قدم","فوت","الجسم"],
+["leg","ساق","لِج","الجسم"],
+["heart","قلب","هارت","الجسم"],
+["hair","شعر","هير","الجسم"],
+["car","سيارة","كار","المواصلات"],
+["bus","حافلة","بَس","المواصلات"],
+["train","قطار","ترين","المواصلات"],
+["plane","طائرة","بلين","المواصلات"],
+["bicycle","دراجة","بايسِكُل","المواصلات"],
+["road","طريق","رود","المواصلات"],
+["street","شارع","ستريت","المواصلات"],
+["ticket","تذكرة","تِكِت","المواصلات"],
+["driver","سائق","درايفَر","المواصلات"],
+["station","محطة","ستيشن","المواصلات"],
+["doctor","طبيب","دوكتَر","المهن"],
+["nurse","ممرض","نِرس","المهن"],
+["engineer","مهندس","إنجِنير","المهن"],
+["farmer","مزارع","فارمَر","المهن"],
+["cook","طاهٍ","كُك","المهن"],
+["police officer","ضابط شرطة","بوليس أوفِسَر","المهن"],
+["worker","عامل","وِركَر","المهن"],
+["artist","فنان","آرتِست","المهن"],
+["computer","حاسوب","كَمبيوتَر","التقنية"],
+["phone","هاتف","فون","التقنية"],
+["screen","شاشة","سكرين","التقنية"],
+["keyboard","لوحة مفاتيح","كيبورد","التقنية"],
+["internet","الإنترنت","إنترنت","التقنية"],
+["website","موقع إلكتروني","ويب سايت","التقنية"],
+["email","بريد إلكتروني","إيميل","التقنية"],
+["password","كلمة مرور","باس وِرد","التقنية"]
 ];
-function speak(t){let u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.9;speechSynthesis.speak(u);}
-function filterDict(){
-let q=document.getElementById('search').value.trim().toLowerCase();
-let list=document.getElementById('list');
-if(q.length<1){list.innerHTML='<p style="text-align:center;opacity:.5;padding:20px">📚 قاموس المورد<br>اكتب كلمة<br>مثال: تفاحة، كتاب، Apple</p>';return;}
-let f=dictData.filter(d=>d[0].includes(q)||d[1].toLowerCase().includes(q));
-list.innerHTML=f.slice(0,150).map(d=>'<div class="item"><div><div class="en">'+d[1]+' ← '+d[0]+'</div><div class="ar">'+d[3]+'</div></div><button class="speakBtn" onclick="speak(\''+d[1]+'\')">🔊</button></div>').join('');
+
+const categories = [
+"أساسيات","الأسرة","المدرسة","الطعام","الحيوانات","الألوان",
+"الأرقام","الطبيعة","الأفعال","الصفات","الوقت","المنزل",
+"الجسم","المواصلات","المهن","التقنية"
+];
+
+let words = base.map((w,i)=>({
+ id:i+1,en:w[0],ar:w[1],pron:w[2],cat:w[3]
+}));
+
+/*
+  نملأ العدد إلى 1000 مدخل مع منع تقديم عبارات غير مترجمة
+  على أنها كلمات قاموسية. المداخل الإضافية تحمل علامة واضحة.
+  استبدلها لاحقًا بقائمة موثقة لإكمال قاموس 1000 كلمة فعلية.
+*/
+const templates = [
+ ["Lesson","درس"],["Exercise","تمرين"],["Question","سؤال"],
+ ["Answer","إجابة"],["Example","مثال"],["Sentence","جملة"],
+ ["Language","لغة"],["Word","كلمة"],["Story","قصة"],
+ ["Picture","صورة"],["Number","رقم"],["Color","لون"],
+ ["Animal","حيوان"],["Food","طعام"],["Water","ماء"],
+ ["Family","عائلة"],["Friend","صديق"],["Work","عمل"],
+ ["Time","وقت"],["Place","مكان"]
+];
+
+let id=words.length+1;
+for (let i=0; words.length<1000; i++) {
+  const t=templates[i%templates.length];
+  const n=Math.floor(i/templates.length)+1;
+  words.push({
+    id:id++,
+    en:t[0]+" (مدخل "+n+")",
+    ar:t[1]+" — مدخل تعليمي رقم "+n,
+    pron:"",
+    cat:categories[i%categories.length],
+    placeholder:true
+  });
 }
-filterDict();
+
+const $=id=>document.getElementById(id);
+const results=$("results");
+let limit=60;
+let favs=[];
+let favoritesMode=false;
+
+try { favs=JSON.parse(localStorage.getItem("alm_favs")||"[]"); }
+catch(e) { favs=[]; }
+
+function speak(text,lang="en-US") {
+  if (!("speechSynthesis" in window)) {
+    alert("النطق الصوتي غير مدعوم في هذا المتصفح.");
+    return;
+  }
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang;
+  u.rate=0.82;
+  speechSynthesis.speak(u);
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+function getFiltered() {
+  const q=$("search").value.trim().toLowerCase();
+  const cat=$("category").value;
+  let arr=words.filter(w=>{
+    const match=!q ||
+      w.en.toLowerCase().includes(q) ||
+      w.ar.toLowerCase().includes(q) ||
+      w.pron.toLowerCase().includes(q);
+    return match && (cat==="all"||w.cat===cat) &&
+      (!favoritesMode||favs.includes(w.id));
+  });
+  if ($("sort").value==="az") arr.sort((a,b)=>a.en.localeCompare(b.en));
+  if ($("sort").value==="za") arr.sort((a,b)=>b.en.localeCompare(a.en));
+  return arr;
+}
+
+function render() {
+  const arr=getFiltered();
+  const visible=arr.slice(0,limit);
+  $("total").textContent="إجمالي المداخل: "+words.length;
+  $("shown").textContent="النتائج: "+arr.length;
+  $("saved").textContent="المفضلة: "+favs.length;
+  $("more").style.display=arr.length>limit?"block":"none";
+
+  results.innerHTML=visible.map(w=>`
+    <article class="word">
+      <div class="word-top">
+        <span class="english" lang="en" dir="ltr">${esc(w.en)}</span>
+      </div>
+      <div class="arabic">${esc(w.ar)}</div>
+      ${w.pron?`<div class="pron">النطق التقريبي: ${esc(w.pron)}</div>`:""}
+      ${w.placeholder?`<div class="pron">مدخل مؤقت يحتاج إلى استكمال ترجمة موثقة.</div>`:""}
+      <div class="word-actions">
+        <button data-speak="${w.id}">🔊 نطق إنجليزي</button>
+        <button data-ar="${w.id}" style="background:#087f5b">🔊 نطق عربي</button>
+        <button data-fav="${w.id}" style="background:#b45309">
+          ${favs.includes(w.id)?"★ إزالة المفضلة":"☆ أضف للمفضلة"}
+        </button>
+      </div>
+    </article>
+  `).join("");
+
+  $("message").textContent=arr.length
+    ? "اختر الكلمة التي تريد تعلمها."
+    : "لا توجد نتائج مطابقة. جرّب كلمة أخرى.";
+}
+
+results.addEventListener("click",e=>{
+  const b=e.target.closest("button");
+  if(!b)return;
+  if(b.dataset.speak) {
+    const w=words.find(x=>x.id===Number(b.dataset.speak));
+    if(w)speak(w.en);
+  }
+  if(b.dataset.ar) {
+    const w=words.find(x=>x.id===Number(b.dataset.ar));
+    if(w)speak(w.ar,"ar-EG");
+  }
+  if(b.dataset.fav) {
+    const n=Number(b.dataset.fav);
+    favs=favs.includes(n)?favs.filter(x=>x!==n):[...favs,n];
+    try{localStorage.setItem("alm_favs",JSON.stringify(favs));}catch(e){}
+    render();
+  }
+});
+
+$("search").addEventListener("input",()=>{limit=60;render();});
+$("category").addEventListener("change",()=>{limit=60;render();});
+$("sort").addEventListener("change",render);
+$("clear").addEventListener("click",()=>{
+  $("search").value="";
+  $("category").value="all";
+  $("sort").value="default";
+  favoritesMode=false;
+  limit=60;
+  render();
+});
+$("showAll").addEventListener("click",()=>{
+  favoritesMode=false;
+  limit=60;
+  render();
+});
+$("favorites").addEventListener("click",()=>{
+  favoritesMode=true;
+  limit=60;
+  render();
+});
+$("allWords").addEventListener("click",()=>{
+  favoritesMode=false;
+  limit=60;
+  render();
+});
+$("more").addEventListener("click",()=>{
+  limit+=60;
+  render();
+});
+
+render();
 </script>
 </body>
 </html>
