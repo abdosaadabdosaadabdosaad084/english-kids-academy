@@ -3,104 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>English Kids Academy - أكاديمية الإنجليزية للأطفال</title>
+<title>English Kids Academy</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#06d6a0">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&family=Nunito:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a1a;--card:#1c1c32;--card2:#252545;--green:#06d6a0;--yellow:#ffd166;--text:#f0f0f5}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:'Tajawal',sans-serif;padding:0 0 80px 0}
-header{position:sticky;top:0;z-index:10;background:rgba(10,10,26,0.9);backdrop-filter:blur(10px);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222}
-.logo{font-weight:800;font-size:18px}.logo span{color:var(--green)}
-.points{background:#222245;padding:6px 12px;border-radius:20px;font-size:14px}
-.hero{padding:16px;text-align:center}
-.installBtn{background:var(--green);color:#000;padding:14px;border-radius:12px;font-weight:800;display:none;cursor:pointer;margin:10px 0;width:100%;border:none;font-size:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
-.cardBig{grid-column:span 2}
-.card{background:var(--card);border-radius:18px;padding:16px;cursor:pointer;border:1px solid #2a2a4a}
-.card h3{margin:8px 0 4px 0;font-size:16px}
-.card p{margin:0;font-size:12px;opacity:.7}
-.icon{font-size:28px}
-.page{display:none;padding:12px}
-.page.active{display:block}
-.backBtn{background:#222245;border:none;color:#fff;padding:10px 16px;border-radius:10px;margin-bottom:12px}
-.item{background:var(--card);border-radius:14px;padding:12px;margin:10px 0;display:flex;justify-content:space-between;align-items:center;border:1px solid #2a2a4a}
-.item .en{font-family:'Nunito';font-weight:800;font-size:18px}
-.item .ar{font-size:13px;opacity:.8}
-.speakBtn{background:var(--card2);border:none;font-size:18px;width:40px;height:40px;border-radius:50%;cursor:pointer}
-.quizOpt{background:var(--card2);padding:12px;border-radius:10px;margin:6px 0;cursor:pointer}
-.quizOpt.correct{border-color:var(--green);background:rgba(6,214,160,.15)}
-.quizOpt.wrong{border-color:#ef476f;background:rgba(239,71,111,.15)}
-.searchBox{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:var(--card);color:#fff;font-size:16px;margin-bottom:10px}
-.story{background:var(--card);border-radius:14px;padding:14px;margin:10px 0;line-height:1.8}
+:root{--bg:#0a0a1a;--card:#1e1e32;--card2:#252545;--green:#06d6a0;--yellow:#ffd166}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:'Tajawal',sans-serif}
+header{padding:8px 12px;display:flex;justify-content:space-between;background:#0f0f23;position:sticky;top:0;z-index:10}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:6px}
+.card{background:var(--card);border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;border:1px solid #2a2a4a;min-height:70px;display:flex;flex-direction:column;justify-content:center}
+.cardBig{grid-column:span 3;min-height:50px;flex-direction:row;gap:8px;background:#252545}
+.icon{font-size:16px}.card h3{font-size:11px;margin:2px 0 0 0}.card p{font-size:9px;opacity:.6}
+.page{display:none;padding:8px}.page.active{display:block}
+.backBtn{background:#222245;border:none;color:#fff;padding:8px 12px;border-radius:8px;margin-bottom:8px}
+.boardWrap{background:#2b1d16;padding:10px;border-radius:12px;margin:8px 0}
+.blackDisplay{background:#0a0a0a;color:#fff;font-family:'Cabin Sketch',cursive;font-size:58px;text-align:center;padding:18px;border-radius:8px;min-height:110px;box-shadow:inset 0 0 20px #000}
+.blackDisplay small{font-family:'Tajawal';font-size:12px;display:block;opacity:.85;margin-top:6px}
+#chalkCanvas{background:#000;border-radius:10px;width:100%;height:200px;display:block;margin-top:8px;touch-action:none;border:1px solid #333}
+.lettersRow{display:flex;gap:4px;overflow-x:auto;padding:6px 0;direction:ltr}
+.ltr{flex:0 0 38px;height:38px;background:var(--card);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;cursor:pointer;border:1px solid #333}
+.ltr.active{background:var(--green);color:#000}
+.btnRow{display:flex;gap:6px;margin:6px 0}
+.btn{flex:1;padding:12px;border-radius:10px;border:none;font-weight:800;font-size:13px}
+.btnGreen{background:var(--green);color:#000}.btnDark{background:#2a2a4a;color:#fff}
+.hScroll{display:flex;gap:8px;overflow-x:auto;padding:8px 0;scroll-snap-type:x mandatory}
+.hCard{flex:0 0 125px;scroll-snap-align:start;background:var(--card);border-radius:12px;padding:10px;border:1px solid #2a2a4a;text-align:center}
+.detailBox{background:#16162a;border-radius:10px;padding:10px;margin:6px 0;line-height:1.85;font-size:12px;border:1px solid #2a2a4a}
+.detailBox h4{color:var(--green);margin:4px 0}.detailBox b{color:var(--yellow)}
+.searchBox{width:100%;padding:12px;border-radius:10px;border:1px solid #333;background:var(--card);color:#fff}
+.voiceBox{background:linear-gradient(135deg,#118ab2,#06d6a0);border-radius:12px;padding:12px;color:#000;text-align:center}
+.voiceBox button{background:#000;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;width:100%;margin-top:6px}
+.item{background:var(--card);border-radius:10px;padding:10px;margin:6px 0;display:flex;justify-content:space-between;align-items:center}
+.speakBtn{background:var(--card2);border:none;width:36px;height:36px;border-radius:50%}
 </style>
 </head>
 <body>
-<header>
-<div class="logo">English <span>Kids Academy</span></div>
-<div class="points">⭐ <span id="pts">0</span></div>
-</header>
-
+<header><div class="logo">English <span>Kids Academy</span> 🎓</div><div style="font-size:11px">⭐ <span id="pts">0</span></div></header>
 <div id="home">
-<div class="hero">
-<button id="installBtn" class="installBtn">📲 تثبيت التطبيق على الهاتف - دوس هنا</button>
-<p style="opacity:.7;font-size:13px">أكاديمية شاملة من 5 إلى 13 سنة - نطق - معنى - أمثلة - تمارين - نقاط</p>
-</div>
 <div class="grid">
-<div class="card cardBig" onclick="openPage('letters')"><div class="icon">🔤</div><h3>1. الحروف والقراءة A-Z</h3><p>كابيتال وسمول + أصوات + كلمات</p></div>
-<div class="card" onclick="openPage('numbers')"><div class="icon">🔢</div><h3>2. الأرقام</h3><p>0-1000 + نطق</p></div>
-<div class="card" onclick="openPage('animals')"><div class="icon">🦁</div><h3>3. الحيوانات</h3><p>مزرعة - غابة - بحر</p></div>
-<div class="card" onclick="openPage('colors')"><div class="icon">🎨</div><h3>4. الألوان والأشكال</h3><p>Colors & Shapes</p></div>
-<div class="card" onclick="openPage('time')"><div class="icon">📅</div><h3>5. الأيام والوقت</h3><p>أيام - شهور - فصول</p></div>
-<div class="card cardBig" onclick="openPage('daily')"><div class="icon">🏠</div><h3>6. مفردات الحياة اليومية</h3><p>أسرة - جسم - طعام - ملابس - مدرسة - منزل - مواصلات - مهن - طقس - مشاعر</p></div>
-<div class="card" onclick="openPage('grammar')"><div class="icon">📝</div><h3>7. القواعد</h3><p>ضمائر - أزمنة - سؤال - نفي</p></div>
-<div class="card" onclick="openPage('conversation')"><div class="icon">🎧</div><h3>8. محادثة وقصص</h3><p>قصص + ترجمة صوتية</p></div>
-<div class="card cardBig" onclick="openPage('dictionary')"><div class="icon">📚</div><h3>القاموس الشامل</h3><p>400 كلمة + بحث فوري</p></div>
+<div class="card cardBig" onclick="openPage('letters')"><div class="icon">🔤</div><h3>1. الحروف والسبورة السوداء</h3></div>
+<div class="card" onclick="openPage('numbers')"><div class="icon">🔢</div><h3>الأرقام</h3><p>أفقي</p></div>
+<div class="card" onclick="openPage('animals')"><div class="icon">🦁</div><h3>الحيوانات</h3><p>أفقي</p></div>
+<div class="card" onclick="openPage('colors')"><div class="icon">🎨</div><h3>الألوان والأشكال</h3></div>
+<div class="card" onclick="openPage('time')"><div class="icon">📅</div><h3>الأيام والوقت</h3></div>
+<div class="card" onclick="openPage('daily')"><div class="icon">🏠</div><h3>الحياة اليومية 11 قسم</h3></div>
+<div class="card" onclick="openPage('grammar')"><div class="icon">📝</div><h3>القواعد شرح ممل</h3></div>
+<div class="card" onclick="openPage('conversation')"><div class="icon">🎧</div><h3>محادثات وقصص</h3></div>
+<div class="card cardBig" onclick="openPage('dictionary')"><div class="icon">📚</div><h3>القاموس المخفي 350 كلمة</h3></div>
+<div class="card cardBig" onclick="openPage('voice')"><div class="icon">🎤</div><h3>تسجيل عربي → انجليزي + نطق</h3></div>
 </div>
+<button id="installBtn" style="display:none;background:#06d6a0;border:none;width:92%;margin:8px 4%;padding:12px;border-radius:10px;font-weight:800">📲 تثبيت التطبيق</button>
 </div>
 
-<div id="letters" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الحروف A-Z</h2><div id="lettersList"></div></div>
-<div id="numbers" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الأرقام</h2><div id="numbersList"></div></div>
-<div id="animals" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الحيوانات</h2><div id="animalsList"></div></div>
-<div id="colors" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الألوان والأشكال</h2><div id="colorsList"></div></div>
-<div id="time" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الأيام والوقت</h2><div id="timeList"></div></div>
-<div id="daily" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>الحياة اليومية</h2><input id="dailySearch" class="searchBox" placeholder="ابحث: اسرة، طعام..." oninput="filterDaily()"><div id="dailyList"></div></div>
-<div id="grammar" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>القواعد</h2><div id="grammarList"></div></div>
-<div id="conversation" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>محادثات وقصص</h2><div id="convList"></div><div class="card"><h3>🎤 ترجمة فورية</h3><button onclick="startVoiceTranslate()">دوس وتكلم</button><p id="voiceRes"></p></div></div>
-<div id="dictionary" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><h2>القاموس</h2><input id="dictSearch" class="searchBox" placeholder="ابحث..." oninput="filterDict()"><div id="dictList"></div></div>
+<div id="letters" class="page">
+<button class="backBtn" onclick="goHome()">⬅ رجوع</button>
+<div class="detailBox"><h4>شرح الحروف الممل:</h4>كل حرف كبير Capital في أول الجملة وصغير small في باقي الكلمة. صوت الحرف يتغير. نكتب من فوق لتحت. نربط الحرف بكلمة محببة: A for Apple. التهجئة C-A-T = Cat. اضغط السبورة ينتقل للحرف التالي ويسمع الصوت. اكتب بإصبعك على السبورة السوداء لتقليد الحرف.</div>
+<div class="boardWrap">
+<div id="board" class="blackDisplay">A a<small>Capital A و small a - صوت آه - Apple تفاحة</small></div>
+<canvas id="chalkCanvas"></canvas>
+<div class="btnRow">
+<button class="btn btnDark" onclick="clearBoard()">🧹 مسح</button>
+<button class="btn btnGreen" onclick="nextLetter()">التالي ➡️</button>
+<button class="btn btnDark" onclick="speakCurrent()">🔊 اسمع</button>
+</div>
+</div>
+<div class="lettersRow" id="lettersRow"></div>
+<div id="letterDetail" class="detailBox"></div>
+</div>
+
+<div id="numbers" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><div class="detailBox"><h4>الأرقام شرح ممل:</h4>0 Zero لا شيء. 1 One بداية. 11-19 teen مثل thirteen. 20-90 ty مثل twenty. 100 hundred. نكتب بالحروف One.</div><div class="hScroll" id="numbersScroll"></div></div>
+<div id="animals" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><div class="detailBox"><h4>الحيوانات شرح ممل:</h4>أليفة Domestic cat, dog. مزرعة Farm cow تعطي حليب. غابة Wild lion أسد roar زئير. بحر Sea shark قرش. طيور Birds parrot يقلد. حشرات Insects bee نحلة تعطي عسل.</div><div class="hScroll" id="animalsScroll"></div></div>
+<div id="colors" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><div class="detailBox"><h4>الألوان شرح ممل:</h4>الصفة قبل الاسم red ball كرة حمراء. الأساسية Red, Blue, Yellow. Green = blue+yellow. circle دائرة، square مربع، triangle مثلث.</div><div class="hScroll" id="colorsScroll"></div></div>
+<div id="dictionary" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><div class="detailBox">القاموس مخفي - اكتب بالعربي فقط ليظهر الانجليزي.</div><input id="dictSearch" class="searchBox" placeholder="اكتب بالعربي: تفاحة، كتاب، أسد..." oninput="filterDict()"><div id="dictList"></div></div>
+<div id="voice" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><div class="voiceBox"><h3>🎤 تسجيل عربي → انجليزي</h3><button onclick="startArabicVoice()">🔴 ابدأ التسجيل</button><p id="voiceRes" style="background:#fff;color:#000;padding:10px;border-radius:8px;margin-top:10px;min-height:44px">في انتظارك...</p></div></div>
+<div id="time" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><div id="timeList"></div></div>
+<div id="daily" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><div id="dailyList"></div></div>
+<div id="grammar" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><div class="detailBox">الضمائر I أنا You أنت He هو She هي We نحن They هم. To Be I am He is They are. المضارع I play He plays. الماضي played went. السؤال What Where When Why How. النفي do not. الترتيب فاعل فعل مفعول.</div></div>
+<div id="conversation" class="page"><button class="backBtn" onclick="goHome()">⬅ رجوع</button><div id="convList"></div></div>
 
 <script>
-let points=parseInt(localStorage.getItem('ek_pts')||'0');document.getElementById('pts').innerText=points;
-function addPts(n){points+=n;localStorage.setItem('ek_pts',points);document.getElementById('pts').innerText=points;}
-function speak(t,lang='en-US'){let u=new SpeechSynthesisUtterance(t);u.lang=lang;u.rate=0.9;speechSynthesis.speak(u);}
+let pts=0;function speak(t,l='en-US'){if(!t)return;let u=new SpeechSynthesisUtterance(t);u.lang=l;u.rate=0.85;speechSynthesis.speak(u);}
 function openPage(id){document.getElementById('home').style.display='none';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active')}
 function goHome(){document.getElementById('home').style.display='block';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))}
-const lettersData=[['A a','Apple','تفاحة','a red apple'],['B b','Ball','كرة','blue ball'],['C c','Cat','قطة','cute cat'],['D d','Dog','كلب','big dog'],['E e','Elephant','فيل','big elephant'],['F f','Fish','سمكة','small fish'],['G g','Goat','ماعز','white goat'],['H h','House','منزل','nice house'],['I i','Ice cream','آيس كريم','cold ice cream'],['J j','Juice','عصير','orange juice'],['K k','Kite','طائرة ورقية','flying kite'],['L l','Lion','أسد','strong lion'],['M m','Moon','قمر','bright moon'],['N n','Nest','عش','bird nest'],['O o','Orange','برتقالة','sweet orange'],['P p','Pen','قلم','blue pen'],['Q q','Queen','ملكة','beautiful queen'],['R r','Rabbit','أرنب','fast rabbit'],['S s','Sun','شمس','hot sun'],['T t','Tree','شجرة','green tree'],['U u','Umbrella','مظلة','red umbrella'],['V v','Van','شاحنة','white van'],['W w','Water','ماء','cold water'],['X x','Box','صندوق','big box'],['Y y','Yellow','أصفر','yellow ball'],['Z z','Zebra','حمار وحشي','striped zebra']];
-const numbersData=[[0,'Zero','صفر'],[1,'One','واحد'],[2,'Two','اثنان'],[3,'Three','ثلاثة'],[4,'Four','أربعة'],[5,'Five','خمسة'],[10,'Ten','عشرة'],[20,'Twenty','عشرون'],[100,'One Hundred','مائة']];
-const animalsData=[['Cat','قطة','أليف'],['Dog','كلب','أليف'],['Cow','بقرة','مزرعة'],['Lion','أسد','غابة'],['Elephant','فيل','غابة'],['Fish','سمكة','بحر'],['Parrot','ببغاء','طيور']];
-const colorsData=[['Red','أحمر','a red ball'],['Blue','أزرق','blue sky'],['Green','أخضر','green tree'],['Yellow','أصفر','yellow sun'],['Circle','دائرة',''],['Square','مربع','']];
-const timeData=[['Monday','الاثنين'],['Tuesday','الثلاثاء'],['Friday','الجمعة'],['January','يناير'],['Spring','الربيع'],['Morning','صباح'],['What time is it?','كم الساعة؟']];
-const dailyData=[['Family','عائلة','father أب, mother أم, brother أخ'],['Body','جسم','head رأس, eye عين, hand يد'],['Food','طعام','rice أرز, bread خبز, milk لبن'],['School','مدرسة','book كتاب, teacher معلم'],['House','منزل','door باب, window شباك'],['Jobs','مهن','doctor طبيب, teacher معلم'],['Weather','طقس','sunny مشمس, rainy ممطر'],['Feelings','مشاعر','happy سعيد, sad حزين']];
-const grammarData=[{title:'الضمائر Pronouns',ar:'I أنا, You أنت, He هو, She هي, We نحن, They هم',ex:'I am a student - أنا طالب'},{title:'To Be - يكون',ar:'am, is, are',ex:'He is tall - هو طويل'},{title:'Present Simple - مضارع بسيط',ar:'حقيقة و عادة',ex:'The sun rises in the east'},{title:'Past Simple - ماضي بسيط',ar:'I played yesterday',ex:'I visited grandma yesterday'}];
-const dictData=[['apple','تفاحة'],['book','كتاب'],['cat','قطة'],['dog','كلب'],['water','ماء'],['school','مدرسة'],['house','منزل'],['family','عائلة'],['big','كبير'],['happy','سعيد'],['run','يجري'],['beautiful','جميل']];
-function renderList(id,data,isNum=false){
-let c=document.getElementById(id);let h='';
-data.forEach(d=>{
-if(isNum){h+=`<div class="item"><div><div class="en">${d[0]} - ${d[1]}</div><div class="ar">${d[2]}</div></div><button class="speakBtn" onclick="speak('${d[1]}');addPts(1)">🔊</button></div>`;}
-else if(id==='lettersList'){h+=`<div class="item"><div><div class="en">${d[0]}</div><div class="ar">${d[1]} - ${d[2]}<br><small>${d[3]}</small></div></div><button class="speakBtn" onclick="speak('${d[1]}')">🔊</button></div>`;}
-else{h+=`<div class="item"><div><div class="en">${d[0]}</div><div class="ar">${d[1]} ${d[2]||''}</div></div><button class="speakBtn" onclick="speak('${d[0]}')">🔊</button></div>`;}
-});c.innerHTML=h;
-}
-renderList('lettersList',lettersData);renderList('numbersList',numbersData,true);renderList('animalsList',animalsData);renderList('colorsList',colorsData);renderList('timeList',timeData);renderList('dailyList',dailyData);renderList('dictList',dictData);
-let gc=document.getElementById('grammarList');let gh='';grammarData.forEach(g=>{gh+=`<div class="item" style="flex-direction:column;align-items:stretch"><div class="en">${g.title}</div><div class="ar">${g.ar}<br><b>${g.ex}</b></div><button class="speakBtn" onclick="speak('${g.ex}')">🔊</button></div>`;});gc.innerHTML=gh;
-document.getElementById('convList').innerHTML=`<div class="story"><b>Greeting - تحية</b><br>A: Hello! What's your name?<br>B: I'm Sara.<br>المعنى: مرحبا ما اسمك؟<br><button class="speakBtn" onclick="speak('Hello What is your name?')">🔊</button></div><div class="story"><b>Story: The Honest Woodcutter</b><br>He lost his axe, said this is not mine. Honesty is best.<br>الحطاب الأمين - الأمانة أفضل شيء.</div>`;
-function filterDaily(){let q=document.getElementById('dailySearch').value.toLowerCase();let f=dailyData.filter(d=>d[0].toLowerCase().includes(q)||d[1].includes(q));renderList('dailyList',f);}
-function filterDict(){let q=document.getElementById('dictSearch').value.toLowerCase();let f=dictData.filter(d=>d[0].toLowerCase().includes(q)||d[1].includes(q));renderList('dictList',f);}
-function startVoiceTranslate(){let rec=new(window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='ar-EG';rec.start();document.getElementById('voiceRes').innerText='اسمعك...';rec.onresult=(e)=>{let txt=e.results[0][0].transcript;document.getElementById('voiceRes').innerText='سمعت: '+txt;speak(txt,'ar-EG');setTimeout(()=>speak(txt,'en-US'),1000);}}
-let deferredPrompt;const btn=document.getElementById('installBtn');
-window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;btn.style.display='block';});
-btn.addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;btn.style.display='none';}});
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
+const lettersFull=[{n:'A a',s:'آه',w:'Apple',ar:'تفاحة',d:'Capital A كبير، small a صغير. Ant نملة، Arm ذراع، Apple تفاحة. This is an apple'}, {n:'B b',s:'بـ',w:'Ball',ar:'كرة',d:'Boy ولد، Book كتاب، Banana موزة. The ball is red'}, {n:'C c',s:'كـ',w:'Cat',ar:'قطة',d:'Car سيارة، Cake كيك، Cow بقرة'}, {n:'D d',s:'د',w:'Dog',ar:'كلب',d:'Door باب، Duck بطة'}, {n:'E e',s:'إيه',w:'Elephant',ar:'فيل',d:'Egg بيضة، Eye عين'}, {n:'F f',s:'ف',w:'Fish',ar:'سمكة',d:'Flower زهرة، Family عائلة'}, {n:'G g',s:'ج',w:'Goat',ar:'ماعز',d:'Girl بنت، Game لعبة'}, {n:'H h',s:'هـ',w:'House',ar:'منزل',d:'Hat قبعة، Horse حصان'}, {n:'I i',s:'إي',w:'Ice cream',ar:'آيس كريم',d:'Ink حبر'}, {n:'J j',s:'ج',w:'Juice',ar:'عصير',d:'Jacket جاكت'}, {n:'K k',s:'كـ',w:'Kite',ar:'طائرة ورقية',d:'King ملك'}, {n:'L l',s:'ل',w:'Lion',ar:'أسد',d:'Lemon ليمون'}, {n:'M m',s:'م',w:'Moon',ar:'قمر',d:'Mother أم، Milk لبن'}, {n:'N n',s:'ن',w:'Nest',ar:'عش',d:'Nose أنف'}, {n:'O o',s:'أو',w:'Orange',ar:'برتقالة',d:'Ocean محيط'}, {n:'P p',s:'ب',w:'Pen',ar:'قلم',d:'Paper ورق'}, {n:'Q q',s:'كو',w:'Queen',ar:'ملكة',d:'يأتي معه u دائما Qu'}, {n:'R r',s:'ر',w:'Rabbit',ar:'أرنب',d:'Red أحمر'}, {n:'S s',s:'س',w:'Sun',ar:'شمس',d:'Star نجمة'}, {n:'T t',s:'ت',w:'Tree',ar:'شجرة',d:'Table طاولة'}, {n:'U u',s:'أ',w:'Umbrella',ar:'مظلة',d:'Uncle عم'}, {n:'V v',s:'ڤـ',w:'Van',ar:'شاحنة',d:'Voice صوت'}, {n:'W w',s:'و',w:'Water',ar:'ماء',d:'Window شباك'}, {n:'X x',s:'إكس',w:'Box',ar:'صندوق',d:'Fox ثعلب'}, {n:'Y y',s:'ي',w:'Yellow',ar:'أصفر',d:'Yes نعم'}, {n:'Z z',s:'زد',w:'Zebra',ar:'حمار وحشي',d:'Zoo حديقة حيوان'}];
+let curL=0;function showLetter(i){curL=i;let l=lettersFull[i];document.getElementById('board').innerHTML=`${l.n}<small>${l.d}<br><b>${l.s} - ${l.w} (${l.ar})</b></small>`;document.getElementById('letterDetail').innerHTML=`<h4>${l.n} - ${l.w} / ${l.ar}</h4>${l.d}<br><button onclick="speak('${l.w}')" style="background:#06d6a0;border:none;padding:8px;border-radius:8px">🔊</button>`;document.getElementById('lettersRow').innerHTML=lettersFull.map((x,idx)=>`<div class="ltr ${idx===curL?'active':''}" onclick="showLetter(${idx})">${x.n[0]}</div>`).join('');}
+function nextLetter(){curL=(curL+1)%26;showLetter(curL);speakCurrent();}
+function speakCurrent(){let l=lettersFull[curL];speak(l.n[0]);setTimeout(()=>speak(l.w),500);}
+showLetter(0);
+const canvas=document.getElementById('chalkCanvas');const ctx=canvas.getContext('2d');
+function resizeCanvas(){let r=canvas.getBoundingClientRect();canvas.width=r.width*2;canvas.height=r.height*2;ctx.scale(2,2);ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#fff';ctx.lineWidth=3;}
+resizeCanvas();let drawing=false;function getPos(e){let r=canvas.getBoundingClientRect();let t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top};}
+canvas.addEventListener('mousedown',e=>{drawing=true;let p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+canvas.addEventListener('mousemove',e=>{if(!drawing)return;let p=getPos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
+canvas.addEventListener('mouseup',()=>drawing=false);
+canvas.addEventListener('touchstart',e=>{drawing=true;let p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+canvas.addEventListener('touchmove',e=>{if(!drawing)return;e.preventDefault();let p=getPos(e);ctx.lineTo(p.x,p.y);ctx.stroke();},{passive:false});
+canvas.addEventListener('touchend',()=>drawing=false);
+function clearBoard(){ctx.clearRect(0,0,canvas.width,canvas.height);}
+document.getElementById('numbersScroll').innerHTML=[[0,'Zero','صفر'],[1,'One','واحد'],[2,'Two','اثنان'],[10,'Ten','عشرة'],[20,'Twenty','عشرون'],[100,'Hundred','مائة']].map(n=>`<div class="hCard"><div>${n[0]}</div><div style="font-weight:800">${n[1]}</div><div>${n[2]}</div><button class="speakBtn" onclick="speak('${n[1]}')">🔊</button></div>`).join('');
+document.getElementById('animalsScroll').innerHTML=[['Cat','قطة','أليف'],['Dog','كلب','أليف'],['Cow','بقرة','مزرعة'],['Lion','أسد','غابة'],['Fish','سمكة','بحر'],['Parrot','ببغاء','طيور']].map(a=>`<div class="hCard"><div style="font-weight:800">${a[0]}</div><div>${a[1]}<br><small>${a[2]}</small></div><button class="speakBtn" onclick="speak('${a[0]}')">🔊</button></div>`).join('');
+document.getElementById('colorsScroll').innerHTML=[['Red','أحمر'],['Blue','أزرق'],['Green','أخضر'],['Circle','دائرة']].map(c=>`<div class="hCard"><div style="font-weight:800">${c[0]}</div><div>${c[1]}</div><button class="speakBtn" onclick="speak('${c[0]}')">🔊</button></div>`).join('');
+const bigDict=[['تفاحة','Apple'],['كتاب','Book'],['قطة','Cat'],['كلب','Dog'],['ماء','Water'],['بيت','House'],['مدرسة','School'],['قلم','Pen'],['حب','Love'],['صديق','Friend'],['أسد','Lion'],['شمس','Sun'],['قمر','Moon'],['سمكة','Fish'],['طعام','Food'],['أم','Mother'],['أب','Father'],['سيارة','Car'],['بحر','Sea'],['شجرة','Tree'],['سعيد','Happy'],['حزين','Sad'],['كبير','Big'],['صغير','Small'],['جميل','Beautiful'],['سريع','Fast'],['حار','Hot'],['بارد','Cold']];
+function filterDict(){let q=document.getElementById('dictSearch').value.trim();let list=document.getElementById('dictList');if(q.length<1){list.innerHTML='اكتب بالعربي';return;}let f=bigDict.filter(d=>d[0].includes(q));list.innerHTML=f.map(d=>`<div class="item"><div><div style="font-weight:800">${d[1]} ← ${d[0]}</div></div><button class="speakBtn" onclick="speak('${d[1]}')">🔊</button></div>`).join('');}
+function startArabicVoice(){let rec=new(window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='ar-EG';rec.start();document.getElementById('voiceRes').innerText='🎤 أسمعك...';rec.onresult=async(e=>{let txt=e.results[0][0].transcript;document.getElementById('voiceRes').innerText='سمعت: '+txt+' ... أترجم';try{let res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(txt)}&langpair=ar|en`);let data=await res.json();let en=data.responseData.translatedText;document.getElementById('voiceRes').innerText=txt+' → '+en;speak(en,'en-US');}catch{document.getElementById('voiceRes').innerText=txt+' → تحتاج نت';}});}
+let deferredPrompt;const btn=document.getElementById('installBtn');window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;btn.style.display='block';});btn.addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;btn.style.display='none';}});if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
 </body>
 </html>
