@@ -3,366 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy – أكاديمية الإنجليزية للأطفال</title>
+    <title>English Kids Academy – الموسوعة الشاملة</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1c2e">
-    <style>
-        :root {
-            --bg-main: #1a1c2e;
-            --card-bg: #252846;
-            --accent-yellow: #ffd166;
-            --accent-pink: #ff6b6b;
-            --accent-green: #06d6a0;
-            --accent-blue: #118ab2;
-            --accent-purple: #9d4edd;
-            --text-light: #ffffff;
-            --text-dim: #c1c5e0;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-light);
-            min-height: 100vh;
-            padding-bottom: 30px;
-        }
-
-        /* Pin Screen Overlay */
-        #pin-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg-main);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .pin-box {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            max-width: 350px;
-            width: 100%;
-            border: 2px solid var(--accent-purple);
-        }
-
-        .pin-box h2 {
-            color: var(--accent-yellow);
-            margin-bottom: 10px;
-        }
-
-        .pin-box p {
-            color: var(--text-dim);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .pin-input {
-            width: 100%;
-            padding: 12px;
-            font-size: 1.5rem;
-            text-align: center;
-            letter-spacing: 5px;
-            border-radius: 10px;
-            border: 2px solid var(--accent-blue);
-            background: #121324;
-            color: #fff;
-            margin-bottom: 15px;
-            outline: none;
-        }
-
-        .btn-action {
-            background: linear-gradient(135deg, var(--accent-green), #049a73);
-            color: #fff;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.2s;
-        }
-
-        .btn-action:active {
-            transform: scale(0.96);
-        }
-
-        .error-msg {
-            color: var(--accent-pink);
-            font-size: 0.85rem;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Install Banner */
-        #install-banner {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            padding: 12px 20px;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        #install-banner span {
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-
-        .btn-install-banner {
-            background: var(--accent-yellow);
-            color: #1a1c2e;
-            border: none;
-            padding: 6px 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* App Layout */
-        header {
-            background: var(--card-bg);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-title h1 {
-            font-size: 1.2rem;
-            color: var(--accent-yellow);
-        }
-
-        .points-badge {
-            background: rgba(255, 209, 102, 0.2);
-            border: 1px solid var(--accent-yellow);
-            padding: 5px 12px;
-            border-radius: 20px;
-            color: var(--accent-yellow);
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .container {
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .stage-selector {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            border: 1px dashed var(--accent-purple);
-        }
-
-        .stage-selector h3 {
-            margin-bottom: 10px;
-            font-size: 1rem;
-            color: var(--accent-yellow);
-        }
-
-        .stage-btns {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .stage-btn {
-            background: #1f223c;
-            color: var(--text-dim);
-            border: 1px solid #3d4168;
-            padding: 8px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .stage-btn.active {
-            background: var(--accent-purple);
-            color: #fff;
-            border-color: var(--accent-purple);
-            font-weight: bold;
-        }
-
-        .grid-menu {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .card-menu {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 20px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .card-menu:active {
-            transform: scale(0.97);
-        }
-
-        .card-icon {
-            font-size: 2.2rem;
-        }
-
-        .card-title {
-            font-weight: bold;
-            color: var(--text-light);
-            font-size: 1.05rem;
-        }
-
-        .card-desc {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        .section-view {
-            display: none;
-        }
-
-        .section-view.active {
-            display: block;
-        }
-
-        .btn-back {
-            background: #2d3154;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-
-        .alphabet-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-            gap: 10px;
-        }
-
-        .letter-card {
-            background: var(--card-bg);
-            border: 1px solid var(--accent-blue);
-            border-radius: 12px;
-            padding: 15px 5px;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-yellow);
-            cursor: pointer;
-        }
-
-        /* Drawing Canvas / السبورة التفاعلية */
-        .canvas-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            margin-top: 20px;
-            border: 2px solid var(--accent-yellow);
-        }
-
-        #draw-canvas {
-            background: #000;
-            border-radius: 15px;
-            border: 2px dashed var(--accent-green);
-            touch-action: none;
-            margin: 15px 0;
-            cursor: crosshair;
-        }
-
-        .canvas-controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .word-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .word-card {
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            border-right: 4px solid var(--accent-green);
-        }
-
-        .word-en {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--accent-yellow);
-        }
-
-        .word-ar {
-            font-size: 1rem;
-            color: var(--text-dim);
-        }
-
-        .interactive-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-        }
-
-        .interactive-card input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid var(--accent-blue);
-            background: #121324;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -386,7 +30,6 @@
                 <small style="font-size: 0.7rem; color: var(--text-dim);">أكاديمية الإنجليزية للأطفال</small>
             </div>
         </div>
-        <div class="points-badge" id="points-display">⭐ 0 نقطة</div>
     </header>
 
     <div class="container">
@@ -399,346 +42,135 @@
         
         <!-- MAIN DASHBOARD -->
         <div id="sec-dashboard" class="section-view active">
-            <div class="stage-selector">
-                <h3>🎯 حدد المرحلة التعليمية المناسبة:</h3>
-                <div class="stage-btns">
-                    <button class="stage-btn active" onclick="setStage(1, this)">المرحلة 1 (5-7 سنوات)</button>
-                    <button class="stage-btn" onclick="setStage(2, this)">المرحلة 2 (8-10 سنوات)</button>
-                    <button class="stage-btn" onclick="setStage(3, this)">المرحلة 3 (11-13 سنة)</button>
-                </div>
-            </div>
-
             <div class="grid-menu">
                 <div class="card-menu" onclick="showSection('sec-alphabet')">
                     <div class="card-icon">🔤</div>
                     <div class="card-title">الحروف والسبورة</div>
-                    <div class="card-desc">نطق وسماع وتتبع الحروف على السبورة</div>
+                    <div class="card-desc">نطق وسماع وتتبع الحروف</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-dictionary')">
-                    <div class="card-icon">📚</div>
-                    <div class="card-title">القاموس التفاعلي</div>
-                    <div class="card-desc">كلمات مصورة مع النطق الفوري والمعنى</div>
+                    <div class="card-icon">📖</div>
+                    <div class="card-title">قاموس المورد الشامل</div>
+                    <div class="card-desc">قاموس ضخم وموسع وشامل</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-grammar')">
                     <div class="card-icon">🧩</div>
-                    <div class="card-title">قواعد الإنجليزية</div>
-                    <div class="card-desc">شرح مبسط للقواعد والضمائر والأزمنة</div>
+                    <div class="card-title">قواعد اللغة الإنجليزية</div>
+                    <div class="card-desc">شرح مستفيض وافٍ من A إلى Z</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-stories')">
-                    <div class="card-icon">📖</div>
-                    <div class="card-title">القصص والحوارات</div>
-                    <div class="card-desc">قصص قصيرة ومحادثات يومية ممتعة</div>
+                    <div class="card-icon">💬</div>
+                    <div class="card-title">المحادثات والحوارات</div>
+                    <div class="card-desc">حوارات تفاعلية حقيقية مكثفة</div>
+                </div>
+
+                <div class="card-menu" onclick="showSection('sec-categories')">
+                    <div class="card-icon">🔢</div>
+                    <div class="card-title">الأرقام والمجموعات</div>
+                    <div class="card-desc">الأرقام، الحيوانات، الطيور والمهن</div>
+                </div>
+
+                <div class="card-menu" onclick="showSection('sec-translator')">
+                    <div class="card-icon">🎙️</div>
+                    <div class="card-title">التسجيل والترجمة الصوتیة</div>
+                    <div class="card-desc">تحدث بالعربية ليترجم للإنجليزية</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-games')">
                     <div class="card-icon">🎮</div>
                     <div class="card-title">الألعاب والتحديات</div>
-                    <div class="card-desc">اختبارات تفاعلية واكتسب نقاطاً</div>
+                    <div class="card-desc">اختبارات تفاعلية بأصوات التقييم</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-parents')">
                     <div class="card-icon">👨‍👩‍👧</div>
                     <div class="card-title">لوحة ولي الأمر</div>
-                    <div class="card-desc">إعدادات الخصوصية وتغيير الرقم السري</div>
+                    <div class="card-desc">إعدادات وتغيير الرقم السري</div>
                 </div>
             </div>
         </div>
 
         <!-- ALPHABET & DRAWING BOARD SECTION -->
         <div id="sec-alphabet" class="section-view">
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🔤 الحروف الأبجدية</h2>
-            <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 15px;">اضغط على أي حرف لسماعه وتدرب على كتابته على السبورة بالأسفل:</p>
-            
+            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🔤 الحروف الأبجدية والسبورة</h2>
             <div class="alphabet-grid" id="alphabet-container"></div>
 
-            <!-- BOARD / السبورة التفاعلية -->
             <div class="canvas-card">
                 <h3 style="color: var(--accent-green);" id="current-letter-title">✏️ سبورة الرسم والتتبع (الحرف: A)</h3>
-                <canvas id="draw-canvas" width="280" height="200"></canvas>
+                <canvas id="draw-canvas" width="280" height="180"></canvas>
                 <div class="canvas-controls">
                     <button class="stage-btn" style="background: var(--accent-pink); color: white;" onclick="clearCanvas()">مسح السبورة 🗑️</button>
-                    <button class="stage-btn" style="background: var(--accent-green); color: white;" onclick="speakCurrentLetter()">إعادة النطق 🔊</button>
+                    <button class="stage-btn" style="background: var(--accent-green); color: white;" onclick="nextLetter()">الحرف التالي ➡</button>
                 </div>
             </div>
+            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
         <!-- DICTIONARY SECTION -->
         <div id="sec-dictionary" class="section-view">
+            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">📖 قاموس المورد الشامل والأمثلة</h2>
+            <div id="dict-container"></div>
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">📚 القاموس المصور</h2>
-            <div class="word-list" id="dict-container"></div>
         </div>
 
         <!-- GRAMMAR SECTION -->
         <div id="sec-grammar" class="section-view">
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">🧩 قواعد مبسطة</h2>
+            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🧩 قواعد اللغة الإنجليزية الشاملة</h2>
             <div id="grammar-container"></div>
+            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
         <!-- STORIES SECTION -->
         <div id="sec-stories" class="section-view">
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">📖 قصص ومحادثات</h2>
+            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">💬 المحادثات والحوارات (سؤال وجواب)</h2>
             <div id="stories-container"></div>
+            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
+        </div>
+
+        <!-- CATEGORIES SECTION (الأرقام والحيوانات والطيور) -->
+        <div id="sec-categories" class="section-view">
+            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🔢 الأرقام والمجموعات الشاملة</h2>
+            <div id="categories-container"></div>
+            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
+        </div>
+
+        <!-- VOICE TRANSLATOR SECTION (التسجيل الصوتي والترجمة) -->
+        <div id="sec-translator" class="section-view">
+            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🎙️ المترجم الصوتي التفاعلي</h2>
+            <div class="interactive-card" style="text-align: center;">
+                <p style="color: var(--text-dim); margin-bottom: 15px;">اضغط على الميكروفون وتحدث بالعربية ليترجم التطبيق وينطق بالإنجليزية فوراً:</p>
+                <button id="btn-mic" class="btn-action" style="background: var(--accent-purple); font-size: 1.2rem; padding: 15px 20px;" onclick="startSpeechRecognition()">
+                    🎤 اضغط هنا والتحدث بالعربية
+                </button>
+                <div id="translator-result" style="margin-top: 20px; text-align: right;"></div>
+            </div>
+            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
         <!-- GAMES SECTION -->
         <div id="sec-games" class="section-view">
+            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🎮 الألعاب والتحديات</h2>
+            <div class="interactive-card" id="quiz-box"></div>
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">🎮 لعبة التحدي السريع</h2>
-            <div class="interactive-card" id="quiz-box">
-                <div id="quiz-q" style="font-size: 1.2rem; margin-bottom: 15px;"></div>
-                <div id="quiz-options"></div>
-            </div>
         </div>
 
         <!-- PARENTS & SETTINGS SECTION -->
         <div id="sec-parents" class="section-view">
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-            <h2 style="color: var(--accent-yellow); margin-bottom: 15px;">👨‍👩‍👧 لوحة التحكم والإعدادات</h2>
-            
+            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">👨‍👩‍👧 لوحة التحكم والإعدادات</h2>
             <div class="interactive-card">
                 <h3 style="color: var(--accent-green); margin-bottom: 10px;">🔑 تغيير الرقم السري الخاص بجهتك</h3>
-                <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
-                    الرقم السري يتم حفظه على هاتفك فقط، ولن يؤثر على أي جهاز آخر.
-                </p>
                 <input type="password" id="new-pin-input" placeholder="أدخل الرقم السري الجديد" maxlength="8">
                 <button class="btn-action" onclick="changePin()">حفظ الرقم السري الجديد</button>
                 <div id="change-pin-msg" style="margin-top: 10px; font-size: 0.85rem;"></div>
             </div>
+            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
     </div>
 
-    <script>
-        // Register Service Worker for PWA
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
-        }
-
-        // PWA Install Logic
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('install-banner').style.display = 'flex';
-        });
-
-        function installPWA() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        document.getElementById('install-banner').style.display = 'none';
-                    }
-                    deferredPrompt = null;
-                });
-            }
-        }
-
-        // PIN System
-        const DEFAULT_PIN = "1234";
-
-        function getSavedPin() {
-            return localStorage.getItem('app_pin') || DEFAULT_PIN;
-        }
-
-        function checkPin() {
-            const input = document.getElementById('pin-input').value;
-            const savedPin = getSavedPin();
-            if (input === savedPin) {
-                document.getElementById('pin-overlay').style.display = 'none';
-                document.getElementById('pin-error').style.display = 'none';
-            } else {
-                document.getElementById('pin-error').style.display = 'block';
-            }
-        }
-
-        function changePin() {
-            const newPin = document.getElementById('new-pin-input').value.trim();
-            const msg = document.getElementById('change-pin-msg');
-            if (newPin.length >= 4) {
-                localStorage.setItem('app_pin', newPin);
-                msg.style.color = "var(--accent-green)";
-                msg.innerText = "✅ تم تغيير الرقم السري بنجاح!";
-                document.getElementById('new-pin-input').value = "";
-            } else {
-                msg.style.color = "var(--accent-pink)";
-                msg.innerText = "❌ يرجى كتابة رقم سري مكون من 4 أرقام على الأقل.";
-            }
-        }
-
-        // App Speech & Data
-        let currentSelectedLetter = 'A';
-        let currentPoints = parseInt(localStorage.getItem('user_points') || '0');
-        document.getElementById('points-display').innerText = `⭐ ${currentPoints} نقطة`;
-
-        function speak(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.85;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        function speakCurrentLetter() {
-            speak(currentSelectedLetter);
-        }
-
-        function addPoints(pts) {
-            currentPoints += pts;
-            localStorage.setItem('user_points', currentPoints);
-            document.getElementById('points-display').innerText = `⭐ ${currentPoints} نقطة`;
-        }
-
-        function showSection(id) {
-            document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
-        function setStage(stage, btn) {
-            document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            loadContent(stage);
-        }
-
-        // Alphabet Grid & Board Handler
-        const alphabetContainer = document.getElementById('alphabet-container');
-        for (let i = 65; i <= 90; i++) {
-            const char = String.fromCharCode(i);
-            const div = document.createElement('div');
-            div.className = 'letter-card';
-            div.innerText = char;
-            div.onclick = () => selectLetter(char);
-            alphabetContainer.appendChild(div);
-        }
-
-        function selectLetter(char) {
-            currentSelectedLetter = char;
-            document.getElementById('current-letter-title').innerText = `✏️ سبورة الرسم والتتبع (الحرف: ${char})`;
-            speak(char);
-            clearCanvas();
-        }
-
-        // Canvas / Drawing Board Code
-        const canvas = document.getElementById('draw-canvas');
-        const ctx = canvas.getContext('2d');
-        let isDrawing = false;
-
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#000";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw faint template letter
-            ctx.font = "bold 110px Segoe UI";
-            ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(currentSelectedLetter, canvas.width / 2, canvas.height / 2);
-        }
-
-        function startDrawing(e) {
-            isDrawing = true;
-            draw(e);
-        }
-
-        function stopDrawing() {
-            isDrawing = false;
-            ctx.beginPath();
-        }
-
-        function draw(e) {
-            if (!isDrawing) return;
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-            ctx.lineWidth = 10;
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = '#06d6a0';
-
-            ctx.lineTo(clientX - rect.left, clientY - rect.top);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(clientX - rect.left, clientY - rect.top);
-        }
-
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mousemove', draw);
-
-        canvas.addEventListener('touchstart', startDrawing);
-        canvas.addEventListener('touchend', stopDrawing);
-        canvas.addEventListener('touchmove', draw);
-
-        // Load Content
-        function loadContent(stage) {
-            const dictContainer = document.getElementById('dict-container');
-            const words = stage === 1 ? [
-                {en: 'Apple', ar: 'تفاحة'}, {en: 'Cat', ar: 'قطة'}, {en: 'Dog', ar: 'كلب'}, {en: 'Sun', ar: 'شمس'}
-            ] : stage === 2 ? [
-                {en: 'School', ar: 'مدرسة'}, {en: 'Friend', ar: 'صديق'}, {en: 'Book', ar: 'كتاب'}, {en: 'Teacher', ar: 'معلم'}
-            ] : [
-                {en: 'Knowledge', ar: 'معرفة'}, {en: 'Future', ar: 'مستقبل'}, {en: 'Science', ar: 'علوم'}, {en: 'Challenge', ar: 'تحدي'}
-            ];
-
-            dictContainer.innerHTML = words.map(w => `
-                <div class="word-card" onclick="speak('${w.en}')">
-                    <span class="word-en">🔊 ${w.en}</span>
-                    <span class="word-ar">${w.ar}</span>
-                </div>
-            `).join('');
-
-            const grammarContainer = document.getElementById('grammar-container');
-            grammarContainer.innerHTML = `
-                <div class="interactive-card">
-                    <h3>📌 الضمائر الأساسية (Pronouns)</h3>
-                    <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
-                        <button class="stage-btn" onclick="speak('I am')">I am (أنا)</button>
-                        <button class="stage-btn" onclick="speak('He is')">He is (هو)</button>
-                        <button class="stage-btn" onclick="speak('She is')">She is (هي)</button>
-                    </div>
-                </div>
-            `;
-
-            const storiesContainer = document.getElementById('stories-container');
-            storiesContainer.innerHTML = `
-                <div class="interactive-card" onclick="speak('Hello! What is your name? My name is Ghazaal. Nice to meet you!')">
-                    <h3>💬 محادثة التعارف</h3>
-                    <p style="margin-top:10px; color:var(--accent-yellow);">"Hello! What is your name? My name is Ghazaal. Nice to meet you!"</p>
-                </div>
-            `;
-        }
-
-        function loadQuiz() {
-            document.getElementById('quiz-q').innerText = 'ما معنى كلمة "Apple"؟';
-            document.getElementById('quiz-options').innerHTML = `
-                <button class="btn-action" style="margin-bottom:10px;" onclick="answerQuiz(true)">تفاحة</button>
-                <button class="btn-action" style="background:#444;" onclick="answerQuiz(false)">سيارة</button>
-            `;
-        }
-
-        function answerQuiz(correct) {
-            if (correct) {
-                alert('إجابة صحيحة! 🎉 حصلت على 10 نقاط!');
-                addPoints(10);
-            } else {
-                alert('حاول مرة أخرى! 💪');
-            }
-        }
-
-        loadContent(1);
-        loadQuiz();
-        clearCanvas();
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
