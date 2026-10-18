@@ -1,67 +1,791 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Kids Academy</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#06d6a0">
+<meta name="theme-color" content="#101126">
+<meta name="description" content="أكاديمية الإنجليزية للأطفال من 5 إلى 13 سنة">
+<title>English Kids Academy | أكاديمية الإنجليزية</title>
+<link rel="manifest" href="./manifest.json">
+
 <style>
-body{background:#0a0a1a;color:#fff;font-family:sans-serif;margin:0;padding:15px}
-h1{text-align:center}
-.card{background:#1e1e3a;padding:20px;margin:12px 0;border-radius:15px;text-align:center;font-size:18px}
-button{background:#06d6a0;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;width:100%;margin-top:10px}
-.install-banner{background:#06d6a0;color:#000;padding:15px;border-radius:12px;text-align:center;font-weight:bold;display:block;margin:10px 0}
+:root {
+  --bg: #101126;
+  --panel: #1c2042;
+  --panel2: #262b52;
+  --green: #00d6a0;
+  --gold: #ffca58;
+  --text: #ffffff;
+  --muted: #c2c7df;
+  --border: #41476f;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Tahoma, Arial, sans-serif;
+  line-height: 1.8;
+}
+button, input, select, textarea { font: inherit; }
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 15px;
+  font-weight: bold;
+}
+button:focus-visible, input:focus-visible {
+  outline: 3px solid var(--gold);
+}
+header {
+  background: #191c38;
+  padding: 15px;
+  border-bottom: 2px solid var(--green);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.header-inner {
+  max-width: 950px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.logo { color: var(--green); font-size: 18px; font-weight: bold; }
+.points { color: var(--gold); white-space: nowrap; }
+main { max-width: 950px; margin: auto; padding: 16px; }
+.hero {
+  text-align: center;
+  padding: 24px 12px;
+}
+.hero h1 { color: var(--green); margin-bottom: 5px; }
+.hero p { color: var(--muted); margin-top: 0; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 12px;
+}
+.card, .panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 16px;
+}
+.menu-card {
+  min-height: 120px;
+  text-align: center;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  width: 100%;
+}
+.menu-card .emoji { display: block; font-size: 30px; }
+.menu-card:hover { border-color: var(--green); }
+h2 { color: var(--green); font-size: 22px; }
+h3 { color: var(--gold); }
+.muted { color: var(--muted); }
+.primary { background: var(--green); color: #081b19; }
+.secondary { background: var(--panel2); color: white; border: 1px solid var(--border); }
+.gold { background: var(--gold); color: #211a07; }
+.danger { background: #9e344b; color: white; }
+.actions { display: flex; flex-wrap: wrap; gap: 9px; margin: 12px 0; }
+.actions button { flex: 1 1 110px; }
+.field {
+  display: block;
+  width: 100%;
+  background: #0c0e20;
+  color: white;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 12px;
+  margin: 8px 0 14px;
+}
+.hidden { display: none !important; }
+.section-title { display: flex; align-items: center; gap: 10px; }
+.back { background: var(--panel2); color: white; }
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+.letter-btn {
+  background: var(--panel2);
+  color: white;
+  border: 1px solid var(--border);
+  padding: 8px 2px;
+  font-size: 19px;
+}
+.letter-btn.active { background: var(--green); color: #071b17; }
+.word-card {
+  background: var(--panel2);
+  padding: 13px;
+  margin: 8px 0;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.word-en { color: var(--gold); font-size: 20px; font-weight: bold; }
+.word-ar { color: var(--green); }
+#board {
+  display: block;
+  width: 100%;
+  height: 250px;
+  background: #000;
+  border: 2px solid #555;
+  border-radius: 12px;
+  touch-action: none;
+}
+.story, .conversation, .grammar-card {
+  background: var(--panel2);
+  padding: 14px;
+  border-radius: 12px;
+  margin: 10px 0;
+}
+.quiz-option {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  background: var(--panel2);
+  color: white;
+  text-align: right;
+  border: 1px solid var(--border);
+}
+.notice {
+  background: #242747;
+  border-right: 4px solid var(--gold);
+  padding: 12px;
+  border-radius: 9px;
+  color: var(--muted);
+  margin: 12px 0;
+}
+footer { text-align: center; color: var(--muted); padding: 25px 10px; }
+@media (max-width: 420px) {
+  main { padding: 10px; }
+  .letter-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .logo { font-size: 15px; }
+}
 </style>
 </head>
+
 <body>
-<h1>English Kids Academy</h1>
+<header>
+  <div class="header-inner">
+    <div class="logo">🎓 English Kids Academy</div>
+    <div class="points">⭐ <span id="points">0</span></div>
+  </div>
+</header>
 
-<div id="installDiv" class="install-banner" style="display:none">
-📱 دوس هنا لتثبيت التطبيق على هاتفك
-</div>
+<main>
+  <section id="home">
+    <div class="hero">
+      <h1>أهلاً بك في أكاديمية الإنجليزية!</h1>
+      <p>اتعلّم الإنجليزية خطوة بخطوة من الحروف إلى المحادثة.</p>
+      <button class="primary" onclick="showSection('letters')">🚀 ابدأ التعلّم</button>
+    </div>
 
-<div class="card" onclick="speak('abc')">🔤 الحروف والسبورة<br><small>abc</small></div>
-<div class="card">📚 القاموس الشامل (بحث جوجل)<br><input id="search" placeholder="اكتب كلمة انجليزية" style="width:90%;padding:8px;border-radius:8px"><button onclick="searchDict()">بحث</button></div>
-<div class="card">📖 القواعد بالتفصيل الممل</div>
-<div class="card" onclick="startVoice()">🎤 الترجمة الفورية - دوس وتكلم</div>
-<div id="result" class="card" style="display:none"></div>
+    <div class="grid">
+      <button class="menu-card" onclick="showSection('letters')">
+        <span class="emoji">🔤</span>الحروف والسبورة
+      </button>
+      <button class="menu-card" onclick="showSection('dictionary')">
+        <span class="emoji">📚</span>قاموس الكلمات
+      </button>
+      <button class="menu-card" onclick="showSection('grammar')">
+        <span class="emoji">📖</span>القواعد
+      </button>
+      <button class="menu-card" onclick="showSection('stories')">
+        <span class="emoji">📚</span>القصص التعليمية
+      </button>
+      <button class="menu-card" onclick="showSection('conversations')">
+        <span class="emoji">💬</span>المحادثات
+      </button>
+      <button class="menu-card" onclick="showSection('games')">
+        <span class="emoji">🎮</span>الألعاب والاختبارات
+      </button>
+      <button class="menu-card" onclick="showSection('translator')">
+        <span class="emoji">🎤</span>التدريب الصوتي
+      </button>
+    </div>
+
+    <div class="notice">
+      📱 يمكنك تجربة إضافة الموقع إلى الشاشة الرئيسية من قائمة Chrome.
+      بعض المميزات تحتاج إلى الإنترنت.
+    </div>
+  </section>
+
+  <section id="letters" class="hidden">
+    <div class="section-title">
+      <button class="back" onclick="goHome()">⬅ رجوع</button>
+      <h2>الحروف والسبورة</h2>
+    </div>
+    <div class="panel">
+      <div id="letter-display" style="text-align:center;padding:8px">
+        <div id="big-letter" style="font-size:70px;color:var(--gold)">A a</div>
+        <div id="letter-word" class="word-en">Apple</div>
+        <div id="letter-meaning" class="word-ar">تفاحة</div>
+      </div>
+      <div id="letter-grid" class="letter-grid"></div>
+      <div class="actions">
+        <button class="primary" onclick="speakCurrentLetter()">🔊 اسمع الحرف</button>
+        <button class="secondary" onclick="nextLetter()">الحرف التالي ➡</button>
+      </div>
+      <h3>✍️ السبورة السوداء</h3>
+      <p class="muted">اكتب بإصبعك. لون الكتابة أبيض ويمكنك مسح السبورة.</p>
+      <canvas id="board"></canvas>
+      <div class="actions">
+        <button class="secondary" onclick="clearBoard()">🧹 مسح</button>
+        <button class="primary" onclick="speakCurrentLetter()">🔊 اسمع الكلمة</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="dictionary" class="hidden">
+    <div class="section-title">
+      <button class="back" onclick="goHome()">⬅ رجوع</button>
+      <h2>📚 قاموس الكلمات</h2>
+    </div>
+    <div class="panel">
+      <p class="muted">ابحث بالعربية أو الإنجليزية في الكلمات المتوفرة داخل التطبيق.</p>
+      <input class="field" id="search-input" placeholder="مثال: apple أو تفاحة">
+      <button class="primary" onclick="searchWords()">🔎 ابحث</button>
+      <div id="dictionary-results"></div>
+    </div>
+  </section>
+
+  <section id="grammar" class="hidden">
+    <div class="section-title">
+      <button class="back" onclick="goHome()">⬅ رجوع</button>
+      <h2>📖 القواعد الإنجليزية</h2>
+    </div>
+    <div id="grammar-content"></div>
+  </section>
+
+  <section id="stories" class="hidden">
+    <div class="section-title">
+      <button class="back" onclick="goHome()">⬅ رجوع</button>
+      <h2>📚 القصص التعليمية</h2>
+    </div>
+    <div id="stories-content"></div>
+  </section>
+
+  <section id="conversations" class="hidden">
+    <div class="section-title">
+      <button class="back" onclick="goHome()">⬅ رجوع</button>
+      <h2>💬 المحادثات اليومية</h2>
+    </div>
+    <div id="conversations-content"></div>
+  </section>
+
+  <section id="games" class="hidden">
+    <div class="section-title">
+      <button class="back" onclick="goHome()">⬅ رجوع</button>
+      <h2>🎮 اختبر نفسك</h2>
+    </div>
+    <div class="panel">
+      <p id="quiz-progress" class="muted"></p>
+      <h3 id="quiz-question">استعد للسؤال الأول!</h3>
+      <div id="quiz-options"></div>
+      <p id="quiz-feedback" aria-live="polite"></p>
+      <button class="primary" onclick="startQuiz()">ابدأ / سؤال جديد</button>
+    </div>
+  </section>
+
+  <section id="translator" class="hidden">
+    <div class="section-title">
+      <button class="back" onclick="goHome()">⬅ رجوع</button>
+      <h2>🎤 التدريب الصوتي</h2>
+    </div>
+    <div class="panel">
+      <p>اكتب جملة إنجليزية ثم استمع إلى نطقها.</p>
+      <input class="field" id="speech-input" placeholder="مثال: Good morning">
+      <button class="primary" onclick="speakInput()">🔊 استمع للنطق</button>
+      <div class="notice">
+        التعرف على الكلام وترجمته آليًا يحتاج إلى خدمة مناسبة واتصال بالإنترنت؛
+        هذا القسم لا يدّعي أنه مترجم آلي كامل.
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>English Kids Academy · تعلّم كل يوم خطوة جديدة ⭐</footer>
 
 <script>
-let deferredPrompt;
-const installDiv = document.getElementById('installDiv');
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installDiv.style.display = 'block';
-});
-installDiv.addEventListener('click', async () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    installDiv.style.display = 'none';
+HTML
+
+const letters = [
+  ["A","Apple","تفاحة"],["B","Ball","كرة"],["C","Cat","قطة"],
+  ["D","Dog","كلب"],["E","Egg","بيضة"],["F","Fish","سمكة"],
+  ["G","Girl","بنت"],["H","House","منزل"],["I","Ice","ثلج"],
+  ["J","Juice","عصير"],["K","King","ملك"],["L","Lion","أسد"],
+  ["M","Moon","قمر"],["N","Nose","أنف"],["O","Orange","برتقالة"],
+  ["P","Pen","قلم"],["Q","Queen","ملكة"],["R","Rabbit","أرنب"],
+  ["S","Sun","شمس"],["T","Tiger","نمر"],["U","Umbrella","مظلة"],
+  ["V","Van","سيارة نقل"],["W","Water","ماء"],["X","X-ray","أشعة"],
+  ["Y","Yellow","أصفر"],["Z","Zoo","حديقة حيوان"]
+];
+
+const words = [
+  ...letters.map(x=>({en:x[1],ar:x[2]})),
+  {en:"Hello",ar:"مرحبًا"},{en:"Good morning",ar:"صباح الخير"},
+  {en:"Good night",ar:"تصبح على خير"},{en:"Thank you",ar:"شكرًا"},
+  {en:"Please",ar:"من فضلك"},{en:"Sorry",ar:"آسف"},
+  {en:"School",ar:"مدرسة"},{en:"Teacher",ar:"معلّم"},
+  {en:"Student",ar:"طالب"},{en:"Book",ar:"كتاب"},
+  {en:"Pencil",ar:"قلم رصاص"},{en:"Table",ar:"طاولة"},
+  {en:"Chair",ar:"كرسي"},{en:"Door",ar:"باب"},
+  {en:"Window",ar:"نافذة"},{en:"Family",ar:"عائلة"},
+  {en:"Father",ar:"أب"},{en:"Mother",ar:"أم"},
+  {en:"Brother",ar:"أخ"},{en:"Sister",ar:"أخت"},
+  {en:"Friend",ar:"صديق"},{en:"Water",ar:"ماء"},
+  {en:"Milk",ar:"حليب"},{en:"Bread",ar:"خبز"},
+  {en:"Food",ar:"طعام"},{en:"Happy",ar:"سعيد"},
+  {en:"Sad",ar:"حزين"},{en:"Beautiful",ar:"جميل"},
+  {en:"Big",ar:"كبير"},{en:"Small",ar:"صغير"},
+  {en:"Red",ar:"أحمر"},{en:"Blue",ar:"أزرق"},
+  {en:"Green",ar:"أخضر"},{en:"One",ar:"واحد"},
+  {en:"Two",ar:"اثنان"},{en:"Three",ar:"ثلاثة"},
+  {en:"Four",ar:"أربعة"},{en:"Five",ar:"خمسة"},
+  {en:"Monday",ar:"الاثنين"},{en:"Tuesday",ar:"الثلاثاء"},
+  {en:"Wednesday",ar:"الأربعاء"},{en:"Thursday",ar:"الخميس"},
+  {en:"Friday",ar:"الجمعة"},{en:"Saturday",ar:"السبت"},
+  {en:"Sunday",ar:"الأحد"},{en:"I",ar:"أنا"},
+  {en:"You",ar:"أنت"},{en:"He",ar:"هو"},
+  {en:"She",ar:"هي"},{en:"We",ar:"نحن"},
+  {en:"They",ar:"هم"},{en:"Love",ar:"يحب"},
+  {en:"Read",ar:"يقرأ"},{en:"Write",ar:"يكتب"},
+  {en:"Eat",ar:"يأكل"},{en:"Drink",ar:"يشرب"},
+  {en:"Play",ar:"يلعب"},{en:"Run",ar:"يجري"},
+  {en:"Walk",ar:"يمشي"},{en:"Sleep",ar:"ينام"}
+];
+
+const grammar = [
+  {
+    title:"1. الضمائر الشخصية — Personal Pronouns",
+    body:"I = أنا، You = أنت، He = هو، She = هي، It = لغير العاقل، We = نحن، They = هم.",
+    example:"I am a student. = أنا طالب."
+  },
+  {
+    title:"2. فعل الكينونة — Verb to Be",
+    body:"I am، He/She/It is، You/We/They are. نستخدمه للتعريف والوصف.",
+    example:"She is happy. = هي سعيدة."
+  },
+  {
+    title:"3. المضارع البسيط — Present Simple",
+    body:"نستخدمه للعادات والحقائق. مع He/She/It غالبًا نضيف s إلى الفعل.",
+    example:"I play every day. = أنا ألعب كل يوم. / He plays football. = هو يلعب كرة القدم."
+  },
+  {
+    title:"4. المضارع المستمر — Present Continuous",
+    body:"am/is/are + الفعل مع ing، للتعبير عن شيء يحدث الآن.",
+    example:"I am reading. = أنا أقرأ الآن."
+  },
+  {
+    title:"5. الماضي البسيط — Past Simple",
+    body:"نستخدمه لحدث انتهى في الماضي. الأفعال المنتظمة غالبًا تأخذ ed، وغير المنتظمة لها أشكال خاصة.",
+    example:"I played yesterday. = لعبت أمس. / I went home. = ذهبت إلى المنزل."
+  },
+  {
+    title:"6. المستقبل — Future with Will",
+    body:"Will + المصدر للتحدث عن المستقبل.",
+    example:"I will learn English. = سأتعلم الإنجليزية."
+  },
+  {
+    title:"7. أدوات النكرة والمعرفة — A, An, The",
+    body:"A قبل صوت ساكن، An قبل صوت متحرك، وThe لشيء محدد.",
+    example:"a book = كتاب، an apple = تفاحة، the sun = الشمس."
+  },
+  {
+    title:"8. النفي والسؤال",
+    body:"في المضارع البسيط نستخدم do/does، وفي الماضي نستخدم did. بعد do/does/did يأتي الفعل في المصدر.",
+    example:"Do you play? = هل تلعب؟ / I don't play. = أنا لا ألعب."
+  }
+];
+
+const stories = [
+  {
+    title:"The Little Cat — القطة الصغيرة",
+    en:"A little cat is in the garden. It sees a red ball. The cat plays with the ball. It is happy.",
+    ar:"قطة صغيرة في الحديقة. ترى كرة حمراء. تلعب القطة بالكرة. إنها سعيدة.",
+    lesson:"كلمات: cat = قطة، garden = حديقة، ball = كرة، happy = سعيد."
+  },
+  {
+    title:"My School — مدرستي",
+    en:"I go to school every morning. I meet my teacher and friends. We read books and learn English.",
+    ar:"أذهب إلى المدرسة كل صباح. أقابل معلّمي وأصدقائي. نقرأ الكتب ونتعلم الإنجليزية.",
+    lesson:"كلمات: school = مدرسة، morning = صباح، friends = أصدقاء، learn = يتعلم."
+  },
+  {
+    title:"The Kind Boy — الولد الطيب",
+    en:"A boy sees an old man carrying a bag. He helps him. The old man says, Thank you!",
+    ar:"يرى ولد رجلًا كبيرًا في السن يحمل حقيبة. يساعده الولد. يقول الرجل: شكرًا لك!",
+    lesson:"كلمات: boy = ولد، helps = يساعد، old man = رجل مسن."
+  },
+  {
+    title:"A Sunny Day — يوم مشمس",
+    en:"The sun is shining. Sara goes to the park with her family. They play and eat lunch together.",
+    ar:"الشمس مشرقة. تذهب سارة إلى الحديقة مع عائلتها. يلعبون ويتناولون الغداء معًا.",
+    lesson:"كلمات: sun = شمس، park = حديقة، family = عائلة."
+  },
+  {
+    title:"The Lost Book — الكتاب المفقود",
+    en:"Omar cannot find his book. He looks on the table. His sister finds it beside the chair.",
+    ar:"لا يستطيع عمر العثور على كتابه. يبحث فوق الطاولة. تجد أخته الكتاب بجانب الكرسي.",
+    lesson:"كلمات: find = يجد، table = طاولة، beside = بجانب."
+  }
+];
+
+const conversations = [
+  {
+    title:"Greetings — التحية",
+    lines:[
+      ["Ali","Hello!"],["Omar","Hi! How are you?"],
+      ["Ali","I am fine, thank you."],["Omar","You are welcome."]
+    ],
+    ar:"مرحبًا! — أهلًا! كيف حالك؟ — أنا بخير، شكرًا لك."
+  },
+  {
+    title:"At School — في المدرسة",
+    lines:[
+      ["Teacher","Good morning, students."],["Students","Good morning, teacher."],
+      ["Teacher","Open your books, please."],["Students","Yes, teacher."]
+    ],
+    ar:"صباح الخير يا طلاب. — صباح الخير يا معلم. — افتحوا كتبكم من فضلكم. — حاضر يا معلم."
+  },
+  {
+    title:"At the Shop — في المتجر",
+    lines:[
+      ["Customer","Hello. How much is this?"],["Shopkeeper","It is five pounds."],
+      ["Customer","Here you are."],["Shopkeeper","Thank you!"]
+    ],
+    ar:"مرحبًا، بكم هذا؟ — بخمسة جنيهات. — تفضل. — شكرًا لك!"
+  },
+  {
+    title:"Meeting a Friend — مقابلة صديق",
+    lines:[
+      ["Mona","What is your name?"],["Sara","My name is Sara."],
+      ["Mona","Nice to meet you."],["Sara","Nice to meet you, too."]
+    ],
+    ar:"ما اسمك؟ — اسمي سارة. — سعيدة بلقائك. — وأنا أيضًا."
+  },
+  {
+    title:"At Home — في المنزل",
+    lines:[
+      ["Mother","Please clean your room."],["Child","Okay, Mum."],
+      ["Mother","Thank you for helping."],["Child","You are welcome."]
+    ],
+    ar:"من فضلك نظف غرفتك. — حسنًا يا أمي. — شكرًا لمساعدتك. — العفو."
+  }
+];
+
+let currentLetter = 0;
+let points = 0;
+let quizIndex = 0;
+let quizScore = 0;
+
+function showSection(id) {
+  document.querySelectorAll("main > section").forEach(section => {
+    section.classList.add("hidden");
+  });
+  const target = document.getElementById(id);
+  if (target) target.classList.remove("hidden");
+  if (id === "letters") {
+    renderLetters();
+    updateLetter();
+    setupBoard();
+  }
+  if (id === "grammar") renderGrammar();
+  if (id === "stories") renderStories();
+  if (id === "conversations") renderConversations();
+  if (id === "dictionary") searchWords();
+  if (id === "games" && !document.getElementById("quiz-options").children.length) startQuiz();
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  showSection("home");
+}
+
+function speak(text) {
+  if (!("speechSynthesis" in window)) {
+    alert("خاصية النطق غير مدعومة في هذا المتصفح.");
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-US";
+  utterance.rate = 0.78;
+  window.speechSynthesis.speak(utterance);
+}
+
+function renderLetters() {
+  const grid = document.getElementById("letter-grid");
+  if (grid.children.length) return;
+  letters.forEach((item, index) => {
+    const button = document.createElement("button");
+    button.className = "letter-btn";
+    button.textContent = item[0];
+    button.onclick = () => {
+      currentLetter = index;
+      updateLetter();
+    };
+    grid.appendChild(button);
+  });
+}
+
+function updateLetter() {
+  const item = letters[currentLetter];
+  document.getElementById("big-letter").textContent = item[0] + " " + item[0].toLowerCase();
+  document.getElementById("letter-word").textContent = item[1];
+  document.getElementById("letter-meaning").textContent = item[2];
+  [...document.querySelectorAll(".letter-btn")].forEach((button, index) => {
+    button.classList.toggle("active", index === currentLetter);
+  });
+}
+
+function nextLetter() {
+  currentLetter = (currentLetter + 1) % letters.length;
+  updateLetter();
+}
+
+function speakCurrentLetter() {
+  const item = letters[currentLetter];
+  speak(item[0] + ". " + item[1]);
+}
+
+function searchWords() {
+  const input = document.getElementById("search-input");
+  const results = document.getElementById("dictionary-results");
+  if (!input || !results) return;
+  const query = input.value.trim().toLowerCase();
+  const filtered = words.filter(item =>
+    item.en.toLowerCase().includes(query) || item.ar.includes(query)
+  );
+  results.replaceChildren();
+  const list = query ? filtered : words.slice(0, 15);
+  if (!list.length) {
+    results.textContent = "لم نعثر على الكلمة في القاموس المحفوظ. جرّب كلمة أخرى.";
+    return;
+  }
+  list.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "word-card";
+    const english = document.createElement("div");
+    english.className = "word-en";
+    english.textContent = item.en;
+    const arabic = document.createElement("div");
+    arabic.className = "word-ar";
+    arabic.textContent = item.ar;
+    const button = document.createElement("button");
+    button.className = "secondary";
+    button.textContent = "🔊 استمع";
+    button.onclick = () => speak(item.en);
+    card.append(english, arabic, button);
+    results.appendChild(card);
+  });
+}
+
+function renderGrammar() {
+  const root = document.getElementById("grammar-content");
+  if (root.children.length) return;
+  grammar.forEach(item => {
+    const card = document.createElement("article");
+    card.className = "grammar-card";
+    const title = document.createElement("h3");
+    title.textContent = item.title;
+    const body = document.createElement("p");
+    body.textContent = item.body;
+    const example = document.createElement("p");
+    example.textContent = "مثال: " + item.example;
+    const button = document.createElement("button");
+    button.className = "secondary";
+    button.textContent = "🔊 استمع للمثال";
+    button.onclick = () => speak(item.example.split(" = ")[0]);
+    card.append(title, body, example, button);
+    root.appendChild(card);
+  });
+}
+
+function renderStories() {
+  const root = document.getElementById("stories-content");
+  if (root.children.length) return;
+  stories.forEach(story => {
+    const card = document.createElement("article");
+    card.className = "story";
+    const title = document.createElement("h3");
+    title.textContent = story.title;
+    const english = document.createElement("p");
+    english.textContent = story.en;
+    const arabic = document.createElement("p");
+    arabic.className = "word-ar";
+    arabic.textContent = story.ar;
+    const lesson = document.createElement("p");
+    lesson.textContent = story.lesson;
+    const button = document.createElement("button");
+    button.className = "secondary";
+    button.textContent = "🔊 استمع للقصة";
+    button.onclick = () => speak(story.en);
+    card.append(title, english, arabic, lesson, button);
+    root.appendChild(card);
+  });
+}
+
+function renderConversations() {
+  const root = document.getElementById("conversations-content");
+  if (root.children.length) return;
+  conversations.forEach(conversation => {
+    const card = document.createElement("article");
+    card.className = "conversation";
+    const title = document.createElement("h3");
+    title.textContent = conversation.title;
+    card.appendChild(title);
+    conversation.lines.forEach(line => {
+      const p = document.createElement("p");
+      p.textContent = line[0] + ": " + line[1];
+      card.appendChild(p);
+    });
+    const arabic = document.createElement("p");
+    arabic.className = "word-ar";
+    arabic.textContent = conversation.ar;
+    const button = document.createElement("button");
+    button.className = "secondary";
+    button.textContent = "🔊 استمع للمحادثة";
+    button.onclick = () => speak(conversation.lines.map(line => line[1]).join(". "));
+    card.append(arabic, button);
+    root.appendChild(card);
+  });
+}
+
+const quizQuestions = [
+  {q:"What does Apple mean?", options:["تفاحة","قلم","باب"], answer:0},
+  {q:"What does Cat mean?", options:["كلب","قطة","سمكة"], answer:1},
+  {q:"How do you say شمس in English?", options:["Moon","Sun","Star"], answer:1},
+  {q:"What does Book mean?", options:["كتاب","كرسي","ماء"], answer:0},
+  {q:"What does Happy mean?", options:["حزين","صغير","سعيد"], answer:2},
+  {q:"How do you say ماء in English?", options:["Milk","Water","Bread"], answer:1},
+  {q:"What does Red mean?", options:["أزرق","أحمر","أخضر"], answer:1},
+  {q:"What does Teacher mean?", options:["طالب","طبيب","معلم"], answer:2},
+  {q:"What does Three mean?", options:["اثنان","ثلاثة","أربعة"], answer:1},
+  {q:"How do you say مدرسة in English?", options:["School","House","Shop"], answer:0}
+];
+
+function startQuiz() {
+  quizIndex = Math.floor(Math.random() * quizQuestions.length);
+  const question = quizQuestions[quizIndex];
+  document.getElementById("quiz-question").textContent = question.q;
+  document.getElementById("quiz-progress").textContent = "نتيجتك: " + quizScore + " نقطة";
+  document.getElementById("quiz-feedback").textContent = "";
+  const root = document.getElementById("quiz-options");
+  root.replaceChildren();
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.className = "quiz-option";
+    button.textContent = option;
+    button.onclick = () => answerQuiz(index, button);
+    root.appendChild(button);
+  });
+}
+
+function answerQuiz(index, button) {
+  const question = quizQuestions[quizIndex];
+  const options = document.querySelectorAll(".quiz-option");
+  options.forEach(option => option.disabled = true);
+  if (index === question.answer) {
+    quizScore++;
+    points += 10;
+    document.getElementById("points").textContent = points;
+    document.getElementById("quiz-feedback").textContent = "🎉 إجابة صحيحة! حصلت على 10 نقاط.";
+    button.className = "quiz-option primary";
+  } else {
+    document.getElementById("quiz-feedback").textContent =
+      "حاول مرة أخرى في السؤال القادم. الإجابة الصحيحة: " +
+      question.options[question.answer];
+  }
+  document.getElementById("quiz-progress").textContent =
+    "نتيجتك: " + quizScore + " إجابات صحيحة";
+}
+
+function speakInput() {
+  const input = document.getElementById("speech-input").value.trim();
+  if (!input) {
+    alert("اكتب كلمة أو جملة إنجليزية أولًا.");
+    return;
+  }
+  speak(input);
+}
+
+/* السبورة: خلفية سوداء وقلم أبيض */
+let boardReady = false;
+let drawing = false;
+let boardContext = null;
+let boardCanvas = null;
+
+function setupBoard() {
+  const canvas = document.getElementById("board");
+  if (boardReady && boardCanvas === canvas) return;
+  boardCanvas = canvas;
+  const ratio = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = Math.max(1, Math.round(rect.width * ratio));
+  canvas.height = Math.max(1, Math.round(rect.height * ratio));
+  boardContext = canvas.getContext("2d");
+  boardContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+  boardContext.strokeStyle = "#ffffff";
+  boardContext.lineWidth = 4;
+  boardContext.lineCap = "round";
+  boardContext.lineJoin = "round";
+
+  function position(event) {
+    const bounds = canvas.getBoundingClientRect();
+    return {
+      x: event.clientX - bounds.left,
+      y: event.clientY - bounds.top
+    };
+  }
+
+  canvas.onpointerdown = event => {
+    drawing = true;
+    canvas.setPointerCapture(event.pointerId);
+    const p = position(event);
+    boardContext.beginPath();
+    boardContext.moveTo(p.x, p.y);
+  };
+
+  canvas.onpointermove = event => {
+    if (!drawing) return;
+    const p = position(event);
+    boardContext.lineTo(p.x, p.y);
+    boardContext.stroke();
+  };
+
+  canvas.onpointerup = () => drawing = false;
+  canvas.onpointercancel = () => drawing = false;
+  boardReady = true;
+}
+
+function clearBoard() {
+  if (!boardContext || !boardCanvas) setupBoard();
+  if (boardContext && boardCanvas) {
+    boardContext.clearRect(0, 0, boardCanvas.width, boardCanvas.height);
+  }
+}
+
+/* تشغيل آمن للقسم الرئيسي */
+document.getElementById("search-input").addEventListener("input", searchWords);
+
+/* تحديث مقياس السبورة عند تغيير اتجاه الهاتف */
+window.addEventListener("resize", () => {
+  if (!document.getElementById("letters").classList.contains("hidden")) {
+    boardReady = false;
+    setupBoard();
   }
 });
 
-function speak(t){ speechSynthesis.speak(new SpeechSynthesisUtterance(t)); }
-function searchDict(){
-  let w=document.getElementById('search').value;
-  if(w) window.open('https://www.google.com/search?q='+w+' meaning','_blank');
-}
-function startVoice(){
-  const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  rec.lang='ar-EG'; rec.start();
-  rec.onresult = (e)=>{
-    let txt=e.results[0][0].transcript;
-    document.getElementById('result').style.display='block';
-    document.getElementById('result').innerText='سمعت: '+txt;
-    speak(txt);
-  }
-}
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+/* تهيئة الصفحة */
+renderLetters();
+updateLetter();
 </script>
 </body>
 </html>
