@@ -1,14 +1,15 @@
-
 {
-  "name": "English Kids Academy - أكاديمية الإنجليزية للأطفال",
+  "name": "English Kids Academy",
   "short_name": "Kids Academy",
-  "description": "تطبيق تعليم الإنجليزية للأطفال مع النطق والمعاني العربية",
-  "lang": "ar",
-  "dir": "rtl",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f7ff",
-  "theme_color": "#182044",
-  "icons": []
+  "background_color": "#1a1c2e",
+  "theme_color": "#1a1c2e",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3426/3426653.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
