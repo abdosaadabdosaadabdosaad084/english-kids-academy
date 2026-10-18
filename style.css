@@ -80,8 +80,8 @@ body {
     background: linear-gradient(135deg, var(--accent-green), #049a73);
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 12px 20px;
+    font-size: 1.05rem;
     font-weight: bold;
     border-radius: 12px;
     cursor: pointer;
@@ -195,12 +195,12 @@ header {
     background: #2d3154;
     color: #fff;
     border: none;
-    padding: 10px 18px;
+    padding: 12px 18px;
     border-radius: 10px;
     cursor: pointer;
     margin-top: 15px;
     margin-bottom: 10px;
-    font-size: 0.95rem;
+    font-size: 1rem;
     width: 100%;
     font-weight: bold;
 }
@@ -302,4 +302,30 @@ header {
     border: 1px solid var(--accent-blue);
     background: #121324;
     color: #fff;
+}
+
+/* تنسيق أزرار الألعاب التفاعلية بألوان الأخضر والأحمر */
+.quiz-option-btn {
+    background: #2d3154;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+
+.quiz-option-btn.correct {
+    background: #06d6a0 !important;
+    color: #1a1c2e !important;
+    box-shadow: 0 0 15px rgba(6, 214, 160, 0.6);
+}
+
+.quiz-option-btn.wrong {
+    background: #ff6b6b !important;
+    color: #fff !important;
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
 }
