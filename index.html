@@ -46,43 +46,43 @@
                 <div class="card-menu" onclick="showSection('sec-alphabet')">
                     <div class="card-icon">🔤</div>
                     <div class="card-title">الحروف والسبورة</div>
-                    <div class="card-desc">نطق وسماع وتتبع الحروف</div>
+                    <div class="card-desc">تتبع ونطق وتنقل لمسي سريع</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-dictionary')">
                     <div class="card-icon">📖</div>
                     <div class="card-title">قاموس المورد الشامل</div>
-                    <div class="card-desc">قاموس ضخم وموسع وشامل</div>
+                    <div class="card-desc">محرك بحث شامل لكافة مجالات الحياة</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-grammar')">
                     <div class="card-icon">🧩</div>
                     <div class="card-title">قواعد اللغة الإنجليزية</div>
-                    <div class="card-desc">شرح مستفيض وافٍ من A إلى Z</div>
+                    <div class="card-desc">موسوعة القواعد الكاملة والشاملة من A لـ Z</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-stories')">
                     <div class="card-icon">💬</div>
                     <div class="card-title">المحادثات والحوارات</div>
-                    <div class="card-desc">حوارات تفاعلية حقيقية مكثفة</div>
+                    <div class="card-desc">حوارات مكثفة في كافة قطاعات الحياة</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-categories')">
                     <div class="card-icon">🔢</div>
-                    <div class="card-title">الأرقام والمجموعات</div>
-                    <div class="card-desc">الأرقام، الحيوانات، الطيور والمهن</div>
+                    <div class="card-title">المجموعات والمجالات</div>
+                    <div class="card-desc">الأرقام، المطار، البحر، الدين، المواصلات</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-translator')">
                     <div class="card-icon">🎙️</div>
-                    <div class="card-title">المترجم الصوتي الفوري</div>
-                    <div class="card-desc">تحدث بالعربية ليترجم للإنجليزية مباشرة</div>
+                    <div class="card-title">المترجم الصوتي الحر</div>
+                    <div class="card-desc">ترجمة بحثية مفتوحة كمحرك بحث جوجل</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-games')">
                     <div class="card-icon">🎮</div>
                     <div class="card-title">الألعاب والتحديات</div>
-                    <div class="card-desc">اختبارات تفاعلية بأصوات التقييم</div>
+                    <div class="card-desc">اختبارات لا نهائية بتقييم صوتي صافٍ</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-parents')">
@@ -93,21 +93,22 @@
             </div>
         </div>
 
-        <!-- ALPHABET & DRAWING BOARD SECTION (زر الرجوع في أعلى اليسار) -->
+        <!-- ALPHABET & DRAWING BOARD SECTION -->
         <div id="sec-alphabet" class="section-view">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="font-size: 0.9rem; color: var(--accent-yellow);">اختر الحرف للتتبع:</span>
+                <span style="font-size: 0.85rem; color: var(--accent-yellow);">اضغط على الشاشة للتنقل التلقائي للحرف التالي:</span>
                 <button class="btn-back-top" onclick="showSection('sec-dashboard')">⬅ العودة</button>
             </div>
 
             <div class="alphabet-grid" id="alphabet-container"></div>
 
-            <div class="canvas-card">
+            <div class="canvas-card" onclick="handleCanvasTap(event)">
                 <h3 style="color: var(--accent-green);" id="current-letter-title">✏️ سبورة الرسم والتتبع (الحرف: A)</h3>
+                <p style="font-size:0.75rem; color:var(--text-dim); margin-top:2px;">اضغط هنا للتنقل الفوري للحرف التالي مع نطق معناه</p>
                 <canvas id="draw-canvas" width="280" height="180"></canvas>
                 <div class="canvas-controls">
-                    <button class="stage-btn" style="background: var(--accent-pink); color: white;" onclick="clearCanvas()">مسح السبورة 🗑️</button>
-                    <button class="stage-btn" style="background: var(--accent-green); color: white;" onclick="nextLetter()">الحرف التالي ➡</button>
+                    <button class="stage-btn" style="background: var(--accent-pink); color: white;" onclick="clearCanvas(); event.stopPropagation();">مسح السبورة 🗑️</button>
+                    <button class="stage-btn" style="background: var(--accent-green); color: white;" onclick="nextLetter(); event.stopPropagation();">الحرف التالي ➡</button>
                 </div>
             </div>
         </div>
@@ -139,7 +140,7 @@
         <!-- VOICE TRANSLATOR SECTION -->
         <div id="sec-translator" class="section-view">
             <div class="interactive-card" style="text-align: center;">
-                <p style="color: var(--text-dim); margin-bottom: 15px;">اضغط وتحدث بالعربية ليتم ترجمة الكلمة ونطقها فوراً بالإنجليزية:</p>
+                <p style="color: var(--text-dim); margin-bottom: 12px;">تحدث بأي جملة أو كلمة بالعربية للترجمة الفورية المباشرة كمحرك جوجل:</p>
                 <button id="btn-mic" class="btn-action" style="background: var(--accent-purple); font-size: 1.1rem; padding: 15px;" onclick="startSpeechRecognition()">
                     🎤 اضغط هنا والتحدث بالعربية
                 </button>
