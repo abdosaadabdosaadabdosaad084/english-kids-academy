@@ -95,6 +95,19 @@ function speak(text, lang = 'en-US') {
 
 let currentLetterCode = 65; // A
 
+// خريطة معاني الحروف باللغة العربية مع مثال
+const LETTER_MEANINGS = {
+    65: { word: "Apple", ar: "تفاحة" }, 66: { word: "Banana", ar: "موز" }, 67: { word: "Cat", ar: "قطة" },
+    68: { word: "Dog", ar: "كلب" }, 69: { word: "Elephant", ar: "فيل" }, 70: { word: "Fish", ar: "سمكة" },
+    71: { word: "Giraffe", ar: "زرافة" }, 72: { word: "Horse", ar: "حصان" }, 73: { word: "Ice cream", ar: "مثلجات" },
+    74: { word: "Juice", ar: "عصير" }, 75: { word: "Kangaroo", ar: "كانغرو" }, 76: { word: "Lion", ar: "أسد" },
+    77: { word: "Monkey", ar: "قرد" }, 78: { word: "Notebook", ar: "دفتر" }, 79: { word: "Orange", ar: "برتقال" },
+    80: { word: "Pencil", ar: "قلم رصاص" }, 81: { word: "Queen", ar: "ملكة" }, 82: { word: "Rabbit", ar: "أرنب" },
+    83: { word: "School", ar: "مدرسة" }, 84: { word: "Teacher", ar: "معلم" }, 85: { word: "Umbrella", ar: "مظلة" },
+    86: { word: "Van", ar: "شاحنة" }, 87: { word: "Watermelon", ar: "بطيخ" }, 88: { word: "X-ray", ar: "أشعة" },
+    89: { word: "Yellow", ar: "أصفر" }, 90: { word: "Zebra", ar: "حمار وحشي" }
+};
+
 function showSection(id) {
     document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -108,9 +121,8 @@ window.addEventListener('popstate', () => {
     document.getElementById('sec-dashboard').classList.add('active');
 });
 
-// ==================== 1. القاموس الموسع الحقيقي كمحرك بحث جوجل ====================
+// ==================== 1. القاموس الموسع الحقيقي ====================
 const COMPREHENSIVE_DICTIONARY = [
-    // الحياة اليومية والمطاعم والكافيهات
     {en: 'Restaurant', ar: 'مطعم', example: 'We had a delicious dinner at the restaurant.', cat: 'مطاعم'},
     {en: 'Coffee', ar: 'قهوة', example: 'I drink hot coffee at the cafe.', cat: 'كافيهات'},
     {en: 'Menu', ar: 'قائمة الطعام', example: 'Could you bring me the menu, please?', cat: 'مطاعم'},
@@ -129,14 +141,10 @@ const COMPREHENSIVE_DICTIONARY = [
     {en: 'School', ar: 'مدرسة', example: 'Ghazaal learns English at school.', cat: 'المدرسة والتعليم'}
 ];
 
-// محرك بحث القاموس الفوري المفتوح عبر Online Translation API
 async function searchGoogleStyleDictionary(term) {
     const cleanTerm = term.trim();
     if (!cleanTerm) return;
 
-    const dictContainer = document.getElementById('dict-container');
-    
-    // البحث الفوري في القاموس الخارجي المفتوح
     try {
         const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanTerm)}&langpair=ar|en`);
         const data = await res.json();
@@ -160,9 +168,9 @@ function renderDictionaryHTML(searchTerm = '', liveTranslation = '') {
     if (cleanFilter.length > 0) {
         searchEngineHTML = `
             <div class="interactive-card" style="border:2px solid var(--accent-green); text-align:right;">
-                <h3 style="color:var(--accent-yellow);">🌐 نتيجة البحث الفوري لمُحرك جوجل المورد:</h3>
-                <p style="color:#fff; font-size:1.1rem; margin:8px 0;"><b>الكلمة / النص:</b> "${searchTerm}"</p>
-                <p style="color:var(--accent-green); font-size:1.2rem;"><b>الترجمة والمعنى بالإنجليزية:</b> "${liveTranslation}"</p>
+                <h3 style="color:var(--accent-yellow);">🌐 نتيجة البحث لمُحرك المورد:</h3>
+                <p style="color:#fff; font-size:1.1rem; margin:8px 0;"><b>الكلمة:</b> "${searchTerm}"</p>
+                <p style="color:var(--accent-green); font-size:1.3rem; font-weight:bold;"><b>الترجمة:</b> "${liveTranslation}"</p>
                 <button class="btn-action" style="margin-top:10px;" onclick="speak('${liveTranslation}')">🔊 نطق النتيجة بالإنجليزية</button>
             </div>
         `;
@@ -185,65 +193,66 @@ function renderDictionaryHTML(searchTerm = '', liveTranslation = '') {
     `;
 }
 
-// ==================== 2. موسوعة قواعد اللغة الإنجليزية الشاملة من A لـ Z ====================
+// ==================== 2. قسم قواعد اللغة الإنجليزية (ملف تعليمي وموسوعي مستوفٍ) ====================
 function renderGrammar() {
     const container = document.getElementById('grammar-container');
     container.innerHTML = `
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 1. الضمائر كاملة وأقسام الكلام (Pronouns System)</h3>
-            <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
-                • <b>ضمائر الفاعل (Subject):</b> I, He, She, It, We, You, They (في أول الجملة قبل الفعل).<br>
-                • <b>ضمائر المفعول (Object):</b> Me, Him, Her, It, Us, You, Them (بعد الفعل أو حرف الجر).<br>
-                • <b>صفات الملكية (Possessive Adjectives):</b> My, His, Her, Its, Our, Your, Their (يتبعها اسم).<br>
-                • <b>ضمائر الملكية (Possessive Pronouns):</b> Mine, His, Hers, Ours, Yours, Theirs (تأتي في نهاية الجملة بدون اسم).<br><br>
+            <h2 style="color:var(--accent-yellow); margin-bottom:12px; border-bottom:2px solid var(--accent-purple); padding-bottom:8px;">📘 الملف التعليمي الموسوعي لقواعد اللغة الإنجليزية</h2>
+            <p style="color:var(--text-dim); line-height:1.8; font-size:0.95rem;">
+                دليل وأكاديمية متكاملة تشمل شرحاً وافياً ومستفيضاً لكافة الأركان والقواعد الأساسية من الألف إلى الياء.
+            </p>
+        </div>
+
+        <div class="interactive-card">
+            <h3 style="color:var(--accent-green);">1. الضمائر كاملة وأقسام الكلام (Grammar Pronouns System)</h3>
+            <p style="color:var(--text-dim); margin-top:8px; line-height:1.8;">
+                تُعتبر الضمائر العمود الفقري للجملة الإنجليزية لتفادي التكرار وسلاسة النطق:<br><br>
+                • <b>ضمائر الفاعل (Subject):</b> I, He, She, It, We, You, They (تأتي دائماً في بداية الجملة لتحديد القائم بالفعل).<br>
+                • <b>ضمائر المفعول به (Object):</b> Me, Him, Her, It, Us, You, Them (تأتي بعد الفعل الرئيسي أو بعد حرف الجر).<br>
+                • <b>صفات الملكية (Possessive Adjectives):</b> My, His, Her, Its, Our, Your, Their (يلزم أن يتبعها الاسم المملوك فوراً).<br>
+                • <b>ضمائر الملكية (Possessive Pronouns):</b> Mine, His, Hers, Ours, Yours, Theirs (تأتي مستقلة دون اسم بعدهما).<br><br>
                 <b>أمثلة وافية ومفصلة:</b><br>
                 - <i>I study English every day.</i> (أنا أدرس الإنجليزية يومياً).<br>
                 - <i>The teacher called him in the office.</i> (المعلم اتصل به في المكتب).<br>
-                - <i>This book is mine.</i> (هذا الكتاب ملكي).
+                - <i>This is my notebook and that car is mine.</i> (هذا دفتري وتلك السيارة ملكي).
             </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I study English every day. The teacher called him. This book is mine.')">🔊 استمع للشرح والأمثلة</button>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I study English every day. The teacher called him. This is my notebook and that car is mine.')">🔊 استمع لشرح الضمائر</button>
         </div>
 
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 2. زمن المضارع البسيط والمستمر (Present Simple & Continuous)</h3>
-            <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
-                • <b>المضارع البسيط:</b> للعادات والحقائق والثوابت. (He/She/It + V+s | I/We/They + V).<br>
-                • <b>المضارع المستمر:</b> لأحداث تقع الآن لحظة الكلام. (am/is/are + Verb + ing).<br><br>
-                <b>أمثلة وافية:</b><br>
-                - <i>The sun rises in the east.</i> (تشرق الشمس من الشرق - حقيقة).<br>
-                - <i>She is reading a story right now.</i> (هي تقرأ قصة الآن - حدث مستمر).
+            <h3 style="color:var(--accent-green);">2. زمن المضارع البسيط والمستمر (Present Tenses Masterclass)</h3>
+            <p style="color:var(--text-dim); margin-top:8px; line-height:1.8;">
+                <b>أولاً: المضارع البسيط (Present Simple):</b><br>
+                • يعبر عن الحقائق العلمية والتكرار والعادات اليومية.<br>
+                • التكوين: مع (He/She/It) يُضاف للفعل (s/es)، ومع (I/We/They/You) نضع المصدر مجرداً.<br>
+                • e.g., <i>The sun rises in the east.</i> (تشرق الشمس من الشرق - حقيقة).<br><br>
+                <b>ثانياً: المضارع المستمر (Present Continuous):</b><br>
+                • يعبر عن أفعال تقع لحظة الكلام بوضوح.<br>
+                • التكوين: (am / is / are) + Verb + ing.<br>
+                • e.g., <i>She is reading a book now.</i> (هي تقرأ كتاباً الآن).
             </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('The sun rises in the east. She is reading a story right now.')">🔊 استمع للمضارع البسيط والمستمر</button>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('The sun rises in the east. She is reading a book now.')">🔊 استمع لشرح أزمنة المضارع</button>
         </div>
 
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 3. زمن الماضي البسيط والمستمر (Past Simple & Continuous)</h3>
-            <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
-                • <b>الماضي البسيط:</b> حدث مكتمل ومقترن بوقت في الماضي (V2 أو إضافة ed).<br>
-                • <b>الماضي المستمر:</b> حدث كان مستمراً في الماضي عند وقوع حدث آخر. (was/were + Verb + ing).<br><br>
-                <b>أمثلة وافية:</b><br>
-                - <i>I visited Alexandria yesterday.</i> (زرت الإسكندرية أمس).<br>
-                - <i>I was studying when the phone rang.</i> (كنت أذاكر عندما رن الهاتف).
+            <h3 style="color:var(--accent-green);">3. زمن الماضي البسيط والمستمر (Past Tenses Masterclass)</h3>
+            <p style="color:var(--text-dim); margin-top:8px; line-height:1.8;">
+                <b>أولاً: الماضي البسيط (Past Simple):</b><br>
+                • حدث بدأ وانتهى تماماً بالماضي في وقت محدد.<br>
+                • التكوين: التصريف الثاني للفعل V2 (إضافة ed للأفعال المنتظمة أو حفظ الشاذ).<br>
+                • e.g., <i>I visited Alexandria yesterday.</i> (زرت الإسكندرية البارحة).<br><br>
+                <b>ثانياً: الماضي المستمر (Past Continuous):</b><br>
+                • حدث كان مستمراً في الماضي وتقاطع مع حدث آخر.<br>
+                • التكوين: (was / were) + Verb + ing.<br>
+                • e.g., <i>I was studying when the phone rang.</i> (كنت أذاكر عندما رن الهاتف).
             </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I visited Alexandria yesterday. I was studying when the phone rang.')">🔊 استمع للماضي البسيط والمستمر</button>
-        </div>
-
-        <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 4. المستقبل وأدوات الشرط (Future & If Conditionals)</h3>
-            <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
-                • <b>المستقبل (Will / Going to):</b> للتنبؤ والقرارات والتخطيط القادم.<br>
-                • <b>قاعدة الشرط IF:</b><br>
-                - <i>الحالة الأولى: If + مضارع بسيط ➔ Will + المصدر</i><br><br>
-                <b>أمثلة وافية:</b><br>
-                - <i>We will travel to Cairo tomorrow.</i> (سنقود السفر غداً).<br>
-                - <i>If you study hard, you will pass the exam.</i> (إن تذاكر بجد تنجح في الامتحان).
-            </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('We will travel to Cairo tomorrow. If you study hard, you will pass the exam.')">🔊 استمع للمستقبل والشرط</button>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I visited Alexandria yesterday. I was studying when the phone rang.')">🔊 استمع لشرح أزمنة الماضي</button>
         </div>
     `;
 }
 
-// ==================== 3. المترجم الصوتي الحر المباشر (مثل جوجل محرك بحث) ====================
+// ==================== 3. المترجم الصوتي المباشر بخط عريض وألوان مميزة ====================
 async function startSpeechRecognition() {
     const resultDiv = document.getElementById('translator-result');
     const btn = document.getElementById('btn-mic');
@@ -268,35 +277,44 @@ async function startSpeechRecognition() {
         btn.innerText = "🎤 اضغط هنا والتحدث بالعربية";
         btn.style.background = "var(--accent-purple)";
 
-        resultDiv.innerHTML = `<p style="color:var(--accent-yellow);">🔄 جاري الترجمة عبر محرك جوجل الترجمي...</p>`;
+        resultDiv.innerHTML = `<p style="color:var(--accent-yellow); font-size:1.1rem; font-weight:bold;">🔄 جاري الترجمة الفورية...</p>`;
 
         try {
-            // الاستعانة بمحرك ترجمة خارجي حر لتغطية كافة الكلمات
             const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(arabicSpeech)}&langpair=ar|en`);
             const data = await res.json();
             const translatedText = data.responseData.translatedText;
 
+            // تنسيق بخط عريض وألوان واضحة مستغلة المساحة الكبيرة
             resultDiv.innerHTML = `
-                <div style="background:#191b33; padding:12px; border-radius:10px; border:1px solid var(--accent-green); text-align:right;">
-                    <p style="color:var(--accent-yellow); font-size:0.9rem;">🗣️ المقول بالعربية: "<b>${arabicSpeech}</b>"</p>
-                    <p style="color:#fff; font-size:1.2rem; margin-top:6px;">🌐 الترجمة الإنجليزية الفورية: <b style="color:var(--accent-green);">${translatedText}</b></p>
-                    <button class="btn-action" style="margin-top:10px;" onclick="speak('${translatedText}')">🔊 نطق الترجمة فوراً</button>
+                <div style="background:#191b33; padding:20px 15px; border-radius:15px; border:2px solid var(--accent-green); text-align:right;">
+                    <p style="color:var(--accent-yellow); font-size:1.2rem; font-weight:bold; margin-bottom:10px;">
+                        🗣️ المقول بالعربية: "<span style="color:#fff; font-weight:bold;">${arabicSpeech}</span>"
+                    </p>
+                    <div style="background:#121324; padding:15px; border-radius:12px; border-right:5px solid var(--accent-green); margin:10px 0;">
+                        <span style="color:var(--text-dim); font-size:0.9rem; display:block; margin-bottom:4px;">🌐 الترجمة الإنجليزية الفورية:</span>
+                        <p style="color:var(--accent-green); font-size:1.8rem; font-weight:900; line-height:1.3; letter-spacing:0.5px;">
+                            ${translatedText}
+                        </p>
+                    </div>
+                    <button class="btn-action" style="margin-top:10px; font-size:1.1rem; padding:14px; background:linear-gradient(135deg, var(--accent-green), var(--accent-blue));" onclick="speak('${translatedText}')">
+                        🔊 نطق الترجمة فوراً وبصوت واضح
+                    </button>
                 </div>
             `;
             speak(translatedText);
         } catch (e) {
-            resultDiv.innerHTML = `<p style="color:var(--accent-pink);">❌ تعذر الاتصال بالترجمة الحرة، تأكد من الاتصال بالإنترنت.</p>`;
+            resultDiv.innerHTML = `<p style="color:var(--accent-pink); font-weight:bold;">❌ تعذر الاتصال بالترجمة الحرة، تأكد من اتصال الإنترنت.</p>`;
         }
     };
 
     recognition.onerror = () => {
         btn.innerText = "🎤 اضغط هنا والتحدث بالعربية";
         btn.style.background = "var(--accent-purple)";
-        resultDiv.innerHTML = `<p style="color:var(--accent-pink);">❌ لم يتم التقاط الصوت بوضوح، أعد المحاولة.</p>`;
+        resultDiv.innerHTML = `<p style="color:var(--accent-pink); font-weight:bold;">❌ لم يتم التقاط الصوت بوضوح، أعد المحاولة.</p>`;
     };
 }
 
-// ==================== 4. المجموعات والتصنيفات في الحياة اليومية ====================
+// ==================== 4. المجموعات والتصنيفات ====================
 const CATEGORIES_DATA = [
     { title: "🔢 الأرقام والأعداد (Numbers)", items: [{en: "One (1)", ar: "واحد"}, {en: "Ten (10)", ar: "عشرة"}, {en: "One Hundred (100)", ar: "مائة"}, {en: "One Thousand (1000)", ar: "ألف"}] },
     { title: "✈️ المطار والسفر (Airport & Travel)", items: [{en: "Passport", ar: "جواز سفر"}, {en: "Flight", ar: "رحلة طيران"}, {en: "Luggage", ar: "أمتعة وحقائب"}] },
@@ -321,7 +339,7 @@ function renderCategories() {
     `).join('');
 }
 
-// ==================== 5. المحادثات الشاملة (سؤال وجواب) ====================
+// ==================== 5. المحادثات الشاملة ====================
 const CONVERSATIONS = [
     {
         title: "💬 1. في المطار والسفر (At the Airport)",
@@ -329,13 +347,6 @@ const CONVERSATIONS = [
             { speaker: "Officer", text: "May I see your passport and ticket, please?", ar: "هل يمكنني رؤية جواز سفرك وتذكرتك من فضلك؟" },
             { speaker: "Passenger", text: "Here you are. What time is my flight?", ar: "تفضل هنا. في أي وقت رحلتي؟" },
             { speaker: "Officer", text: "Your flight departs at five o'clock. Have a good flight!", ar: "ستغادر رحلتك في الساعة الخامسة. أتمنى لك رحلة ممتعة!" }
-        ]
-    },
-    {
-        title: "💬 2. في المطعم والكافيه (At the Restaurant)",
-        dialogue: [
-            { speaker: "Waiter", text: "Welcome! What would you like to order today?", ar: "أهلاً بك! ماذا تحب أن تطلب اليوم؟" },
-            { speaker: "Customer", text: "I would like a fresh orange juice and grilled chicken, please.", ar: "أريد عصير برتقال طازج ودجاج مشوي من فضلك." }
         ]
     }
 ];
@@ -358,7 +369,7 @@ function renderStories() {
     `).join('');
 }
 
-// ==================== 6. قسم الألعاب مع أصوات التقييم والتنقل ====================
+// ==================== 6. قسم الألعاب (تفاعل تحول الألوان بالأخضر والأحمر) ====================
 let currentQuizWord = null;
 
 function generateInfiniteQuestion() {
@@ -373,15 +384,15 @@ function generateInfiniteQuestion() {
 
     quizBox.innerHTML = `
         <h3 style="color:var(--accent-yellow); margin-bottom:8px;">🎮 التحدي الصوتي السريع</h3>
-        <p style="color:var(--text-dim); margin-bottom:10px;">استمع للكلمة جيداً واختر معناها الصحيح:</p>
+        <p style="color:var(--text-dim); margin-bottom:12px;">استمع للكلمة جيداً واختر معناها الصحيح:</p>
         
-        <div style="text-align:center; margin:10px 0;">
+        <div style="text-align:center; margin:12px 0;">
             <button class="btn-action" style="background:var(--accent-purple);" onclick="speak('${currentQuizWord.en}')">🔊 نطق الكلمة (${currentQuizWord.en})</button>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:8px;">
-            ${allOptions.map(opt => `
-                <button class="btn-action" style="background:#2d3154;" onclick="checkInfiniteAnswer('${opt.en}', '${currentQuizWord.en}')">${opt.ar}</button>
+        <div style="display:flex; flex-direction:column; gap:10px;" id="quiz-options-list">
+            ${allOptions.map((opt, idx) => `
+                <button class="quiz-option-btn" id="opt-btn-${idx}" onclick="checkInfiniteAnswer('${opt.en}', '${currentQuizWord.en}', 'opt-btn-${idx}')">${opt.ar}</button>
             `).join('')}
         </div>
     `;
@@ -391,20 +402,36 @@ function generateInfiniteQuestion() {
     }, 300);
 }
 
-function checkInfiniteAnswer(selectedEn, correctEn) {
+function checkInfiniteAnswer(selectedEn, correctEn, btnId) {
+    const clickedBtn = document.getElementById(btnId);
+    
+    // تعطيل الأزرار مؤقتاً لتجنب النقرات المتكررة
+    const allBtns = document.querySelectorAll('.quiz-option-btn');
+    allBtns.forEach(b => b.disabled = true);
+
     if (selectedEn === correctEn) {
+        // الإجابة صحيحة: تحويل لون الزر للأخضر مع التصفيق
+        clickedBtn.classList.add('correct');
         playApplauseSound();
         speak('Bravo! Excellent');
     } else {
+        // الإجابة خاطئة: تحويل لون الزر للأحمر والزر الصحيح للأخضر مع التحذير
+        clickedBtn.classList.add('wrong');
+        allBtns.forEach(b => {
+            if (b.innerText === COMPREHENSIVE_DICTIONARY.find(w => w.en === correctEn).ar) {
+                b.classList.add('correct');
+            }
+        });
         playWarningSound();
         speak('Wrong');
     }
+
     setTimeout(() => {
         generateInfiniteQuestion();
-    }, 900);
+    }, 1200);
 }
 
-// ==================== 7. السبورة والتنقل اللمسي الفوري عند النقر ====================
+// ==================== 7. السبورة والتنقل الفوري عند النقر على الشاشة ====================
 const alphabetContainer = document.getElementById('alphabet-container');
 if (alphabetContainer) {
     for (let i = 65; i <= 90; i++) {
@@ -420,8 +447,12 @@ if (alphabetContainer) {
 function selectLetterCode(code) {
     currentLetterCode = code;
     const char = String.fromCharCode(currentLetterCode);
+    const meaningInfo = LETTER_MEANINGS[currentLetterCode] || { word: char, ar: "" };
+    
     document.getElementById('current-letter-title').innerText = `✏️ سبورة الرسم والتتبع (الحرف: ${char})`;
-    speak(`${char}. Letter ${char}`);
+    
+    // نطق اسم الحرف ومعناه الفوري
+    speak(`Letter ${char}. ${meaningInfo.word}. means ${meaningInfo.ar}`);
     clearCanvas();
 }
 
@@ -429,11 +460,6 @@ function nextLetter() {
     currentLetterCode++;
     if (currentLetterCode > 90) currentLetterCode = 65;
     selectLetterCode(currentLetterCode);
-}
-
-function handleCanvasTap(e) {
-    // التنقل التلقائي للحرف التالي عند الضغط على الشاشة في السبورة
-    nextLetter();
 }
 
 const canvas = document.getElementById('draw-canvas');
@@ -454,6 +480,11 @@ function clearCanvas() {
 }
 
 if (canvas) {
+    // الضغط أو النقر على السبورة ينقل فوراً للحرف التالي مع نطق معناه
+    canvas.addEventListener('click', (e) => {
+        nextLetter();
+    });
+
     function startDrawing(e) {
         isDrawing = true;
         draw(e);
