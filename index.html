@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy – الموسوعة الشاملة</title>
+    <title>English Kids Academy</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1c2e">
     <link rel="stylesheet" href="style.css">
@@ -75,8 +75,8 @@
 
                 <div class="card-menu" onclick="showSection('sec-translator')">
                     <div class="card-icon">🎙️</div>
-                    <div class="card-title">التسجيل والترجمة الصوتیة</div>
-                    <div class="card-desc">تحدث بالعربية ليترجم للإنجليزية</div>
+                    <div class="card-title">المترجم الصوتي الفوري</div>
+                    <div class="card-desc">تحدث بالعربية ليترجم للإنجليزية مباشرة</div>
                 </div>
 
                 <div class="card-menu" onclick="showSection('sec-games')">
@@ -93,9 +93,13 @@
             </div>
         </div>
 
-        <!-- ALPHABET & DRAWING BOARD SECTION -->
+        <!-- ALPHABET & DRAWING BOARD SECTION (زر الرجوع في أعلى اليسار) -->
         <div id="sec-alphabet" class="section-view">
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🔤 الحروف الأبجدية والسبورة</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 0.9rem; color: var(--accent-yellow);">اختر الحرف للتتبع:</span>
+                <button class="btn-back-top" onclick="showSection('sec-dashboard')">⬅ العودة</button>
+            </div>
+
             <div class="alphabet-grid" id="alphabet-container"></div>
 
             <div class="canvas-card">
@@ -106,60 +110,52 @@
                     <button class="stage-btn" style="background: var(--accent-green); color: white;" onclick="nextLetter()">الحرف التالي ➡</button>
                 </div>
             </div>
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
         <!-- DICTIONARY SECTION -->
         <div id="sec-dictionary" class="section-view">
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">📖 قاموس المورد الشامل والأمثلة</h2>
             <div id="dict-container"></div>
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
         <!-- GRAMMAR SECTION -->
         <div id="sec-grammar" class="section-view">
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🧩 قواعد اللغة الإنجليزية الشاملة</h2>
             <div id="grammar-container"></div>
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
         <!-- STORIES SECTION -->
         <div id="sec-stories" class="section-view">
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">💬 المحادثات والحوارات (سؤال وجواب)</h2>
             <div id="stories-container"></div>
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
-        <!-- CATEGORIES SECTION (الأرقام والحيوانات والطيور) -->
+        <!-- CATEGORIES SECTION -->
         <div id="sec-categories" class="section-view">
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🔢 الأرقام والمجموعات الشاملة</h2>
             <div id="categories-container"></div>
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
-        <!-- VOICE TRANSLATOR SECTION (التسجيل الصوتي والترجمة) -->
+        <!-- VOICE TRANSLATOR SECTION -->
         <div id="sec-translator" class="section-view">
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🎙️ المترجم الصوتي التفاعلي</h2>
             <div class="interactive-card" style="text-align: center;">
-                <p style="color: var(--text-dim); margin-bottom: 15px;">اضغط على الميكروفون وتحدث بالعربية ليترجم التطبيق وينطق بالإنجليزية فوراً:</p>
-                <button id="btn-mic" class="btn-action" style="background: var(--accent-purple); font-size: 1.2rem; padding: 15px 20px;" onclick="startSpeechRecognition()">
+                <p style="color: var(--text-dim); margin-bottom: 15px;">اضغط وتحدث بالعربية ليتم ترجمة الكلمة ونطقها فوراً بالإنجليزية:</p>
+                <button id="btn-mic" class="btn-action" style="background: var(--accent-purple); font-size: 1.1rem; padding: 15px;" onclick="startSpeechRecognition()">
                     🎤 اضغط هنا والتحدث بالعربية
                 </button>
-                <div id="translator-result" style="margin-top: 20px; text-align: right;"></div>
+                <div id="translator-result" style="margin-top: 15px;"></div>
             </div>
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
         <!-- GAMES SECTION -->
         <div id="sec-games" class="section-view">
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">🎮 الألعاب والتحديات</h2>
             <div class="interactive-card" id="quiz-box"></div>
             <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
         </div>
 
         <!-- PARENTS & SETTINGS SECTION -->
         <div id="sec-parents" class="section-view">
-            <h2 style="color: var(--accent-yellow); margin-bottom: 10px;">👨‍👩‍👧 لوحة التحكم والإعدادات</h2>
             <div class="interactive-card">
                 <h3 style="color: var(--accent-green); margin-bottom: 10px;">🔑 تغيير الرقم السري الخاص بجهتك</h3>
                 <input type="password" id="new-pin-input" placeholder="أدخل الرقم السري الجديد" maxlength="8">
