@@ -1,4 +1,4 @@
-// Web Audio Synthesis (أصوات التصفيق والتحذير)
+// Web Audio API Synthesis Engine
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 function playApplauseSound() {
@@ -82,7 +82,7 @@ function changePin() {
     }
 }
 
-// Speech Synthesis Engine
+// Speech Engine
 function speak(text, lang = 'en-US') {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -108,51 +108,75 @@ window.addEventListener('popstate', () => {
     document.getElementById('sec-dashboard').classList.add('active');
 });
 
-// ==================== 1. القاموس الموسع ====================
+// ==================== 1. القاموس الموسع الحقيقي كمحرك بحث جوجل ====================
 const COMPREHENSIVE_DICTIONARY = [
-    {en: 'Apple', ar: 'تفاحة', example: 'I eat a fresh apple daily.', cat: 'فواكه'},
-    {en: 'Banana', ar: 'موز', example: 'Monkeys love yellow bananas.', cat: 'فواكه'},
-    {en: 'Orange', ar: 'برتقال', example: 'Orange juice is full of vitamins.', cat: 'فواكه'},
-    {en: 'Watermelon', ar: 'بطيخ', example: 'Watermelon is sweet in summer.', cat: 'فواكه'},
-    {en: 'Bread', ar: 'خبز', example: 'Fresh bread tastes delicious.', cat: 'طعام'},
-    {en: 'Milk', ar: 'حليب', example: 'Drinking milk builds strong bones.', cat: 'طعام'},
-    {en: 'School', ar: 'مدرسة', example: 'Ghazaal studies hard at school.', cat: 'تعليم'},
-    {en: 'Teacher', ar: 'معلم', example: 'Our teacher explains rules clearly.', cat: 'تعليم'},
-    {en: 'Book', ar: 'كتاب', example: 'Reading books expands your mind.', cat: 'تعليم'},
-    {en: 'Doctor', ar: 'طبيب', example: 'The doctor helps sick people.', cat: 'مهن'},
-    {en: 'Engineer', ar: 'مهندس', example: 'Engineers build modern cities.', cat: 'مهن'},
-    {en: 'Computer', ar: 'حاسوب', example: 'I learn coding on my computer.', cat: 'تكنولوجيا'},
-    {en: 'Read', ar: 'يقرأ', example: 'I read stories every evening.', cat: 'أفعال'},
-    {en: 'Write', ar: 'يكتب', example: 'She writes her lessons neatly.', cat: 'أفعال'}
+    // الحياة اليومية والمطاعم والكافيهات
+    {en: 'Restaurant', ar: 'مطعم', example: 'We had a delicious dinner at the restaurant.', cat: 'مطاعم'},
+    {en: 'Coffee', ar: 'قهوة', example: 'I drink hot coffee at the cafe.', cat: 'كافيهات'},
+    {en: 'Menu', ar: 'قائمة الطعام', example: 'Could you bring me the menu, please?', cat: 'مطاعم'},
+    {en: 'Airport', ar: 'المطار', example: 'The plane lands at the airport on time.', cat: 'المطار والسفر'},
+    {en: 'Ticket', ar: 'تذكرة', example: 'I booked my flight ticket online.', cat: 'السفر'},
+    {en: 'Hospital', ar: 'مستشفى', example: 'The doctor works in the hospital.', cat: 'المستشفى'},
+    {en: 'Medicine', ar: 'دواء', example: 'Take your medicine after breakfast.', cat: 'المستشفى'},
+    {en: 'Bus', ar: 'حافلة / أوتوبيس', example: 'I take the bus to go to school.', cat: 'المواصلات'},
+    {en: 'Train', ar: 'قطار', example: 'The train travels fast across cities.', cat: 'المواصلات'},
+    {en: 'Sea', ar: 'البحر', example: 'The sea water is blue and clean in Alexandria.', cat: 'البحر والتنزه'},
+    {en: 'Beach', ar: 'شاطئ', example: 'Children play with sand on the beach.', cat: 'البحر والتنزه'},
+    {en: 'City', ar: 'مدينة', example: 'Alexandria is a beautiful coastal city.', cat: 'المدن والقرى'},
+    {en: 'Village', ar: 'قرية', example: 'Life in the village is quiet and peaceful.', cat: 'المدن والقرى'},
+    {en: 'Pray', ar: 'يصلي', example: 'Muslims pray five times a day in the mosque.', cat: 'الدين والعبادات'},
+    {en: 'Mosque', ar: 'مسجد', example: 'The mosque is near our house.', cat: 'الدين والعبادات'},
+    {en: 'School', ar: 'مدرسة', example: 'Ghazaal learns English at school.', cat: 'المدرسة والتعليم'}
 ];
 
-function renderDictionary(filterText = '') {
+// محرك بحث القاموس الفوري المفتوح عبر Online Translation API
+async function searchGoogleStyleDictionary(term) {
+    const cleanTerm = term.trim();
+    if (!cleanTerm) return;
+
     const dictContainer = document.getElementById('dict-container');
-    const cleanFilter = filterText.trim().toLowerCase();
+    
+    // البحث الفوري في القاموس الخارجي المفتوح
+    try {
+        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanTerm)}&langpair=ar|en`);
+        const data = await res.json();
+        const englishTranslation = data.responseData.translatedText;
+
+        renderDictionaryHTML(cleanTerm, englishTranslation);
+    } catch (err) {
+        renderDictionaryHTML(cleanTerm, cleanTerm);
+    }
+}
+
+function renderDictionaryHTML(searchTerm = '', liveTranslation = '') {
+    const dictContainer = document.getElementById('dict-container');
+    const cleanFilter = searchTerm.trim().toLowerCase();
     
     let filtered = COMPREHENSIVE_DICTIONARY.filter(w => 
         w.en.toLowerCase().includes(cleanFilter) || w.ar.includes(cleanFilter)
     );
 
-    let customSearchHTML = '';
-    if (cleanFilter.length > 0 && filtered.length === 0) {
-        customSearchHTML = `
-            <div class="interactive-card" style="border:2px solid var(--accent-green); text-align:center;">
-                <h3 style="color:var(--accent-yellow);">🔍 نطق الكلمة المكتوبة: "${filterText}"</h3>
-                <button class="btn-action" style="margin-top:10px;" onclick="speak('${filterText}')">🔊 نطق الكلمة فورا</button>
+    let searchEngineHTML = '';
+    if (cleanFilter.length > 0) {
+        searchEngineHTML = `
+            <div class="interactive-card" style="border:2px solid var(--accent-green); text-align:right;">
+                <h3 style="color:var(--accent-yellow);">🌐 نتيجة البحث الفوري لمُحرك جوجل المورد:</h3>
+                <p style="color:#fff; font-size:1.1rem; margin:8px 0;"><b>الكلمة / النص:</b> "${searchTerm}"</p>
+                <p style="color:var(--accent-green); font-size:1.2rem;"><b>الترجمة والمعنى بالإنجليزية:</b> "${liveTranslation}"</p>
+                <button class="btn-action" style="margin-top:10px;" onclick="speak('${liveTranslation}')">🔊 نطق النتيجة بالإنجليزية</button>
             </div>
         `;
     }
 
     dictContainer.innerHTML = `
-        <input type="text" id="dict-search-input" value="${filterText}" placeholder="🔍 ابحث في القاموس أو اكتب أي كلمة..." style="width:100%; padding:10px; border-radius:10px; border:2px solid var(--accent-blue); background:#121324; color:#fff; margin-bottom:12px;" oninput="renderDictionary(this.value)">
-        ${customSearchHTML}
+        <input type="text" id="dict-search-input" value="${searchTerm}" placeholder="🔍 ابحث في القاموس كـ محرك جوجل عن أي كلمة أو مجال..." style="width:100%; padding:10px; border-radius:10px; border:2px solid var(--accent-blue); background:#121324; color:#fff; margin-bottom:12px;" oninput="searchGoogleStyleDictionary(this.value)">
+        ${searchEngineHTML}
         <div class="word-list">
             ${filtered.map(w => `
                 <div class="word-card" style="flex-direction:column; align-items:flex-start; gap:6px;" onclick="speak('${w.en}. Example: ${w.example}')">
                     <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
                         <span class="word-en">🔊 ${w.en}</span>
-                        <span class="word-ar">${w.ar}</span>
+                        <span class="word-ar">${w.ar} <small style="color:var(--accent-purple);">[${w.cat}]</small></span>
                     </div>
                     <div style="font-size:0.8rem; color:var(--accent-yellow);">💬 مثال: "${w.example}"</div>
                 </div>
@@ -161,82 +185,66 @@ function renderDictionary(filterText = '') {
     `;
 }
 
-// ==================== 2. قسم القواعد المطور بالشرح التفصيلي ====================
+// ==================== 2. موسوعة قواعد اللغة الإنجليزية الشاملة من A لـ Z ====================
 function renderGrammar() {
     const container = document.getElementById('grammar-container');
     container.innerHTML = `
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 1. الضمائر وأنواعها (Pronouns System)</h3>
+            <h3 style="color:var(--accent-yellow);">📘 1. الضمائر كاملة وأقسام الكلام (Pronouns System)</h3>
             <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
-                الضمائر تُستخدم للتعويض عن الأسماء لمنع التكرار:<br>
-                • <b>ضمائر الفاعل (Subject):</b> I, He, She, It, We, You, They (تأتي أول الجملة).<br>
-                • <b>ضمائر المفعول (Object):</b> Me, Him, Her, It, Us, You, Them (تأتي بعد الفعل).<br>
-                • <b>صفات الملكية (Possessive):</b> My, His, Her, Its, Our, Your, Their (يتبعها اسم).<br><br>
-                <b>أمثلة شريحة ومفصلة:</b><br>
-                - <i>I study English every day.</i> (أنا أذاكر الإنجليزية يومياً).<br>
-                - <i>The teacher called him.</i> (المعلم اتصل به).<br>
-                - <i>This is my notebook.</i> (هذا دفتري).
+                • <b>ضمائر الفاعل (Subject):</b> I, He, She, It, We, You, They (في أول الجملة قبل الفعل).<br>
+                • <b>ضمائر المفعول (Object):</b> Me, Him, Her, It, Us, You, Them (بعد الفعل أو حرف الجر).<br>
+                • <b>صفات الملكية (Possessive Adjectives):</b> My, His, Her, Its, Our, Your, Their (يتبعها اسم).<br>
+                • <b>ضمائر الملكية (Possessive Pronouns):</b> Mine, His, Hers, Ours, Yours, Theirs (تأتي في نهاية الجملة بدون اسم).<br><br>
+                <b>أمثلة وافية ومفصلة:</b><br>
+                - <i>I study English every day.</i> (أنا أدرس الإنجليزية يومياً).<br>
+                - <i>The teacher called him in the office.</i> (المعلم اتصل به في المكتب).<br>
+                - <i>This book is mine.</i> (هذا الكتاب ملكي).
             </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I study English every day. The teacher called him. This is my notebook.')">🔊 استمع للضمائر والأمثلة</button>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I study English every day. The teacher called him. This book is mine.')">🔊 استمع للشرح والأمثلة</button>
         </div>
 
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 2. زمن المضارع البسيط (Present Simple Tense)</h3>
+            <h3 style="color:var(--accent-yellow);">📘 2. زمن المضارع البسيط والمستمر (Present Simple & Continuous)</h3>
             <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
-                • <b>الاستخدام:</b> للتعبير عن العادات والحقائق اليومية والثابتة والجداول.<br>
-                • <b>التكوين:</b><br>
-                - مع (I / We / They / You): نضع الفعل مجرد بدون إضافة (e.g., I study).<br>
-                - مع (He / She / It): نُضيف للفعل (s / es) (e.g., He studies hard).<br>
-                • <b>النفي:</b> باستخدام (don't / doesn't) + المصدر.<br><br>
+                • <b>المضارع البسيط:</b> للعادات والحقائق والثوابت. (He/She/It + V+s | I/We/They + V).<br>
+                • <b>المضارع المستمر:</b> لأحداث تقع الآن لحظة الكلام. (am/is/are + Verb + ing).<br><br>
                 <b>أمثلة وافية:</b><br>
                 - <i>The sun rises in the east.</i> (تشرق الشمس من الشرق - حقيقة).<br>
-                - <i>She drinks milk every morning.</i> (تشرب الحليب كل صباح - عادة).
+                - <i>She is reading a story right now.</i> (هي تقرأ قصة الآن - حدث مستمر).
             </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('The sun rises in the east. She drinks milk every morning.')">🔊 استمع لشرح المضارع البسيط</button>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('The sun rises in the east. She is reading a story right now.')">🔊 استمع للمضارع البسيط والمستمر</button>
         </div>
 
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 3. زمن الماضي البسيط (Past Simple Tense)</h3>
+            <h3 style="color:var(--accent-yellow);">📘 3. زمن الماضي البسيط والمستمر (Past Simple & Continuous)</h3>
             <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
-                • <b>الاستخدام:</b> حدث بدأ وانتهى تماماً في الماضي.<br>
-                • <b>التكوين:</b> التصريف الثاني للفعل V2 (إضافة ed للأفعال العادية مثل visited أو حفظ الشاذ).<br>
-                • <b>النفي:</b> باستخدام (didn't) + مصدر الفعل.<br><br>
+                • <b>الماضي البسيط:</b> حدث مكتمل ومقترن بوقت في الماضي (V2 أو إضافة ed).<br>
+                • <b>الماضي المستمر:</b> حدث كان مستمراً في الماضي عند وقوع حدث آخر. (was/were + Verb + ing).<br><br>
                 <b>أمثلة وافية:</b><br>
                 - <i>I visited Alexandria yesterday.</i> (زرت الإسكندرية أمس).<br>
-                - <i>He wrote a nice story last week.</i> (كتب قصة جميلة الأسبوع الماضي).
+                - <i>I was studying when the phone rang.</i> (كنت أذاكر عندما رن الهاتف).
             </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I visited Alexandria yesterday. He wrote a nice story last week.')">🔊 استمع لشرح الماضي البسيط</button>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I visited Alexandria yesterday. I was studying when the phone rang.')">🔊 استمع للماضي البسيط والمستمر</button>
         </div>
 
         <div class="interactive-card">
-            <h3 style="color:var(--accent-yellow);">📘 4. المستقبل وأدوات الشرط (Future & Conditionals)</h3>
+            <h3 style="color:var(--accent-yellow);">📘 4. المستقبل وأدوات الشرط (Future & If Conditionals)</h3>
             <p style="color:var(--text-dim); margin-top:8px; line-height:1.7;">
-                • <b>المستقبل (Will):</b> للتنبؤ والقرارات المباشرة (Will + المصدر).<br>
-                • <b>قاعدة الشرط (If Conditionals):</b><br>
-                - <i>If + مضارع بسيط ➔ Will + المصدر</i><br><br>
+                • <b>المستقبل (Will / Going to):</b> للتنبؤ والقرارات والتخطيط القادم.<br>
+                • <b>قاعدة الشرط IF:</b><br>
+                - <i>الحالة الأولى: If + مضارع بسيط ➔ Will + المصدر</i><br><br>
                 <b>أمثلة وافية:</b><br>
-                - <i>We will travel tomorrow.</i> (سنقود السفر غداً).<br>
+                - <i>We will travel to Cairo tomorrow.</i> (سنقود السفر غداً).<br>
                 - <i>If you study hard, you will pass the exam.</i> (إن تذاكر بجد تنجح في الامتحان).
             </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('We will travel tomorrow. If you study hard, you will pass the exam.')">🔊 استمع للمستقبل والشرط</button>
+            <button class="stage-btn" style="margin-top:10px;" onclick="speak('We will travel to Cairo tomorrow. If you study hard, you will pass the exam.')">🔊 استمع للمستقبل والشرط</button>
         </div>
     `;
 }
 
-// ==================== 3. المترجم الصوتي المباشر الفوري الدقيق ====================
-const DICTIONARY_TRANSLATION_MAP = {
-    "مدرسه": "School", "المدرسه": "School", "مدرسة": "School",
-    "تفاحه": "Apple", "تفاحة": "Apple", "تفاح": "Apple",
-    "كتاب": "Book", "الكتاب": "Book",
-    "معلم": "Teacher", "مدرس": "Teacher", "المعلم": "Teacher",
-    "طالب": "Student", "تلميذ": "Student",
-    "بيت": "House", "منزل": "House",
-    "سياره": "Car", "سيارة": "Car",
-    "شكرا": "Thank you", "شكرا لك": "Thank you",
-    "صباح الخير": "Good morning", "مرحبا": "Hello", "السلام عليكم": "Hello"
-};
-
-function startSpeechRecognition() {
+// ==================== 3. المترجم الصوتي الحر المباشر (مثل جوجل محرك بحث) ====================
+async function startSpeechRecognition() {
     const resultDiv = document.getElementById('translator-result');
     const btn = document.getElementById('btn-mic');
 
@@ -250,27 +258,35 @@ function startSpeechRecognition() {
     recognition.lang = 'ar-EG';
     recognition.interimResults = false;
 
-    btn.innerText = "🎙️ جاري الاستماع... اتكلم الآن";
+    btn.innerText = "🎙️ جاري الاستماع صوتياً... اتكلم الآن بالعربية";
     btn.style.background = "var(--accent-pink)";
 
     recognition.start();
 
-    recognition.onresult = (event) => {
-        const arabicText = event.results[0][0].transcript.trim();
+    recognition.onresult = async (event) => {
+        const arabicSpeech = event.results[0][0].transcript.trim();
         btn.innerText = "🎤 اضغط هنا والتحدث بالعربية";
         btn.style.background = "var(--accent-purple)";
 
-        // ترجمة دقيقة للكلمات دون طباعة Translated
-        let englishTranslation = DICTIONARY_TRANSLATION_MAP[arabicText] || arabicText;
+        resultDiv.innerHTML = `<p style="color:var(--accent-yellow);">🔄 جاري الترجمة عبر محرك جوجل الترجمي...</p>`;
 
-        resultDiv.innerHTML = `
-            <div style="background:#191b33; padding:12px; border-radius:10px; border:1px solid var(--accent-green); text-align:right;">
-                <p style="color:var(--accent-yellow); font-size:0.9rem;">🗣️ المقول بالعربية: "<b>${arabicText}</b>"</p>
-                <p style="color:#fff; font-size:1.2rem; margin-top:6px;">🌐 الترجمة: <b style="color:var(--accent-green);">${englishTranslation}</b></p>
-                <button class="btn-action" style="margin-top:10px;" onclick="speak('${englishTranslation}')">🔊 نطق الكلمة بالإنجليزية</button>
-            </div>
-        `;
-        speak(englishTranslation);
+        try {
+            // الاستعانة بمحرك ترجمة خارجي حر لتغطية كافة الكلمات
+            const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(arabicSpeech)}&langpair=ar|en`);
+            const data = await res.json();
+            const translatedText = data.responseData.translatedText;
+
+            resultDiv.innerHTML = `
+                <div style="background:#191b33; padding:12px; border-radius:10px; border:1px solid var(--accent-green); text-align:right;">
+                    <p style="color:var(--accent-yellow); font-size:0.9rem;">🗣️ المقول بالعربية: "<b>${arabicSpeech}</b>"</p>
+                    <p style="color:#fff; font-size:1.2rem; margin-top:6px;">🌐 الترجمة الإنجليزية الفورية: <b style="color:var(--accent-green);">${translatedText}</b></p>
+                    <button class="btn-action" style="margin-top:10px;" onclick="speak('${translatedText}')">🔊 نطق الترجمة فوراً</button>
+                </div>
+            `;
+            speak(translatedText);
+        } catch (e) {
+            resultDiv.innerHTML = `<p style="color:var(--accent-pink);">❌ تعذر الاتصال بالترجمة الحرة، تأكد من الاتصال بالإنترنت.</p>`;
+        }
     };
 
     recognition.onerror = () => {
@@ -280,10 +296,12 @@ function startSpeechRecognition() {
     };
 }
 
-// ==================== 4. المجموعات والأرقام ====================
+// ==================== 4. المجموعات والتصنيفات في الحياة اليومية ====================
 const CATEGORIES_DATA = [
-    { title: "🔢 الأرقام (Numbers)", items: [{en: "One (1)", ar: "واحد"}, {en: "Two (2)", ar: "إثنان"}, {en: "Three (3)", ar: "ثلاثة"}, {en: "Four (4)", ar: "أربعة"}, {en: "Five (5)", ar: "خمسة"}] },
-    { title: "🦁 الحيوانات (Animals)", items: [{en: "Lion", ar: "أسد"}, {en: "Tiger", ar: "نمر"}, {en: "Elephant", ar: "فيل"}, {en: "Giraffe", ar: "زرافة"}] }
+    { title: "🔢 الأرقام والأعداد (Numbers)", items: [{en: "One (1)", ar: "واحد"}, {en: "Ten (10)", ar: "عشرة"}, {en: "One Hundred (100)", ar: "مائة"}, {en: "One Thousand (1000)", ar: "ألف"}] },
+    { title: "✈️ المطار والسفر (Airport & Travel)", items: [{en: "Passport", ar: "جواز سفر"}, {en: "Flight", ar: "رحلة طيران"}, {en: "Luggage", ar: "أمتعة وحقائب"}] },
+    { title: "🏥 المستشفى والطب (Hospital)", items: [{en: "Doctor", ar: "طبيب"}, {en: "Nurse", ar: "ممرضة"}, {en: "Pharmacy", ar: "صيدلية"}] },
+    { title: "🕌 الدين والعبادات (Religion)", items: [{en: "Mosque", ar: "مسجد"}, {en: "Pray", ar: "صلاة / يصلي"}, {en: "Quran", ar: "القرآن الكريم"}] }
 ];
 
 function renderCategories() {
@@ -303,13 +321,21 @@ function renderCategories() {
     `).join('');
 }
 
-// ==================== 5. المحادثات ====================
+// ==================== 5. المحادثات الشاملة (سؤال وجواب) ====================
 const CONVERSATIONS = [
     {
-        title: "💬 محادثة التعارف (Greetings)",
+        title: "💬 1. في المطار والسفر (At the Airport)",
         dialogue: [
-            { speaker: "Speaker A", text: "Hello! Good morning. What is your name?", ar: "أهلاً بك! صباح الخير. ما اسمك؟" },
-            { speaker: "Speaker B", text: "Good morning! My name is Ghazaal. What about you?", ar: "صباح النور! اسمي غزل. وماذا عنك؟" }
+            { speaker: "Officer", text: "May I see your passport and ticket, please?", ar: "هل يمكنني رؤية جواز سفرك وتذكرتك من فضلك؟" },
+            { speaker: "Passenger", text: "Here you are. What time is my flight?", ar: "تفضل هنا. في أي وقت رحلتي؟" },
+            { speaker: "Officer", text: "Your flight departs at five o'clock. Have a good flight!", ar: "ستغادر رحلتك في الساعة الخامسة. أتمنى لك رحلة ممتعة!" }
+        ]
+    },
+    {
+        title: "💬 2. في المطعم والكافيه (At the Restaurant)",
+        dialogue: [
+            { speaker: "Waiter", text: "Welcome! What would you like to order today?", ar: "أهلاً بك! ماذا تحب أن تطلب اليوم؟" },
+            { speaker: "Customer", text: "I would like a fresh orange juice and grilled chicken, please.", ar: "أريد عصير برتقال طازج ودجاج مشوي من فضلك." }
         ]
     }
 ];
@@ -378,7 +404,7 @@ function checkInfiniteAnswer(selectedEn, correctEn) {
     }, 900);
 }
 
-// ==================== 7. السبورة والتفاعل التلقائي والصوت ====================
+// ==================== 7. السبورة والتنقل اللمسي الفوري عند النقر ====================
 const alphabetContainer = document.getElementById('alphabet-container');
 if (alphabetContainer) {
     for (let i = 65; i <= 90; i++) {
@@ -395,7 +421,7 @@ function selectLetterCode(code) {
     currentLetterCode = code;
     const char = String.fromCharCode(currentLetterCode);
     document.getElementById('current-letter-title').innerText = `✏️ سبورة الرسم والتتبع (الحرف: ${char})`;
-    speak(char);
+    speak(`${char}. Letter ${char}`);
     clearCanvas();
 }
 
@@ -403,6 +429,11 @@ function nextLetter() {
     currentLetterCode++;
     if (currentLetterCode > 90) currentLetterCode = 65;
     selectLetterCode(currentLetterCode);
+}
+
+function handleCanvasTap(e) {
+    // التنقل التلقائي للحرف التالي عند الضغط على الشاشة في السبورة
+    nextLetter();
 }
 
 const canvas = document.getElementById('draw-canvas');
@@ -425,7 +456,6 @@ function clearCanvas() {
 if (canvas) {
     function startDrawing(e) {
         isDrawing = true;
-        playApplauseSound(); // صوت تشجيعي مباشر عند البدء بالرسم على السبورة
         draw(e);
     }
     function stopDrawing() { isDrawing = false; ctx.beginPath(); }
@@ -452,7 +482,7 @@ if (canvas) {
 }
 
 // Initial Loading
-renderDictionary();
+renderDictionaryHTML();
 renderGrammar();
 renderStories();
 renderCategories();
