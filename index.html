@@ -1,788 +1,740 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101126">
-<meta name="description" content="أكاديمية الإنجليزية للأطفال من 5 إلى 13 سنة">
-<title>English Kids Academy | أكاديمية الإنجليزية</title>
-<link rel="manifest" href="./manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية الإنجليزية للأطفال | English Kids Academy</title>
+    <!-- Tajawal Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2FF;
+            --secondary: #10B981;
+            --accent: #F59E0B;
+            --danger: #EF4444;
+            --bg: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --radius: 18px;
+        }
 
-<style>
-:root {
-  --bg: #101126;
-  --panel: #1c2042;
-  --panel2: #262b52;
-  --green: #00d6a0;
-  --gold: #ffca58;
-  --text: #ffffff;
-  --muted: #c2c7df;
-  --border: #41476f;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Tahoma, Arial, sans-serif;
-  line-height: 1.8;
-}
-button, input, select, textarea { font: inherit; }
-button {
-  cursor: pointer;
-  border: 0;
-  border-radius: 12px;
-  padding: 11px 15px;
-  font-weight: bold;
-}
-button:focus-visible, input:focus-visible {
-  outline: 3px solid var(--gold);
-}
-header {
-  background: #191c38;
-  padding: 15px;
-  border-bottom: 2px solid var(--green);
-  position: sticky;
-  top: 0;
-  z-index: 5;
-}
-.header-inner {
-  max-width: 950px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-.logo { color: var(--green); font-size: 18px; font-weight: bold; }
-.points { color: var(--gold); white-space: nowrap; }
-main { max-width: 950px; margin: auto; padding: 16px; }
-.hero {
-  text-align: center;
-  padding: 24px 12px;
-}
-.hero h1 { color: var(--green); margin-bottom: 5px; }
-.hero p { color: var(--muted); margin-top: 0; }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-  gap: 12px;
-}
-.card, .panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 16px;
-}
-.menu-card {
-  min-height: 120px;
-  text-align: center;
-  color: var(--text);
-  background: var(--panel);
-  border: 1px solid var(--border);
-  width: 100%;
-}
-.menu-card .emoji { display: block; font-size: 30px; }
-.menu-card:hover { border-color: var(--green); }
-h2 { color: var(--green); font-size: 22px; }
-h3 { color: var(--gold); }
-.muted { color: var(--muted); }
-.primary { background: var(--green); color: #081b19; }
-.secondary { background: var(--panel2); color: white; border: 1px solid var(--border); }
-.gold { background: var(--gold); color: #211a07; }
-.danger { background: #9e344b; color: white; }
-.actions { display: flex; flex-wrap: wrap; gap: 9px; margin: 12px 0; }
-.actions button { flex: 1 1 110px; }
-.field {
-  display: block;
-  width: 100%;
-  background: #0c0e20;
-  color: white;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  padding: 12px;
-  margin: 8px 0 14px;
-}
-.hidden { display: none !important; }
-.section-title { display: flex; align-items: center; gap: 10px; }
-.back { background: var(--panel2); color: white; }
-.letter-grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 6px;
-}
-.letter-btn {
-  background: var(--panel2);
-  color: white;
-  border: 1px solid var(--border);
-  padding: 8px 2px;
-  font-size: 19px;
-}
-.letter-btn.active { background: var(--green); color: #071b17; }
-.word-card {
-  background: var(--panel2);
-  padding: 13px;
-  margin: 8px 0;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-}
-.word-en { color: var(--gold); font-size: 20px; font-weight: bold; }
-.word-ar { color: var(--green); }
-#board {
-  display: block;
-  width: 100%;
-  height: 250px;
-  background: #000;
-  border: 2px solid #555;
-  border-radius: 12px;
-  touch-action: none;
-}
-.story, .conversation, .grammar-card {
-  background: var(--panel2);
-  padding: 14px;
-  border-radius: 12px;
-  margin: 10px 0;
-}
-.quiz-option {
-  display: block;
-  width: 100%;
-  margin: 8px 0;
-  background: var(--panel2);
-  color: white;
-  text-align: right;
-  border: 1px solid var(--border);
-}
-.notice {
-  background: #242747;
-  border-right: 4px solid var(--gold);
-  padding: 12px;
-  border-radius: 9px;
-  color: var(--muted);
-  margin: 12px 0;
-}
-footer { text-align: center; color: var(--muted); padding: 25px 10px; }
-@media (max-width: 420px) {
-  main { padding: 10px; }
-  .letter-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .logo { font-size: 15px; }
-}
-</style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            padding-bottom: 40px;
+        }
+
+        /* Top Header */
+        header {
+            background: linear-gradient(135deg, #6366F1, #4F46E5);
+            color: white;
+            padding: 20px 16px 30px 16px;
+            border-bottom-left-radius: 28px;
+            border-bottom-right-radius: 28px;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stat-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-badge i {
+            color: #FBBF24;
+        }
+
+        /* Container & Layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: white;
+            margin-top: -15px;
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .hero-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 14px;
+            object-fit: cover;
+        }
+
+        .hero-text h2 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .hero-text p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title span {
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* Grid Cards */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid #E2E8F0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #F1F5F9;
+        }
+
+        .btn-learn {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Interactive Lesson Modal/Area */
+        .lesson-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            overflow-y: auto;
+            padding-bottom: 30px;
+        }
+
+        .lesson-header {
+            background: var(--primary);
+            color: white;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+        }
+
+        .btn-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .lesson-body {
+            padding: 20px 16px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .explain-box {
+            background: var(--primary-light);
+            border-right: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .vocab-card {
+            background: #F1F5F9;
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            position: relative;
+        }
+
+        .vocab-en {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .vocab-ar {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .btn-audio {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .quiz-section {
+            background: #FFFBEB;
+            border: 1px solid #FCD34D;
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .quiz-question {
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quiz-opt {
+            background: white;
+            border: 1px solid #CBD5E1;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: right;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .quiz-opt:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+    </style>
 </head>
-
 <body>
-<header>
-  <div class="header-inner">
-    <div class="logo">🎓 English Kids Academy</div>
-    <div class="points">⭐ <span id="points">0</span></div>
-  </div>
-</header>
 
-<main>
-  <section id="home">
-    <div class="hero">
-      <h1>أهلاً بك في أكاديمية الإنجليزية!</h1>
-      <p>اتعلّم الإنجليزية خطوة بخطوة من الحروف إلى المحادثة.</p>
-      <button class="primary" onclick="showSection('letters')">🚀 ابدأ التعلّم</button>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="logo-area">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div>
+                    <h1 style="font-size: 18px;">أكاديمية عبده للإنجليزي</h1>
+                    <p style="font-size: 11px; opacity: 0.8;">من سن 5 إلى 13 سنة</p>
+                </div>
+            </div>
+            <div class="user-stats">
+                <div class="stat-badge"><i class="fa-solid fa-star"></i> <span id="score">120</span></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Hero / Info Banner -->
+        <div class="hero-banner">
+            <img src="https://images.openai.com/static-rsc-4/4l29uZhWowH-q2Z9atlcjFDps_07jpDSZJf3KgndPw6Y6RbUHi8PxaFyj0iUjN36B9JivZkPIrJJ7BBlaZfA3mdkhvGcDDfllputLZkwtWvvx-zK_A0gC1sLpVdecIgp3GEy7yYk8U_FhFCydvZ9eQtwho7MSh2dq8gKAIzeWkgPLwQHboikfrJeQsNNIjSL?purpose=fullsize" alt="English Banner" class="hero-img">
+            <div class="hero-text">
+                <h2>أهلاً بك يا بطل! 🌟</h2>
+                <p>تعلم الإنجليزية خطوة بخطوة مع الشرح بالعربي، النطق الصوتي، والتمارين التفاعلية.</p>
+            </div>
+        </div>
+
+        <div class="section-title">
+            الأقسام التعليمية الشاملة
+            <span>8 أقسام رئيسية</span>
+        </div>
+
+        <!-- Modules Grid -->
+        <div class="modules-grid">
+
+            <!-- Card 1 -->
+            <div class="module-card" onclick="openLesson(1)">
+                <img src="https://images.openai.com/static-rsc-4/4l29uZhWowH-q2Z9atlcjFDps_07jpDSZJf3KgndPw6Y6RbUHi8PxaFyj0iUjN36B9JivZkPIrJJ7BBlaZfA3mdkhvGcDDfllputLZkwtWvvx-zK_A0gC1sLpVdecIgp3GEy7yYk8U_FhFCydvZ9eQtwho7MSh2dq8gKAIzeWkgPLwQHboikfrJeQsNNIjSL?purpose=fullsize" class="card-img" alt="الحروف والقراءة">
+                <div class="card-content">
+                    <div>
+                        <div class="card-title">1. الحروف والقراءة</div>
+                        <div class="card-desc">الحروف A–Z، أصوات الحروف، والتهجئة القراءة التدريجية.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 11px; color: var(--text-muted);">26 حرفًا + أصوات</span>
+                        <button class="btn-learn">ابدأ الآن</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="module-card" onclick="openLesson(2)">
+                <img src="https://images.openai.com/static-rsc-4/oXbonW4z4oc-GvmquigoKUKMbTQae7jt0FCIQSA6IMqH0NICfVd1aYROwp3bA3xWZH1_zaPSeIDJc4w5y7RI6r_KZ-KTonzxJROcCFXqPeeFITu6LaGgEB0_KM5QRC32wU1pcunxsdAaeraHwwTkbGhMkD0jKWIQyWvtMMlmHJFOCVkR_KMBsQAGc6VtKJ3O?purpose=fullsize" class="card-img" alt="الأرقام والأعداد">
+                <div class="card-content">
+                    <div>
+                        <div class="card-title">2. الأرقام والأعداد</div>
+                        <div class="card-desc">من 0 إلى 100 والمئات والآلاف، النطق والتمارين.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 11px; color: var(--text-muted);">أرقام وعدّ</span>
+                        <button class="btn-learn">ابدأ الآن</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="module-card" onclick="openLesson(3)">
+                <img src="https://images.openai.com/static-rsc-4/MQ9pQwjHJbGYHOFoF33-xyqnPWkiq_HOWgvptmBc3lTworKgOQWzycijpc5R2k_lKz-ououOnDhTO1PiN8XfuAMXqqqbPUp3xo78ThTwol0l0dTWRLJp8cSVfN5-HABHmskLjwJMQqDAkf-WSlE-_JXRl-Rg1R4VDwDOepWq8MkWb2NQtlg0p3loqKdoCBtg?purpose=fullsize" class="card-img" alt="الحيوانات">
+                <div class="card-content">
+                    <div>
+                        <div class="card-title">3. عالم الحيوانات</div>
+                        <div class="card-desc">الحيوانات الأليفة، المزرعة، الغابة، والطيور والحشرات.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 11px; color: var(--text-muted);">مفردات + أصوات</span>
+                        <button class="btn-learn">ابدأ الآن</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="module-card" onclick="openLesson(4)">
+                <img src="https://images.openai.com/static-rsc-4/UdlKAKN5hegH9h4_5ggIdzLLY-vkkynqlyJ31jEIEnoygDU1Kft51DBZ40s-SmxTAJsNrq34h1SE1Ka2bMamREf9tuQmyeRzWeutKjlqOt9NjMiIv_lI8Z6ucVCooH1shEx3NQhoBOu7VATqr6M4dxDobcBZbLxEN5EEBHqRNoKfFex7XNv3EQ1_ElByXwfW?purpose=fullsize" class="card-img" alt="الألوان والأشكال">
+                <div class="card-content">
+                    <div>
+                        <div class="card-title">4. الألوان والأشكال</div>
+                        <div class="card-desc">الألوان الأساسية والأشكال الهندسية مع أمثلة.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 11px; color: var(--text-muted);">أشكال وألوان</span>
+                        <button class="btn-learn">ابدأ الآن</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="module-card" onclick="openLesson(5)">
+                <img src="https://images.openai.com/static-rsc-4/Z7LQvmgeEfjRzCvOAVizPLKab4yFHPOVO_ptvP5rSbQBTIVc07nzM1FVhH67SC0TFoEP63Q0ju3Od7L_upnqLd9UMjTAcbQbUKmsbFfskBpl4aYY79p5uzCbngWTbUoAJcOi585uZu5p_RzCOm-w5nW_NskJ6S2H1WLTqNYS8Mw1cN8UQvNThvW6U05hd2yp?purpose=fullsize" class="card-img" alt="الأيام والشهور والتاريخ">
+                <div class="card-content">
+                    <div>
+                        <div class="card-title">5. الأيام والشهور والتاريخ</div>
+                        <div class="card-desc">أيام الأسبوع، الفصول، الساعة ومفردات الوقت.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 11px; color: var(--text-muted);">الوقت والتقويم</span>
+                        <button class="btn-learn">ابدأ الآن</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="module-card" onclick="openLesson(6)">
+                <img src="https://images.openai.com/static-rsc-4/e5cGFDcg6Yml8myvpPYWorJkhHL44b5K6cJ5soJqdqpubafl4tuUNjZuKl23qZuvUlfuitXAyDLu3fZXKWJ_qH-suHZd96de4c6IMUIuNLx1CNEvGenCuKqUGgCDne1pkSIW1roM09aIXTyBgnu4uDhSU1n11qUMncKq566FVIM0mKtb3PgSW0WTUE2-V8DX?purpose=fullsize" class="card-img" alt="مفردات الحياة اليومية">
+                <div class="card-content">
+                    <div>
+                        <div class="card-title">6. مفردات الحياة اليومية</div>
+                        <div class="card-desc">الأسرة، الجسم، الطعام، المدرسة، والمهن.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 11px; color: var(--text-muted);">مفردات هامة</span>
+                        <button class="btn-learn">ابدأ الآن</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="module-card" onclick="openLesson(7)">
+                <img src="https://images.openai.com/static-rsc-4/XmgRAUtHOtaDV86eU1NjtHABH3O190pwQJ181Y4kbwZcbP8PffFE9dNKsM-tZSnImn_sSP-FjQuhSdr--hBhbncwYOf_zNqZeLoBE14XlOv2oO3r0OUlvSSJZ-Fajo2WYjPdCQBXV00YzrlNB5ujigPl--c2dFHShb7yaiNPnE5FKgKxYUq8c4DyxlY_exyg?purpose=fullsize" class="card-img" alt="القواعد وتكوين الجمل">
+                <div class="card-content">
+                    <div>
+                        <div class="card-title">7. القواعد وتكوين الجمل</div>
+                        <div class="card-desc">الضمائر، الأفعال، الأزمنة، وتكوين الجمل ببساطة.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 11px; color: var(--text-muted);">Grammar</span>
+                        <button class="btn-learn">ابدأ الآن</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="module-card" onclick="openLesson(8)">
+                <img src="https://images.openai.com/static-rsc-4/g_oK1NFD52gyD01ChDkakBlu4iZng8ioALetv04hckNu9sk0PQb1mY0JLBeLcqKP1atBJ4caCwhINqdQZ8FkhmweU-hWNrOzGG9MGYuueUdqSQPptFKySE_05SBfr2AChThopBvhLc0EF4DjG6Y8e9zO72jSwYkguuF5fGjpBOBq4meGc7TT8Gwx3Ze4hp0Y?purpose=fullsize" class="card-img" alt="المحادثة والقصص">
+                <div class="card-content">
+                    <div>
+                        <div class="card-title">8. الاستماع والمحادثة والقصص</div>
+                        <div class="card-desc">مواقف يومية، قصص قصيرة، واختبارات تفاعلية.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 11px; color: var(--text-muted);">تحدث واستماع</span>
+                        <button class="btn-learn">ابدأ الآن</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="grid">
-      <button class="menu-card" onclick="showSection('letters')">
-        <span class="emoji">🔤</span>الحروف والسبورة
-      </button>
-      <button class="menu-card" onclick="showSection('dictionary')">
-        <span class="emoji">📚</span>قاموس الكلمات
-      </button>
-      <button class="menu-card" onclick="showSection('grammar')">
-        <span class="emoji">📖</span>القواعد
-      </button>
-      <button class="menu-card" onclick="showSection('stories')">
-        <span class="emoji">📚</span>القصص التعليمية
-      </button>
-      <button class="menu-card" onclick="showSection('conversations')">
-        <span class="emoji">💬</span>المحادثات
-      </button>
-      <button class="menu-card" onclick="showSection('games')">
-        <span class="emoji">🎮</span>الألعاب والاختبارات
-      </button>
-      <button class="menu-card" onclick="showSection('translator')">
-        <span class="emoji">🎤</span>التدريب الصوتي
-      </button>
+    <!-- Lesson Viewer Modal -->
+    <div id="lessonViewer" class="lesson-viewer">
+        <div class="lesson-header">
+            <h3 id="lessonTitle">عنوان الدرس</h3>
+            <button class="btn-close" onclick="closeLesson()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="lesson-body">
+            <div class="explain-box" id="lessonExplain">
+                شرح الدرس هنا بالعربية...
+            </div>
+
+            <h4 style="margin-bottom: 12px;">المفردات والنطق:</h4>
+            <div class="vocab-grid" id="vocabGrid">
+                <!-- Vocab cards dynamically inserted -->
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-question" id="quizQuestion">اختبار سريع: ما معنى كلمة "Apple"؟</div>
+                <div class="quiz-options" id="quizOptions">
+                    <!-- Options inserted dynamically -->
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="notice">
-      📱 يمكنك تجربة إضافة الموقع إلى الشاشة الرئيسية من قائمة Chrome.
-      بعض المميزات تحتاج إلى الإنترنت.
-    </div>
-  </section>
+    <footer>
+        أكاديمية اللغة الإنجليزية للأطفال © 2026 - جميع الحقوق محفوظة
+    </footer>
 
-  <section id="letters" class="hidden">
-    <div class="section-title">
-      <button class="back" onclick="goHome()">⬅ رجوع</button>
-      <h2>الحروف والسبورة</h2>
-    </div>
-    <div class="panel">
-      <div id="letter-display" style="text-align:center;padding:8px">
-        <div id="big-letter" style="font-size:70px;color:var(--gold)">A a</div>
-        <div id="letter-word" class="word-en">Apple</div>
-        <div id="letter-meaning" class="word-ar">تفاحة</div>
-      </div>
-      <div id="letter-grid" class="letter-grid"></div>
-      <div class="actions">
-        <button class="primary" onclick="speakCurrentLetter()">🔊 اسمع الحرف</button>
-        <button class="secondary" onclick="nextLetter()">الحرف التالي ➡</button>
-      </div>
-      <h3>✍️ السبورة السوداء</h3>
-      <p class="muted">اكتب بإصبعك. لون الكتابة أبيض ويمكنك مسح السبورة.</p>
-      <canvas id="board"></canvas>
-      <div class="actions">
-        <button class="secondary" onclick="clearBoard()">🧹 مسح</button>
-        <button class="primary" onclick="speakCurrentLetter()">🔊 اسمع الكلمة</button>
-      </div>
-    </div>
-  </section>
+    <script>
+        // Sample Data for Lessons
+        const lessonsData = {
+            1: {
+                title: "1. الحروف والقراءة (Alphabet)",
+                explain: "في هذا الدرس نتعلم حروف اللغة الإنجليزية الأبجدية من A إلى Z. لكل حرف شكل كبير (Capital) وشكل صغير (Small) وصوت خاص به.",
+                vocab: [
+                    { en: "Apple", ar: "تفاحة" },
+                    { en: "Ball", ar: "كرة" },
+                    { en: "Cat", ar: "قطة" },
+                    { en: "Dog", ar: "كلب" }
+                ],
+                quiz: {
+                    q: "ما معنى كلمة Cat؟",
+                    options: ["تفاحة", "قطة", "كلب"],
+                    correct: 1
+                }
+            },
+            2: {
+                title: "2. الأرقام والأعداد (Numbers)",
+                explain: "الأرقام تساعدنا في العد وحساب الأشكال والأشياء من حولنا. لنبدأ بالأرقام الأساسية.",
+                vocab: [
+                    { en: "One (1)", ar: "واحد" },
+                    { en: "Two (2)", ar: "اثنان" },
+                    { en: "Three (3)", ar: "ثلاثة" },
+                    { en: "Ten (10)", ar: "عشرة" }
+                ],
+                quiz: {
+                    q: "ما هو الرقم Three؟",
+                    options: ["1", "2", "3"],
+                    correct: 2
+                }
+            },
+            3: {
+                title: "3. عالم الحيوانات (Animals)",
+                explain: "تعتبر الحيوانات من أمتع الموضوعات! نتعلم أسماء الحيوانات الأليفة وحيوانات المزرعة والغابة.",
+                vocab: [
+                    { en: "Lion", ar: "أسد" },
+                    { en: "Elephant", ar: "فيل" },
+                    { en: "Cow", ar: "بقرة" },
+                    { en: "Bird", ar: "طائر" }
+                ],
+                quiz: {
+                    q: "ما معنى كلمة Lion؟",
+                    options: ["أسد", "فيل", "طائر"],
+                    correct: 0
+                }
+            },
+            4: {
+                title: "4. الألوان والأشكال (Colors & Shapes)",
+                explain: "تعلم وصف الأشياء بالألوان مثل: Red Car (سيارة حمراء)، والأشكال مثل Circle (دائرة).",
+                vocab: [
+                    { en: "Red", ar: "أحمر" },
+                    { en: "Blue", ar: "أزرق" },
+                    { en: "Circle", ar: "دائرة" },
+                    { en: "Square", ar: "مربع" }
+                ],
+                quiz: {
+                    q: "ما ترجمة: Red Ball؟",
+                    options: ["كرة أزرق", "كرة حمراء", "مربع أحمر"],
+                    correct: 1
+                }
+            },
+            5: {
+                title: "5. الأيام والشهور (Days & Months)",
+                explain: "تعلم أيام الأسبوع وفصول السنة وكيفية الإجابة عن السؤال عن الوقت واليوم.",
+                vocab: [
+                    { en: "Sunday", ar: "الأحد" },
+                    { en: "Monday", ar: "الإثنين" },
+                    { en: "Summer", ar: "الصيف" },
+                    { en: "Winter", ar: "الشتاء" }
+                ],
+                quiz: {
+                    q: "ما معنى كلمة Sunday؟",
+                    options: ["السبت", "الأحد", "الإثنين"],
+                    correct: 1
+                }
+            },
+            6: {
+                title: "6. مفردات الحياة اليومية (Daily Life)",
+                explain: "كلمات نستخدمها يومياً عند الحديث عن العائلة، المدرسة، الطعام، والأماكن.",
+                vocab: [
+                    { en: "Father", ar: "أب" },
+                    { en: "Mother", ar: "أم" },
+                    { en: "School", ar: "مدرسة" },
+                    { en: "Water", ar: "ماء" }
+                ],
+                quiz: {
+                    q: "ما معنى School؟",
+                    options: ["بيت", "مدرسة", "حديقة"],
+                    correct: 1
+                }
+            },
+            7: {
+                title: "7. القواعد وتكوين الجمل (Grammar)",
+                explain: "القواعد تساعدنا على بناء جملة صحيحة. مثل ضمائر الفاعل: I (أنا)، You (أنت)، He (هو)، She (هي).",
+                vocab: [
+                    { en: "I am", ar: "أنا أكون" },
+                    { en: "He is", ar: "هو يكون" },
+                    { en: "She is", ar: "هي تكون" },
+                    { en: "They are", ar: "هم يكونوا" }
+                ],
+                quiz: {
+                    q: "اختر الكلمة المناسبة: She ___ a girl.",
+                    options: ["am", "is", "are"],
+                    correct: 1
+                }
+            },
+            8: {
+                title: "8. المحادثة والقصص (Stories)",
+                explain: "استمع إلى محادثات قصيرة وبسيطة لممارسة النطق والتحدث بثقة.",
+                vocab: [
+                    { en: "Hello!", ar: "مرحباً!" },
+                    { en: "How are you?", ar: "كيف حالك؟" },
+                    { en: "Thank you", ar: "شكراً لك" },
+                    { en: "Goodbye", ar: "إلى اللقاء" }
+                ],
+                quiz: {
+                    q: "كيف تقول 'شكراً لك' بالإنجليزي؟",
+                    options: ["Hello", "Thank you", "Goodbye"],
+                    correct: 1
+                }
+            }
+        };
 
-  <section id="dictionary" class="hidden">
-    <div class="section-title">
-      <button class="back" onclick="goHome()">⬅ رجوع</button>
-      <h2>📚 قاموس الكلمات</h2>
-    </div>
-    <div class="panel">
-      <p class="muted">ابحث بالعربية أو الإنجليزية في الكلمات المتوفرة داخل التطبيق.</p>
-      <input class="field" id="search-input" placeholder="مثال: apple أو تفاحة">
-      <button class="primary" onclick="searchWords()">🔎 ابحث</button>
-      <div id="dictionary-results"></div>
-    </div>
-  </section>
+        // Text To Speech Function
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.85; // Slightly slower for kids
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('عذراً، متصفحك لا يدعم خاصية نطق الصوت.');
+            }
+        }
 
-  <section id="grammar" class="hidden">
-    <div class="section-title">
-      <button class="back" onclick="goHome()">⬅ رجوع</button>
-      <h2>📖 القواعد الإنجليزية</h2>
-    </div>
-    <div id="grammar-content"></div>
-  </section>
+        // Open Lesson Modal
+        function openLesson(id) {
+            const lesson = lessonsData[id];
+            if (!lesson) return;
 
-  <section id="stories" class="hidden">
-    <div class="section-title">
-      <button class="back" onclick="goHome()">⬅ رجوع</button>
-      <h2>📚 القصص التعليمية</h2>
-    </div>
-    <div id="stories-content"></div>
-  </section>
+            document.getElementById('lessonTitle').innerText = lesson.title;
+            document.getElementById('lessonExplain').innerText = lesson.explain;
 
-  <section id="conversations" class="hidden">
-    <div class="section-title">
-      <button class="back" onclick="goHome()">⬅ رجوع</button>
-      <h2>💬 المحادثات اليومية</h2>
-    </div>
-    <div id="conversations-content"></div>
-  </section>
+            // Render Vocab Cards
+            const vocabGrid = document.getElementById('vocabGrid');
+            vocabGrid.innerHTML = '';
+            lesson.vocab.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'vocab-card';
+                card.innerHTML = `
+                    <div class="vocab-en">${item.en}</div>
+                    <div class="vocab-ar">${item.ar}</div>
+                    <button class="btn-audio" onclick="speak('${item.en}')"><i class="fa-solid fa-volume-high"></i></button>
+                `;
+                vocabGrid.appendChild(card);
+            });
 
-  <section id="games" class="hidden">
-    <div class="section-title">
-      <button class="back" onclick="goHome()">⬅ رجوع</button>
-      <h2>🎮 اختبر نفسك</h2>
-    </div>
-    <div class="panel">
-      <p id="quiz-progress" class="muted"></p>
-      <h3 id="quiz-question">استعد للسؤال الأول!</h3>
-      <div id="quiz-options"></div>
-      <p id="quiz-feedback" aria-live="polite"></p>
-      <button class="primary" onclick="startQuiz()">ابدأ / سؤال جديد</button>
-    </div>
-  </section>
+            // Render Quiz
+            document.getElementById('quizQuestion').innerText = lesson.quiz.q;
+            const quizOptions = document.getElementById('quizOptions');
+            quizOptions.innerHTML = '';
+            lesson.quiz.options.forEach((opt, idx) => {
+                const optBtn = document.createElement('button');
+                optBtn.className = 'quiz-opt';
+                optBtn.innerText = opt;
+                optBtn.onclick = () => checkAnswer(idx, lesson.quiz.correct);
+                quizOptions.appendChild(optBtn);
+            });
 
-  <section id="translator" class="hidden">
-    <div class="section-title">
-      <button class="back" onclick="goHome()">⬅ رجوع</button>
-      <h2>🎤 التدريب الصوتي</h2>
-    </div>
-    <div class="panel">
-      <p>اكتب جملة إنجليزية ثم استمع إلى نطقها.</p>
-      <input class="field" id="speech-input" placeholder="مثال: Good morning">
-      <button class="primary" onclick="speakInput()">🔊 استمع للنطق</button>
-      <div class="notice">
-        التعرف على الكلام وترجمته آليًا يحتاج إلى خدمة مناسبة واتصال بالإنترنت؛
-        هذا القسم لا يدّعي أنه مترجم آلي كامل.
-      </div>
-    </div>
-  </section>
-</main>
+            document.getElementById('lessonViewer').style.display = 'block';
+        }
 
-<footer>English Kids Academy · تعلّم كل يوم خطوة جديدة ⭐</footer>
+        // Close Lesson
+        function closeLesson() {
+            document.getElementById('lessonViewer').style.display = 'none';
+        }
 
-<script>
-const letters = [
-  ["A","Apple","تفاحة"],["B","Ball","كرة"],["C","Cat","قطة"],
-  ["D","Dog","كلب"],["E","Egg","بيضة"],["F","Fish","سمكة"],
-  ["G","Girl","بنت"],["H","House","منزل"],["I","Ice","ثلج"],
-  ["J","Juice","عصير"],["K","King","ملك"],["L","Lion","أسد"],
-  ["M","Moon","قمر"],["N","Nose","أنف"],["O","Orange","برتقالة"],
-  ["P","Pen","قلم"],["Q","Queen","ملكة"],["R","Rabbit","أرنب"],
-  ["S","Sun","شمس"],["T","Tiger","نمر"],["U","Umbrella","مظلة"],
-  ["V","Van","سيارة نقل"],["W","Water","ماء"],["X","X-ray","أشعة"],
-  ["Y","Yellow","أصفر"],["Z","Zoo","حديقة حيوان"]
-];
-
-const words = [
-  ...letters.map(x=>({en:x[1],ar:x[2]})),
-  {en:"Hello",ar:"مرحبًا"},{en:"Good morning",ar:"صباح الخير"},
-  {en:"Good night",ar:"تصبح على خير"},{en:"Thank you",ar:"شكرًا"},
-  {en:"Please",ar:"من فضلك"},{en:"Sorry",ar:"آسف"},
-  {en:"School",ar:"مدرسة"},{en:"Teacher",ar:"معلّم"},
-  {en:"Student",ar:"طالب"},{en:"Book",ar:"كتاب"},
-  {en:"Pencil",ar:"قلم رصاص"},{en:"Table",ar:"طاولة"},
-  {en:"Chair",ar:"كرسي"},{en:"Door",ar:"باب"},
-  {en:"Window",ar:"نافذة"},{en:"Family",ar:"عائلة"},
-  {en:"Father",ar:"أب"},{en:"Mother",ar:"أم"},
-  {en:"Brother",ar:"أخ"},{en:"Sister",ar:"أخت"},
-  {en:"Friend",ar:"صديق"},{en:"Water",ar:"ماء"},
-  {en:"Milk",ar:"حليب"},{en:"Bread",ar:"خبز"},
-  {en:"Food",ar:"طعام"},{en:"Happy",ar:"سعيد"},
-  {en:"Sad",ar:"حزين"},{en:"Beautiful",ar:"جميل"},
-  {en:"Big",ar:"كبير"},{en:"Small",ar:"صغير"},
-  {en:"Red",ar:"أحمر"},{en:"Blue",ar:"أزرق"},
-  {en:"Green",ar:"أخضر"},{en:"One",ar:"واحد"},
-  {en:"Two",ar:"اثنان"},{en:"Three",ar:"ثلاثة"},
-  {en:"Four",ar:"أربعة"},{en:"Five",ar:"خمسة"},
-  {en:"Monday",ar:"الاثنين"},{en:"Tuesday",ar:"الثلاثاء"},
-  {en:"Wednesday",ar:"الأربعاء"},{en:"Thursday",ar:"الخميس"},
-  {en:"Friday",ar:"الجمعة"},{en:"Saturday",ar:"السبت"},
-  {en:"Sunday",ar:"الأحد"},{en:"I",ar:"أنا"},
-  {en:"You",ar:"أنت"},{en:"He",ar:"هو"},
-  {en:"She",ar:"هي"},{en:"We",ar:"نحن"},
-  {en:"They",ar:"هم"},{en:"Love",ar:"يحب"},
-  {en:"Read",ar:"يقرأ"},{en:"Write",ar:"يكتب"},
-  {en:"Eat",ar:"يأكل"},{en:"Drink",ar:"يشرب"},
-  {en:"Play",ar:"يلعب"},{en:"Run",ar:"يجري"},
-  {en:"Walk",ar:"يمشي"},{en:"Sleep",ar:"ينام"}
-];
-
-const grammar = [
-  {
-    title:"1. الضمائر الشخصية — Personal Pronouns",
-    body:"I = أنا، You = أنت، He = هو، She = هي، It = لغير العاقل، We = نحن، They = هم.",
-    example:"I am a student. = أنا طالب."
-  },
-  {
-    title:"2. فعل الكينونة — Verb to Be",
-    body:"I am، He/She/It is، You/We/They are. نستخدمه للتعريف والوصف.",
-    example:"She is happy. = هي سعيدة."
-  },
-  {
-    title:"3. المضارع البسيط — Present Simple",
-    body:"نستخدمه للعادات والحقائق. مع He/She/It غالبًا نضيف s إلى الفعل.",
-    example:"I play every day. = أنا ألعب كل يوم. / He plays football. = هو يلعب كرة القدم."
-  },
-  {
-    title:"4. المضارع المستمر — Present Continuous",
-    body:"am/is/are + الفعل مع ing، للتعبير عن شيء يحدث الآن.",
-    example:"I am reading. = أنا أقرأ الآن."
-  },
-  {
-    title:"5. الماضي البسيط — Past Simple",
-    body:"نستخدمه لحدث انتهى في الماضي. الأفعال المنتظمة غالبًا تأخذ ed، وغير المنتظمة لها أشكال خاصة.",
-    example:"I played yesterday. = لعبت أمس. / I went home. = ذهبت إلى المنزل."
-  },
-  {
-    title:"6. المستقبل — Future with Will",
-    body:"Will + المصدر للتحدث عن المستقبل.",
-    example:"I will learn English. = سأتعلم الإنجليزية."
-  },
-  {
-    title:"7. أدوات النكرة والمعرفة — A, An, The",
-    body:"A قبل صوت ساكن، An قبل صوت متحرك، وThe لشيء محدد.",
-    example:"a book = كتاب، an apple = تفاحة، the sun = الشمس."
-  },
-  {
-    title:"8. النفي والسؤال",
-    body:"في المضارع البسيط نستخدم do/does، وفي الماضي نستخدم did. بعد do/does/did يأتي الفعل في المصدر.",
-    example:"Do you play? = هل تلعب؟ / I don't play. = أنا لا ألعب."
-  }
-];
-
-const stories = [
-  {
-    title:"The Little Cat — القطة الصغيرة",
-    en:"A little cat is in the garden. It sees a red ball. The cat plays with the ball. It is happy.",
-    ar:"قطة صغيرة في الحديقة. ترى كرة حمراء. تلعب القطة بالكرة. إنها سعيدة.",
-    lesson:"كلمات: cat = قطة، garden = حديقة، ball = كرة، happy = سعيد."
-  },
-  {
-    title:"My School — مدرستي",
-    en:"I go to school every morning. I meet my teacher and friends. We read books and learn English.",
-    ar:"أذهب إلى المدرسة كل صباح. أقابل معلّمي وأصدقائي. نقرأ الكتب ونتعلم الإنجليزية.",
-    lesson:"كلمات: school = مدرسة، morning = صباح، friends = أصدقاء، learn = يتعلم."
-  },
-  {
-    title:"The Kind Boy — الولد الطيب",
-    en:"A boy sees an old man carrying a bag. He helps him. The old man says, Thank you!",
-    ar:"يرى ولد رجلًا كبيرًا في السن يحمل حقيبة. يساعده الولد. يقول الرجل: شكرًا لك!",
-    lesson:"كلمات: boy = ولد، helps = يساعد، old man = رجل مسن."
-  },
-  {
-    title:"A Sunny Day — يوم مشمس",
-    en:"The sun is shining. Sara goes to the park with her family. They play and eat lunch together.",
-    ar:"الشمس مشرقة. تذهب سارة إلى الحديقة مع عائلتها. يلعبون ويتناولون الغداء معًا.",
-    lesson:"كلمات: sun = شمس، park = حديقة، family = عائلة."
-  },
-  {
-    title:"The Lost Book — الكتاب المفقود",
-    en:"Omar cannot find his book. He looks on the table. His sister finds it beside the chair.",
-    ar:"لا يستطيع عمر العثور على كتابه. يبحث فوق الطاولة. تجد أخته الكتاب بجانب الكرسي.",
-    lesson:"كلمات: find = يجد، table = طاولة، beside = بجانب."
-  }
-];
-
-const conversations = [
-  {
-    title:"Greetings — التحية",
-    lines:[
-      ["Ali","Hello!"],["Omar","Hi! How are you?"],
-      ["Ali","I am fine, thank you."],["Omar","You are welcome."]
-    ],
-    ar:"مرحبًا! — أهلًا! كيف حالك؟ — أنا بخير، شكرًا لك."
-  },
-  {
-    title:"At School — في المدرسة",
-    lines:[
-      ["Teacher","Good morning, students."],["Students","Good morning, teacher."],
-      ["Teacher","Open your books, please."],["Students","Yes, teacher."]
-    ],
-    ar:"صباح الخير يا طلاب. — صباح الخير يا معلم. — افتحوا كتبكم من فضلكم. — حاضر يا معلم."
-  },
-  {
-    title:"At the Shop — في المتجر",
-    lines:[
-      ["Customer","Hello. How much is this?"],["Shopkeeper","It is five pounds."],
-      ["Customer","Here you are."],["Shopkeeper","Thank you!"]
-    ],
-    ar:"مرحبًا، بكم هذا؟ — بخمسة جنيهات. — تفضل. — شكرًا لك!"
-  },
-  {
-    title:"Meeting a Friend — مقابلة صديق",
-    lines:[
-      ["Mona","What is your name?"],["Sara","My name is Sara."],
-      ["Mona","Nice to meet you."],["Sara","Nice to meet you, too."]
-    ],
-    ar:"ما اسمك؟ — اسمي سارة. — سعيدة بلقائك. — وأنا أيضًا."
-  },
-  {
-    title:"At Home — في المنزل",
-    lines:[
-      ["Mother","Please clean your room."],["Child","Okay, Mum."],
-      ["Mother","Thank you for helping."],["Child","You are welcome."]
-    ],
-    ar:"من فضلك نظف غرفتك. — حسنًا يا أمي. — شكرًا لمساعدتك. — العفو."
-  }
-];
-
-let currentLetter = 0;
-let points = 0;
-let quizIndex = 0;
-let quizScore = 0;
-
-function showSection(id) {
-  document.querySelectorAll("main > section").forEach(section => {
-    section.classList.add("hidden");
-  });
-  const target = document.getElementById(id);
-  if (target) target.classList.remove("hidden");
-  if (id === "letters") {
-    renderLetters();
-    updateLetter();
-    setupBoard();
-  }
-  if (id === "grammar") renderGrammar();
-  if (id === "stories") renderStories();
-  if (id === "conversations") renderConversations();
-  if (id === "dictionary") searchWords();
-  if (id === "games" && !document.getElementById("quiz-options").children.length) startQuiz();
-  window.scrollTo(0, 0);
-}
-
-function goHome() {
-  showSection("home");
-}
-
-function speak(text) {
-  if (!("speechSynthesis" in window)) {
-    alert("خاصية النطق غير مدعومة في هذا المتصفح.");
-    return;
-  }
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  utterance.rate = 0.78;
-  window.speechSynthesis.speak(utterance);
-}
-
-function renderLetters() {
-  const grid = document.getElementById("letter-grid");
-  if (grid.children.length) return;
-  letters.forEach((item, index) => {
-    const button = document.createElement("button");
-    button.className = "letter-btn";
-    button.textContent = item[0];
-    button.onclick = () => {
-      currentLetter = index;
-      updateLetter();
-    };
-    grid.appendChild(button);
-  });
-}
-
-function updateLetter() {
-  const item = letters[currentLetter];
-  document.getElementById("big-letter").textContent = item[0] + " " + item[0].toLowerCase();
-  document.getElementById("letter-word").textContent = item[1];
-  document.getElementById("letter-meaning").textContent = item[2];
-  [...document.querySelectorAll(".letter-btn")].forEach((button, index) => {
-    button.classList.toggle("active", index === currentLetter);
-  });
-}
-
-function nextLetter() {
-  currentLetter = (currentLetter + 1) % letters.length;
-  updateLetter();
-}
-
-function speakCurrentLetter() {
-  const item = letters[currentLetter];
-  speak(item[0] + ". " + item[1]);
-}
-
-function searchWords() {
-  const input = document.getElementById("search-input");
-  const results = document.getElementById("dictionary-results");
-  if (!input || !results) return;
-  const query = input.value.trim().toLowerCase();
-  const filtered = words.filter(item =>
-    item.en.toLowerCase().includes(query) || item.ar.includes(query)
-  );
-  results.replaceChildren();
-  const list = query ? filtered : words.slice(0, 15);
-  if (!list.length) {
-    results.textContent = "لم نعثر على الكلمة في القاموس المحفوظ. جرّب كلمة أخرى.";
-    return;
-  }
-  list.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "word-card";
-    const english = document.createElement("div");
-    english.className = "word-en";
-    english.textContent = item.en;
-    const arabic = document.createElement("div");
-    arabic.className = "word-ar";
-    arabic.textContent = item.ar;
-    const button = document.createElement("button");
-    button.className = "secondary";
-    button.textContent = "🔊 استمع";
-    button.onclick = () => speak(item.en);
-    card.append(english, arabic, button);
-    results.appendChild(card);
-  });
-}
-
-function renderGrammar() {
-  const root = document.getElementById("grammar-content");
-  if (root.children.length) return;
-  grammar.forEach(item => {
-    const card = document.createElement("article");
-    card.className = "grammar-card";
-    const title = document.createElement("h3");
-    title.textContent = item.title;
-    const body = document.createElement("p");
-    body.textContent = item.body;
-    const example = document.createElement("p");
-    example.textContent = "مثال: " + item.example;
-    const button = document.createElement("button");
-    button.className = "secondary";
-    button.textContent = "🔊 استمع للمثال";
-    button.onclick = () => speak(item.example.split(" = ")[0]);
-    card.append(title, body, example, button);
-    root.appendChild(card);
-  });
-}
-
-function renderStories() {
-  const root = document.getElementById("stories-content");
-  if (root.children.length) return;
-  stories.forEach(story => {
-    const card = document.createElement("article");
-    card.className = "story";
-    const title = document.createElement("h3");
-    title.textContent = story.title;
-    const english = document.createElement("p");
-    english.textContent = story.en;
-    const arabic = document.createElement("p");
-    arabic.className = "word-ar";
-    arabic.textContent = story.ar;
-    const lesson = document.createElement("p");
-    lesson.textContent = story.lesson;
-    const button = document.createElement("button");
-    button.className = "secondary";
-    button.textContent = "🔊 استمع للقصة";
-    button.onclick = () => speak(story.en);
-    card.append(title, english, arabic, lesson, button);
-    root.appendChild(card);
-  });
-}
-
-function renderConversations() {
-  const root = document.getElementById("conversations-content");
-  if (root.children.length) return;
-  conversations.forEach(conversation => {
-    const card = document.createElement("article");
-    card.className = "conversation";
-    const title = document.createElement("h3");
-    title.textContent = conversation.title;
-    card.appendChild(title);
-    conversation.lines.forEach(line => {
-      const p = document.createElement("p");
-      p.textContent = line[0] + ": " + line[1];
-      card.appendChild(p);
-    });
-    const arabic = document.createElement("p");
-    arabic.className = "word-ar";
-    arabic.textContent = conversation.ar;
-    const button = document.createElement("button");
-    button.className = "secondary";
-    button.textContent = "🔊 استمع للمحادثة";
-    button.onclick = () => speak(conversation.lines.map(line => line[1]).join(". "));
-    card.append(arabic, button);
-    root.appendChild(card);
-  });
-}
-
-const quizQuestions = [
-  {q:"What does Apple mean?", options:["تفاحة","قلم","باب"], answer:0},
-  {q:"What does Cat mean?", options:["كلب","قطة","سمكة"], answer:1},
-  {q:"How do you say شمس in English?", options:["Moon","Sun","Star"], answer:1},
-  {q:"What does Book mean?", options:["كتاب","كرسي","ماء"], answer:0},
-  {q:"What does Happy mean?", options:["حزين","صغير","سعيد"], answer:2},
-  {q:"How do you say ماء in English?", options:["Milk","Water","Bread"], answer:1},
-  {q:"What does Red mean?", options:["أزرق","أحمر","أخضر"], answer:1},
-  {q:"What does Teacher mean?", options:["طالب","طبيب","معلم"], answer:2},
-  {q:"What does Three mean?", options:["اثنان","ثلاثة","أربعة"], answer:1},
-  {q:"How do you say مدرسة in English?", options:["School","House","Shop"], answer:0}
-];
-
-function startQuiz() {
-  quizIndex = Math.floor(Math.random() * quizQuestions.length);
-  const question = quizQuestions[quizIndex];
-  document.getElementById("quiz-question").textContent = question.q;
-  document.getElementById("quiz-progress").textContent = "نتيجتك: " + quizScore + " نقطة";
-  document.getElementById("quiz-feedback").textContent = "";
-  const root = document.getElementById("quiz-options");
-  root.replaceChildren();
-  question.options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.className = "quiz-option";
-    button.textContent = option;
-    button.onclick = () => answerQuiz(index, button);
-    root.appendChild(button);
-  });
-}
-
-function answerQuiz(index, button) {
-  const question = quizQuestions[quizIndex];
-  const options = document.querySelectorAll(".quiz-option");
-  options.forEach(option => option.disabled = true);
-  if (index === question.answer) {
-    quizScore++;
-    points += 10;
-    document.getElementById("points").textContent = points;
-    document.getElementById("quiz-feedback").textContent = "🎉 إجابة صحيحة! حصلت على 10 نقاط.";
-    button.className = "quiz-option primary";
-  } else {
-    document.getElementById("quiz-feedback").textContent =
-      "حاول مرة أخرى في السؤال القادم. الإجابة الصحيحة: " +
-      question.options[question.answer];
-  }
-  document.getElementById("quiz-progress").textContent =
-    "نتيجتك: " + quizScore + " إجابات صحيحة";
-}
-
-function speakInput() {
-  const input = document.getElementById("speech-input").value.trim();
-  if (!input) {
-    alert("اكتب كلمة أو جملة إنجليزية أولًا.");
-    return;
-  }
-  speak(input);
-}
-
-/* السبورة: خلفية سوداء وقلم أبيض */
-let boardReady = false;
-let drawing = false;
-let boardContext = null;
-let boardCanvas = null;
-
-function setupBoard() {
-  const canvas = document.getElementById("board");
-  if (boardReady && boardCanvas === canvas) return;
-  boardCanvas = canvas;
-  const ratio = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = Math.max(1, Math.round(rect.width * ratio));
-  canvas.height = Math.max(1, Math.round(rect.height * ratio));
-  boardContext = canvas.getContext("2d");
-  boardContext.setTransform(ratio, 0, 0, ratio, 0, 0);
-  boardContext.strokeStyle = "#ffffff";
-  boardContext.lineWidth = 4;
-  boardContext.lineCap = "round";
-  boardContext.lineJoin = "round";
-
-  function position(event) {
-    const bounds = canvas.getBoundingClientRect();
-    return {
-      x: event.clientX - bounds.left,
-      y: event.clientY - bounds.top
-    };
-  }
-
-  canvas.onpointerdown = event => {
-    drawing = true;
-    canvas.setPointerCapture(event.pointerId);
-    const p = position(event);
-    boardContext.beginPath();
-    boardContext.moveTo(p.x, p.y);
-  };
-
-  canvas.onpointermove = event => {
-    if (!drawing) return;
-    const p = position(event);
-    boardContext.lineTo(p.x, p.y);
-    boardContext.stroke();
-  };
-
-  canvas.onpointerup = () => drawing = false;
-  canvas.onpointercancel = () => drawing = false;
-  boardReady = true;
-}
-
-function clearBoard() {
-  if (!boardContext || !boardCanvas) setupBoard();
-  if (boardContext && boardCanvas) {
-    boardContext.clearRect(0, 0, boardCanvas.width, boardCanvas.height);
-  }
-}
-
-/* تشغيل آمن للقسم الرئيسي */
-document.getElementById("search-input").addEventListener("input", searchWords);
-
-/* تحديث مقياس السبورة عند تغيير اتجاه الهاتف */
-window.addEventListener("resize", () => {
-  if (!document.getElementById("letters").classList.contains("hidden")) {
-    boardReady = false;
-    setupBoard();
-  }
-});
-
-/* تهيئة الصفحة */
-renderLetters();
-updateLetter();
-</script>
+        // Check Answer & Add Points
+        function checkAnswer(selected, correct) {
+            if (selected === correct) {
+                alert('إجابة صحيحة! أحسنت يا بطل! 🎉 +10 نقاط');
+                let currentScore = parseInt(document.getElementById('score').innerText);
+                document.getElementById('score').innerText = currentScore + 10;
+            } else {
+                alert('إجابة خاطئة، حاول مرة أخرى! 💪');
+            }
+        }
+    </script>
 </body>
 </html>
