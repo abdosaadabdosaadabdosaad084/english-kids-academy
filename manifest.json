@@ -1,28 +1,15 @@
 {
-  "id": "/english-kids-academy/",
-  "name": "English Kids Academy - أكاديمية الإنجليزية للأطفال",
+  "name": "English Kids Academy",
   "short_name": "Kids Academy",
-  "description": "أكاديمية تعليم اللغة الإنجليزية للأطفال من 5 إلى 13 سنة",
-  "lang": "ar",
-  "dir": "rtl",
   "start_url": "/english-kids-academy/",
   "scope": "/english-kids-academy/",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#101126",
-  "theme_color": "#101126",
-  "icons": [
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "background_color": "#0a0a1a",
+  "theme_color": "#06d6a0",
+  "icons": [{
+    "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any maskable"
+  }]
 }
