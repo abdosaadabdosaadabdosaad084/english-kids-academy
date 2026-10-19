@@ -70,24 +70,27 @@
         <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
         <h2 class="section-title">الحروف والسبورة التفاعلية</h2>
         
+        <!-- مربع وشريط الحروف مجمعة فوق السبورة -->
+        <div id="letters-grid" class="letters-grid-container"></div>
+
         <div class="alphabet-container">
-            <div id="current-letter-display" class="faint-letter">A a</div>
-            <p class="instruction-text">اكتب الحرف الباهت أعلاه على السبورة السوداء أدناه:</p>
+            <p class="instruction-text">تتبع الحرف الباهت وقم بالكتابة فوقه على السبورة السوداء:</p>
             
-            <canvas id="blackboard" width="320" height="200"></canvas>
+            <!-- السبورة السوداء الرسم داخلها -->
+            <canvas id="blackboard" width="320" height="280"></canvas>
             
             <div class="board-controls">
                 <button class="action-btn clear-btn" onclick="clearBoard()">مسح السبورة 🧹</button>
-                <button class="action-btn next-btn" onclick="nextLetter()">التالي ➡️</button>
+                <button class="action-btn next-btn" onclick="nextLetter()">الحرف التالي ➡️</button>
             </div>
         </div>
     </section>
 
-    <!-- 2. قسم القاموس الشامل (بحث فقط بدون فهرس ثابث) -->
+    <!-- 2. قسم القاموس الشامل (بحث فقط بدون فهرس ثابت) -->
     <section id="dictionary-section" class="section-view" style="display: none;">
         <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
         <div class="search-box-container">
-            <input type="text" id="dict-search-input" placeholder="ابحث عن أي كلمة بالعرّبي أو الإنجليزي..." oninput="searchDictionary()">
+            <input type="text" id="dict-search-input" placeholder="ابحث عن أي كلمة بالعربية أو الإنجليزية..." oninput="searchDictionary()">
         </div>
         <div id="dict-results" class="results-container"></div>
     </section>
@@ -132,7 +135,6 @@
 
     <script src="app.js"></script>
     <script>
-        // تسجيل Service Worker للعمل دون إنترنت والتخزين التلقائي
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js')
             .then(() => console.log('Service Worker Registered Successfully'));
