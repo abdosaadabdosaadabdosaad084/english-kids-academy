@@ -1,16 +1,15 @@
 {
-  "short_name": "LearnEnglish",
-  "name": "تطبيق تعليم الإنجليزية الاحترافي",
+  "name": "English Kids Academy",
+  "short_name": "EKA",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1e1b4b",
+  "theme_color": "#ff3366",
   "icons": [
     {
-      "src": "https://flaticon.com",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
-  ],
-  "start_url": "/index.html",
-  "background_color": "#1a1a2e",
-  "theme_color": "#16213e",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }
