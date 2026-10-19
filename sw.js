@@ -1,4 +1,4 @@
-const CACHE_NAME = 'eka-cache-v1';
+const CACHE_NAME = 'eka-cache-v2'; // تغيير الاصدار من v1 إلى v2
 const assetsToCache = [
   'index.html',
   'style.css',
