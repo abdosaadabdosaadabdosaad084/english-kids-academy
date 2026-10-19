@@ -108,7 +108,6 @@ body {
     font-size: 0.95rem;
 }
 
-/* تنسيق الأقسام الداخلية */
 .section-view {
     max-width: 800px;
     margin: 0 auto;
@@ -134,23 +133,17 @@ body {
     opacity: 0.9;
 }
 
-.section-title {
-    color: var(--accent-color);
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 /* شبكة ومربع الحروف فوق السبورة */
 .letters-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
     gap: 8px;
     background: rgba(255, 255, 255, 0.08);
     padding: 12px;
     border-radius: 15px;
     margin-bottom: 20px;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    max-height: 150px;
+    max-height: 140px;
     overflow-y: auto;
 }
 
@@ -160,7 +153,7 @@ body {
     border: none;
     padding: 8px;
     border-radius: 8px;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s;
@@ -177,15 +170,8 @@ body {
     box-shadow: 0 0 10px var(--accent-color);
 }
 
-/* 1. سبورة الحروف */
 .alphabet-container {
     text-align: center;
-}
-
-.instruction-text {
-    margin-bottom: 15px;
-    color: var(--secondary-color);
-    font-size: 1.1rem;
 }
 
 #blackboard {
@@ -217,10 +203,8 @@ body {
 .clear-btn { background-color: var(--error-color); color: white; }
 .next-btn { background-color: var(--success-color); color: white; }
 
-/* 2. القاموس ومحرك البحث الفوري */
-.search-box-container {
-    margin-bottom: 25px;
-}
+/* البحث والقاموس */
+.search-box-container { margin-bottom: 25px; }
 
 #dict-search-input {
     width: 100%;
@@ -231,10 +215,6 @@ body {
     background: rgba(255, 255, 255, 0.1);
     color: white;
     outline: none;
-}
-
-#dict-search-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
 }
 
 .results-container {
@@ -253,25 +233,8 @@ body {
     cursor: pointer;
 }
 
-/* محتوى القواعد والمحادثات */
-.content-body h3 {
-    color: var(--accent-color);
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 1.4rem;
-}
-
-.content-body p, .content-body li {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #f1f5f9;
-    margin-bottom: 10px;
-}
-
 /* الألعاب والأسئلة */
-.game-card {
-    text-align: center;
-}
+.game-card { text-align: center; }
 
 #game-question {
     font-size: 1.6rem;
@@ -297,27 +260,13 @@ body {
     transition: 0.2s;
 }
 
-.option-btn.correct {
-    background-color: var(--success-color) !important;
-    color: white !important;
-}
+.option-btn.correct { background-color: var(--success-color) !important; color: white !important; }
+.option-btn.wrong { background-color: var(--error-color) !important; color: white !important; }
 
-.option-btn.wrong {
-    background-color: var(--error-color) !important;
-    color: white !important;
-}
-
-.game-feedback {
-    margin-top: 20px;
-    font-size: 1.3rem;
-    font-weight: bold;
-}
+.game-feedback { margin-top: 20px; font-size: 1.3rem; font-weight: bold; }
 
 /* المترجم الصوتي */
-.translator-container {
-    text-align: center;
-    padding: 20px;
-}
+.translator-container { text-align: center; padding: 20px; }
 
 .mic-btn {
     background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
