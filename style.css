@@ -1,331 +1,137 @@
-:root {
-    --bg-main: #1a1c2e;
-    --card-bg: #252846;
-    --accent-yellow: #ffd166;
-    --accent-pink: #ff6b6b;
-    --accent-green: #06d6a0;
-    --accent-blue: #118ab2;
-    --accent-purple: #9d4edd;
-    --text-light: #ffffff;
-    --text-dim: #c1c5e0;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    -webkit-tap-highlight-color: transparent;
-}
-
 body {
-    background-color: var(--bg-main);
-    color: var(--text-light);
-    min-height: 100vh;
-    padding-bottom: 20px;
+    background-color: #1a1b2f;
+    color: #ffffff;
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    padding: 10px;
 }
 
-#pin-overlay {
-    position: fixed;
+.app-container {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.app-header {
+    text-align: center;
+    background: #252845;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.app-header h1 {
+    color: #f39c12;
+    margin: 0;
+    font-size: 22px;
+}
+
+.card-section, .card {
+    background: #252845;
+    border: 1px solid #3f4373;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* شريط الحروف في الأعلى */
+.letters-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 5px 0;
+    scroll-behavior: smooth;
+}
+
+.letter-chip {
+    background: #34495e;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.3s;
+    border: none;
+}
+
+.letter-chip.active {
+    background: #9b59b6;
+    transform: scale(1.1);
+}
+
+/* السبورة في الأسفل */
+.board-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.blackboard-area {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background: #000000;
+    border: 3px dashed #2ecc71;
+    border-radius: 12px;
+    overflow: hidden;
+    touch-action: none;
+}
+
+/* الحرف الباهت للتتبع */
+.ghost-letter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 120px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.15); /* لون باهت جداً ليتمكن الطفل من التتبع فوقه */
+    user-select: none;
+    pointer-events: none;
+}
+
+#drawing-canvas {
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--bg-main);
-    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+.board-controls {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    text-align: center;
-}
-
-.pin-box {
-    background: var(--card-bg);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    max-width: 350px;
+    gap: 10px;
     width: 100%;
-    border: 2px solid var(--accent-purple);
 }
 
-.pin-box h2 {
-    color: var(--accent-yellow);
-    margin-bottom: 10px;
-}
-
-.pin-box p {
-    color: var(--text-dim);
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-}
-
-.pin-input {
-    width: 100%;
+.btn {
+    flex: 1;
     padding: 10px;
-    font-size: 1.5rem;
-    text-align: center;
-    letter-spacing: 5px;
-    border-radius: 10px;
-    border: 2px solid var(--accent-blue);
-    background: #121324;
-    color: #fff;
-    margin-bottom: 15px;
-    outline: none;
-}
-
-.btn-action {
-    background: linear-gradient(135deg, var(--accent-green), #049a73);
-    color: #fff;
     border: none;
-    padding: 12px 20px;
-    font-size: 1.05rem;
-    font-weight: bold;
-    border-radius: 12px;
-    cursor: pointer;
-    width: 100%;
-    transition: 0.2s;
-}
-
-.btn-action:active {
-    transform: scale(0.96);
-}
-
-.error-msg {
-    color: var(--accent-pink);
-    font-size: 0.85rem;
-    margin-top: 10px;
-    display: none;
-}
-
-#install-banner {
-    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-    padding: 8px 15px;
-    display: none;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.btn-install-banner {
-    background: var(--accent-yellow);
-    color: #1a1c2e;
-    border: none;
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-header {
-    background: var(--card-bg);
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.logo-title h1 {
-    font-size: 1.1rem;
-    color: var(--accent-yellow);
-}
-
-.container {
-    padding: 10px 12px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.grid-menu {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-}
-
-.card-menu {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 10px 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.2s;
-    border: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-}
-
-.card-menu:active {
-    transform: scale(0.97);
-}
-
-.card-icon {
-    font-size: 1.6rem;
-}
-
-.card-title {
-    font-weight: bold;
-    color: var(--text-light);
-    font-size: 0.95rem;
-}
-
-.card-desc {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-}
-
-.section-view {
-    display: none;
-}
-
-.section-view.active {
-    display: block;
-}
-
-.btn-back {
-    background: #2d3154;
-    color: #fff;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    font-size: 1rem;
-    width: 100%;
-    font-weight: bold;
-}
-
-.btn-back-top {
-    background: var(--accent-purple);
-    color: #fff;
-    border: none;
-    padding: 6px 14px;
     border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
     font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
 }
 
-.alphabet-grid {
+.primary-btn { background: #2ecc71; color: #fff; }
+.danger-btn { background: #e74c3c; color: #fff; }
+.secondary-btn { background: #9b59b6; color: #fff; }
+.voice-btn { background: #8e44ad; color: #fff; padding: 15px; }
+
+.games-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    direction: ltr;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
-.letter-card {
-    background: var(--card-bg);
-    border: 1px solid var(--accent-blue);
-    border-radius: 10px;
-    padding: 10px 5px;
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: var(--accent-yellow);
-    cursor: pointer;
-}
-
-.canvas-card {
-    background: var(--card-bg);
-    padding: 12px;
-    border-radius: 15px;
-    text-align: center;
-    margin-top: 12px;
-    border: 2px solid var(--accent-yellow);
-    cursor: pointer;
-}
-
-#draw-canvas {
-    background: #000;
-    border-radius: 12px;
-    border: 2px dashed var(--accent-green);
-    touch-action: none;
-    margin: 10px 0;
-}
-
-.canvas-controls {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-}
-
-.word-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.word-card {
-    background: var(--card-bg);
-    padding: 12px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    border-right: 4px solid var(--accent-green);
-}
-
-.word-en {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--accent-yellow);
-}
-
-.word-ar {
-    font-size: 0.95rem;
-    color: var(--text-dim);
-}
-
-.interactive-card {
-    background: var(--card-bg);
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-}
-
-.interactive-card input {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 8px;
-    border: 1px solid var(--accent-blue);
-    background: #121324;
-    color: #fff;
-}
-
-/* تنسيق أزرار الألعاب التفاعلية بألوان الأخضر والأحمر */
-.quiz-option-btn {
-    background: #2d3154;
-    color: #fff;
-    border: none;
-    padding: 14px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 12px;
-    cursor: pointer;
-    width: 100%;
-    transition: background 0.3s ease;
-}
-
-.quiz-option-btn.correct {
-    background: #06d6a0 !important;
-    color: #1a1c2e !important;
-    box-shadow: 0 0 15px rgba(6, 214, 160, 0.6);
-}
-
-.quiz-option-btn.wrong {
-    background: #ff6b6b !important;
-    color: #fff !important;
-    box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+.game-btn {
+    background: #3498db;
+    color: white;
 }
