@@ -1,90 +1,348 @@
 :root {
-    --bg-color: #1a1a2e;
-    --card-bg: #16213e;
-    --accent-color: #0f3460;
-    --text-color: #e94560;
-    --light-text: #ffffff;
+    --primary-color: #ff3366;
+    --secondary-color: #33ccff;
+    --accent-color: #ffcc00;
+    --dark-bg: #0f172a;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --text-color: #ffffff;
+    --success-color: #22c55e; /* أخضر للإجابة الصح */
+    --error-color: #ef4444;   /* أحمر للإجابة الخطأ */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--light-text);
+    background: linear-gradient(135deg, #1e1b4b, #311042, #0f172a);
+    color: var(--text-color);
+    min-height: 100vh;
+    padding: 20px;
+    direction: rtl;
+}
+
+/* زر التثبيت في أعلى اليسار */
+.install-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: linear-gradient(45deg, #ffcc00, #ff3366);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+    z-index: 1000;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.main-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.main-header h1 {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    text-shadow: 0 2px 10px rgba(255, 204, 0, 0.4);
+    margin-bottom: 10px;
+}
+
+.main-header p {
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+}
+
+.grid-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-color);
+    box-shadow: 0 12px 40px rgba(255, 204, 0, 0.3);
+}
+
+.card .icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    color: var(--accent-color);
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: #e2e8f0;
+    font-size: 0.95rem;
+}
+
+/* تنسيق الأقسام الداخلية */
+.section-view {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(15, 23, 42, 0.85);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.back-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    opacity: 0.9;
+}
+
+.section-title {
+    color: var(--accent-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 1. سبورة الحروف */
+.alphabet-container {
     text-align: center;
 }
 
-header {
-    padding: 20px;
-    background-color: var(--card-bg);
-    border-bottom: 3px solid var(--text-color);
+.faint-letter {
+    font-size: 5rem;
+    color: rgba(255, 255, 255, 0.2);
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 5px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 1.8rem;
+.instruction-text {
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+    font-size: 1.1rem;
 }
 
-.levels-container {
+#blackboard {
+    background-color: #000;
+    border: 4px solid var(--accent-color);
+    border-radius: 15px;
+    cursor: crosshair;
+    display: block;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+}
+
+.board-controls {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    padding: 20px;
-    flex-wrap: wrap;
+    gap: 15px;
 }
 
-.level-btn {
-    background-color: var(--accent-color);
-    color: white;
+.action-btn {
+    padding: 12px 25px;
     border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    transition: 0.3s ease;
-}
-
-.level-btn.active, .level-btn:hover {
-    background-color: var(--text-color);
-    transform: scale(1.05);
-}
-
-.content-card {
-    background-color: var(--card-bg);
-    margin: 20px auto;
-    padding: 30px;
-    width: 85%;
-    max-width: 500px;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-}
-
-.item-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
-}
-
-.word-en {
-    font-size: 1.4rem;
+    border-radius: 12px;
     font-weight: bold;
-    color: #4eed94;
-}
-
-.word-ar {
-    font-size: 1.1rem;
-    color: #b0b0b0;
-}
-
-.listen-btn {
-    background: var(--text-color);
-    border: none;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
+    font-size: 1rem;
     cursor: pointer;
 }
+
+.clear-btn { background-color: var(--error-color); color: white; }
+.next-btn { background-color: var(--success-color); color: white; }
+
+/* 2. القاموس ومحرك البحث الفوري */
+.search-box-container {
+    margin-bottom: 25px;
+}
+
+#dict-search-input {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    border: 3px solid var(--secondary-color);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    outline: none;
+}
+
+#dict-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.results-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.dict-item {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border-left: 5px solid var(--accent-color);
+}
+
+.dict-item .en-word {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.dict-item .ar-word {
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+    margin-top: 5px;
+}
+
+/* المحتوى الوافي للشرح (القواعد، المحادثات، المجموعات) */
+.content-body h3 {
+    color: var(--accent-color);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.content-body p, .content-body li {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #f1f5f9;
+    margin-bottom: 10px;
+}
+
+.content-body ul {
+    padding-right: 20px;
+}
+
+/* الألعاب والأسئلة */
+.game-card {
+    text-align: center;
+}
+
+#game-question {
+    font-size: 1.6rem;
+    color: var(--accent-color);
+    margin-bottom: 25px;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.option-btn {
+    padding: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.option-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ألوان الإجابة الصحيحة والخاطئة المحددة بدقة */
+.option-btn.correct {
+    background-color: var(--success-color) !important;
+    color: white !important;
+    animation: pulse 0.5s;
+}
+
+.option-btn.wrong {
+    background-color: var(--error-color) !important;
+    color: white !important;
+    animation: shake 0.5s;
+}
+
+.game-feedback {
+    margin-top: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+/* المترجم الصوتي */
+.translator-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.mic-btn {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.4rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 10px 25px rgba(255, 51, 102, 0.4);
+    margin-bottom: 30px;
+}
+
+.speech-output {
+    font-size: 1.8rem;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 15px 0;
+}
+
+.ar-output { color: var(--secondary-color); background: rgba(51, 204, 255, 0.1); }
+.en-output { color: var(--accent-color); background: rgba(255, 204, 0, 0.1); }
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+        }
