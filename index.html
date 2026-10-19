@@ -3,38 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تعلم الإنجليزية الاحترافي</title>
+    <title>English Kids Academy</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e1b4b">
 </head>
 <body>
 
-    <header>
-        <h1>نظام تعليم الإنجليزية الذكي 🎓</h1>
-        <p>رحلتك من الصفر إلى الاحتراف</p>
-    </header>
+    <!-- زر تثبيت التطبيق في أعلى اليسار -->
+    <button id="install-btn" class="install-btn" style="display: none;">تثبيت التطبيق 📱</button>
 
-    <main>
-        <!-- قسم اختيار المستويات -->
-        <section class="levels-container">
-            <button class="level-btn active" onclick="switchLevel('kids')">🧒 مرحلة البراعم (الأطفال)</button>
-            <button class="level-btn" onclick="switchLevel('beginners')">🌱 المبتدئين (الشباب)</button>
-            <button class="level-btn" onclick="switchLevel('advanced')">🚀 المحادثة والاحتراف</button>
-        </section>
+    <!-- الشاشة الرئيسية -->
+    <div id="home-screen" class="container">
+        <header class="main-header">
+            <h1>English Kids Academy</h1>
+            <p>أكاديمية الإنجليزية للأطفال والكبار من الألف إلى الياء</p>
+        </header>
 
-        <!-- منطقة عرض المحتوى التعليمي -->
-        <section class="content-card">
-            <div id="content-display">
-                <!-- يتم توليد المحتوى هنا عبر الـ JavaScript -->
+        <div class="grid-menu">
+            <div class="card" onclick="openSection('alphabet-section')">
+                <div class="icon">🔤</div>
+                <h3>الحروف والسبورة</h3>
+                <p>تتبع ونطق وتنقل سريع</p>
             </div>
-        </section>
-    </main>
+
+            <div class="card" onclick="openSection('dictionary-section')">
+                <div class="icon">📖</div>
+                <h3>قاموس المورد الشامل</h3>
+                <p>محرك بحث شامل لكافة مجالات الحياة</p>
+            </div>
+
+            <div class="card" onclick="openSection('grammar-section')">
+                <div class="icon">🧩</div>
+                <h3>قواعد اللغة الإنجليزية</h3>
+                <p>ملف تعليمي موسوعي شامل من A إلى Z</p>
+            </div>
+
+            <div class="card" onclick="openSection('conversations-section')">
+                <div class="icon">💬</div>
+                <h3>المحادثات والحوارات</h3>
+                <p>حوارات مكثفة في كافة قطاعات الحياة</p>
+            </div>
+
+            <div class="card" onclick="openSection('categories-section')">
+                <div class="icon">🔢</div>
+                <h3>المجموعات والمجالات</h3>
+                <p>الأرقام، المطار، البحر، الدين، المواصلات</p>
+            </div>
+
+            <div class="card" onclick="openSection('games-section')">
+                <div class="icon">🎮</div>
+                <h3>ألعاب التحدي الذكية</h3>
+                <p>اختبر معلوماتك بلون صحيح وخاطئ</p>
+            </div>
+
+            <div class="card" onclick="openSection('voice-translator-section')">
+                <div class="icon">🎙️</div>
+                <h3>المترجم الصوتي</h3>
+                <p>ترجمة الصوت العربي إلى الإنجليزية</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. قسم الحروف والسبورة -->
+    <section id="alphabet-section" class="section-view" style="display: none;">
+        <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
+        <h2 class="section-title">الحروف والسبورة التفاعلية</h2>
+        
+        <div class="alphabet-container">
+            <div id="current-letter-display" class="faint-letter">A a</div>
+            <p class="instruction-text">اكتب الحرف الباهت أعلاه على السبورة السوداء أدناه:</p>
+            
+            <canvas id="blackboard" width="320" height="200"></canvas>
+            
+            <div class="board-controls">
+                <button class="action-btn clear-btn" onclick="clearBoard()">مسح السبورة 🧹</button>
+                <button class="action-btn next-btn" onclick="nextLetter()">التالي ➡️</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. قسم القاموس الشامل (بحث فقط بدون فهرس ثابث) -->
+    <section id="dictionary-section" class="section-view" style="display: none;">
+        <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
+        <div class="search-box-container">
+            <input type="text" id="dict-search-input" placeholder="ابحث عن أي كلمة بالعرّبي أو الإنجليزي..." oninput="searchDictionary()">
+        </div>
+        <div id="dict-results" class="results-container"></div>
+    </section>
+
+    <!-- 3. قسم قواعد اللغة الإنجليزية -->
+    <section id="grammar-section" class="section-view" style="display: none;">
+        <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
+        <div id="grammar-content" class="content-body"></div>
+    </section>
+
+    <!-- 4. قسم المحادثات والحوارات -->
+    <section id="conversations-section" class="section-view" style="display: none;">
+        <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
+        <div id="conversations-content" class="content-body"></div>
+    </section>
+
+    <!-- 5. قسم المجموعات والمجالات -->
+    <section id="categories-section" class="section-view" style="display: none;">
+        <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
+        <div id="categories-content" class="content-body"></div>
+    </section>
+
+    <!-- 6. قسم الألعاب التعليمية -->
+    <section id="games-section" class="section-view" style="display: none;">
+        <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
+        <div class="game-card">
+            <h3 id="game-question">السؤال سيظهر هنا</h3>
+            <div id="game-options" class="options-grid"></div>
+            <p id="game-feedback" class="game-feedback"></p>
+        </div>
+    </section>
+
+    <!-- 7. قسم المترجم الصوتي -->
+    <section id="voice-translator-section" class="section-view" style="display: none;">
+        <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
+        <div class="translator-container">
+            <button class="mic-btn" onclick="startVoiceRecognition()">🎙️ اضغط وتحدث بالعربية</button>
+            <p id="voice-arabic-text" class="speech-output ar-output"></p>
+            <p id="voice-english-text" class="speech-output en-output"></p>
+        </div>
+    </section>
 
     <script src="app.js"></script>
     <script>
-        // تسجيل الـ Service Worker لتشغيل التطبيق بدون إنترنت
+        // تسجيل Service Worker للعمل دون إنترنت والتخزين التلقائي
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
+            navigator.serviceWorker.register('sw.js')
+            .then(() => console.log('Service Worker Registered Successfully'));
         }
     </script>
 </body>
