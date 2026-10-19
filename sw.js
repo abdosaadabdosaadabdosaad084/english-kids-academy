@@ -1,6 +1,6 @@
 const CACHE_NAME = 'english-kids-academy-v3';
 const ASSETS_TO_CACHE = [
-    './',
+    './', 
     './index.html',
     './style.css',
     './app.js',
