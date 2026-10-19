@@ -3,171 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a1c2e">
+    <title>English Kids Academy - أكاديمية الإنجليزية للأطفال</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="app-container">
+        <!-- رأس التطبيق -->
+        <header class="app-header">
+            <h1>English Kids Academy</h1>
+            <p>أكاديمية الإنجليزية للأطفال</p>
+        </header>
 
-    <!-- Pin Code Screen Overlay -->
-    <div id="pin-overlay">
-        <div class="pin-box">
-            <h2>🔒 كلمة المرور</h2>
-            <p>يرجى إدخال الرقم السري لفتح التطبيق</p>
-            <input type="password" id="pin-input" class="pin-input" placeholder="****" maxlength="8">
-            <button class="btn-action" onclick="checkPin()">دخول</button>
-            <div id="pin-error" class="error-msg">الرقم السري غير صحيح!</div>
-        </div>
+        <!-- قسم الحروف والسبورة -->
+        <section id="letters-board-section" class="card-section">
+            <div class="navigation-header">
+                <button id="back-btn" class="btn secondary-btn">← العودة</button>
+                <span id="instruction-text">اضغط على الحرف للتعلم والانتقال للتالي</span>
+            </div>
+
+            <!-- 1. الحروف في الأعلى -->
+            <div id="letters-container" class="letters-bar">
+                <!-- يتم توليد الحروف برمجياً هنا A-Z -->
+            </div>
+
+            <!-- 2. السبورة في الأسفل -->
+            <div class="board-wrapper">
+                <h3 id="board-title">سبورة الرسم والتتبع (الحرف: A)</h3>
+                <div id="blackboard" class="blackboard-area">
+                    <!-- الحرف الباهت للتتبع خلف السبورة -->
+                    <span id="ghost-letter" class="ghost-letter">A</span>
+                    <canvas id="drawing-canvas"></canvas>
+                </div>
+                <div class="board-controls">
+                    <button id="next-letter-btn" class="btn primary-btn">الحرف التالي ←</button>
+                    <button id="clear-board-btn" class="btn danger-btn">🗑️ مسح السبورة</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم المترجم الصوتي والألعاب -->
+        <section id="tools-section" class="tools-container">
+            <div id="translator-card" class="card">
+                <p>تحدث بأي كلمة أو جملة باللغة العربية للترجمة المباشرة:</p>
+                <button id="speak-btn" class="btn voice-btn">🎤 اضغط هنا والتحدث بالعربية</button>
+                <div id="translation-result" class="result-box"></div>
+            </div>
+            
+            <div id="games-card" class="card">
+                <h3>ألعاب تفاعلية ممتعة</h3>
+                <div id="games-grid" class="games-grid">
+                    <button class="btn game-btn" onclick="startLetterGame()">لعبة تطابق الحروف</button>
+                    <button class="btn game-btn" onclick="startAudioQuizGame()">لعبة اختبار الصوت</button>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- Main Header -->
-    <header>
-        <div class="logo-title">
-            <span style="font-size: 1.5rem;">🎓</span>
-            <div>
-                <h1>English Kids Academy</h1>
-                <small style="font-size: 0.7rem; color: var(--text-dim);">أكاديمية الإنجليزية للأطفال</small>
-            </div>
-        </div>
-    </header>
-
-    <div class="container">
-
-        <!-- Install Banner -->
-        <div id="install-banner">
-            <span>📲 تثبيت التطبيق على الهاتف</span>
-            <button class="btn-install-banner" onclick="installPWA()">تثبيت الآن</button>
-        </div>
-        
-        <!-- MAIN DASHBOARD -->
-        <div id="sec-dashboard" class="section-view active">
-            <div class="grid-menu">
-                <div class="card-menu" onclick="showSection('sec-alphabet')">
-                    <div class="card-icon">🔤</div>
-                    <div class="card-title">الحروف والسبورة</div>
-                    <div class="card-desc">تتبع ونطق وتنقل لمسي سريع</div>
-                </div>
-
-                <div class="card-menu" onclick="showSection('sec-dictionary')">
-                    <div class="card-icon">📖</div>
-                    <div class="card-title">قاموس المورد الشامل</div>
-                    <div class="card-desc">محرك بحث شامل لكافة مجالات الحياة</div>
-                </div>
-
-                <div class="card-menu" onclick="showSection('sec-grammar')">
-                    <div class="card-icon">🧩</div>
-                    <div class="card-title">قواعد اللغة الإنجليزية</div>
-                    <div class="card-desc">ملف تعليمي وموسوعي شامل من A لـ Z</div>
-                </div>
-
-                <div class="card-menu" onclick="showSection('sec-stories')">
-                    <div class="card-icon">💬</div>
-                    <div class="card-title">المحادثات والحوارات</div>
-                    <div class="card-desc">حوارات مكثفة في كافة قطاعات الحياة</div>
-                </div>
-
-                <div class="card-menu" onclick="showSection('sec-categories')">
-                    <div class="card-icon">🔢</div>
-                    <div class="card-title">المجموعات والمجالات</div>
-                    <div class="card-desc">الأرقام، المطار، البحر، الدين، المواصلات</div>
-                </div>
-
-                <div class="card-menu" onclick="showSection('sec-translator')">
-                    <div class="card-icon">🎙️</div>
-                    <div class="card-title">المترجم الصوتي الحر</div>
-                    <div class="card-desc">خط عريض ملون للترجمة الفورية</div>
-                </div>
-
-                <div class="card-menu" onclick="showSection('sec-games')">
-                    <div class="card-icon">🎮</div>
-                    <div class="card-title">الألعاب والتحديات</div>
-                    <div class="card-desc">تقييم ملون بالأخضر والأحمر وأصوات حية</div>
-                </div>
-
-                <div class="card-menu" onclick="showSection('sec-parents')">
-                    <div class="card-icon">👨‍👩‍👧</div>
-                    <div class="card-title">لوحة ولي الأمر</div>
-                    <div class="card-desc">إعدادات وتغيير الرقم السري</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ALPHABET & DRAWING BOARD SECTION -->
-        <div id="sec-alphabet" class="section-view">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="font-size: 0.85rem; color: var(--accent-yellow);">اضغط على شاشة السبورة للتنقل الفوري للحرف التالي:</span>
-                <button class="btn-back-top" onclick="showSection('sec-dashboard')">⬅ العودة</button>
-            </div>
-
-            <div class="alphabet-grid" id="alphabet-container"></div>
-
-            <div class="canvas-card">
-                <h3 style="color: var(--accent-green);" id="current-letter-title">✏️ سبورة الرسم والتتبع (الحرف: A)</h3>
-                <p style="font-size:0.75rem; color:var(--text-dim); margin-top:2px; margin-bottom:8px;">انقر على السبورة للتنقل الفوري ونطق المعنى</p>
-                <canvas id="draw-canvas" width="280" height="180"></canvas>
-                <div class="canvas-controls">
-                    <button class="stage-btn" style="background: var(--accent-pink); color: white;" onclick="clearCanvas(); event.stopPropagation();">مسح السبورة 🗑️</button>
-                    <button class="stage-btn" style="background: var(--accent-green); color: white;" onclick="nextLetter(); event.stopPropagation();">الحرف التالي ➡</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- DICTIONARY SECTION -->
-        <div id="sec-dictionary" class="section-view">
-            <div id="dict-container"></div>
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-        </div>
-
-        <!-- GRAMMAR SECTION -->
-        <div id="sec-grammar" class="section-view">
-            <div id="grammar-container"></div>
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-        </div>
-
-        <!-- STORIES SECTION -->
-        <div id="sec-stories" class="section-view">
-            <div id="stories-container"></div>
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-        </div>
-
-        <!-- CATEGORIES SECTION -->
-        <div id="sec-categories" class="section-view">
-            <div id="categories-container"></div>
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-        </div>
-
-        <!-- VOICE TRANSLATOR SECTION -->
-        <div id="sec-translator" class="section-view">
-            <div class="interactive-card" style="text-align: center; padding: 20px 15px;">
-                <p style="color: var(--text-dim); font-size: 1rem; margin-bottom: 15px; font-weight: bold;">تحدث بأي كلمة أو جملة باللغة العربية للترجمة المباشرة:</p>
-                <button id="btn-mic" class="btn-action" style="background: var(--accent-purple); font-size: 1.2rem; padding: 16px; border-radius: 15px; font-weight: bold;" onclick="startSpeechRecognition()">
-                    🎤 اضغط هنا والتحدث بالعربية
-                </button>
-                <div id="translator-result" style="margin-top: 18px;"></div>
-            </div>
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-        </div>
-
-        <!-- GAMES SECTION -->
-        <div id="sec-games" class="section-view">
-            <div class="interactive-card" id="quiz-box"></div>
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-        </div>
-
-        <!-- PARENTS & SETTINGS SECTION -->
-        <div id="sec-parents" class="section-view">
-            <div class="interactive-card">
-                <h3 style="color: var(--accent-green); margin-bottom: 10px;">🔑 تغيير الرقم السري الخاص بجهتك</h3>
-                <input type="password" id="new-pin-input" placeholder="أدخل الرقم السري الجديد" maxlength="8">
-                <button class="btn-action" onclick="changePin()">حفظ الرقم السري الجديد</button>
-                <div id="change-pin-msg" style="margin-top: 10px; font-size: 0.85rem;"></div>
-            </div>
-            <button class="btn-back" onclick="showSection('sec-dashboard')">⬅ العودة للرئيسية</button>
-        </div>
-
-    </div>
-
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
