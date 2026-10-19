@@ -1,13 +1,13 @@
 :root {
-    --bg-dark: #0f101d;
-    --card-bg: #191b33;
+    --bg-color: #0f101d;
+    --card-bg: #1a1c38;
     --accent-blue: #00f2fe;
     --accent-purple: #7f00ff;
     --accent-yellow: #ffd700;
     --accent-green: #00e676;
-    --accent-pink: #ff007f;
+    --accent-pink: #ff4081;
     --text-main: #ffffff;
-    --text-dim: #a0a5c0;
+    --text-dim: #b0b3c6;
 }
 
 * {
@@ -18,23 +18,53 @@
 }
 
 body {
-    background-color: var(--bg-dark);
+    background-color: var(--bg-color);
     color: var(--text-main);
     direction: rtl;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
-    padding: 12px;
 }
 
-.app-container {
-    max-width: 600px;
-    margin: 0 auto;
+.install-banner {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    color: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-/* Header Styles */
+.install-banner button {
+    background: #fff;
+    color: var(--accent-purple);
+    border: none;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.section-view {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+}
+
+.section-view.active {
+    display: block;
+}
+
 .app-header {
     text-align: center;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 20px;
 }
 
@@ -46,122 +76,104 @@ body {
 
 .app-header p {
     color: var(--text-dim);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
-/* Section Views Management */
-.section-view {
-    display: none;
-}
-
-.section-view.active {
-    display: block;
-}
-
-/* Main Dashboard Cards Grid */
-.menu-grid {
+/* تخطيط الشبكة للكروت الرئيسية */
+.grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+    width: 100%;
 }
 
-.menu-card {
+.dash-card {
     background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 16px 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 18px 12px;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.menu-card:active {
+.dash-card:active {
     transform: scale(0.96);
-    border-color: var(--accent-blue);
+    background: #252850;
 }
 
-.menu-card .icon {
+.card-icon {
     font-size: 2rem;
-    display: block;
     margin-bottom: 8px;
 }
 
-.menu-card h3 {
+.dash-card h3 {
     color: var(--accent-yellow);
     font-size: 1rem;
     margin-bottom: 4px;
 }
 
-.menu-card p {
+.dash-card p {
     color: var(--text-dim);
     font-size: 0.75rem;
     line-height: 1.3;
 }
 
-/* Back Button */
-.back-btn {
-    background: linear-gradient(135deg, var(--accent-purple), #4a00e0);
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 15px;
-}
-
-/* Interactive Card Base */
 .interactive-card {
     background: var(--card-bg);
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
-/* Board Canvas Area */
-.board-container {
-    background: var(--card-bg);
-    border-radius: 14px;
-    padding: 12px;
-    text-align: center;
-    border: 2px solid var(--accent-yellow);
+.btn-back {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.stage-btn, .btn-action {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(127, 0, 255, 0.4);
 }
 
 #drawing-canvas {
-    background-color: #000000;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 320px;
-    height: 220px;
+    background: #000;
+    border: 3px solid var(--accent-blue);
+    border-radius: 12px;
     touch-action: none;
-    border: 2px dashed var(--accent-blue);
-    margin: 0 auto;
-    display: block;
+    cursor: crosshair;
+    box-shadow: inset 0 0 15px rgba(0,242,254,0.2);
 }
 
-.board-controls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 12px;
-}
-
-.btn-action {
-    border: none;
-    color: #000;
-    font-weight: bold;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-/* Word & Dictionary Cards */
 .word-list {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    max-height: 65vh;
+    overflow-y: auto;
 }
 
 .word-card {
@@ -171,79 +183,16 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .word-en {
     color: var(--accent-yellow);
     font-weight: bold;
+    font-size: 1rem;
 }
 
 .word-ar {
-    color: #fff;
-}
-
-/* PWA Banner & PIN Overlay */
-.install-banner {
-    background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
-    color: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    font-size: 0.85rem;
-}
-
-.install-banner button {
-    background: var(--accent-yellow);
-    color: #000;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.pin-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
-
-.pin-box {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    width: 280px;
-    border: 2px solid var(--accent-purple);
-}
-
-.pin-box input {
-    width: 100%;
-    padding: 10px;
-    margin: 12px 0;
-    text-align: center;
-    font-size: 1.2rem;
-    border-radius: 8px;
-    border: 1px solid var(--accent-blue);
-    background: #121324;
-    color: #fff;
-}
-
-.pin-box button {
-    background: var(--accent-green);
-    color: #000;
-    font-weight: bold;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
-    cursor: pointer;
+    color: var(--text-main);
+    font-size: 0.95rem;
 }
