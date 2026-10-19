@@ -2,34 +2,7 @@
 // English Kids Academy - Main Application JS
 // ==========================================
 
-const alphabetList = [
-    { letter: "A a", sound: "Apple / أبل" },
-    { letter: "B b", sound: "Ball / بول" },
-    { letter: "C c", sound: "Cat / كات" },
-    { letter: "D d", sound: "Dog / دوج" },
-    { letter: "E e", sound: "Elephant / إليفانت" },
-    { letter: "F f", sound: "Fish / فيش" },
-    { letter: "G g", sound: "Girl / جيرل" },
-    { letter: "H h", sound: "Hat / هات" },
-    { letter: "I i", sound: "Ice Cream / آيس كريم" },
-    { letter: "J j", sound: "Juice / جوس" },
-    { letter: "K k", sound: "Kite / كايت" },
-    { letter: "L l", sound: "Lion / ليون" },
-    { letter: "M m", sound: "Monkey / مونكي" },
-    { letter: "N n", sound: "Nest / نيست" },
-    { letter: "O o", sound: "Orange / أورانج" },
-    { letter: "P p", sound: "Pen / بين" },
-    { letter: "Q q", sound: "Queen / كوين" },
-    { letter: "R r", sound: "Rabbit / رابيت" },
-    { letter: "S s", sound: "Sun / سان" },
-    { letter: "T t", sound: "Tree / تري" },
-    { letter: "U u", sound: "Umbrella / أمبريلا" },
-    { letter: "V v", sound: "Van / فان" },
-    { letter: "W w", sound: "Watch / ووتش" },
-    { letter: "X x", sound: "X-ray / إكس راي" },
-    { letter: "Y y", sound: "Yellow / يلو" },
-    { letter: "Z z", sound: "Zebra / زيبرا" }
-];
+const alphabetList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
 let currentLetterIndex = 0;
 let canvas, ctx, painting = false;
@@ -78,10 +51,10 @@ function renderLettersGrid() {
     if (!grid) return;
     grid.innerHTML = '';
 
-    alphabetList.forEach((item, index) => {
+    alphabetList.forEach((letter, index) => {
         const btn = document.createElement('button');
         btn.className = 'letter-btn' + (index === currentLetterIndex ? ' active-letter' : '');
-        btn.innerText = item.letter.split(' ')[0];
+        btn.innerText = letter;
         btn.onclick = () => {
             currentLetterIndex = index;
             loadAlphabetLetter();
@@ -92,9 +65,13 @@ function renderLettersGrid() {
 
 function loadAlphabetLetter() {
     renderLettersGrid();
-    const currentObj = alphabetList[currentLetterIndex];
-    speakText(currentObj.sound);
-    drawFaintLetterOnBoard(currentObj.letter);
+    const currentLetter = alphabetList[currentLetterIndex];
+    
+    // نطق اسم الحرف فقط
+    speakText(currentLetter);
+    
+    // رسم الحرف الباهت مباشرة داخل السبورة
+    drawFaintLetterOnBoard(currentLetter);
 }
 
 function nextLetter() {
@@ -107,8 +84,8 @@ function drawFaintLetterOnBoard(letterText) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
-    ctx.font = "bold 140px 'Segoe UI', Arial, sans-serif";
-    ctx.fillStyle = "rgba(255, 255, 255, 0.18)";
+    ctx.font = "bold 180px 'Segoe UI', Arial, sans-serif";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.35)"; // لون باهت وواضح جداً للتتبع
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(letterText, canvas.width / 2, canvas.height / 2);
@@ -132,7 +109,7 @@ function endPosition() {
 function draw(e) {
     if (!painting || !ctx) return;
     const rect = canvas.getBoundingClientRect();
-    ctx.lineWidth = 8;
+    ctx.lineWidth = 10;
     ctx.lineCap = 'round';
     ctx.strokeStyle = '#ffcc00';
 
@@ -171,7 +148,7 @@ function searchDictionary() {
     );
 
     if (filtered.length === 0) {
-        resultsContainer.innerHTML = `<div class="dict-item"><div class="en-word">لا يوجد نتائج</div><div class="ar-word">جرب البحث عن كلمة أخرى...</div></div>`;
+        resultsContainer.innerHTML = `<div class="dict-item"><div class="en-word">لا توجد نتائج</div><div class="ar-word">جرب كلمة أخرى...</div></div>`;
         return;
     }
 
@@ -187,20 +164,28 @@ function searchDictionary() {
     });
 }
 
-// 3. القواعد
+// 3. القواعد الشاملة
 function loadGrammarContent() {
     const container = document.getElementById('grammar-content');
     if (!container) return;
     container.innerHTML = `
-        <h3>1. الأزمنة الأساسية (Tenses)</h3>
-        <p><strong>المضارع البسيط (Present Simple):</strong> يعبر عن الحقائق والعادات اليومية.<br>مثال: I play football every day.</p>
-        <p><strong>الماضي البسيط (Past Simple):</strong> يعبر عن حدث انتهى في الماضي.<br>مثال: She visited Cairo yesterday.</p>
-        
-        <h3>2. الأفعال المساعدة (Auxiliary Verbs)</h3>
-        <p>استخدام (Verb to be): am, is, are للمضارع / was, were للماضي.</p>
+        <div style="text-align: right;">
+            <h3 style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 5px;">1. زمن المضارع البسيط (Present Simple Tense)</h3>
+            <p><strong>الاستخدام:</strong> يعبر عن الحقائق العلمية والعادات اليومية المكررة.</p>
+            <p><strong>التكويـن:</strong></p>
+            <ul style="padding-right: 20px; line-height: 2;">
+                <li>مع (I, They, We, You): نضع الفعل في المصدر بدون إضافة. (مثال: They play football).</li>
+                <li>مع (He, She, It): نضيف للفعل (s / es). (مثال: She plays football).</li>
+            </ul>
 
-        <h3>3. الضمائر (Pronouns)</h3>
-        <p>ضمائر الفاعل: I (أنا), He (هو), She (هي), We (نحن), They (هم), You (أنت).</p>
+            <h3 style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-top: 20px;">2. زمن الماضي البسيط (Past Simple Tense)</h3>
+            <p><strong>الاستخدام:</strong> يعبر عن حدث بدأ وانتهى تماماً في الماضي.</p>
+            <p><strong>التكويـن:</strong> التصريف الثاني للفعل بإضافة (ed) للأفعال المنتظمة.</p>
+            <p>مثال: I visited my grandmother yesterday. (أنا زرت جدتي أمس).</p>
+
+            <h3 style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-top: 20px;">3. الضمائر باللغة الإنجليزية (Pronouns)</h3>
+            <p><strong>ضمائر الفاعل:</strong> I (أنا) | He (هو) | She (هي) | It (هو/هي لغير العاقل) | We (نحن) | They (هم) | You (أنت/أنتم).</p>
+        </div>
     `;
 }
 
@@ -209,13 +194,19 @@ function loadConversationsContent() {
     const container = document.getElementById('conversations-content');
     if (!container) return;
     container.innerHTML = `
-        <h3>حوار التعارف (Greetings)</h3>
-        <p style="color: #ffcc00; font-size: 1.3rem;">- أحمد: Hello! What is your name?</p>
-        <p style="color: #33ccff; font-size: 1.3rem;">- جون: My name is John. Nice to meet you!</p>
+        <div style="text-align: right;">
+            <h3 style="color: #33ccff; border-bottom: 2px solid #33ccff; padding-bottom: 5px;">🗣️ حوار التعارف والترحيب (Greetings)</h3>
+            <p style="color: #ffcc00; font-size: 1.2rem;">- Ali: Hello! What is your name?</p>
+            <p style="color: #ffffff;">(علي: أهلاً! ما اسمك؟)</p>
+            <p style="color: #33ccff; font-size: 1.2rem;">- Sara: My name is Sara. Nice to meet you!</p>
+            <p style="color: #ffffff;">(سارة: اسمي سارة. سررت بلقائك!)</p>
 
-        <h3>حوار في المطار (At the Airport)</h3>
-        <p style="color: #ffcc00; font-size: 1.3rem;">- موظف الاستقبال: Passport, please?</p>
-        <p style="color: #33ccff; font-size: 1.3rem;">- المسافر: Here is my passport and ticket.</p>
+            <h3 style="color: #33ccff; border-bottom: 2px solid #33ccff; padding-bottom: 5px; margin-top: 20px;">✈️ حوار في المطار (At the Airport)</h3>
+            <p style="color: #ffcc00; font-size: 1.2rem;">- Officer: May I see your passport, please?</p>
+            <p style="color: #ffffff;">(الموظف: هل يمكنني رؤية جواز سفرك من فضلك؟)</p>
+            <p style="color: #33ccff; font-size: 1.2rem;">- Traveler: Here it is. Thank you.</p>
+            <p style="color: #ffffff;">(المسافر: تفضل، شكراً لك.)</p>
+        </div>
     `;
 }
 
@@ -224,17 +215,19 @@ function loadCategoriesContent() {
     const container = document.getElementById('categories-content');
     if (!container) return;
     container.innerHTML = `
-        <h3>🔢 الأرقام (Numbers)</h3>
-        <p>1: One | 2: Two | 3: Three | 4: Four | 5: Five</p>
+        <div style="text-align: right;">
+            <h3 style="color: #ffcc00;">🔢 الأرقام (Numbers)</h3>
+            <p>1: One | 2: Two | 3: Three | 4: Four | 5: Five | 6: Six | 7: Seven | 8: Eight | 9: Nine | 10: Ten</p>
 
-        <h3>✈️ المطار (Airport)</h3>
-        <p>طائرة: Airplane | تذكرة: Ticket | جواز سفر: Passport</p>
+            <h3 style="color: #ffcc00; margin-top: 15px;">🚗 المواصلات (Transportation)</h3>
+            <p>Car (سيارة) | Bus (حافلة) | Train (قطار) | Plane (طائرة) | Bicycle (دراجة)</p>
 
-        <h3>🌊 البحر (Sea)</h3>
-        <p>سمكة: Fish | موجة: Wave | شاطئ: Beach</p>
+            <h3 style="color: #ffcc00; margin-top: 15px;">🌊 البحر والطبيعة (Sea & Nature)</h3>
+            <p>Fish (سمكة) | Sea (بحر) | Wave (موجة) | Sun (شمس) | Tree (شجرة)</p>
 
-        <h3>🚗 المواصلات (Transportation)</h3>
-        <p>سيارة: Car | قطار: Train | حافلة: Bus</p>
+            <h3 style="color: #ffcc00; margin-top: 15px;">🕌 الدين والأخلاق (Religion & Morals)</h3>
+            <p>Peace (سلام) | Faith (إيمان) | Truth (صدق) | Kindness (طيبة)</p>
+        </div>
     `;
 }
 
@@ -273,12 +266,12 @@ function checkAnswer(selectedIndex, correctIndex, buttonElement) {
     if (selectedIndex === correctIndex) {
         buttonElement.classList.add('correct');
         document.getElementById('game-feedback').innerHTML = "<span style='color: #22c55e;'>إجابة صحيحة برافو عليك! 🎉</span>";
-        speakText("Excellent! Correct answer.");
+        speakText("Correct!");
     } else {
         buttonElement.classList.add('wrong');
         allButtons[correctIndex].classList.add('correct');
         document.getElementById('game-feedback').innerHTML = "<span style='color: #ef4444;'>إجابة خاطئة، حاول مرة أخرى! ❌</span>";
-        speakText("Wrong answer, try again.");
+        speakText("Wrong answer!");
     }
 
     setTimeout(() => {
@@ -331,14 +324,18 @@ function startVoiceRecognition() {
     };
 }
 
+// نطق اسم الحرف/الكلمة
 function speakText(text) {
     if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
+        utterance.rate = 0.8;
         window.speechSynthesis.speak(utterance);
     }
 }
 
+// زر تثبيت PWA
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
