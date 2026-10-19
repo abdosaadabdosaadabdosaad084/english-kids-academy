@@ -93,21 +93,6 @@ function speak(text, lang = 'en-US') {
     }
 }
 
-let currentLetterCode = 65; // A
-
-// خريطة معاني الحروف باللغة العربية مع مثال
-const LETTER_MEANINGS = {
-    65: { word: "Apple", ar: "تفاحة" }, 66: { word: "Banana", ar: "موز" }, 67: { word: "Cat", ar: "قطة" },
-    68: { word: "Dog", ar: "كلب" }, 69: { word: "Elephant", ar: "فيل" }, 70: { word: "Fish", ar: "سمكة" },
-    71: { word: "Giraffe", ar: "زرافة" }, 72: { word: "Horse", ar: "حصان" }, 73: { word: "Ice cream", ar: "مثلجات" },
-    74: { word: "Juice", ar: "عصير" }, 75: { word: "Kangaroo", ar: "كانغرو" }, 76: { word: "Lion", ar: "أسد" },
-    77: { word: "Monkey", ar: "قرد" }, 78: { word: "Notebook", ar: "دفتر" }, 79: { word: "Orange", ar: "برتقال" },
-    80: { word: "Pencil", ar: "قلم رصاص" }, 81: { word: "Queen", ar: "ملكة" }, 82: { word: "Rabbit", ar: "أرنب" },
-    83: { word: "School", ar: "مدرسة" }, 84: { word: "Teacher", ar: "معلم" }, 85: { word: "Umbrella", ar: "مظلة" },
-    86: { word: "Van", ar: "شاحنة" }, 87: { word: "Watermelon", ar: "بطيخ" }, 88: { word: "X-ray", ar: "أشعة" },
-    89: { word: "Yellow", ar: "أصفر" }, 90: { word: "Zebra", ar: "حمار وحشي" }
-};
-
 function showSection(id) {
     document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -131,6 +116,103 @@ window.addEventListener('popstate', () => {
     document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
     document.getElementById('sec-dashboard').classList.add('active');
 });
+
+// ==================== بيانات الفصول الخمسة عشر مباشرة ====================
+const GRAMMAR_CHAPTERS_DATA = [
+  {
+    chapter: 1, title_ar: "الفصل الأول: الأسماء", title_en: "Nouns",
+    content: "الاسم هو كلمة تُطلق على شخص، مكان، شيء، أو فكرة.\n\n- اسم مفرد (Singular Noun): Boy (ولد), Book (كتاب), Child (طفل).\n- اسم جمع (Plural Noun): Boys (أولاد - بزيادة s), Books (كتب - بزيادة s), Children (أطفال - جمع شاذ).\n\nأمثلة في جمل:\n- The boy reads a book in the room. (الولد يقرأ كتاباً في الغرفة).\n- The children play outside. (الأطفال يلعبون في الخارج)."
+  },
+  {
+    chapter: 2, title_ar: "الفصل الثاني: الأدوات", title_en: "Articles",
+    content: "تُوضع الأدوات قبل الأسماء لتحديد ما إذا كان الاسم نكرة أو معرفة.\n\n1. أدوات النكرة (a / an):\n- (a): قبل الاسم المفرد البادئ بحرف ساكن. مثال: A book, A car.\n- (an): قبل الاسم المفرد البادئ بحرف متحرك (a, e, i, o, u). مثال: An apple, An umbrella.\n\n2. أداة المعرفة (the):\n- تُستخدم قبل الأسماء المفردة أو الجمع المعروفة أو المحددة مسبقاً. مثال: The sun, The book that you gave me."
+  },
+  {
+    chapter: 3, title_ar: "الفصل الثالث: الضمائر", title_en: "Pronouns",
+    content: "الضمير يعوض الاسم لتجنب تكراره.\n\n1. ضمائر الفاعل (Subject Pronouns):\n- I (أنا), He (هو), She (هي), It (هو/هي لغير العاقل), We (نحن), You (أنت/أنتم), They (هم).\n- مثال: He plays football.\n\n2. ضمائر المفعول به (Object Pronouns):\n- me, him, her, it, us, you, them.\n- مثال: John gave me a book.\n\n3. ضمائر التملك (Possessive Pronouns):\n- mine, his, hers, ours, yours, theirs.\n- مثال: This car is mine."
+  },
+  {
+    chapter: 4, title_ar: "الفصل الرابع: الأفعال", title_en: "Verbs",
+    content: "الفعل يدل على حدث أو حالة في زمن معين.\n\n1. الأفعال الرئيسية (Main Verbs):\n- تحمل المعنى الأساسي. مثال: Play, Eat, Go, Read.\n- مثال: I eat an apple.\n\n2. الأفعال المساعدة (Auxiliary Verbs):\n- تساعد في تحديد الزمن أو النفي أو الاستفهام (be, do, have).\n- مثال: She is reading a book."
+  },
+  {
+    chapter: 5, title_ar: "الفصل الخامس: الإستفهام", title_en: "Questions",
+    content: "تنقسم الأسئلة إلى نوعين:\n\n1. الأسئلة المبدوءة بأداة استفهام (Wh- Questions):\n- What (ماذا), Who (من), Where (أين), When (متى), Why (لماذا), How (كيف).\n- التركيب: أداة الاستفهام + الفعل المساعد + الفاعل + الفعل الرئيسي؟\n- مثال: Where do you live?\n\n2. أسئلة نعم أو لا (Yes/No Questions):\n- تبدأ بفعل مساعد أو فعل كون.\n- مثال: Are you a student? -> Yes, I am."
+  },
+  {
+    chapter: 6, title_ar: "الفصل السادس: المبني للمعلوم والمبني للمجهول", title_en: "Active and Passive Voice",
+    content: "1. المبني للمعلوم (Active Voice):\n- الفاعل معروف ومذكور في بداية الجملة.\n- مثال: The cat ate the fish. (القط أكل السمكة).\n\n2. المبني للمجهول (Passive Voice):\n- التركيز على المفعول به والفاعل غير معروف أو غير مهم.\n- التركيب: المفعول به + Verb to be + التصريف الثالث للفعل.\n- مثال: The fish was eaten. (أُكلت السمكة)."
+  },
+  {
+    chapter: 7, title_ar: "الفصل السابع: صيغة الأمر", title_en: "Imperatives",
+    content: "تُستخدم لإعطاء توجيهات أو أوامر وتبدأ دائماً بفعل مجرد.\n\n1. الأمر المثبت (Affirmative Imperative):\n- Open the door. (افتح الباب).\n- Listen carefully. (استمع جيداً).\n\n2. الأمر المنفي (Negative Imperative):\n- يبدأ بـ Don't قبل الفعل المجرد.\n- Don't touch this. (لا تلمس هذا).\n- Don't be late. (لا تتأخر)."
+  },
+  {
+    chapter: 8, title_ar: "الفصل الثامن: الصفات", title_en: "Adjectives",
+    content: "الصفة تصف الاسم وتأتي قبله عادةً أو بعد أفعال الكون.\n\n- موقع الصفة: It is a fast car / The car is fast.\n\nالمقارنة والتفضيل:\n- المقارنة (Comparative): إضافية er + than للصفات القصيرة. مثال: Ali is taller than Ahmed.\n- التفضيل (Superlative): إضافة the + est للصفات القصيرة. مثال: Ali is the tallest student."
+  },
+  {
+    chapter: 9, title_ar: "الفصل التاسع: الأحوال", title_en: "Adverbs",
+    content: "الحال (الظرف) يصف الفعل ويجيب عن سؤال 'كيف حدث الفعل؟'.\n\nتكوين الحال:\n- يُضاف غالباً (ly) لنهاية الصفة.\n- Quick (سريع) -> Quickly (بسرعة).\n- Quiet (هادئ) -> Quietly (بهدوء).\n\nأمثلة:\n- He runs quickly. (هو يجري بسرعة).\n- She speaks English fluently. (هي تتحدث الإنجليزية بطلاقة)."
+  },
+  {
+    chapter: 10, title_ar: "الفصل العاشر: الروابط", title_en: "Conjunctions",
+    content: "الروابط تُستخدم لربط الكلمات أو الجمل.\n\nأهم الروابط:\n- And (و): للربط بين أفكار متشابهة. (I like apples and bananas).\n- But (لكن): للتناقض. (He is tired, but he is working).\n- Because (لأن): لبيان السبب. (I stayed home because it was raining).\n- Or (أو): للتخيير. (Do you want tea or coffee?)."
+  },
+  {
+    chapter: 11, title_ar: "الفصل الحادي عشر: استعمال بعض أشباه الجمل مع أمثلة", title_en: "Phrasal Verbs",
+    content: "أشباه الجمل الفعلية هي (فعل + حرف جر أو ظرف) تُعطي معنى جديداً.\n\nأمثلة:\n1. Look after (يعتني بـ): Please look after my cat.\n2. Give up (يستسلم / يقلع عن): Never give up on your dreams.\n3. Turn off (يُطفئ جهازاً): Please turn off the light."
+  },
+  {
+    chapter: 12, title_ar: "الفصل الثاني عشر: لو الشرطية", title_en: "Conditional Sentences (If)",
+    content: "تُستخدم للتعبير عن حدث يعتمد وقوعه على حدث آخر.\n\n1. الحالة الأولى (First Conditional):\n- التركيب: If + مضارع بسيط, will + مصدر الفعل.\n- مثال: If it rains, I will stay at home.\n\n2. الحالة الثانية (Second Conditional):\n- التركيب: If + ماضي بسيط, would + مصدر الفعل.\n- مثال: If I won the lottery, I would buy a car."
+  },
+  {
+    chapter: 13, title_ar: "الفصل الثالث عشر: الكلام المباشر وغير المباشر", title_en: "Direct and Indirect Speech",
+    content: "1. الكلام المباشر (Direct Speech):\n- نقل الكلام بنصه الأصلي بين أقواس.\n- مثال: He said, \"I am happy\".\n\n2. الكلام غير المباشر (Indirect Speech):\n- نقل مضمون الكلام وتغيير الأزمنة للماضي والضمائر.\n- مثال: He said that he was happy."
+  },
+  {
+    chapter: 14, title_ar: "الفصل الرابع عشر: حروف الجر", title_en: "Prepositions",
+    content: "تُحدد العلاقة المكانية والزمانية بين الكلمات.\n\nأهم حروف الجر:\n- In: للأماكن المغلقة/الكبيرة والشهور والسنوات. (In Cairo, In July).\n- On: للأسطح وأيام الأسبوع والتواريخ المحددة. (On the table, On Monday).\n- At: للنقاط المحددة والأوقات والدقائق. (At 5:00 PM, At the door)."
+  },
+  {
+    chapter: 15, title_ar: "الفصل الخامس عشر: التعبيرات العاطفية والتعجب - الإختزال - الأفعال الشاذة", title_en: "Exclamations, Contractions & Irregular Verbs",
+    content: "1. التعجب (Exclamations):\n- What a beautiful day! / How fast he runs!\n\n2. الاختزال (Contractions):\n- I am -> I'm | Do not -> Don't | It is -> It's\n\n3. الأفعال الشاذة (Irregular Verbs):\n- Go -> Went -> Gone\n- Eat -> Ate -> Eaten\n- See -> Saw -> Seen"
+  }
+];
+
+// ==================== عرض قسم القواعد من الكود المباشر ====================
+function renderGrammar() {
+    const container = document.getElementById('grammar-container');
+    
+    let chaptersHTML = `
+        <div class="interactive-card">
+            <h2 style="color:var(--accent-yellow); margin-bottom:12px; border-bottom:2px solid var(--accent-purple); padding-bottom:8px;">📘 الموسوعة الشاملة لقواعد اللغة الإنجليزية (15 فصل)</h2>
+            <p style="color:var(--text-dim); line-height:1.8; font-size:0.95rem;">
+                دليل وأكاديمية متكاملة تشمل شرحاً وافياً ومستفيضاً لكافة الأركان والقواعد الأساسية من A إلى Z.
+            </p>
+        </div>
+    `;
+
+    GRAMMAR_CHAPTERS_DATA.forEach(chap => {
+        chaptersHTML += `
+            <div class="interactive-card" style="text-align: right;">
+                <h3 style="color:var(--accent-green); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 12px;">
+                    ${chap.title_ar} 
+                    <span style="font-size: 0.8em; color: var(--accent-yellow); font-weight: normal;">(${chap.title_en})</span>
+                </h3>
+                <div style="color: var(--text-dim); line-height: 1.8; font-size: 0.95rem; white-space: pre-line;">
+                    ${chap.content}
+                </div>
+                <button class="stage-btn" style="margin-top:12px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));" onclick="speak('${chap.title_en}')">
+                    🔊 نطق عنوان الفصل
+                </button>
+            </div>
+        `;
+    });
+
+    container.innerHTML = chaptersHTML;
+}
 
 // ==================== 1. القاموس الموسع الحقيقي ====================
 const COMPREHENSIVE_DICTIONARY = [
@@ -202,61 +284,6 @@ function renderDictionaryHTML(searchTerm = '', liveTranslation = '') {
             `).join('')}
         </div>
     `;
-}
-
-// ==================== 2. قسم قواعد اللغة الإنجليزية (جلب الفصول الـ 15 تلقائياً) ====================
-async function renderGrammar() {
-    const container = document.getElementById('grammar-container');
-    container.innerHTML = `
-        <div class="interactive-card">
-            <h2 style="color:var(--accent-yellow); margin-bottom:12px; border-bottom:2px solid var(--accent-purple); padding-bottom:8px;">📘 الموسوعة الشاملة لقواعد اللغة الإنجليزية</h2>
-            <p style="color:var(--text-dim); line-height:1.8; font-size:0.95rem;">
-                جاري تحميل الفصول الـ 15 كاملة بشرحها التفصيلي...
-            </p>
-        </div>
-    `;
-
-    try {
-        const response = await fetch('english_grammar_chapters.json');
-        if (!response.ok) throw new Error('فشل جلب ملف القواعد');
-        const chapters = await response.json();
-
-        let chaptersHTML = `
-            <div class="interactive-card">
-                <h2 style="color:var(--accent-yellow); margin-bottom:12px; border-bottom:2px solid var(--accent-purple); padding-bottom:8px;">📘 الموسوعة الشاملة لقواعد اللغة الإنجليزية (15 فصل)</h2>
-                <p style="color:var(--text-dim); line-height:1.8; font-size:0.95rem;">
-                    دليل وأكاديمية متكاملة تشمل شرحاً وافياً ومستفيضاً لكافة الأركان والقواعد الأساسية من A إلى Z.
-                </p>
-            </div>
-        `;
-
-        chapters.forEach(chap => {
-            chaptersHTML += `
-                <div class="interactive-card" style="text-align: right;">
-                    <h3 style="color:var(--accent-green); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 12px;">
-                        ${chap.title_ar} 
-                        <span style="font-size: 0.8em; color: var(--accent-yellow); font-weight: normal;">(${chap.title_en})</span>
-                    </h3>
-                    <div style="color: var(--text-dim); line-height: 1.8; font-size: 0.95rem; white-space: pre-line;">
-                        ${chap.content}
-                    </div>
-                    <button class="stage-btn" style="margin-top:12px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));" onclick="speak('${chap.title_en}')">
-                        🔊 نطق عنوان الفصل
-                    </button>
-                </div>
-            `;
-        });
-
-        container.innerHTML = chaptersHTML;
-    } catch (error) {
-        console.error("Error loading grammar chapters:", error);
-        container.innerHTML = `
-            <div class="interactive-card">
-                <h3 style="color:var(--accent-pink);">⚠️ تعذر تحميل الفصول</h3>
-                <p style="color:var(--text-dim);">تأكد من رفع ملف <b>english_grammar_chapters.json</b> بنفس الاسم على GitHub.</p>
-            </div>
-        `;
-    }
 }
 
 // ==================== 3. المترجم الصوتي المباشر بخط عريض وألوان مميزة ====================
