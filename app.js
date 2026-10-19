@@ -93,18 +93,22 @@ function speak(text, lang = 'en-US') {
     }
 }
 
+let currentSelectedLetter = 'A';
+
 function showSection(id) {
     document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     
-    if (id === 'sec-grammar') {
+    if (id === 'sec-board' || id === 'sec-alphabet') {
+        initBoardWithLetter(currentSelectedLetter);
+    } else if (id === 'sec-grammar') {
         renderGrammar();
     } else if (id === 'sec-dictionary') {
         renderDictionaryHTML();
     } else if (id === 'sec-categories') {
-        renderCategories(); // المجموعات والمجالات
+        renderCategories();
     } else if (id === 'sec-stories') {
-        renderStories(); // المحادثات والحوارات والقصص
+        renderStories();
     }
 
     if (id !== 'sec-dashboard') {
@@ -116,6 +120,80 @@ window.addEventListener('popstate', () => {
     document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
     document.getElementById('sec-dashboard').classList.add('active');
 });
+
+// ==================== رسم ودعم سبورة الحروف التفاعلية ====================
+function initBoardWithLetter(letter) {
+    currentSelectedLetter = letter;
+    speak(letter);
+    
+    const letterTitle = document.getElementById('board-letter-title');
+    if (letterTitle) {
+        letterTitle.innerText = `سبورة الرسم والتتبع (الحرف: ${letter})`;
+    }
+
+    const canvas = document.getElementById('drawing-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = canvas.offsetWidth || 300;
+    canvas.height = 220;
+    
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.font = 'bold 120px sans-serif';
+    ctx.fillStyle = 'rgba(255, 215, 0, 0.35)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(letter, canvas.width / 2, canvas.height / 2);
+
+    let isDrawing = false;
+    
+    function startDrawing(e) {
+        isDrawing = true;
+        draw(e);
+    }
+    
+    function stopDrawing() {
+        isDrawing = false;
+        ctx.beginPath();
+    }
+    
+    function draw(e) {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        
+        ctx.lineWidth = 10;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#00f2fe';
+
+        ctx.lineTo(clientX - rect.left, clientY - rect.top);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(clientX - rect.left, clientY - rect.top);
+    }
+
+    canvas.onmousedown = startDrawing;
+    canvas.onmouseup = stopDrawing;
+    canvas.onmousemove = draw;
+    
+    canvas.ontouchstart = startDrawing;
+    canvas.ontouchend = stopDrawing;
+    canvas.ontouchmove = draw;
+}
+
+function clearBoard() {
+    initBoardWithLetter(currentSelectedLetter);
+}
+
+function nextLetter() {
+    const code = currentSelectedLetter.charCodeAt(0);
+    const nextChar = code >= 90 ? 'A' : String.fromCharCode(code + 1);
+    initBoardWithLetter(nextChar);
+}
 
 // ==================== بيانات قسم المجموعات والمجالات ====================
 const DailyLifeEnglishData = {
