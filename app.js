@@ -111,6 +111,17 @@ const LETTER_MEANINGS = {
 function showSection(id) {
     document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
+    
+    if (id === 'sec-grammar') {
+        renderGrammar();
+    } else if (id === 'sec-dictionary') {
+        renderDictionaryHTML();
+    } else if (id === 'sec-categories') {
+        renderCategories();
+    } else if (id === 'sec-stories') {
+        renderStories();
+    }
+
     if (id !== 'sec-dashboard') {
         history.pushState({ section: id }, '', `#${id}`);
     }
@@ -193,63 +204,59 @@ function renderDictionaryHTML(searchTerm = '', liveTranslation = '') {
     `;
 }
 
-// ==================== 2. قسم قواعد اللغة الإنجليزية (ملف تعليمي وموسوعي مستوفٍ) ====================
-function renderGrammar() {
+// ==================== 2. قسم قواعد اللغة الإنجليزية (جلب الفصول الـ 15 تلقائياً) ====================
+async function renderGrammar() {
     const container = document.getElementById('grammar-container');
     container.innerHTML = `
         <div class="interactive-card">
-            <h2 style="color:var(--accent-yellow); margin-bottom:12px; border-bottom:2px solid var(--accent-purple); padding-bottom:8px;">📘 الملف التعليمي الموسوعي لقواعد اللغة الإنجليزية</h2>
+            <h2 style="color:var(--accent-yellow); margin-bottom:12px; border-bottom:2px solid var(--accent-purple); padding-bottom:8px;">📘 الموسوعة الشاملة لقواعد اللغة الإنجليزية</h2>
             <p style="color:var(--text-dim); line-height:1.8; font-size:0.95rem;">
-                دليل وأكاديمية متكاملة تشمل شرحاً وافياً ومستفيضاً لكافة الأركان والقواعد الأساسية من الألف إلى الياء.
+                جاري تحميل الفصول الـ 15 كاملة بشرحها التفصيلي...
             </p>
-        </div>
-
-        <div class="interactive-card">
-            <h3 style="color:var(--accent-green);">1. الضمائر كاملة وأقسام الكلام (Grammar Pronouns System)</h3>
-            <p style="color:var(--text-dim); margin-top:8px; line-height:1.8;">
-                تُعتبر الضمائر العمود الفقري للجملة الإنجليزية لتفادي التكرار وسلاسة النطق:<br><br>
-                • <b>ضمائر الفاعل (Subject):</b> I, He, She, It, We, You, They (تأتي دائماً في بداية الجملة لتحديد القائم بالفعل).<br>
-                • <b>ضمائر المفعول به (Object):</b> Me, Him, Her, It, Us, You, Them (تأتي بعد الفعل الرئيسي أو بعد حرف الجر).<br>
-                • <b>صفات الملكية (Possessive Adjectives):</b> My, His, Her, Its, Our, Your, Their (يلزم أن يتبعها الاسم المملوك فوراً).<br>
-                • <b>ضمائر الملكية (Possessive Pronouns):</b> Mine, His, Hers, Ours, Yours, Theirs (تأتي مستقلة دون اسم بعدهما).<br><br>
-                <b>أمثلة وافية ومفصلة:</b><br>
-                - <i>I study English every day.</i> (أنا أدرس الإنجليزية يومياً).<br>
-                - <i>The teacher called him in the office.</i> (المعلم اتصل به في المكتب).<br>
-                - <i>This is my notebook and that car is mine.</i> (هذا دفتري وتلك السيارة ملكي).
-            </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I study English every day. The teacher called him. This is my notebook and that car is mine.')">🔊 استمع لشرح الضمائر</button>
-        </div>
-
-        <div class="interactive-card">
-            <h3 style="color:var(--accent-green);">2. زمن المضارع البسيط والمستمر (Present Tenses Masterclass)</h3>
-            <p style="color:var(--text-dim); margin-top:8px; line-height:1.8;">
-                <b>أولاً: المضارع البسيط (Present Simple):</b><br>
-                • يعبر عن الحقائق العلمية والتكرار والعادات اليومية.<br>
-                • التكوين: مع (He/She/It) يُضاف للفعل (s/es)، ومع (I/We/They/You) نضع المصدر مجرداً.<br>
-                • e.g., <i>The sun rises in the east.</i> (تشرق الشمس من الشرق - حقيقة).<br><br>
-                <b>ثانياً: المضارع المستمر (Present Continuous):</b><br>
-                • يعبر عن أفعال تقع لحظة الكلام بوضوح.<br>
-                • التكوين: (am / is / are) + Verb + ing.<br>
-                • e.g., <i>She is reading a book now.</i> (هي تقرأ كتاباً الآن).
-            </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('The sun rises in the east. She is reading a book now.')">🔊 استمع لشرح أزمنة المضارع</button>
-        </div>
-
-        <div class="interactive-card">
-            <h3 style="color:var(--accent-green);">3. زمن الماضي البسيط والمستمر (Past Tenses Masterclass)</h3>
-            <p style="color:var(--text-dim); margin-top:8px; line-height:1.8;">
-                <b>أولاً: الماضي البسيط (Past Simple):</b><br>
-                • حدث بدأ وانتهى تماماً بالماضي في وقت محدد.<br>
-                • التكوين: التصريف الثاني للفعل V2 (إضافة ed للأفعال المنتظمة أو حفظ الشاذ).<br>
-                • e.g., <i>I visited Alexandria yesterday.</i> (زرت الإسكندرية البارحة).<br><br>
-                <b>ثانياً: الماضي المستمر (Past Continuous):</b><br>
-                • حدث كان مستمراً في الماضي وتقاطع مع حدث آخر.<br>
-                • التكوين: (was / were) + Verb + ing.<br>
-                • e.g., <i>I was studying when the phone rang.</i> (كنت أذاكر عندما رن الهاتف).
-            </p>
-            <button class="stage-btn" style="margin-top:10px;" onclick="speak('I visited Alexandria yesterday. I was studying when the phone rang.')">🔊 استمع لشرح أزمنة الماضي</button>
         </div>
     `;
+
+    try {
+        const response = await fetch('english_grammar_chapters.json');
+        if (!response.ok) throw new Error('فشل جلب ملف القواعد');
+        const chapters = await response.json();
+
+        let chaptersHTML = `
+            <div class="interactive-card">
+                <h2 style="color:var(--accent-yellow); margin-bottom:12px; border-bottom:2px solid var(--accent-purple); padding-bottom:8px;">📘 الموسوعة الشاملة لقواعد اللغة الإنجليزية (15 فصل)</h2>
+                <p style="color:var(--text-dim); line-height:1.8; font-size:0.95rem;">
+                    دليل وأكاديمية متكاملة تشمل شرحاً وافياً ومستفيضاً لكافة الأركان والقواعد الأساسية من A إلى Z.
+                </p>
+            </div>
+        `;
+
+        chapters.forEach(chap => {
+            chaptersHTML += `
+                <div class="interactive-card" style="text-align: right;">
+                    <h3 style="color:var(--accent-green); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 12px;">
+                        ${chap.title_ar} 
+                        <span style="font-size: 0.8em; color: var(--accent-yellow); font-weight: normal;">(${chap.title_en})</span>
+                    </h3>
+                    <div style="color: var(--text-dim); line-height: 1.8; font-size: 0.95rem; white-space: pre-line;">
+                        ${chap.content}
+                    </div>
+                    <button class="stage-btn" style="margin-top:12px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));" onclick="speak('${chap.title_en}')">
+                        🔊 نطق عنوان الفصل
+                    </button>
+                </div>
+            `;
+        });
+
+        container.innerHTML = chaptersHTML;
+    } catch (error) {
+        console.error("Error loading grammar chapters:", error);
+        container.innerHTML = `
+            <div class="interactive-card">
+                <h3 style="color:var(--accent-pink);">⚠️ تعذر تحميل الفصول</h3>
+                <p style="color:var(--text-dim);">تأكد من رفع ملف <b>english_grammar_chapters.json</b> بنفس الاسم على GitHub.</p>
+            </div>
+        `;
+    }
 }
 
 // ==================== 3. المترجم الصوتي المباشر بخط عريض وألوان مميزة ====================
@@ -284,7 +291,6 @@ async function startSpeechRecognition() {
             const data = await res.json();
             const translatedText = data.responseData.translatedText;
 
-            // تنسيق بخط عريض وألوان واضحة مستغلة المساحة الكبيرة
             resultDiv.innerHTML = `
                 <div style="background:#191b33; padding:20px 15px; border-radius:15px; border:2px solid var(--accent-green); text-align:right;">
                     <p style="color:var(--accent-yellow); font-size:1.2rem; font-weight:bold; margin-bottom:10px;">
@@ -368,154 +374,3 @@ function renderStories() {
         </div>
     `).join('');
 }
-
-// ==================== 6. قسم الألعاب (تفاعل تحول الألوان بالأخضر والأحمر) ====================
-let currentQuizWord = null;
-
-function generateInfiniteQuestion() {
-    const quizBox = document.getElementById('quiz-box');
-    currentQuizWord = COMPREHENSIVE_DICTIONARY[Math.floor(Math.random() * COMPREHENSIVE_DICTIONARY.length)];
-    
-    let wrongOptions = COMPREHENSIVE_DICTIONARY.filter(w => w.en !== currentQuizWord.en)
-                                             .sort(() => 0.5 - Math.random())
-                                             .slice(0, 3);
-    
-    let allOptions = [...wrongOptions, currentQuizWord].sort(() => 0.5 - Math.random());
-
-    quizBox.innerHTML = `
-        <h3 style="color:var(--accent-yellow); margin-bottom:8px;">🎮 التحدي الصوتي السريع</h3>
-        <p style="color:var(--text-dim); margin-bottom:12px;">استمع للكلمة جيداً واختر معناها الصحيح:</p>
-        
-        <div style="text-align:center; margin:12px 0;">
-            <button class="btn-action" style="background:var(--accent-purple);" onclick="speak('${currentQuizWord.en}')">🔊 نطق الكلمة (${currentQuizWord.en})</button>
-        </div>
-
-        <div style="display:flex; flex-direction:column; gap:10px;" id="quiz-options-list">
-            ${allOptions.map((opt, idx) => `
-                <button class="quiz-option-btn" id="opt-btn-${idx}" onclick="checkInfiniteAnswer('${opt.en}', '${currentQuizWord.en}', 'opt-btn-${idx}')">${opt.ar}</button>
-            `).join('')}
-        </div>
-    `;
-
-    setTimeout(() => {
-        speak(currentQuizWord.en);
-    }, 300);
-}
-
-function checkInfiniteAnswer(selectedEn, correctEn, btnId) {
-    const clickedBtn = document.getElementById(btnId);
-    
-    // تعطيل الأزرار مؤقتاً لتجنب النقرات المتكررة
-    const allBtns = document.querySelectorAll('.quiz-option-btn');
-    allBtns.forEach(b => b.disabled = true);
-
-    if (selectedEn === correctEn) {
-        // الإجابة صحيحة: تحويل لون الزر للأخضر مع التصفيق
-        clickedBtn.classList.add('correct');
-        playApplauseSound();
-        speak('Bravo! Excellent');
-    } else {
-        // الإجابة خاطئة: تحويل لون الزر للأحمر والزر الصحيح للأخضر مع التحذير
-        clickedBtn.classList.add('wrong');
-        allBtns.forEach(b => {
-            if (b.innerText === COMPREHENSIVE_DICTIONARY.find(w => w.en === correctEn).ar) {
-                b.classList.add('correct');
-            }
-        });
-        playWarningSound();
-        speak('Wrong');
-    }
-
-    setTimeout(() => {
-        generateInfiniteQuestion();
-    }, 1200);
-}
-
-// ==================== 7. السبورة والتنقل الفوري عند النقر على الشاشة ====================
-const alphabetContainer = document.getElementById('alphabet-container');
-if (alphabetContainer) {
-    for (let i = 65; i <= 90; i++) {
-        const char = String.fromCharCode(i);
-        const div = document.createElement('div');
-        div.className = 'letter-card';
-        div.innerText = char;
-        div.onclick = () => selectLetterCode(i);
-        alphabetContainer.appendChild(div);
-    }
-}
-
-function selectLetterCode(code) {
-    currentLetterCode = code;
-    const char = String.fromCharCode(currentLetterCode);
-    const meaningInfo = LETTER_MEANINGS[currentLetterCode] || { word: char, ar: "" };
-    
-    document.getElementById('current-letter-title').innerText = `✏️ سبورة الرسم والتتبع (الحرف: ${char})`;
-    
-    // نطق اسم الحرف ومعناه الفوري
-    speak(`Letter ${char}. ${meaningInfo.word}. means ${meaningInfo.ar}`);
-    clearCanvas();
-}
-
-function nextLetter() {
-    currentLetterCode++;
-    if (currentLetterCode > 90) currentLetterCode = 65;
-    selectLetterCode(currentLetterCode);
-}
-
-const canvas = document.getElementById('draw-canvas');
-const ctx = canvas ? canvas.getContext('2d') : null;
-let isDrawing = false;
-
-function clearCanvas() {
-    if (!canvas || !ctx) return;
-    const char = String.fromCharCode(currentLetterCode);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "bold 100px Segoe UI";
-    ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(char, canvas.width / 2, canvas.height / 2);
-}
-
-if (canvas) {
-    // الضغط أو النقر على السبورة ينقل فوراً للحرف التالي مع نطق معناه
-    canvas.addEventListener('click', (e) => {
-        nextLetter();
-    });
-
-    function startDrawing(e) {
-        isDrawing = true;
-        draw(e);
-    }
-    function stopDrawing() { isDrawing = false; ctx.beginPath(); }
-    function draw(e) {
-        if (!isDrawing) return;
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        ctx.lineWidth = 8;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#06d6a0';
-        ctx.lineTo(clientX - rect.left, clientY - rect.top);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(clientX - rect.left, clientY - rect.top);
-    }
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('touchstart', startDrawing);
-    canvas.addEventListener('touchend', stopDrawing);
-    canvas.addEventListener('touchmove', draw);
-}
-
-// Initial Loading
-renderDictionaryHTML();
-renderGrammar();
-renderStories();
-renderCategories();
-generateInfiniteQuestion();
-if (canvas) clearCanvas();
