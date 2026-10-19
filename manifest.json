@@ -1,15 +1,16 @@
 {
-  "name": "English Kids Academy",
-  "short_name": "Kids Academy",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#0f101d",
-  "theme_color": "#7f00ff",
+  "short_name": "LearnEnglish",
+  "name": "تطبيق تعليم الإنجليزية الاحترافي",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3429/3429149.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "https://flaticon.com",
+      "type": "image/png",
+      "sizes": "512x512"
     }
-  ]
+  ],
+  "start_url": "/index.html",
+  "background_color": "#1a1a2e",
+  "theme_color": "#16213e",
+  "display": "standalone",
+  "orientation": "portrait"
 }
