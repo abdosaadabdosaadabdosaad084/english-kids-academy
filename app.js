@@ -1,4 +1,8 @@
-// بيانات الحروف الإنجليزية مع النطق
+// ==========================================
+// English Kids Academy - Main Application JS
+// ==========================================
+
+// قائمة الحروف الإنجليزية مع النطق والكلمات التوضيحية
 const alphabetList = [
     { letter: "A a", sound: "Apple / أبل" },
     { letter: "B b", sound: "Ball / بول" },
@@ -30,13 +34,11 @@ const alphabetList = [
 
 let currentLetterIndex = 0;
 
-// تفعيل التنقل بين الأقسام
+// التنقل بين أقسام التطبيق
 function openSection(sectionId) {
     document.querySelectorAll('.section-view').forEach(sec => sec.style.display = 'none');
     document.getElementById('home-screen').style.display = 'none';
     document.getElementById(sectionId).style.display = 'block';
-
-    playAudioEffect("فتح القسم");
 
     if (sectionId === 'alphabet-section') {
         loadAlphabetLetter();
@@ -58,7 +60,9 @@ function goHome() {
     document.getElementById('home-screen').style.display = 'block';
 }
 
-// 1. منطق السبورة والحروف
+// ------------------------------------------
+// 1. قسم الحروف والسبورة التفاعلية
+// ------------------------------------------
 function loadAlphabetLetter() {
     const currentObj = alphabetList[currentLetterIndex];
     document.getElementById('current-letter-display').innerText = currentObj.letter;
@@ -71,17 +75,19 @@ function nextLetter() {
     loadAlphabetLetter();
 }
 
-// إعداد الرسم على السبورة السوداء
+// إعداد رسم السبورة السوداء
 const canvas = document.getElementById('blackboard');
-const ctx = canvas.getContext('2d');
+const ctx = canvas ? canvas.getContext('2d') : null;
 let painting = false;
 
-canvas.addEventListener('mousedown', startPosition);
-canvas.addEventListener('mouseup', endPosition);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('touchstart', (e) => { startPosition(e.touches[0]); });
-canvas.addEventListener('touchend', endPosition);
-canvas.addEventListener('touchmove', (e) => { draw(e.touches[0]); });
+if (canvas) {
+    canvas.addEventListener('mousedown', startPosition);
+    canvas.addEventListener('mouseup', endPosition);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('touchstart', (e) => { startPosition(e.touches[0]); });
+    canvas.addEventListener('touchend', endPosition);
+    canvas.addEventListener('touchmove', (e) => { draw(e.touches[0]); });
+}
 
 function startPosition(e) {
     painting = true;
@@ -90,15 +96,15 @@ function startPosition(e) {
 
 function endPosition() {
     painting = false;
-    ctx.beginPath();
+    if (ctx) ctx.beginPath();
 }
 
 function draw(e) {
-    if (!painting) return;
+    if (!painting || !ctx) return;
     const rect = canvas.getBoundingClientRect();
     ctx.lineWidth = 6;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#ffcc00'; // خط أصفر مبهج للسبورة
+    ctx.strokeStyle = '#ffcc00'; // أصفر مبهج للكتابة
 
     ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
     ctx.stroke();
@@ -107,31 +113,37 @@ function draw(e) {
 }
 
 function clearBoard() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
 }
 
-// 2. القاموس الذكي ومحرك البحث (آلاف الكلمات والتخزين التلقائي أوفلاين)
+// ------------------------------------------
+// 2. قسم القاموس الشامل (بحث فقط والتخزين التلقائي أوفلاين)
+// ------------------------------------------
 const massiveDictionary = [
     { en: "Apple", ar: "تفاحة" }, { en: "Book", ar: "كتاب" }, { en: "Cat", ar: "قطة" },
     { en: "Dog", ar: "كلب" }, { en: "Elephant", ar: "فيل" }, { en: "Fish", ar: "سمكة" },
     { en: "Sun", ar: "شمس" }, { en: "Moon", ar: "قمر" }, { en: "Water", ar: "ماء" },
     { en: "School", ar: "مدرسة" }, { en: "Teacher", ar: "معلم" }, { en: "Student", ar: "طالب" },
     { en: "Family", ar: "عائلة" }, { en: "Friend", ar: "صديق" }, { en: "House", ar: "منزل" },
-    // يمكن توسيع القائمة برمجياً بآلاف الكلمات لتعمل أوفلاين
+    { en: "Car", ar: "سيارة" }, { en: "Tree", ar: "شجرة" }, { en: "Flower", ar: "زهرة" },
+    { en: "Milk", ar: "حليب" }, { en: "Bread", ar: "خبز" }, { en: "Pen", ar: "قلم" },
+    { en: "Peace", ar: "سلام" }, { en: "Hello", ar: "مرحبا" }, { en: "Good", ar: "جيد" }
 ];
 
 function initDictionary() {
-    // تخزين البيانات محلياً للتخزين التلقائي بدون إنترنت
     localStorage.setItem('offline_dictionary', JSON.stringify(massiveDictionary));
     searchDictionary();
 }
 
 function searchDictionary() {
-    const query = document.getElementById('dict-search-input').value.toLowerCase().trim();
+    const inputElem = document.getElementById('dict-search-input');
+    const query = inputElem ? inputElem.value.toLowerCase().trim() : '';
     const resultsContainer = document.getElementById('dict-results');
-    resultsContainer.innerHTML = '';
+    if (!resultsContainer) return;
 
-    // جلب القاموس المخزّن تلقائياً
+    resultsContainer.innerHTML = '';
     const savedData = JSON.parse(localStorage.getItem('offline_dictionary')) || massiveDictionary;
 
     const filtered = savedData.filter(item => 
@@ -139,7 +151,7 @@ function searchDictionary() {
     );
 
     if (filtered.length === 0) {
-        resultsContainer.innerHTML = `<div class="dict-item"><div class="en-word">No Results</div><div class="ar-word">جاري البحث في محرك جوجل والذاكرة المحلية...</div></div>`;
+        resultsContainer.innerHTML = `<div class="dict-item"><div class="en-word">لا يوجد نتائج</div><div class="ar-word">جرب البحث عن كلمة أخرى...</div></div>`;
         return;
     }
 
@@ -147,34 +159,40 @@ function searchDictionary() {
         const div = document.createElement('div');
         div.className = 'dict-item';
         div.innerHTML = `
-            <div class="en-word" style="font-size: 2rem; font-weight: bold; color: #ffcc00;">${item.en}</div>
-            <div class="ar-word" style="font-size: 1.5rem; color: #33ccff; margin-top: 5px;">${item.ar}</div>
+            <div class="en-word" style="font-size: 1.8rem; font-weight: bold; color: #ffcc00;">${item.en}</div>
+            <div class="ar-word" style="font-size: 1.3rem; color: #33ccff; margin-top: 5px;">${item.ar}</div>
         `;
         div.onclick = () => speakText(item.en);
         resultsContainer.appendChild(div);
     });
 }
 
-// 3. قواعد اللغة الإنجليزية الشاملة من A إلى Z
+// ------------------------------------------
+// 3. قسم قواعد اللغة الإنجليزية الشاملة
+// ------------------------------------------
 function loadGrammarContent() {
     const container = document.getElementById('grammar-content');
+    if (!container) return;
     container.innerHTML = `
         <h3>1. الأزمنة الأساسية (Tenses)</h3>
-        <p><strong>المضارع البسيط (Present Simple):</strong> يعبر عن الحقائق والعادات. مثال: I play football every day. (أنا ألعَبُ كرة القدم كل يوم).</p>
-        <p><strong>الماضي البسيط (Past Simple):</strong> يعبر عن حدث وقع وانتهى في الماضي. مثال: She visited Cairo yesterday. (هي زارت القاهرة أمس).</p>
+        <p><strong>المضارع البسيط (Present Simple):</strong> يعبر عن الحقائق والعادات اليومية.<br>مثال: I play football every day. (أنا ألعَبُ كرة القدم كل يوم).</p>
+        <p><strong>الماضي البسيط (Past Simple):</strong> يعبر عن حدث بدأ وانتهى في الماضي.<br>مثال: She visited Cairo yesterday. (هي زارت القاهرة أمس).</p>
         
         <h3>2. الأفعال المساعدة (Auxiliary Verbs)</h3>
         <p>استخدام (Verb to be): am, is, are للمضارع / was, were للماضي.</p>
         <p>استخدام (Verb to do): do, does للنفي والسؤال في المضارع.</p>
 
         <h3>3. الضمائر (Pronouns)</h3>
-        <p>ضمائر الفاعل: I (أنا), He (هو), She (هي), It (لغير العצר), We (نحن), They (هم), You (أنت/أنتم).</p>
+        <p>ضمائر الفاعل: I (أنا), He (هو), She (هي), It (لغير العاقل), We (نحن), They (هم), You (أنت/أنتم).</p>
     `;
 }
 
-// 4. المحادثات والحوارات المكثفة
+// ------------------------------------------
+// 4. قسم المحادثات والحوارات المكثفة
+// ------------------------------------------
 function loadConversationsContent() {
     const container = document.getElementById('conversations-content');
+    if (!container) return;
     container.innerHTML = `
         <h3>حوار التعارف (Greetings)</h3>
         <p style="color: #ffcc00; font-size: 1.3rem;">- أحمد: Hello! What is your name?</p>
@@ -188,9 +206,12 @@ function loadConversationsContent() {
     `;
 }
 
-// 5. المجموعات والمجالات (الأرقام، البحر، المطار، الدين، المواصلات)
+// ------------------------------------------
+// 5. قسم المجموعات والمجالات
+// ------------------------------------------
 function loadCategoriesContent() {
     const container = document.getElementById('categories-content');
+    if (!container) return;
     container.innerHTML = `
         <h3>🔢 الأرقام (Numbers)</h3>
         <p>1: One (وان) | 2: Two (تو) | 3: Three (ثري) | 4: Four (فور) | 5: Five (فايف)</p>
@@ -209,7 +230,9 @@ function loadCategoriesContent() {
     `;
 }
 
-// 6. الألعاب التعليمية (أخضر صحيح، أحمر خطأ، مع تفعيل الصوت)
+// ------------------------------------------
+// 6. قسم الألعاب التفاعلية (أخضر للصحيح وأحمر للخطأ مع الصوت)
+// ------------------------------------------
 const questionsList = [
     { q: "ما هي ترجمة كلمة (Cat)؟", options: ["قطة", "كلب", "أسد", "فيل"], correct: 0 },
     { q: "ما هي ترجمة كلمة (Apple)؟", options: ["موز", "تفاحة", "برتقال", "عنب"], correct: 1 },
@@ -225,6 +248,7 @@ function loadGameQuestion() {
     document.getElementById('game-feedback').innerText = '';
     
     const optionsContainer = document.getElementById('game-options');
+    if (!optionsContainer) return;
     optionsContainer.innerHTML = '';
     
     currentQ.options.forEach((opt, index) => {
@@ -241,14 +265,14 @@ function checkAnswer(selectedIndex, correctIndex, buttonElement) {
     allButtons.forEach(b => b.disabled = true);
 
     if (selectedIndex === correctIndex) {
-        buttonElement.classList.add('correct'); // أخضر للإجابة الصح
+        buttonElement.classList.add('correct');
         document.getElementById('game-feedback').innerHTML = "<span style='color: #22c55e;'>إجابة صحيحة برافو عليك! 🎉</span>";
-        playAudioEffect("إجابة صحيحة");
+        speakText("Excellent! Correct answer.");
     } else {
-        buttonElement.classList.add('wrong'); // أحمر للإجابة الخطأ
+        buttonElement.classList.add('wrong');
         allButtons[correctIndex].classList.add('correct');
         document.getElementById('game-feedback').innerHTML = "<span style='color: #ef4444;'>إجابة خاطئة، حاول مرة أخرى! ❌</span>";
-        playAudioEffect("إجابة خاطئة");
+        speakText("Wrong answer, try again.");
     }
 
     setTimeout(() => {
@@ -257,11 +281,13 @@ function checkAnswer(selectedIndex, correctIndex, buttonElement) {
     }, 2000);
 }
 
-// 7. المترجم الصوتي (تحويل الصوت العربي إلى الإنجليزية بخط عريض وواضح)
+// ------------------------------------------
+// 7. قسم المترجم الصوتي (الترجمة الحقيقية الفورية من العربية إلى الإنجليزية)
+// ------------------------------------------
 function startVoiceRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("متصفحك لا يدعم التعرف على الصوت.");
+        alert("عذراً، متصفحك لا يدعم التعرف على الصوت. يُفضل استخدام متصفح Google Chrome.");
         return;
     }
 
@@ -269,50 +295,64 @@ function startVoiceRecognition() {
     recognition.lang = 'ar-SA';
     recognition.start();
 
-    document.getElementById('voice-arabic-text').innerText = "جاري الاستماع لصوتك...";
+    const arOutput = document.getElementById('voice-arabic-text');
+    const enOutput = document.getElementById('voice-english-text');
 
-    recognition.onresult = function(event) {
-        const speechText = event.results[0][0].transcript;
-        document.getElementById('voice-arabic-text').innerText = "العربية: " + speechText;
+    if (arOutput) arOutput.innerText = "جاري الاستماع لصوتك... 🎙️";
+    if (enOutput) enOutput.innerText = "جاري الترجمة...";
 
-        // ترجمة فورية تجريبية ذكية للمثال
-        let translated = "Translation in English: " + speechText;
-        if(speechText.includes("مرحباً")) translated = "Hello / Hi";
-        if(speechText.includes("كيف حالك")) translated = "How are you?";
-        if(speechText.includes("شكراً")) translated = "Thank you";
+    recognition.onresult = async function(event) {
+        const spokenText = event.results[0][0].transcript;
+        if (arOutput) arOutput.innerText = "العربية: " + spokenText;
 
-        document.getElementById('voice-english-text').innerText = translated;
-        speakText(translated);
+        try {
+            // طلب الترجمة الفورية من API مجاني وبدون قيود
+            const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(spokenText)}&langpair=ar|en`);
+            const data = await response.json();
+            
+            if (data && data.responseData && data.responseData.translatedText) {
+                const translatedText = data.responseData.translatedText;
+                if (enOutput) enOutput.innerText = "English: " + translatedText;
+                
+                // نطق الترجمة فورياً باللغة الإنجليزية
+                speakText(translatedText);
+            } else {
+                if (enOutput) enOutput.innerText = "English: Translation failed";
+            }
+        } catch (error) {
+            console.error("Translation Error:", error);
+            if (enOutput) enOutput.innerText = "English: (تأكد من الاتصال بالإنترنت للترجمة الفورية)";
+        }
+    };
+
+    recognition.onerror = function() {
+        if (arOutput) arOutput.innerText = "حدث خطأ أثناء الاستماع، حاول مرة أخرى.";
     };
 }
 
-// محرك النطق الصوتي التفاعلي
+// محرك نطق الأصوات
 function speakText(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    window.speechSynthesis.speak(utterance);
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+    }
 }
 
-function playAudioEffect(type) {
-    speakText(type);
-}
-
-// برمجة زر التثبيت (Install PWA)
+// برمجة زر تثبيت التطبيق PWA
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     const installBtn = document.getElementById('install-btn');
-    installBtn.style.display = 'block';
-
-    installBtn.addEventListener('click', () => {
-        installBtn.style.display = 'none';
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-            }
-            deferredPrompt = null;
+    if (installBtn) {
+        installBtn.style.display = 'block';
+        installBtn.addEventListener('click', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => {
+                deferredPrompt = null;
+            });
         });
-    });
+    }
 });
