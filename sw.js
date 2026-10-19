@@ -1,4 +1,4 @@
-const CACHE_NAME = 'english-kids-academy-v2';
+const CACHE_NAME = 'english-kids-academy-v3';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -31,12 +31,11 @@ self.addEventListener('activate', (e) => {
     self.clients.claim();
 });
 
+// تجديد البيانات من الإنترنت فوراً إن وجدت لضمان ظهور التحديثات
 self.addEventListener('fetch', (e) => {
     e.respondWith(
-        caches.match(e.request).then((cachedResponse) => {
-            return cachedResponse || fetch(e.request).catch(() => {
-                return caches.match('./index.html');
-            });
+        fetch(e.request).catch(() => {
+            return caches.match(e.request) || caches.match('./index.html');
         })
     );
 });
