@@ -3,130 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy</title>
+    <title>تعلم الإنجليزية الاحترافي</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#7f00ff">
 </head>
 <body>
 
-    <!-- شريط تثبيت PWA -->
-    <div id="install-banner" class="install-banner" style="display:none;">
-        <span>📲 قم بتثبيت التطبيق على هاتفك ليعمل بدون إنترنت!</span>
-        <button onclick="installPWA()">تثبيت الآن</button>
-    </div>
+    <header>
+        <h1>نظام تعليم الإنجليزية الذكي 🎓</h1>
+        <p>رحلتك من الصفر إلى الاحتراف</p>
+    </header>
 
-    <!-- الصفحة الرئيسية / لوحة التحكم -->
-    <div id="sec-dashboard" class="section-view active">
-        <header class="app-header">
-            <h1>English Kids Academy</h1>
-            <p>أكاديمية الإنجليزية للأطفال والكبار</p>
-        </header>
+    <main>
+        <!-- قسم اختيار المستويات -->
+        <section class="levels-container">
+            <button class="level-btn active" onclick="switchLevel('kids')">🧒 مرحلة البراعم (الأطفال)</button>
+            <button class="level-btn" onclick="switchLevel('beginners')">🌱 المبتدئين (الشباب)</button>
+            <button class="level-btn" onclick="switchLevel('advanced')">🚀 المحادثة والاحتراف</button>
+        </section>
 
-        <main class="grid-container">
-            <div class="dash-card" onclick="showSection('sec-alphabet')">
-                <div class="card-icon">🔤</div>
-                <h3>الحروف والسبورة</h3>
-                <p>تتبع ونطق وتنقل سريع</p>
+        <!-- منطقة عرض المحتوى التعليمي -->
+        <section class="content-card">
+            <div id="content-display">
+                <!-- يتم توليد المحتوى هنا عبر الـ JavaScript -->
             </div>
-
-            <div class="dash-card" onclick="showSection('sec-dictionary')">
-                <div class="card-icon">📖</div>
-                <h3>قاموس المورد الشامل</h3>
-                <p>محرك بحث شامل لكافة مجالات الحياة</p>
-            </div>
-
-            <div class="dash-card" onclick="showSection('sec-grammar')">
-                <div class="card-icon">🧩</div>
-                <h3>قواعد اللغة الإنجليزية</h3>
-                <p>ملف تعليمي وموسوعي شامل من A إلى Z</p>
-            </div>
-
-            <div class="dash-card" onclick="showSection('sec-stories')">
-                <div class="card-icon">💬</div>
-                <h3>المحادثات والحوارات</h3>
-                <p>حوارات مكثفة في كافة قطاعات الحياة</p>
-            </div>
-
-            <div class="dash-card" onclick="showSection('sec-categories')">
-                <div class="card-icon">🔢</div>
-                <h3>المجموعات والمجالات</h3>
-                <p>الأرقام، المطار، البحر، الدين، المواصلات</p>
-            </div>
-
-            <div class="dash-card" onclick="showSection('sec-parents')">
-                <div class="card-icon">👥</div>
-                <h3>لوحة ولي الأمر</h3>
-                <p>إعدادات وتغيير الرقم السري</p>
-            </div>
-        </main>
-    </div>
-
-    <!-- قسم الحروف والسبورة -->
-    <div id="sec-alphabet" class="section-view">
-        <button class="btn-back" onclick="showSection('sec-dashboard')">⬅️ العودة للرئيسية</button>
-        <div class="interactive-card" style="text-align:center;">
-            <h2 id="board-letter-title" style="color:var(--accent-yellow);">سبورة الرسم والتتبع</h2>
-            
-            <div style="margin: 15px 0;">
-                <canvas id="drawing-canvas"></canvas>
-            </div>
-
-            <div style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
-                <button class="stage-btn" onclick="clearBoard()">🗑️ مسح السبورة</button>
-                <button class="stage-btn" style="background:var(--accent-green);" onclick="nextLetter()">➡️ الحرف التالي</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- قسم القاموس -->
-    <div id="sec-dictionary" class="section-view">
-        <button class="btn-back" onclick="showSection('sec-dashboard')">⬅️ العودة للرئيسية</button>
-        <div id="dict-container"></div>
-    </div>
-
-    <!-- قسم القواعد -->
-    <div id="sec-grammar" class="section-view">
-        <button class="btn-back" onclick="showSection('sec-dashboard')">⬅️ العودة للرئيسية</button>
-        <div id="grammar-container"></div>
-    </div>
-
-    <!-- قسم المحادثات والقصص -->
-    <div id="sec-stories" class="section-view">
-        <button class="btn-back" onclick="showSection('sec-dashboard')">⬅️ العودة للرئيسية</button>
-        <div id="stories-container"></div>
-    </div>
-
-    <!-- قسم المجموعات والمجالات -->
-    <div id="sec-categories" class="section-view">
-        <button class="btn-back" onclick="showSection('sec-dashboard')">⬅️ العودة للرئيسية</button>
-        <div id="categories-container"></div>
-    </div>
-
-    <!-- قسم منطقة ولي الأمر -->
-    <div id="sec-parents" class="section-view">
-        <button class="btn-back" onclick="showSection('sec-dashboard')">⬅️ العودة للرئيسية</button>
-        
-        <!-- حماية الرقم السري -->
-        <div id="pin-overlay" class="interactive-card" style="text-align:center;">
-            <h3 style="color:var(--accent-yellow);">🔒 منطقة ولي الأمر (مغلقة)</h3>
-            <p style="color:var(--text-dim); margin:8px 0;">يرجى إدخال الرقم السري للدخول (الافتراضي: 1234)</p>
-            <input type="password" id="pin-input" placeholder="أدخل الرقم السري" style="padding:10px; border-radius:8px; border:1px solid var(--accent-purple); text-align:center; font-size:1.2rem; width:150px;">
-            <button class="btn-action" style="margin-top:10px;" onclick="checkPin()">تأكيد الدخول</button>
-            <p id="pin-error" style="color:var(--accent-pink); display:none; margin-top:8px;">❌ الرقم السري غير صحيح!</p>
-        </div>
-
-        <div class="interactive-card" style="margin-top:15px;">
-            <h3 style="color:var(--accent-green);">⚙️ إعدادات التحكم</h3>
-            <div style="margin-top:10px;">
-                <label style="color:#fff; display:block; margin-bottom:5px;">تغيير الرقم السري:</label>
-                <input type="password" id="new-pin-input" placeholder="الرقم السري الجديد" style="padding:8px; border-radius:6px; border:1px solid #444; width:160px;">
-                <button class="stage-btn" onclick="changePin()">حفظ</button>
-                <p id="change-pin-msg" style="margin-top:5px; font-size:0.9rem;"></p>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <script src="app.js"></script>
+    <script>
+        // تسجيل الـ Service Worker لتشغيل التطبيق بدون إنترنت
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
 </body>
 </html>
