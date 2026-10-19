@@ -3,62 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy - أكاديمية الإنجليزية للأطفال</title>
+    <title>قواعد اللغة الإنجليزية للطلاب</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <div class="app-container">
-        <!-- رأس التطبيق -->
-        <header class="app-header">
-            <h1>English Kids Academy</h1>
-            <p>أكاديمية الإنجليزية للأطفال</p>
-        </header>
 
-        <!-- قسم الحروف والسبورة -->
-        <section id="letters-board-section" class="card-section">
-            <div class="navigation-header">
-                <button id="back-btn" class="btn secondary-btn">← العودة</button>
-                <span id="instruction-text">اضغط على الحرف للتعلم والانتقال للتالي</span>
-            </div>
+    <header>
+        <h1>تطبيق قواعد اللغة الإنجليزية</h1>
+    </header>
 
-            <!-- 1. الحروف في الأعلى -->
-            <div id="letters-container" class="letters-bar">
-                <!-- يتم توليد الحروف برمجياً هنا A-Z -->
-            </div>
+    <main>
+        <!-- هذا هو المكان الذي ستظهر فيه الفصول الـ 15 تلقائياً -->
+        <div id="chapters-container"></div>
+    </main>
 
-            <!-- 2. السبورة في الأسفل -->
-            <div class="board-wrapper">
-                <h3 id="board-title">سبورة الرسم والتتبع (الحرف: A)</h3>
-                <div id="blackboard" class="blackboard-area">
-                    <!-- الحرف الباهت للتتبع خلف السبورة -->
-                    <span id="ghost-letter" class="ghost-letter">A</span>
-                    <canvas id="drawing-canvas"></canvas>
-                </div>
-                <div class="board-controls">
-                    <button id="next-letter-btn" class="btn primary-btn">الحرف التالي ←</button>
-                    <button id="clear-board-btn" class="btn danger-btn">🗑️ مسح السبورة</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- قسم المترجم الصوتي والألعاب -->
-        <section id="tools-section" class="tools-container">
-            <div id="translator-card" class="card">
-                <p>تحدث بأي كلمة أو جملة باللغة العربية للترجمة المباشرة:</p>
-                <button id="speak-btn" class="btn voice-btn">🎤 اضغط هنا والتحدث بالعربية</button>
-                <div id="translation-result" class="result-box"></div>
-            </div>
-            
-            <div id="games-card" class="card">
-                <h3>ألعاب تفاعلية ممتعة</h3>
-                <div id="games-grid" class="games-grid">
-                    <button class="btn game-btn" onclick="startLetterGame()">لعبة تطابق الحروف</button>
-                    <button class="btn game-btn" onclick="startAudioQuizGame()">لعبة اختبار الصوت</button>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <script src="script.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
 </body>
 </html>
