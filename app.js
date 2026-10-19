@@ -121,7 +121,7 @@ window.addEventListener('popstate', () => {
     document.getElementById('sec-dashboard').classList.add('active');
 });
 
-// ==================== رسم ودعم سبورة الحروف التفاعلية ====================
+// ==================== رسم ودعم سبورة الحروف التفاعلية (باهت + نقر للتالي) ====================
 function initBoardWithLetter(letter) {
     currentSelectedLetter = letter;
     speak(letter);
@@ -136,23 +136,28 @@ function initBoardWithLetter(letter) {
 
     const ctx = canvas.getContext('2d');
     
-    canvas.width = canvas.offsetWidth || 300;
+    canvas.width = 300;
     canvas.height = 220;
     
+    // خلفية سوداء للسبورة
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    ctx.font = 'bold 120px sans-serif';
-    ctx.fillStyle = 'rgba(255, 215, 0, 0.35)';
+    // رسم الحرف بشكل باهت جداً (شفاف) ليتمكن الطفل من التتبع فوقه
+    ctx.font = 'bold 130px Arial, sans-serif';
+    ctx.fillStyle = 'rgba(255, 215, 0, 0.25);'; // لون ذهبي باهت للتتبع
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(letter, canvas.width / 2, canvas.height / 2);
 
     let isDrawing = false;
-    
+    let hasDrawn = false; // تتبع ما إذا كان الطفل قد رسم شيئاً
+
     function startDrawing(e) {
         isDrawing = true;
+        hasDrawn = true;
         draw(e);
+        if (e.cancelable) e.preventDefault();
     }
     
     function stopDrawing() {
@@ -166,9 +171,9 @@ function initBoardWithLetter(letter) {
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
         
-        ctx.lineWidth = 10;
+        ctx.lineWidth = 12;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = '#00f2fe';
+        ctx.strokeStyle = '#00f2fe'; // لون القلم المضيء
 
         ctx.lineTo(clientX - rect.left, clientY - rect.top);
         ctx.stroke();
@@ -176,6 +181,7 @@ function initBoardWithLetter(letter) {
         ctx.moveTo(clientX - rect.left, clientY - rect.top);
     }
 
+    // دعم اللمس والفأرة للرسم
     canvas.onmousedown = startDrawing;
     canvas.onmouseup = stopDrawing;
     canvas.onmousemove = draw;
@@ -183,6 +189,14 @@ function initBoardWithLetter(letter) {
     canvas.ontouchstart = startDrawing;
     canvas.ontouchend = stopDrawing;
     canvas.ontouchmove = draw;
+
+    // عند النقر البسيط على السبورة (بدون رسم)، يتم الانتقال للحرف التالي تلقائياً
+    canvas.onclick = function() {
+        if (!hasDrawn) {
+            nextLetter();
+        }
+        hasDrawn = false;
+    };
 }
 
 function clearBoard() {
