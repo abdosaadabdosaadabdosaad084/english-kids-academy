@@ -68,16 +68,13 @@
     <!-- 1. قسم الحروف والسبورة -->
     <section id="alphabet-section" class="section-view" style="display: none;">
         <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
-        <h2 class="section-title">الحروف والسبورة التفاعلية</h2>
         
         <!-- مربع وشريط الحروف مجمعة فوق السبورة -->
         <div id="letters-grid" class="letters-grid-container"></div>
 
         <div class="alphabet-container">
-            <p class="instruction-text">تتبع الحرف الباهت وقم بالكتابة فوقه على السبورة السوداء:</p>
-            
-            <!-- السبورة السوداء الرسم داخلها -->
-            <canvas id="blackboard" width="320" height="280"></canvas>
+            <!-- السبورة السوداء الرسم والتتبع داخلها مباشرة -->
+            <canvas id="blackboard" width="320" height="300"></canvas>
             
             <div class="board-controls">
                 <button class="action-btn clear-btn" onclick="clearBoard()">مسح السبورة 🧹</button>
@@ -86,7 +83,7 @@
         </div>
     </section>
 
-    <!-- 2. قسم القاموس الشامل (بحث فقط بدون فهرس ثابت) -->
+    <!-- 2. قسم القاموس الشامل (بحث فقط) -->
     <section id="dictionary-section" class="section-view" style="display: none;">
         <button class="back-btn" onclick="goHome()">الرجوع للرئيسية 🏠</button>
         <div class="search-box-container">
