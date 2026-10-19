@@ -1,5 +1,5 @@
 // ==========================================
-// English Kids Academy - Main Application JS
+// English Kids Academy - Professional App JS
 // ==========================================
 
 const alphabetList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -45,7 +45,9 @@ function goHome() {
     document.getElementById('home-screen').style.display = 'block';
 }
 
-// 1. قسم الحروف والسبورة
+// ------------------------------------------
+// 1. قسم الحروف والسبورة (نطق اسم الحرف + شبكة مجمعة + تتبع باهت واضح)
+// ------------------------------------------
 function renderLettersGrid() {
     const grid = document.getElementById('letters-grid');
     if (!grid) return;
@@ -66,11 +68,7 @@ function renderLettersGrid() {
 function loadAlphabetLetter() {
     renderLettersGrid();
     const currentLetter = alphabetList[currentLetterIndex];
-    
-    // نطق اسم الحرف فقط
-    speakText(currentLetter);
-    
-    // رسم الحرف الباهت مباشرة داخل السبورة
+    speakText(currentLetter); // نطق اسم الحرف صريحاً
     drawFaintLetterOnBoard(currentLetter);
 }
 
@@ -85,7 +83,7 @@ function drawFaintLetterOnBoard(letterText) {
 
     ctx.save();
     ctx.font = "bold 180px 'Segoe UI', Arial, sans-serif";
-    ctx.fillStyle = "rgba(255, 255, 255, 0.35)"; // لون باهت وواضح جداً للتتبع
+    ctx.fillStyle = "rgba(255, 255, 255, 0.35)"; // لون باهت واضح جداً للتتبع
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(letterText, canvas.width / 2, canvas.height / 2);
@@ -111,7 +109,7 @@ function draw(e) {
     const rect = canvas.getBoundingClientRect();
     ctx.lineWidth = 10;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#ffcc00';
+    ctx.strokeStyle = '#ffcc00'; // لون أصفر مبهج للكتابة
 
     ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
     ctx.stroke();
@@ -119,14 +117,17 @@ function draw(e) {
     ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
 }
 
-// 2. قسم القاموس
+// ------------------------------------------
+// 2. القاموس الشامل (بحث فقط والتخزين التلقائي أوفلاين)
+// ------------------------------------------
 const massiveDictionary = [
     { en: "Apple", ar: "تفاحة" }, { en: "Book", ar: "كتاب" }, { en: "Cat", ar: "قطة" },
     { en: "Dog", ar: "كلب" }, { en: "Elephant", ar: "فيل" }, { en: "Fish", ar: "سمكة" },
     { en: "Sun", ar: "شمس" }, { en: "Moon", ar: "قمر" }, { en: "Water", ar: "ماء" },
     { en: "School", ar: "مدرسة" }, { en: "Teacher", ar: "معلم" }, { en: "Student", ar: "طالب" },
     { en: "Family", ar: "عائلة" }, { en: "Friend", ar: "صديق" }, { en: "House", ar: "منزل" },
-    { en: "Peace", ar: "سلام" }, { en: "Hello", ar: "مرحبا" }, { en: "Good", ar: "جيد" }
+    { en: "Car", ar: "سيارة" }, { en: "Tree", ar: "شجرة" }, { en: "Peace", ar: "سلام" },
+    { en: "Hospital", ar: "مستشفى" }, { en: "Airport", ar: "مطار" }, { en: "Computer", ar: "حاسوب" }
 ];
 
 function initDictionary() {
@@ -148,7 +149,7 @@ function searchDictionary() {
     );
 
     if (filtered.length === 0) {
-        resultsContainer.innerHTML = `<div class="dict-item"><div class="en-word">لا توجد نتائج</div><div class="ar-word">جرب كلمة أخرى...</div></div>`;
+        resultsContainer.innerHTML = `<div class="dict-item"><div class="en-word">لا توجد نتائج</div><div class="ar-word">جرب البحث عن كلمة أخرى...</div></div>`;
         return;
     }
 
@@ -164,78 +165,99 @@ function searchDictionary() {
     });
 }
 
-// 3. القواعد الشاملة
+// ------------------------------------------
+// 3. قسم قواعد اللغة الإنجليزية (موسوعة تفصيلية من A إلى Z)
+// ------------------------------------------
 function loadGrammarContent() {
     const container = document.getElementById('grammar-content');
     if (!container) return;
     container.innerHTML = `
-        <div style="text-align: right;">
-            <h3 style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 5px;">1. زمن المضارع البسيط (Present Simple Tense)</h3>
-            <p><strong>الاستخدام:</strong> يعبر عن الحقائق العلمية والعادات اليومية المكررة.</p>
-            <p><strong>التكويـن:</strong></p>
-            <ul style="padding-right: 20px; line-height: 2;">
-                <li>مع (I, They, We, You): نضع الفعل في المصدر بدون إضافة. (مثال: They play football).</li>
-                <li>مع (He, She, It): نضيف للفعل (s / es). (مثال: She plays football).</li>
-            </ul>
+        <div style="text-align: right; line-height: 1.8;">
+            <h3 style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 5px;">📚 المستوى الأول: المضارع البسيط (Present Simple)</h3>
+            <p><strong>الاستخدام:</strong> يعبر عن الحقائق الثابتة والعادات اليومية.</p>
+            <p><strong>التركيبة (Structure):</strong> الفاعل + الفعل في المصدر (مع الجمع) أو مضافاً إليه (s/es) مع المفرد.</p>
+            <p style="color: #33ccff;">مثال: I read books every night. / She reads books.</p>
 
-            <h3 style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-top: 20px;">2. زمن الماضي البسيط (Past Simple Tense)</h3>
-            <p><strong>الاستخدام:</strong> يعبر عن حدث بدأ وانتهى تماماً في الماضي.</p>
-            <p><strong>التكويـن:</strong> التصريف الثاني للفعل بإضافة (ed) للأفعال المنتظمة.</p>
-            <p>مثال: I visited my grandmother yesterday. (أنا زرت جدتي أمس).</p>
+            <h3 style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-top: 25px;">📚 المستوى الثاني: الماضي البسيط (Past Simple)</h3>
+            <p><strong>الاستخدام:</strong> للتعبير عن أفعال حدثت وانتهت في الماضي.</p>
+            <p><strong>التركيبة (Structure):</strong> الفاعل + التصريف الثاني للفعل (إضافة ed للأفعال المنتظمة).</p>
+            <p style="color: #33ccff;">مثال: We played football yesterday.</p>
 
-            <h3 style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-top: 20px;">3. الضمائر باللغة الإنجليزية (Pronouns)</h3>
-            <p><strong>ضمائر الفاعل:</strong> I (أنا) | He (هو) | She (هي) | It (هو/هي لغير العاقل) | We (نحن) | They (هم) | You (أنت/أنتم).</p>
+            <h3 style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-top: 25px;">📚 المستوى الثالث: الأفعال المساعدة والضمائر</h3>
+            <p><strong>Verb to be:</strong> (am, is,are) للمضارع | (was, were) للماضي.</p>
+            <p><strong>ضمائر الفاعل (Subject Pronouns):</strong> I, He, She, It, We, They, You.</p>
         </div>
     `;
 }
 
-// 4. المحادثات
+// ------------------------------------------
+// 4. قسم المحادثات والحوارات الحياتية الكاملة
+// ------------------------------------------
 function loadConversationsContent() {
     const container = document.getElementById('conversations-content');
     if (!container) return;
     container.innerHTML = `
-        <div style="text-align: right;">
-            <h3 style="color: #33ccff; border-bottom: 2px solid #33ccff; padding-bottom: 5px;">🗣️ حوار التعارف والترحيب (Greetings)</h3>
-            <p style="color: #ffcc00; font-size: 1.2rem;">- Ali: Hello! What is your name?</p>
-            <p style="color: #ffffff;">(علي: أهلاً! ما اسمك؟)</p>
-            <p style="color: #33ccff; font-size: 1.2rem;">- Sara: My name is Sara. Nice to meet you!</p>
-            <p style="color: #ffffff;">(سارة: اسمي سارة. سررت بلقائك!)</p>
+        <div style="text-align: right; line-height: 1.8;">
+            <h3 style="color: #33ccff; border-bottom: 2px solid #33ccff; padding-bottom: 5px;">🤝 حوار التعارف اليومي (Greetings)</h3>
+            <p style="color: #ffcc00; font-size: 1.2rem;">- Ahmed: Hello! How are you today?</p>
+            <p style="color: #fff;">(أحمد: أهلاً! كيف حالك اليوم؟)</p>
+            <p style="color: #33ccff; font-size: 1.2rem;">- John: I am fine, thank you. And you?</p>
+            <p style="color: #fff;">(جون: أنا بخير، شكراً لك. وأنت؟)</p>
 
-            <h3 style="color: #33ccff; border-bottom: 2px solid #33ccff; padding-bottom: 5px; margin-top: 20px;">✈️ حوار في المطار (At the Airport)</h3>
-            <p style="color: #ffcc00; font-size: 1.2rem;">- Officer: May I see your passport, please?</p>
-            <p style="color: #ffffff;">(الموظف: هل يمكنني رؤية جواز سفرك من فضلك؟)</p>
-            <p style="color: #33ccff; font-size: 1.2rem;">- Traveler: Here it is. Thank you.</p>
-            <p style="color: #ffffff;">(المسافر: تفضل، شكراً لك.)</p>
+            <h3 style="color: #33ccff; border-bottom: 2px solid #33ccff; padding-bottom: 5px; margin-top: 25px;">🛒 حوار في التسوق (Shopping)</h3>
+            <p style="color: #ffcc00; font-size: 1.2rem;">- Customer: How much is this shirt?</p>
+            <p style="color: #fff;">(الزبون: كم سعر هذا القميص؟)</p>
+            <p style="color: #33ccff; font-size: 1.2rem;">- Seller: It is twenty dollars.</p>
+            <p style="color: #fff;">(البائع: إنه عشرون دولاراً.)</p>
         </div>
     `;
 }
 
-// 5. المجموعات
+// ------------------------------------------
+// 5. قسم المجموعات والمجالات (مع جمل كاملة)
+// ------------------------------------------
 function loadCategoriesContent() {
     const container = document.getElementById('categories-content');
     if (!container) return;
     container.innerHTML = `
-        <div style="text-align: right;">
-            <h3 style="color: #ffcc00;">🔢 الأرقام (Numbers)</h3>
-            <p>1: One | 2: Two | 3: Three | 4: Four | 5: Five | 6: Six | 7: Seven | 8: Eight | 9: Nine | 10: Ten</p>
+        <div style="text-align: right; line-height: 1.8;">
+            <h3 style="color: #ffcc00;">🔢 الأرقام والعد (Numbers)</h3>
+            <p>1: One | 2: Two | 3: Three | 4: Four | 5: Five | 10: Ten | 100: Hundred</p>
 
-            <h3 style="color: #ffcc00; margin-top: 15px;">🚗 المواصلات (Transportation)</h3>
-            <p>Car (سيارة) | Bus (حافلة) | Train (قطار) | Plane (طائرة) | Bicycle (دراجة)</p>
+            <h3 style="color: #ffcc00; margin-top: 20px;">🚗 المواصلات والسفر (Transport)</h3>
+            <p>Car (سيارة) - I have a red car.<br>Plane (طائرة) - The plane flies fast.</p>
 
-            <h3 style="color: #ffcc00; margin-top: 15px;">🌊 البحر والطبيعة (Sea & Nature)</h3>
-            <p>Fish (سمكة) | Sea (بحر) | Wave (موجة) | Sun (شمس) | Tree (شجرة)</p>
+            <h3 style="color: #ffcc00; margin-top: 20px;">🌊 الطبيعة والبحر (Nature)</h3>
+            <p>Sea (بحر) - The sea is blue.<br>Sun (شمس) - The sun shines brightly.</p>
 
-            <h3 style="color: #ffcc00; margin-top: 15px;">🕌 الدين والأخلاق (Religion & Morals)</h3>
-            <p>Peace (سلام) | Faith (إيمان) | Truth (صدق) | Kindness (طيبة)</p>
+            <h3 style="color: #ffcc00; margin-top: 20px;">🕌 الأخلاق والقيم (Morals)</h3>
+            <p>Peace (سلام) - We love peace.<br>Kindness (اللطف) - Kindness is great.</p>
         </div>
     `;
 }
 
-// 6. الألعاب
+// ------------------------------------------
+// 6. الألعاب والتحديات الذكية (مع أخضر صحيح وأحمر خطأ وتفسير)
+// ------------------------------------------
 const questionsList = [
-    { q: "ما هي ترجمة كلمة (Cat)؟", options: ["قطة", "كلب", "أسد", "فيل"], correct: 0 },
-    { q: "ما هي ترجمة كلمة (Apple)؟", options: ["موز", "تفاحة", "برتقال", "عنب"], correct: 1 },
-    { q: "اختر الكلمة الصحيحة لـ (Water):", options: ["هواء", "ماء", "نار", "تراب"], correct: 1 }
+    { 
+        q: "ما هي ترجمة كلمة (Cat) الصحيحة؟", 
+        options: ["قطة", "كلب", "أسد", "فيل"], 
+        correct: 0, 
+        explanation: "كلمة Cat تعني قطة باللغة العربية، بينما كلب تعني Dog." 
+    },
+    { 
+        q: "ما هي ترجمة كلمة (Apple)؟", 
+        options: ["موز", "تفاحة", "برتقال", "عنب"], 
+        correct: 1, 
+        explanation: "كلمة Apple تعني تفاحة." 
+    },
+    { 
+        q: "اختر الكلمة الإنجليزية المناسبة لـ (ماء):", 
+        options: ["Air", "Water", "Fire", "Earth"], 
+        correct: 1, 
+        explanation: "Water تعني ماء." 
+    }
 ];
 let currentQuestionIndex = 0;
 
@@ -254,37 +276,41 @@ function loadGameQuestion() {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         btn.innerText = opt;
-        btn.onclick = () => checkAnswer(index, currentQ.correct, btn);
+        btn.onclick = () => checkAnswer(index, currentQ.correct, currentQ.explanation, btn);
         optionsContainer.appendChild(btn);
     });
 }
 
-function checkAnswer(selectedIndex, correctIndex, buttonElement) {
+function checkAnswer(selectedIndex, correctIndex, explanationText, buttonElement) {
     const allButtons = document.querySelectorAll('.option-btn');
     allButtons.forEach(b => b.disabled = true);
 
+    const feedbackElem = document.getElementById('game-feedback');
+
     if (selectedIndex === correctIndex) {
-        buttonElement.classList.add('correct');
-        document.getElementById('game-feedback').innerHTML = "<span style='color: #22c55e;'>إجابة صحيحة برافو عليك! 🎉</span>";
+        buttonElement.classList.add('correct'); // أخضر للإجابة الصح
+        feedbackElem.innerHTML = `<span style='color: #22c55e;'>إجابة صحيحة برافو عليك! 🎉<br><small>${explanationText}</small></span>`;
         speakText("Correct!");
     } else {
-        buttonElement.classList.add('wrong');
+        buttonElement.classList.add('wrong'); // أحمر للإجابة الخطأ
         allButtons[correctIndex].classList.add('correct');
-        document.getElementById('game-feedback').innerHTML = "<span style='color: #ef4444;'>إجابة خاطئة، حاول مرة أخرى! ❌</span>";
+        feedbackElem.innerHTML = `<span style='color: #ef4444;'>إجابة خاطئة! ❌<br><small>${explanationText}</small></span>`;
         speakText("Wrong answer!");
     }
 
     setTimeout(() => {
         currentQuestionIndex++;
         loadGameQuestion();
-    }, 2000);
+    }, 3500);
 }
 
-// 7. المترجم الصوتي
+// ------------------------------------------
+// 7. المترجم الصوتي الفوري
+// ------------------------------------------
 function startVoiceRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("عذراً، متصفحك لا يدعم التعرف على الصوت. يُفضل استخدام متصفح Google Chrome.");
+        alert("متصفحك لا يدعم التعرف على الصوت. جرب متصفح Google Chrome.");
         return;
     }
 
@@ -314,28 +340,22 @@ function startVoiceRecognition() {
                 if (enOutput) enOutput.innerText = "English: Translation failed";
             }
         } catch (error) {
-            console.error("Translation Error:", error);
-            if (enOutput) enOutput.innerText = "English: (تأكد من الاتصال بالإنترنت للترجمة الفورية)";
+            if (enOutput) enOutput.innerText = "English: (تأكد من الاتصال بالإنترنت)";
         }
-    };
-
-    recognition.onerror = function() {
-        if (arOutput) arOutput.innerText = "حدث خطأ أثناء الاستماع، حاول مرة أخرى.";
     };
 }
 
-// نطق اسم الحرف/الكلمة
 function speakText(text) {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
-        utterance.rate = 0.8;
+        utterance.rate = 0.85;
         window.speechSynthesis.speak(utterance);
     }
 }
 
-// زر تثبيت PWA
+// زر تثبيت التطبيق في أعلى اليسار
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
