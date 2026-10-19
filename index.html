@@ -3,26 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قواعد اللغة الإنجليزية للطلاب</title>
+    <title>English Kids Academy - أكاديمية الإنجليزية للأطفال</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-    <header>
-        <h1>تطبيق قواعد اللغة الإنجليزية</h1>
-    </header>
+    <!-- شاشة إدخال الرقم السري (لوحة ولي الأمر) -->
+    <div id="pin-overlay" class="pin-overlay" style="display:none;">
+        <div class="pin-box">
+            <h3>🔒 لوحة ولي الأمر</h3>
+            <p>يرجى إدخال الرقم السري للوصول للإعدادات</p>
+            <input type="password" id="pin-input" placeholder="****" maxlength="4">
+            <button onclick="checkPIN()">دخول</button>
+            <p id="pin-error" style="color:red; display:none; margin-top:5px;">الرقم السري غير صحيح</p>
+        </div>
+    </div>
 
-    <main>
-        <!-- هذا هو المكان الذي ستظهر فيه الفصول الـ 15 تلقائياً -->
-        <div id="chapters-container"></div>
-    </main>
+    <!-- شاشة تثبيت التطبيق -->
+    <div id="install-banner" class="install-banner" style="display:none;">
+        <span>📱 تثبيت تطبيق الأكاديمية على هاتفك للاستخدام السريع</span>
+        <button onclick="installPWA()">تثبيت الآن</button>
+    </div>
+
+    <div class="app-container">
+        <!-- الهيدر الرئيسي -->
+        <header class="app-header">
+            <h1>English Kids Academy</h1>
+            <p>أكاديمية الإنجليزية للأطفال والكبار</p>
+        </header>
+
+        <!-- الشاشة الرئيسية (Dashboard) -->
+        <main id="sec-dashboard" class="section-view active">
+            <div class="menu-grid">
+                <div class="menu-card" onclick="showSection('sec-alphabet')">
+                    <span class="icon">🔤</span>
+                    <h3>الحروف والسبورة</h3>
+                    <p>تتبع ونطق وتنقل لسري سريع</p>
+                </div>
+                <div class="menu-card" onclick="showSection('sec-dictionary')">
+                    <span class="icon">📖</span>
+                    <h3>قاموس المورد الشامل</h3>
+                    <p>محرك بحث شامل لكافة مجالات الحياة</p>
+                </div>
+                <div class="menu-card" onclick="showSection('sec-grammar')">
+                    <span class="icon">🧩</span>
+                    <h3>قواعد اللغة الإنجليزية</h3>
+                    <p>ملف تعليمي وموسوعي شامل من A إلى Z</p>
+                </div>
+                <div class="menu-card" onclick="showSection('sec-stories')">
+                    <span class="icon">💬</span>
+                    <h3>المحادثات والحوارات</h3>
+                    <p>حوارات مكثفة في كافة قطاعات الحياة</p>
+                </div>
+                <div class="menu-card" onclick="showSection('sec-categories')">
+                    <span class="icon">🔢</span>
+                    ### المجموعات والمجالات
+                    <p>الأرقام، المطار، البحر، الدين، المواصلات</p>
+                </div>
+                <div class="menu-card" onclick="showSection('sec-parent')">
+                    <span class="icon">👥</span>
+                    <h3>لوحة ولي الأمر</h3>
+                    <p>إعدادات وتغيير الرقم السري</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- قسم الحروف والسبورة -->
+        <section id="sec-alphabet" class="section-view">
+            <button class="back-btn" onclick="showSection('sec-dashboard')">⬅ العودة</button>
+            <h2 id="board-letter-title" style="color:var(--accent-yellow); margin-bottom:10px;">سبورة الرسم والتتبع</h2>
+            <p style="color:var(--text-dim); font-size:0.85rem; margin-bottom:10px;">اضغط على السبورة للانتقال للحرف التالي، أو ارسم فوق الحرف الباهت للتتبع.</p>
+            
+            <div class="board-container">
+                <canvas id="drawing-canvas"></canvas>
+                <div class="board-controls">
+                    <button class="btn-action" onclick="nextLetter()" style="background:var(--accent-green);">الحرف التالي ➡</button>
+                    <button class="btn-action" onclick="clearBoard()" style="background:var(--accent-pink);">مسح السبورة 🗑️</button>
+                </div>
+            </div>
+
+            <div class="alphabet-grid" style="margin-top:20px;">
+                <script>
+                    // توليد شبكة الحروف من A إلى Z
+                    document.write('<div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:6px;">');
+                    for(let i=65; i<=90; i++) {
+                        let l = String.fromCharCode(i);
+                        document.write(`<button onclick="initBoardWithLetter('${l}')" style="padding:10px; background:#191b33; color:var(--accent-yellow); border:1px solid rgba(255,255,255,0.1); border-radius:8px; font-weight:bold; font-size:1.1rem; cursor:pointer;">${l}</button>`);
+                    }
+                    document.write('</div>');
+                </script>
+            </div>
+        </section>
+
+        <!-- قسم قاموس المورد الشامل -->
+        <section id="sec-dictionary" class="section-view">
+            <button class="back-btn" onclick="showSection('sec-dashboard')">⬅ العودة</button>
+            <h2>📖 قاموس المورد الشامل</h2>
+            <div id="dict-container" style="margin-top:15px;"></div>
+        </section>
+
+        <!-- قسم قواعد اللغة -->
+        <section id="sec-grammar" class="section-view">
+            <button class="back-btn" onclick="showSection('sec-dashboard')">⬅ العودة</button>
+            <div id="grammar-container"></div>
+        </section>
+
+        <!-- قسم المحادثات والقصص -->
+        <section id="sec-stories" class="section-view">
+            <button class="back-btn" onclick="showSection('sec-dashboard')">⬅ العودة</button>
+            <div id="stories-container"></div>
+        </section>
+
+        <!-- قسم المجموعات والمجالات -->
+        <section id="sec-categories" class="section-view">
+            <button class="back-btn" onclick="showSection('sec-dashboard')">⬅ العودة</button>
+            <div id="categories-container"></div>
+        </section>
+
+        <!-- لوحة ولي الأمر -->
+        <section id="sec-parent" class="section-view">
+            <button class="back-btn" onclick="showSection('sec-dashboard')">⬅ العودة</button>
+            <div class="interactive-card" style="text-align:right;">
+                <h3 style="color:var(--accent-yellow); margin-bottom:15px;">👥 إعدادات لوحة ولي الأمر</h3>
+                <label style="color:#fff; display:block; margin-bottom:5px;">تغيير الرقم السري الجديد (4 أرقام):</label>
+                <input type="text" id="new-pin-input" placeholder="أدخل الرقم الجديد" maxlength="4" style="width:100%; padding:10px; background:#121324; border:1px solid var(--accent-blue); color:#fff; border-radius:8px; margin-bottom:10px;">
+                <button class="btn-action" onclick="changePin()" style="background:var(--accent-green); width:100%;">حفظ الرقم السري</button>
+                <p id="change-pin-msg" style="margin-top:10px; font-weight:bold;"></p>
+            </div>
+        </section>
+    </div>
 
     <script src="app.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
-    </script>
 </body>
 </html>
