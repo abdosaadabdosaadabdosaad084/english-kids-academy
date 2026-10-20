@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Kids Academy | أكاديمية الإنجليزية الشاملة</title>
-    <link rel="manifest" href="manifest.json">
     <style>
         :root {
             --primary: #4f46e5;
@@ -89,7 +88,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* شبكة الحروف والمجموعات */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -118,7 +116,6 @@
             color: var(--accent);
         }
 
-        /* السبورة */
         .board-container {
             background: #022c22;
             border: 8px solid #b45309;
@@ -154,7 +151,6 @@
         .btn-danger { background: #ef4444; }
         .btn-success { background: #10b981; }
 
-        /* البحث والقاموس */
         .search-box {
             width: 100%;
             padding: 0.8rem;
@@ -181,7 +177,6 @@
             align-items: center;
         }
 
-        /* القواعد والحوارات */
         .accordion {
             background: var(--card-bg);
             border-radius: 8px;
@@ -288,7 +283,6 @@
     </main>
 
     <script>
-        // التنقل بين الأقسام
         function showSection(id) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -296,7 +290,6 @@
             event.target.classList.add('active');
         }
 
-        // 1. توليد الحروف والنطق
         const lettersGrid = document.getElementById('lettersGrid');
         for (let i = 65; i <= 90; i++) {
             const char = String.fromCharCode(i);
@@ -307,14 +300,12 @@
             lettersGrid.appendChild(card);
         }
 
-        // النطق الصوتي العامة
         function speak(text) {
             const msg = new SpeechSynthesisUtterance(text);
             msg.lang = 'en-US';
             window.speechSynthesis.speak(msg);
         }
 
-        // 2. القاموس والمفردات
         const dictionary = [
             { en: 'Apple', ar: 'تفاحة' }, { en: 'Book', ar: 'كتاب' },
             { en: 'Car', ar: 'سيارة' }, { en: 'Door', ar: 'باب' },
@@ -342,7 +333,6 @@
             renderDict(filtered);
         }
 
-        // 3. القواعد
         const grammarRules = [
             { title: 'Present Simple (المضارع البسيط)', desc: 'يستخدم للتعبير عن الحقائق والعادات اليومية. مثال: I play football every day.' },
             { title: 'Past Simple (الماضي البسيط)', desc: 'يستخدم للحديث عن أحداث انتهت في الماضي. مثال: She visited London last year.' },
@@ -358,7 +348,6 @@
                 </div>`;
         });
 
-        // 4. المحادثات
         const conversations = [
             { title: 'At the Restaurant (في المطعم)', text: 'A: Can I see the menu? <br> B: Yes, here you go.' },
             { title: 'At the Airport (في المطار)', text: 'A: Where is my passport? <br> B: It is in your bag.' }
@@ -373,14 +362,12 @@
                 </div>`;
         });
 
-        // 5. المجموعات
         const categories = ['الأرقام 🔢', 'الحيوانات 🦁', 'المواصفات 🚗', 'الألوان 🎨', 'الدين 🕌'];
         const catGrid = document.getElementById('categoriesGrid');
         categories.forEach(cat => {
             catGrid.innerHTML += `<div class="card"><div style="font-size:1.2rem">${cat}</div></div>`;
         });
 
-        // 6. لعبة التحدي
         const quiz = [
             { q: 'معنى كلمة "Dog" هو قطة؟', a: false },
             { q: 'كلمة "Sun" تعني الشمس؟', a: true },
@@ -403,7 +390,6 @@
         }
         loadQuiz();
 
-        // 7. السبورة
         const canvas = document.getElementById('paintCanvas');
         const ctx = canvas.getContext('2d');
         let painting = false;
