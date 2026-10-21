@@ -3,97 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy - أكاديمية الإنجليزية</title>
+    <title>English Kids Academy</title>
     
-    <!-- PWA Link -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#101126">
+    <meta name="theme-color" content="#0F1123">
 
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo-area">
-                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                <div>
-                    <h1>أكاديمية الإنجليزية للأطفال</h1>
-                    <p>English Kids Academy</p>
+    <div id="app" class="app-container">
+
+        <!-- ===== VIEW 1: HOME PAGE ===== -->
+        <div id="homeView" class="view active-view">
+            <header class="top-bar">
+                <div class="score-badge">
+                    <span id="userScore">100</span> <i class="fa-solid fa-star"></i>
                 </div>
+                <h1 class="app-title">English Kids Academy</h1>
+            </header>
+
+            <!-- Install PWA Banner -->
+            <div class="install-banner" id="installBanner" onclick="installPWA()">
+                📲 تثبيت التطبيق على الشاشة الرئيسية للهاتف
             </div>
-            <div class="user-stats">
-                <div class="stat-badge"><i class="fa-solid fa-star"></i> <span id="userScore">100</span> نقطة</div>
+
+            <!-- Menu Cards -->
+            <div class="cards-grid">
+                
+                <div class="menu-card" onclick="openSection('board')">
+                    <div class="card-icon">🔤</div>
+                    <h3>الحروف والسبورة</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('dictionary')">
+                    <div class="card-icon">📚</div>
+                    <h3>القاموس الشامل (بحث جوجل)</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('translator')">
+                    <div class="card-icon">🎙️</div>
+                    <h3>الترجمة الفورية</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('grammar')">
+                    <div class="card-icon">📖</div>
+                    <h3>القواعد بالتفصيل الممل</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('dialogues')">
+                    <div class="card-icon">💬</div>
+                    <h3>محادثات الحياة (+100)</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('stories')">
+                    <div class="card-icon">📕</div>
+                    <h3>القصص التعليمية الموسعة</h3>
+                </div>
+
+                <div class="menu-card full-width" onclick="openSection('games')">
+                    <div class="card-icon">🎮</div>
+                    <h3>الألعاب الصوتية والتحديات</h3>
+                </div>
+
             </div>
         </div>
-    </header>
 
-    <main class="main-container">
-
-        <!-- Blackboard / Drawing Section -->
-        <section class="blackboard-card">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-pen-ruler"></i> سبورة كتابة الحروف Interactive Board</h2>
-                <p>اختر الحرف وتدرّب على رسمه وكتابته بإصبعك!</p>
+        <!-- ===== VIEW 2: TRANSLATOR PAGE ===== -->
+        <div id="translatorView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
             </div>
 
-            <!-- Tabs Capital / Small -->
-            <div class="letter-tabs">
-                <button class="tab-btn active" id="tabCapital" onclick="switchLetterType('capital')">حروف كبيرة (Capital A-Z)</button>
-                <button class="tab-btn" id="tabSmall" onclick="switchLetterType('small')">حروف صغيرة (Small a-z)</button>
-            </div>
+            <div class="translator-container">
+                <button class="big-mic-btn" id="micBtn" onclick="toggleSpeech()">
+                    🎙️ اضغط وتحدث بالعربية
+                </button>
 
-            <!-- Letter Selector Grid -->
-            <div class="letters-selector" id="lettersSelector">
-                <!-- Dynamically Rendered Letters -->
-            </div>
-
-            <!-- Canvas Board Area -->
-            <div class="canvas-container">
-                <div class="canvas-header">
-                    <span id="currentLetterDisplay">الحرف الحالي: A</span>
-                    <button class="btn-audio" onclick="speakCurrentLetter()"><i class="fa-solid fa-volume-high"></i> نطق الحرف</button>
+                <div class="result-box arabic-box">
+                    <span>العربية: <strong id="arText">سلام</strong></span>
                 </div>
-                <canvas id="paintCanvas" width="300" height="200"></canvas>
-                <div class="canvas-tools">
-                    <button class="tool-btn btn-clear" onclick="clearCanvas()"><i class="fa-solid fa-eraser"></i> مسح السبورة</button>
-                    <input type="color" id="penColor" value="#4F46E5" class="color-picker">
-                </div>
-            </div>
-        </section>
 
-        <!-- Main Educational Modules -->
-        <h2 class="section-heading">الأقسام التعليمية الشاملة</h2>
-        
-        <div class="modules-grid" id="modulesGrid">
-            <!-- Rendered via app.js -->
+                <div class="result-box english-box">
+                    <span>English: <mark id="enText">peace</mark></span>
+                    <button class="btn-speak-icon" onclick="speakEnglish()"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+
+                <button class="btn-google-search" onclick="searchGoogleTrans()">🔍 ابحث واستزد في Google Translate</button>
+            </div>
         </div>
 
-    </main>
-
-    <!-- Modal for Lessons -->
-    <div id="lessonModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">عنوان الدرس</h3>
-                <button class="close-btn" onclick="closeLesson()">&times;</button>
+        <!-- ===== VIEW 3: BOARD PAGE ===== -->
+        <div id="boardView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
             </div>
-            <div class="modal-body">
-                <div class="explain-box" id="modalExplain"></div>
-                <h4>المفردات والنطق:</h4>
-                <div class="vocab-grid" id="modalVocab"></div>
-                <div class="quiz-box" id="modalQuiz"></div>
+
+            <div class="board-container">
+                <div class="board-tabs">
+                    <button class="tab-b active" id="tabCap" onclick="setLetterCase('capital')">Capital A-Z</button>
+                    <button class="tab-b" id="tabSmall" onclick="setLetterCase('small')">Small a-z</button>
+                </div>
+
+                <div class="letters-bar" id="lettersBar"></div>
+
+                <div class="canvas-box">
+                    <div class="ghost-letter-bg" id="ghostLetter">A</div>
+                    <canvas id="traceCanvas" width="300" height="250"></canvas>
+                </div>
+
+                <div class="board-actions">
+                    <button class="btn-act clear-btn" onclick="clearBoard()">🗑️ مسح</button>
+                    <button class="btn-act audio-btn" onclick="speakCurrentLetter()">🔊 نطق</button>
+                    <button class="btn-act next-btn" onclick="nextLetter()">➡️ التالي</button>
+                </div>
             </div>
         </div>
+
+        <!-- ===== VIEW 4: DETAILS VIEW ===== -->
+        <div id="detailsView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            </div>
+            <div class="details-content" id="detailsContent"></div>
+        </div>
+
     </div>
 
-    <!-- Scripts -->
     <script src="app.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
