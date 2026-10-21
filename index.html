@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Kids Academy - أكاديمية الإنجليزية</title>
+    
+    <!-- PWA Link -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#101126">
 
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div>
+                    <h1>أكاديمية الإنجليزية للأطفال</h1>
+                    <p>English Kids Academy</p>
+                </div>
+            </div>
+            <div class="user-stats">
+                <div class="stat-badge"><i class="fa-solid fa-star"></i> <span id="userScore">100</span> نقطة</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <!-- Blackboard / Drawing Section -->
+        <section class="blackboard-card">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-pen-ruler"></i> سبورة كتابة الحروف Interactive Board</h2>
+                <p>اختر الحرف وتدرّب على رسمه وكتابته بإصبعك!</p>
+            </div>
+
+            <!-- Tabs Capital / Small -->
+            <div class="letter-tabs">
+                <button class="tab-btn active" id="tabCapital" onclick="switchLetterType('capital')">حروف كبيرة (Capital A-Z)</button>
+                <button class="tab-btn" id="tabSmall" onclick="switchLetterType('small')">حروف صغيرة (Small a-z)</button>
+            </div>
+
+            <!-- Letter Selector Grid -->
+            <div class="letters-selector" id="lettersSelector">
+                <!-- Dynamically Rendered Letters -->
+            </div>
+
+            <!-- Canvas Board Area -->
+            <div class="canvas-container">
+                <div class="canvas-header">
+                    <span id="currentLetterDisplay">الحرف الحالي: A</span>
+                    <button class="btn-audio" onclick="speakCurrentLetter()"><i class="fa-solid fa-volume-high"></i> نطق الحرف</button>
+                </div>
+                <canvas id="paintCanvas" width="300" height="200"></canvas>
+                <div class="canvas-tools">
+                    <button class="tool-btn btn-clear" onclick="clearCanvas()"><i class="fa-solid fa-eraser"></i> مسح السبورة</button>
+                    <input type="color" id="penColor" value="#4F46E5" class="color-picker">
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Educational Modules -->
+        <h2 class="section-heading">الأقسام التعليمية الشاملة</h2>
+        
+        <div class="modules-grid" id="modulesGrid">
+            <!-- Rendered via app.js -->
+        </div>
+
+    </main>
+
+    <!-- Modal for Lessons -->
+    <div id="lessonModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">عنوان الدرس</h3>
+                <button class="close-btn" onclick="closeLesson()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="explain-box" id="modalExplain"></div>
+                <h4>المفردات والنطق:</h4>
+                <div class="vocab-grid" id="modalVocab"></div>
+                <div class="quiz-box" id="modalQuiz"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
