@@ -3,37 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية تعليم الإنجليزية</title>
+    <title>English Kids Academy</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0F1123">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- الهيدر الرئيسي -->
-    <header>
-        <h1 id="main-title">قواعد اللغة الإنجليزية</h1>
-    </header>
+    <div id="app" class="app-container">
 
-    <!-- حاوية المحتوى الديناميكي -->
-    <main id="content-area">
-        <!-- المحتوى سيتم حقنه هنا تلقائياً عبر الجافاسكريبت -->
-    </main>
+        <!-- ===== VIEW 1: HOME PAGE ===== -->
+        <div id="homeView" class="view active-view">
+            <header class="top-bar">
+                <div class="score-badge">
+                    <span id="userScore">100</span> <i class="fa-solid fa-star"></i>
+                </div>
+                <h1 class="app-title">English Kids Academy</h1>
+            </header>
 
-    <!-- شريط التنقل السفلي -->
-    <nav class="bottom-nav">
-        <button class="nav-btn active" onclick="switchTab('grammar', this)">
-            <span class="icon">📝</span>
-            <span class="text">القواعد</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('conversations', this)">
-            <span class="icon">💬</span>
-            <span class="text">محادثات</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('stories', this)">
-            <span class="icon">📚</span>
-            <span class="text">القصص</span>
-        </button>
-    </nav>
+            <!-- Native Install PWA Banner -->
+            <div class="install-banner" id="installBanner" onclick="triggerPWAInstall()">
+                📲 تثبيت التطبيق على الشاشة الرئيسية للهاتف
+            </div>
+
+            <div class="cards-grid">
+                <div class="menu-card" onclick="navigateTo('board')">
+                    <div class="card-icon">🔤</div>
+                    <h3>الحروف والسبورة</h3>
+                </div>
+
+                <div class="menu-card" onclick="navigateTo('dictionary')">
+                    <div class="card-icon">📚</div>
+                    <h3>القاموس الشامل المباشر</h3>
+                </div>
+
+                <div class="menu-card" onclick="navigateTo('translator')">
+                    <div class="card-icon">🎙️</div>
+                    <h3>الترجمة الفورية</h3>
+                </div>
+
+                <div class="menu-card" onclick="navigateTo('grammar')">
+                    <div class="card-icon">📖</div>
+                    <h3>القواعد بالتفصيل الممل</h3>
+                </div>
+
+                <div class="menu-card" onclick="navigateTo('dialogues')">
+                    <div class="card-icon">💬</div>
+                    <h3>محادثات الحياة (+100)</h3>
+                </div>
+
+                <div class="menu-card" onclick="navigateTo('stories')">
+                    <div class="card-icon">📕</div>
+                    <h3>القصص التعليمية الموسعة</h3>
+                </div>
+
+                <div class="menu-card full-width" onclick="navigateTo('games')">
+                    <div class="card-icon">🎮</div>
+                    <h3>الألعاب الصوتية والتحديات</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 2: TRANSLATOR PAGE ===== -->
+        <div id="translatorView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
+            </div>
+
+            <div class="translator-container">
+                <button class="big-mic-btn" id="micBtn" onclick="toggleSpeech()">
+                    🎙️ اضغط وتحدث بالعربية
+                </button>
+
+                <div class="result-box arabic-box">
+                    <span>العربية: <strong id="arText">سلام</strong></span>
+                </div>
+
+                <div class="result-box english-box">
+                    <span>الترجمة: <mark id="enText">peace</mark></span>
+                    <button class="btn-speak-icon" onclick="speakEnglish()"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 3: BOARD PAGE ===== -->
+        <div id="boardView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
+            </div>
+
+            <div class="board-container">
+                <div class="board-tabs">
+                    <button class="tab-b active" id="tabCap" onclick="setLetterCase('capital')">Capital A-Z</button>
+                    <button class="tab-b" id="tabSmall" onclick="setLetterCase('small')">Small a-z</button>
+                </div>
+
+                <div class="letters-bar" id="lettersBar"></div>
+
+                <div class="canvas-box">
+                    <div class="ghost-letter-bg" id="ghostLetter">A</div>
+                    <canvas id="traceCanvas" width="300" height="250"></canvas>
+                </div>
+
+                <div class="board-actions">
+                    <button class="btn-act clear-btn" onclick="clearBoard()">🗑️ مسح</button>
+                    <button class="btn-act audio-btn" onclick="speakCurrentLetter()">🔊 نطق</button>
+                    <button class="btn-act next-btn" onclick="nextLetter()">➡️ التالي</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 4: DICTIONARY PAGE ===== -->
+        <div id="dictionaryView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
+            </div>
+            
+            <div class="dict-box">
+                <h2>📚 القاموس الشامل المباشر</h2>
+                <div class="search-input-group">
+                    <input type="text" id="dictSearchInput" placeholder="اكتب الكلمة (مثلاً: طالب، طعام، طفل، Book...)" onkeyup="if(event.key==='Enter') searchInAppDictionary()">
+                    <button class="btn-search-dict" onclick="searchInAppDictionary()"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
+                </div>
+                <div id="dictResultsList" class="dict-results-grid">
+                    <p style="text-align:center; padding:15px; color:#aaa;">اكتب أي كلمة بالعربية أو الإنجليزية واضغط بحث لتظهر النتائج فوراً مع النطق المباشر.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 5: GAMES PAGE ===== -->
+        <div id="gamesView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
+            </div>
+
+            <div class="game-container">
+                <h2>🎮 الألعاب الصوتية والتحديات الذكية</h2>
+                <hr style="margin:15px 0; border-color:#333;">
+                
+                <div class="quiz-card-box">
+                    <div class="quiz-q-title" id="quizQuestion">السؤال سيظهر هنا...</div>
+                    <div class="quiz-options-grid" id="quizOptionsGrid"></div>
+                    <div id="quizFeedback" class="quiz-feedback-banner"></div>
+                    <button id="btnNextQuiz" class="btn-act next-btn" style="display:none; width:100%; margin-top:15px;" onclick="loadNextQuestion()">السؤال التالي ➡️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 6: DETAILED CONTENT VIEW ===== -->
+        <div id="detailsView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
+            </div>
+            <div class="details-content" id="detailsContent"></div>
+        </div>
+
+    </div>
 
     <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
+    </script>
 </body>
 </html>
