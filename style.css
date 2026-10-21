@@ -28,7 +28,7 @@ body {
 
 .app-container {
     width: 100%;
-    max-width: 480px;
+    max-width: 520px;
     padding: 16px;
     position: relative;
 }
@@ -82,13 +82,13 @@ body {
 .search-input-group { display: flex; gap: 10px; margin: 15px 0; }
 .search-input-group input { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #444; background: #161936; color: white; font-size: 16px; }
 .btn-search-dict { padding: 12px 18px; background: var(--green-banner); border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: #000; }
-.dict-results-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px; }
-.dict-card-item { background: #1A233A; padding: 12px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+.dict-results-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+.dict-card-item { background: #161936; padding: 16px; border-radius: 14px; border-right: 4px solid var(--green-banner); display: flex; justify-content: space-between; align-items: center; }
 
 /* Games */
 .game-container { background-color: var(--card-bg); padding: 20px; border-radius: 18px; }
 .quiz-card-box { background: #161936; padding: 20px; border-radius: 14px; text-align: center; }
-.quiz-q-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; line-height: 1.6; }
+.quiz-q-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; line-height: 1.6; color: #4DEAEA; }
 .quiz-options-grid { display: flex; flex-direction: column; gap: 12px; }
 .btn-opt { padding: 14px; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; background-color: #2D303E; color: white; }
 .btn-opt.opt-correct { background-color: #2ED573 !important; color: white !important; }
@@ -97,8 +97,11 @@ body {
 .quiz-feedback-banner.correct-text { color: #2ED573; }
 .quiz-feedback-banner.wrong-text { color: #FF4757; }
 
-/* Detailed Content */
-.details-content { background-color: var(--card-bg); padding: 20px; border-radius: 18px; line-height: 1.9; font-size: 15px; }
-.details-content h2 { color: #4DEAEA; margin-bottom: 12px; font-size: 22px; }
-.details-content h3 { color: #FFDD59; margin-top: 15px; margin-bottom: 8px; font-size: 18px; }
-.details-content p { margin-bottom: 10px; color: #E2E8F0; }
+/* Detailed Content Structure */
+.details-content { background-color: var(--card-bg); padding: 22px; border-radius: 18px; line-height: 2; font-size: 15px; }
+.details-content h2 { color: #4DEAEA; margin-bottom: 15px; font-size: 22px; border-bottom: 2px solid #333; padding-bottom: 8px; }
+.details-content h3 { color: #FFDD59; margin-top: 20px; margin-bottom: 10px; font-size: 18px; background: rgba(255, 221, 89, 0.1); padding: 6px 12px; border-radius: 8px; }
+.details-content p { margin-bottom: 12px; color: #E2E8F0; }
+.details-content ul { margin-right: 20px; margin-bottom: 15px; color: #CBD5E1; }
+.details-content li { margin-bottom: 6px; }
+.dialogue-box { background: #161936; padding: 16px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #1E90FF; }
