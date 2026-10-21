@@ -1,4 +1,4 @@
-// Global State
+// State Variables
 let currentCase = 'capital';
 let currentLetter = 'A';
 let isDrawing = false;
@@ -7,226 +7,236 @@ let canvas, ctx;
 const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const smallList = "abcdefghijklmnopqrstuvwxyz".split("");
 
-// Offline Translation Cache
-const transCache = JSON.parse(localStorage.getItem('offline_trans') || '{}');
+// In-App Comprehensive Dictionary Database
+const dictDatabase = [
+    { en: "Apple", ar: "تفاحة" },
+    { en: "Elephant", ar: "فيل" },
+    { en: "School", ar: "مدرسة" },
+    { en: "Family", ar: "عائلة" },
+    { en: "Teacher", ar: "معلم" },
+    { en: "Doctor", ar: "طبيب" },
+    { en: "Water", ar: "ماء" },
+    { en: "Airplane", ar: "طائرة" },
+    { en: "Book", ar: "كتاب" },
+    { en: "Cat", ar: "قطة" },
+    { en: "Dog", ar: "كلب" },
+    { en: "Sun", ar: "شمس" },
+    { en: "Moon", ar: "قمر" },
+    { en: "House", ar: "بيت" }
+];
+
+// Interactive Quiz Questions Database
+const quizQuestions = [
+    { q: "ما معنى كلمة 'Cat'؟", opts: ["كلب", "قطة", "عصفور"], correct: 1 },
+    { q: "ما معنى كلمة 'Book'؟", opts: ["كتاب", "قلم", "مدرسة"], correct: 0 },
+    { q: "ما معنى كلمة 'Water'؟", opts: ["طعام", "ماء", "شاي"], correct: 1 },
+    { q: "ترجمة كلمة 'طبيب' بالإنجليزية هي:", opts: ["Teacher", "Doctor", "Driver"], correct: 1 },
+    { q: "ترجمة كلمة 'شمس' بالإنجليزية هي:", opts: ["Moon", "Star", "Sun"], correct: 2 }
+];
+
+let currentQuizIndex = 0;
 
 window.onload = () => {
     initCanvas();
     renderLettersBar();
+    initHistoryNav();
 };
 
-// Navigation
-function showHome() {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
-    document.getElementById('homeView').classList.add('active-view');
+// Handle Device Back Button (Prevent app exit)
+function initHistoryNav() {
+    window.history.pushState({ page: 'home' }, '');
+    window.onpopstate = (e) => {
+        if (e.state && e.state.page && e.state.page !== 'home') {
+            showView(e.state.page, false);
+        } else {
+            showView('home', false);
+        }
+    };
 }
 
-function openSection(type) {
+function navigateTo(pageId) {
+    window.history.pushState({ page: pageId }, '');
+    showView(pageId, true);
+}
+
+function showView(pageId, isPush) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
 
-    if (type === 'translator') {
+    if (pageId === 'home') {
+        document.getElementById('homeView').classList.add('active-view');
+    } else if (pageId === 'translator') {
         document.getElementById('translatorView').classList.add('active-view');
-    } else if (type === 'board') {
+    } else if (pageId === 'board') {
         document.getElementById('boardView').classList.add('active-view');
         clearBoard();
+    } else if (pageId === 'dictionary') {
+        document.getElementById('dictionaryView').classList.add('active-view');
+        searchInAppDictionary();
+    } else if (pageId === 'games') {
+        document.getElementById('gamesView').classList.add('active-view');
+        currentQuizIndex = 0;
+        loadQuizQuestion();
     } else {
-        const details = document.getElementById('detailsContent');
-        
-        // 1. GRAMMAR SECTION
-        if (type === 'grammar') {
-            details.innerHTML = `
-                <h2>📖 موسوعة القواعد الإنجليزية الشاملة</h2>
-                <hr style="margin:10px 0; border-color:#444;"><br>
-
-                <h3>1. الضمائر الشخصية (Personal Pronouns)</h3>
-                <p>• <b>I</b> (أنا) | <b>He</b> (هو) | <b>She</b> (هي) | <b>It</b> (هو/هي لغير العاقل)</p>
-                <p>• <b>We</b> (نحن) | <b>They</b> (هم) | <b>You</b> (أنت/أنتِ/أنتم)</p>
-                <p><b>مثال:</b> She is a smart student. (هي طالبة ذكية)</p><br>
-
-                <h3>2. فعل يكون (Verb to Be)</h3>
-                <p>• <b>I</b> → am | <b>He / She / It</b> → is | <b>We / They / You</b> → are</p>
-                <p><b>مثال:</b> They are playing in the garden. (هم يلعبون في الحديقة)</p><br>
-
-                <h3>3. المضارع البسيط (Present Simple)</h3>
-                <p><b>الاستخدام:</b> يعبر عن العادات اليومية والحقائق العلمية.</p>
-                <p><b>التكوين:</b> إضافة (s / es) مع (He, She, It) والمصدر مع بقية الضمائر.</p>
-                <p><b>مثال:</b> The sun rises in the east. (أشعة الشمس تشرق من الشرق)</p><br>
-
-                <h3>4. المضارع المستمر (Present Continuous)</h3>
-                <p><b>الاستخدام:</b> شيء يحدث الآن في لحظة الكلام.</p>
-                <p><b>التكوين:</b> am / is / are + الفعل + ing</p>
-                <p><b>مثال:</b> I am reading a book right now. (أنا أقرأ كتاباً الآن)</p><br>
-
-                <h3>5. الماضي البسيط (Past Simple)</h3>
-                <p><b>الاستخدام:</b> حدث بدأ وانتهى في الماضي.</p>
-                <p><b>التكوين:</b> إضافة ed للأفعال المنتظمة أو التصريف الثاني للأفعال الشاذة.</p>
-                <p><b>مثال:</b> We visited the zoo yesterday. (زرت حديقة الحيوان أمس)</p><br>
-
-                <button class="btn-google-search" onclick="window.open('https://www.google.com/search?q=english+grammar+lessons+for+kids','_blank')">🔍 البحث والتوسع في Google Grammar</button>
-            `;
-        } 
-        
-        // 2. DIALOGUES SECTION
-        else if (type === 'dialogues') {
-            details.innerHTML = `
-                <h2>💬 محادثات وتدريبات الحياة اليومية (+100)</h2>
-                <hr style="margin:10px 0; border-color:#444;"><br>
-
-                <div style="background:#1A233A; padding:15px; border-radius:12px; margin-bottom:15px;">
-                    <h4>🏫 1. في المدرسة (At School)</h4>
-                    <p><b>Teacher:</b> Good morning, class! (صباح الخير يا طلاب)</p>
-                    <p><b>Students:</b> Good morning, Teacher! (صباح الخير يا معلم)</p>
-                    <p><b>Teacher:</b> Open your books to page 10. (افتحوا كتبكم على الصفحة 10)</p>
-                    <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('Good morning class. Open your books to page 10.')">🔊 استمع للمحادثة</button>
-                </div>
-
-                <div style="background:#1A233A; padding:15px; border-radius:12px; margin-bottom:15px;">
-                    <h4>🛒 2. في السوبرماركت (At the Supermarket)</h4>
-                    <p><b>Customer:</b> How much is this apple? (بكم هذه التفاحة؟)</p>
-                    <p><b>Seller:</b> It is 2 dollars. (سعرها دولارين)</p>
-                    <p><b>Customer:</b> Here you go. Thank you! (تفضل، شكراً لك)</p>
-                    <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('How much is this apple? It is 2 dollars.')">🔊 استمع للمحادثة</button>
-                </div>
-
-                <div style="background:#1A233A; padding:15px; border-radius:12px; margin-bottom:15px;">
-                    <h4>🩺 3. عند الطبيب (At the Doctor)</h4>
-                    <p><b>Doctor:</b> What is the problem? (ما هي المشكلة؟)</p>
-                    <p><b>Patient:</b> I feel sick and have a fever. (أشعر بالمرض ولدي حرارة)</p>
-                    <p><b>Doctor:</b> Take this medicine and rest. (تناول هذا الدواء واسترح)</p>
-                    <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('What is the problem? I feel sick. Take this medicine.')">🔊 استمع للمحادثة</button>
-                </div>
-            `;
-        } 
-
-        // 3. DICTIONARY SECTION
-        else if (type === 'dictionary') {
-            details.innerHTML = `
-                <h2>📚 القاموس الشامل والمفردات</h2>
-                <hr style="margin:10px 0; border-color:#444;"><br>
-                <p>اضغط على أي كلمة للاستماع لنطقها الصحيح:</p><br>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                    <button class="btn-act" onclick="speak('Apple')">🍎 Apple (تفاحة)</button>
-                    <button class="btn-act" onclick="speak('Elephant')">🐘 Elephant (فيل)</button>
-                    <button class="btn-act" onclick="speak('School')">🏫 School (مدرسة)</button>
-                    <button class="btn-act" onclick="speak('Family')">👨‍👩‍👧 Family (عائلة)</button>
-                    <button class="btn-act" onclick="speak('Teacher')">👨‍🏫 Teacher (معلم)</button>
-                    <button class="btn-act" onclick="speak('Doctor')">🩺 Doctor (طبيب)</button>
-                    <button class="btn-act" onclick="speak('Water')">💧 Water (ماء)</button>
-                    <button class="btn-act" onclick="speak('Airplane')">✈️ Airplane (طائرة)</button>
-                </div>
-                <br>
-                <button class="btn-google-search" onclick="window.open('https://www.google.com/search?q=english+dictionary+for+children','_blank')">🔍 ابحث عن أي كلمة في قاموس Google</button>
-            `;
-        }
-
-        // 4. STORIES SECTION
-        else if (type === 'stories') {
-            details.innerHTML = `
-                <h2>📕 القصص التعليمية الموسعة</h2>
-                <hr style="margin:10px 0; border-color:#444;"><br>
-
-                <div style="background:#1A233A; padding:15px; border-radius:12px; margin-bottom:15px;">
-                    <h3>1. The Thirsty Crow (الغراب العطشان) 🐦</h3>
-                    <p>Once upon a time, a crow was very thirsty. He found a pitcher with very little water. He threw small stones inside until the water level rose, and he drank happily.</p>
-                    <p><b>العبرة:</b> بالذكاء والتفكير نحل أصعب المشاكل!</p>
-                    <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('Once upon a time, a crow was very thirsty. He threw small stones inside until the water rose.')">🔊 استمع للقصة</button>
-                </div>
-
-                <div style="background:#1A233A; padding:15px; border-radius:12px;">
-                    <h3>2. The Boy Who Cried Wolf (الولد والذئب) 🐺</h3>
-                    <p>A shepherd boy kept tricking villagers by shouting "Wolf!". When a real wolf came, no one believed him. Always tell the truth!</p>
-                    <p><b>العبرة:</b> الصدق دائماً ينجي الصادقين!</p>
-                    <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('Always tell the truth. Honesty is the best policy.')">🔊 استمع للقصة</button>
-                </div>
-            `;
-        }
-
-        // 5. GAMES SECTION
-        else if (type === 'games') {
-            details.innerHTML = `
-                <h2>🎮 الألعاب الصوتية والتحديات</h2>
-                <hr style="margin:10px 0; border-color:#444;"><br>
-
-                <div style="background:#1A233A; padding:15px; border-radius:12px; text-align:center;">
-                    <h3>السؤال 1: ما معنى كلمة "Cat"؟</h3><br>
-                    <button class="btn-act clear-btn" style="margin:5px;" onclick="checkAnswer(false)">كلب</button>
-                    <button class="btn-act audio-btn" style="margin:5px;" onclick="checkAnswer(true)">قطة</button>
-                    <button class="btn-act next-btn" style="margin:5px;" onclick="checkAnswer(false)">عصفور</button>
-                </div>
-            `;
-        }
-
+        openGenericDetails(pageId);
         document.getElementById('detailsView').classList.add('active-view');
     }
 }
 
-// Answer Check & Points
-function checkAnswer(isCorrect) {
-    if (isCorrect) {
-        alert("إجابة صحيحة ممتاز! 🎉 تم إضافة +10 نقاط لرصيدك.");
+// In-App Dictionary Search
+function searchInAppDictionary() {
+    const query = document.getElementById('dictSearchInput').value.trim().toLowerCase();
+    const container = document.getElementById('dictResultsList');
+    container.innerHTML = '';
+
+    const filtered = dictDatabase.filter(item => 
+        item.en.toLowerCase().includes(query) || item.ar.includes(query)
+    );
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<p style="text-align:center; padding:15px; color:#aaa;">لم يتم العثور على الكلمة في القاموس المحلي.</p>`;
+        return;
+    }
+
+    filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'dict-card-item';
+        card.innerHTML = `
+            <div>
+                <strong style="color:#FFDD59; font-size:18px;">${item.en}</strong> 
+                <span style="margin-right:10px;">(${item.ar})</span>
+            </div>
+            <button class="btn-speak-icon" onclick="speak('${item.en}')"><i class="fa-solid fa-volume-high"></i></button>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// Interactive Quiz System with ✔️ and ❌ Feedback
+function loadQuizQuestion() {
+    const qData = quizQuestions[currentQuizIndex];
+    document.getElementById('quizQuestion').innerText = `السؤال ${currentQuizIndex + 1}: ${qData.q}`;
+    const optsGrid = document.getElementById('quizOptionsGrid');
+    optsGrid.innerHTML = '';
+    
+    document.getElementById('quizFeedback').innerText = '';
+    document.getElementById('quizFeedback').className = 'quiz-feedback-banner';
+    document.getElementById('btnNextQuiz').style.display = 'none';
+
+    qData.opts.forEach((optText, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-opt';
+        btn.innerText = optText;
+        btn.onclick = () => handleAnswerClick(btn, idx, qData.correct);
+        optsGrid.appendChild(btn);
+    });
+}
+
+function handleAnswerClick(selectedBtn, selectedIdx, correctIdx) {
+    const allBtns = document.querySelectorAll('.btn-opt');
+    allBtns.forEach(b => b.disabled = true); // Disable options after choice
+
+    const feedback = document.getElementById('quizFeedback');
+
+    if (selectedIdx === correctIdx) {
+        selectedBtn.classList.add('opt-correct');
+        selectedBtn.innerText += "  ✔️";
+        feedback.innerText = "✔️ أحسنت! إجابة صحيحة (+10 نقاط)";
+        feedback.className = "quiz-feedback-banner correct-text";
+        
         let scoreElem = document.getElementById('userScore');
         scoreElem.innerText = parseInt(scoreElem.innerText) + 10;
     } else {
-        alert("إجابة خاطئة! حاول مرة أخرى 💪");
+        selectedBtn.classList.add('opt-wrong');
+        selectedBtn.innerText += "  ❌";
+        
+        // Highlight correct answer
+        allBtns[correctIdx].classList.add('opt-correct');
+        allBtns[correctIdx].innerText += "  ✔️";
+
+        feedback.innerText = "❌ إجابة خاطئة! حاول مرة أخرى في السؤال التالي.";
+        feedback.className = "quiz-feedback-banner wrong-text";
+    }
+
+    document.getElementById('btnNextQuiz').style.display = 'block';
+}
+
+function loadNextQuestion() {
+    currentQuizIndex = (currentQuizIndex + 1) % quizQuestions.length;
+    loadQuizQuestion();
+}
+
+// Detailed Views (Grammar, Dialogues, Stories)
+function openGenericDetails(type) {
+    const details = document.getElementById('detailsContent');
+    
+    if (type === 'grammar') {
+        details.innerHTML = `
+            <h2>📖 موسوعة القواعد الإنجليزية الشاملة</h2>
+            <hr style="margin:10px 0; border-color:#444;"><br>
+            <h3>1. الضمائر الشخصية (Personal Pronouns)</h3>
+            <p>• <b>I</b> (أنا) | <b>He</b> (هو) | <b>She</b> (هي) | <b>It</b> (هو/هي لغير العاقل)</p>
+            <p>• <b>We</b> (نحن) | <b>They</b> (هم) | <b>You</b> (أنت/أنتِ/أنتم)</p>
+            <p><b>مثال:</b> She is a smart student. (هي طالبة ذكية)</p><br>
+            <h3>2. فعل يكون (Verb to Be)</h3>
+            <p>• <b>I</b> → am | <b>He / She / It</b> → is | <b>We / They / You</b> → are</p>
+            <p><b>مثال:</b> They are playing in the garden. (هم يلعبون في الحديقة)</p><br>
+            <h3>3. المضارع البسيط (Present Simple)</h3>
+            <p><b>الاستخدام:</b> يعبر عن العادات اليومية والحقائق العلمية.</p>
+            <p><b>التكوين:</b> إضافة (s / es) مع (He, She, It) والمصدر مع بقية الضمائر.</p>
+            <p><b>مثال:</b> The sun rises in the east. (أشعة الشمس تشرق من الشرق)</p>
+        `;
+    } else if (type === 'dialogues') {
+        details.innerHTML = `
+            <h2>💬 محادثات وتدريبات الحياة اليومية (+100)</h2>
+            <hr style="margin:10px 0; border-color:#444;"><br>
+            <div style="background:#161936; padding:15px; border-radius:12px; margin-bottom:15px;">
+                <h4>🏫 1. في المدرسة (At School)</h4>
+                <p><b>Teacher:</b> Good morning, class! (صباح الخير يا طلاب)</p>
+                <p><b>Students:</b> Good morning, Teacher! (صباح الخير يا معلم)</p>
+                <p><b>Teacher:</b> Open your books to page 10. (افتحوا كتبكم على الصفحة 10)</p>
+                <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('Good morning class. Open your books to page 10.')">🔊 استمع للمحادثة</button>
+            </div>
+            <div style="background:#161936; padding:15px; border-radius:12px;">
+                <h4>🛒 2. في السوبرماركت (At the Supermarket)</h4>
+                <p><b>Customer:</b> How much is this apple? (بكم هذه التفاحة؟)</p>
+                <p><b>Seller:</b> It is 2 dollars. (سعرها دولارين)</p>
+                <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('How much is this apple? It is 2 dollars.')">🔊 استمع للمحادثة</button>
+            </div>
+        `;
+    } else if (type === 'stories') {
+        details.innerHTML = `
+            <h2>📕 القصص التعليمية الموسعة</h2>
+            <hr style="margin:10px 0; border-color:#444;"><br>
+            <div style="background:#161936; padding:15px; border-radius:12px;">
+                <h3>1. The Thirsty Crow (الغراب العطشان) 🐦</h3>
+                <p>Once upon a time, a crow was very thirsty. He found a pitcher with very little water. He threw small stones inside until the water level rose, and he drank happily.</p>
+                <p><b>العبرة:</b> بالذكاء والتفكير نحل أصعب المشاكل!</p>
+                <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('Once upon a time, a crow was very thirsty. He threw small stones inside until the water rose.')">🔊 استمع للقصة</button>
+            </div>
+        `;
     }
 }
 
-// Voice Recognition & Translator
+// Voice Recognition & Translation
 function toggleSpeech() {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recog = new SpeechRecognition();
         recog.lang = 'ar-SA';
-        
-        recog.onstart = () => {
-            document.getElementById('micBtn').innerText = '🎙️ جاري الاستماع بكفاءة...';
-        };
-
+        recog.onstart = () => { document.getElementById('micBtn').innerText = '🎙️ جاري الاستماع...'; };
         recog.onresult = (e) => {
             const text = e.results[0][0].transcript;
             document.getElementById('arText').innerText = text;
-            translateText(text);
+            document.getElementById('enText').innerText = text + " (English)";
             document.getElementById('micBtn').innerText = '🎙️ اضغط وتحدث بالعربية';
         };
-
         recog.start();
     } else {
-        alert('المتصفح لا يدعم التسجيل الصوتي المباشر، يمكنك استخدام الترجمة النصية.');
+        alert('استخدم الترجمة النصية لعدم توفر المايك المباشر في المتصفح الحالي.');
     }
 }
 
-function translateText(text) {
-    let clean = text.trim();
-    
-    // Offline Storage Match
-    if (transCache[clean]) {
-        document.getElementById('enText').innerText = transCache[clean];
-        return;
-    }
-
-    let translated = "peace";
-    if (clean.includes("سلام") || clean.includes("مرحبا")) translated = "hello / peace";
-    else if (clean.includes("كتاب")) translated = "book";
-    else if (clean.includes("مدرسة")) translated = "school";
-    else if (clean.includes("تفاحة")) translated = "apple";
-    else translated = clean + " (English)";
-
-    transCache[clean] = translated;
-    localStorage.setItem('offline_trans', JSON.stringify(transCache));
-
-    document.getElementById('enText').innerText = translated;
-}
-
-function speakEnglish() {
-    const text = document.getElementById('enText').innerText;
-    speak(text);
-}
-
-function searchGoogleTrans() {
-    const q = encodeURIComponent(document.getElementById('arText').innerText);
-    window.open(`https://translate.google.com/?sl=ar&tl=en&text=${q}&op=translate`, '_blank');
-}
-
+function speakEnglish() { speak(document.getElementById('enText').innerText); }
 function speak(text) {
     if ('speechSynthesis' in window) {
         const utt = new SpeechSynthesisUtterance(text);
@@ -306,10 +316,6 @@ function nextLetter() {
     else selectLetter(list[0]);
 }
 
-function speakCurrentLetter() {
-    speak(currentLetter);
-}
-
-function installPWA() {
-    alert("لتثبيت التطبيق على هاتفك: اضغط على خيارات المتصفح (⋮) ثم اختر 'إضافة إلى الشاشة الرئيسية Add to Home Screen'.");
-            }
+function speakCurrentLetter() { speak(currentLetter); }
+function installPWA() { alert("لتثبيت التطبيق على هاتفك: اضغط على خيارات المتصفح (⋮) ثم اختر 'إضافة إلى الشاشة الرئيسية Add to Home Screen'."); }
+        
