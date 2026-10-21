@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy - الأكاديمية الشاملة</title>
+    <title>English Kids Academy</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0F1123">
@@ -118,7 +118,7 @@
             </div>
         </div>
 
-        <!-- ===== VIEW 4: DICTIONARY PAGE (IN-APP GOOGLE SEARCH) ===== -->
+        <!-- ===== VIEW 4: DICTIONARY PAGE (API IN-APP DIRECT SEARCH) ===== -->
         <div id="dictionaryView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
@@ -127,20 +127,16 @@
             <div class="dict-box">
                 <h2>📚 القاموس الشامل المباشر</h2>
                 <div class="search-input-group">
-                    <input type="text" id="dictSearchInput" placeholder="اكتب الكلمة للبحث المباشر..." onkeyup="searchInAppDictionary()">
-                    <button class="btn-search-dict" onclick="searchInAppDictionary()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="text" id="dictSearchInput" placeholder="اكتب الكلمة (مثلاً: طالب، طعام، طفل، Book...)" onkeyup="if(event.key==='Enter') searchInAppDictionary()">
+                    <button class="btn-search-dict" onclick="searchInAppDictionary()"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
                 </div>
-                <div id="dictResultsList" class="dict-results-grid"></div>
-                
-                <!-- In-App Web Search Frame (Stays inside the app) -->
-                <div style="margin-top:20px;">
-                    <p style="font-size:13px; color:#aaa; margin-bottom:8px;">🔍 نتائج البحث المتقدم من داخل التطبيق:</p>
-                    <iframe id="inAppSearchFrame" src="about:blank" style="width:100%; height:300px; border:1px solid #444; border-radius:12px; background:#fff;"></iframe>
+                <div id="dictResultsList" class="dict-results-grid">
+                    <p style="text-align:center; padding:15px; color:#aaa;">اكتب أي كلمة بالعربية أو الإنجليزية واضغط بحث لتظهر النتائج فوراً مع النطق المباشر.</p>
                 </div>
             </div>
         </div>
 
-        <!-- ===== VIEW 5: GAMES & QUIZZES PAGE ===== -->
+        <!-- ===== VIEW 5: GAMES PAGE ===== -->
         <div id="gamesView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
@@ -159,7 +155,7 @@
             </div>
         </div>
 
-        <!-- ===== VIEW 6: GENERIC DETAILED CONTENT VIEW ===== -->
+        <!-- ===== VIEW 6: DETAILED CONTENT VIEW ===== -->
         <div id="detailsView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
