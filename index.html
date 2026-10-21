@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy</title>
+    <title>English Kids Academy - الأكاديمية الشاملة</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0F1123">
@@ -27,7 +27,7 @@
                 <h1 class="app-title">English Kids Academy</h1>
             </header>
 
-            <div class="install-banner" id="installBanner" onclick="installPWA()">
+            <div class="install-banner" onclick="installPWA()">
                 📲 تثبيت التطبيق على الشاشة الرئيسية للهاتف
             </div>
 
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="result-box english-box">
-                    <span>English: <mark id="enText">peace</mark></span>
+                    <span>الترجمة: <mark id="enText">peace</mark></span>
                     <button class="btn-speak-icon" onclick="speakEnglish()"><i class="fa-solid fa-volume-high"></i></button>
                 </div>
             </div>
@@ -118,7 +118,7 @@
             </div>
         </div>
 
-        <!-- ===== VIEW 4: DICTIONARY PAGE (IN-APP SEARCH) ===== -->
+        <!-- ===== VIEW 4: DICTIONARY PAGE (IN-APP GOOGLE SEARCH) ===== -->
         <div id="dictionaryView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
@@ -127,11 +127,15 @@
             <div class="dict-box">
                 <h2>📚 القاموس الشامل المباشر</h2>
                 <div class="search-input-group">
-                    <input type="text" id="dictSearchInput" placeholder="اكتب الكلمة بالإنجليزية أو العربية..." onkeyup="searchInAppDictionary()">
-                    <button class="btn-search-dict"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="text" id="dictSearchInput" placeholder="اكتب الكلمة للبحث المباشر..." onkeyup="searchInAppDictionary()">
+                    <button class="btn-search-dict" onclick="searchInAppDictionary()"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
-                <div id="dictResultsList" class="dict-results-grid">
-                    <!-- Dynamic Dictionary Words rendered here -->
+                <div id="dictResultsList" class="dict-results-grid"></div>
+                
+                <!-- In-App Web Search Frame (Stays inside the app) -->
+                <div style="margin-top:20px;">
+                    <p style="font-size:13px; color:#aaa; margin-bottom:8px;">🔍 نتائج البحث المتقدم من داخل التطبيق:</p>
+                    <iframe id="inAppSearchFrame" src="about:blank" style="width:100%; height:300px; border:1px solid #444; border-radius:12px; background:#fff;"></iframe>
                 </div>
             </div>
         </div>
@@ -143,21 +147,19 @@
             </div>
 
             <div class="game-container">
-                <h2>🎮 الألعاب الصوتية والتحديات</h2>
+                <h2>🎮 الألعاب الصوتية والتحديات الذكية</h2>
                 <hr style="margin:15px 0; border-color:#333;">
                 
                 <div class="quiz-card-box">
                     <div class="quiz-q-title" id="quizQuestion">السؤال سيظهر هنا...</div>
-                    <div class="quiz-options-grid" id="quizOptionsGrid">
-                        <!-- Dynamic Buttons -->
-                    </div>
+                    <div class="quiz-options-grid" id="quizOptionsGrid"></div>
                     <div id="quizFeedback" class="quiz-feedback-banner"></div>
                     <button id="btnNextQuiz" class="btn-act next-btn" style="display:none; width:100%; margin-top:15px;" onclick="loadNextQuestion()">السؤال التالي ➡️</button>
                 </div>
             </div>
         </div>
 
-        <!-- ===== VIEW 6: GENERIC DETAILS VIEW ===== -->
+        <!-- ===== VIEW 6: GENERIC DETAILED CONTENT VIEW ===== -->
         <div id="detailsView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="navigateTo('home')">🏠 الرجوع للرئيسية</button>
