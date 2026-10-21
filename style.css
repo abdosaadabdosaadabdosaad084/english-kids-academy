@@ -33,68 +33,17 @@ body {
     position: relative;
 }
 
-.view {
-    display: none;
-}
+.view { display: none; }
+.view.active-view { display: block; }
 
-.view.active-view {
-    display: block;
-}
+.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.app-title { font-size: 20px; font-weight: 800; }
+.score-badge { border: 2px solid var(--yellow-star); color: var(--yellow-star); padding: 4px 14px; border-radius: 20px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
 
-/* Header */
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
+.install-banner { background-color: var(--green-banner); color: #000; font-weight: 800; text-align: center; padding: 14px; border-radius: 14px; margin-bottom: 20px; cursor: pointer; }
 
-.app-title {
-    font-size: 20px;
-    font-weight: 800;
-}
-
-.score-badge {
-    border: 2px solid var(--yellow-star);
-    color: var(--yellow-star);
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.install-banner {
-    background-color: var(--green-banner);
-    color: #000;
-    font-weight: 800;
-    text-align: center;
-    padding: 14px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-    cursor: pointer;
-}
-
-.cards-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-.menu-card {
-    background-color: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 24px 12px;
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 140px;
-}
-
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.menu-card { background-color: var(--card-bg); border-radius: var(--radius); padding: 24px 12px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 140px; }
 .menu-card.full-width { grid-column: span 2; }
 .card-icon { font-size: 36px; margin-bottom: 12px; }
 
@@ -128,24 +77,28 @@ body {
 .audio-btn { background-color: #2ED573; color: white; }
 .next-btn { background-color: #1E90FF; color: white; }
 
-/* In-App Dictionary Search */
+/* Dictionary In-App */
 .dict-box { background-color: var(--card-bg); padding: 20px; border-radius: 18px; }
 .search-input-group { display: flex; gap: 10px; margin: 15px 0; }
 .search-input-group input { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #444; background: #161936; color: white; font-size: 16px; }
-.btn-search-dict { padding: 12px 18px; background: var(--green-banner); border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+.btn-search-dict { padding: 12px 18px; background: var(--green-banner); border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: #000; }
 .dict-results-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px; }
 .dict-card-item { background: #1A233A; padding: 12px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
 
-/* Games Screen & Feedback */
+/* Games */
 .game-container { background-color: var(--card-bg); padding: 20px; border-radius: 18px; }
 .quiz-card-box { background: #161936; padding: 20px; border-radius: 14px; text-align: center; }
-.quiz-q-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+.quiz-q-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; line-height: 1.6; }
 .quiz-options-grid { display: flex; flex-direction: column; gap: 12px; }
-.btn-opt { padding: 14px; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; background-color: #2D303E; color: white; transition: background-color 0.2s; }
+.btn-opt { padding: 14px; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; background-color: #2D303E; color: white; }
 .btn-opt.opt-correct { background-color: #2ED573 !important; color: white !important; }
 .btn-opt.opt-wrong { background-color: #FF4757 !important; color: white !important; }
 .quiz-feedback-banner { margin-top: 15px; font-size: 18px; font-weight: 800; }
 .quiz-feedback-banner.correct-text { color: #2ED573; }
 .quiz-feedback-banner.wrong-text { color: #FF4757; }
 
-.details-content { background-color: var(--card-bg); padding: 20px; border-radius: 18px; line-height: 1.8; }
+/* Detailed Content */
+.details-content { background-color: var(--card-bg); padding: 20px; border-radius: 18px; line-height: 1.9; font-size: 15px; }
+.details-content h2 { color: #4DEAEA; margin-bottom: 12px; font-size: 22px; }
+.details-content h3 { color: #FFDD59; margin-top: 15px; margin-bottom: 8px; font-size: 18px; }
+.details-content p { margin-bottom: 10px; color: #E2E8F0; }
