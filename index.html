@@ -32,7 +32,7 @@
                 📲 تثبيت التطبيق على الشاشة الرئيسية للهاتف
             </div>
 
-            <!-- Menu Cards -->
+            <!-- Menu Cards Grid -->
             <div class="cards-grid">
                 
                 <div class="menu-card" onclick="openSection('board')">
@@ -52,7 +52,22 @@
 
                 <div class="menu-card" onclick="openSection('grammar')">
                     <div class="card-icon">📖</div>
-                    <h3>القواعد بالتفصيل الممل</h3>
+                    <h3>الموسوعة الشاملة للقواعد</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('tools')">
+                    <div class="card-icon">🛠️</div>
+                    <h3>أدوات اللغة والشرط</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('phonics')">
+                    <div class="card-icon">🔊</div>
+                    <h3>تعليم الصوتيات والنطق</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('visual_dict')">
+                    <div class="card-icon">🖼️</div>
+                    <h3>القاموس المصور الناطق</h3>
                 </div>
 
                 <div class="menu-card" onclick="openSection('dialogues')">
@@ -124,7 +139,7 @@
             </div>
         </div>
 
-        <!-- ===== VIEW 4: GAMES VIEW (عالم الألعاب اللانهائي الجديد) ===== -->
+        <!-- ===== VIEW 4: GAMES VIEW ===== -->
         <div id="gamesView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
@@ -142,11 +157,9 @@
                 </button>
 
                 <div id="gameVisualArena" style="min-height: 140px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 20px; border: 2px dashed rgba(255,255,255,0.2); margin-bottom: 20px; padding: 10px;">
-                    <!-- المكان الذي تظهر فيه الصورة أو المربعات الملونة أو الأرقام -->
                 </div>
 
                 <div id="gameOptionsGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <!-- الخيارات التفاعلية -->
                 </div>
 
                 <div style="margin-top: 25px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
