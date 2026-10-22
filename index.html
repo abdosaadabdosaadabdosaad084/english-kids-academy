@@ -1,654 +1,215 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy - عالم الألعاب الذكية اللانهائي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-            --accent-pink: #ec4899;
-            --accent-purple: #8b5cf6;
-            --accent-blue: #3b82f6;
-            --accent-green: #10b981;
-            --accent-yellow: #f59e0b;
-            --text-light: #f8fafc;
-        }
+// State & Navigation Function
+function switchTab(tabName, btnElement) {
+    // تحديث الأزرار المحددة في الشريط السفلي
+    if (btnElement) {
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+    const contentArea = document.getElementById('content-area');
+    const mainTitle = document.getElementById('main-title');
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 15px;
-            overflow-x: hidden;
-        }
+    if (tabName === 'grammar') {
+        mainTitle.innerText = "قواعد اللغة الإنجليزية";
+        contentArea.innerHTML = `
+            <div class="card">
+                <h2>📖 موسوعة القواعد</h2>
+                <p>تعلم قواعد اللغة الإنجليزية الشاملة من الضمائر إلى الأزمنة بطريقة مبسطة.</p>
+            </div>`;
+    } else if (tabName === 'conversations') {
+        mainTitle.innerText = "محادثات الحياة اليومية";
+        contentArea.innerHTML = `
+            <div class="card">
+                <h2>💬 المحادثات والتعارف</h2>
+                <p>استمع وتدرب على محادثات مواقف الحياة اليومية في المدرسة والمستشفى والتسوق.</p>
+            </div>`;
+    } else if (tabName === 'stories') {
+        mainTitle.innerText = "القصص التعليمية المترجمة";
+        contentArea.innerHTML = `
+            <div class="card">
+                <h2>📚 القصص القصيرة</h2>
+                <p>اقرأ واستمع لقصص ممتعة لزيادة حصيلتك اللغوية.</p>
+            </div>`;
+    } else if (tabName === 'games') {
+        mainTitle.innerText = "🎮 عالم ألعاب الأطفال الذكي";
+        renderInfiniteKidsGames(contentArea);
+    }
+}
 
-        /* Header & Stats */
-        .app-header {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 12px 20px;
-            border-radius: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
+// ==========================================
+// 🚀 محرك ألعاب الأطفال اللانهائي التفاعلي
+// ==========================================
+const ANIMALS_DATA = [
+    { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
+    { nameEn: "Elephant", nameAr: "فيل", emoji: "🐘" },
+    { nameEn: "Monkey", nameAr: "قرد", emoji: "🐒" },
+    { nameEn: "Giraffe", nameAr: "زرافة", emoji: "🦒" },
+    { nameEn: "Tiger", nameAr: "نمر", emoji: "🐅" },
+    { nameEn: "Cat", nameAr: "قطة", emoji: "🐱" },
+    { nameEn: "Dog", nameAr: "كلب", emoji: "🐶" },
+    { nameEn: "Rabbit", nameAr: "أرنب", emoji: "🐰" },
+    { nameEn: "Panda", nameAr: "باندا", emoji: "🐼" },
+    { nameEn: "Bird", nameAr: "عصفور", emoji: "🐦" },
+    { nameEn: "Duck", nameAr: "بطة", emoji: "🦆" },
+    { nameEn: "Frog", nameAr: "ضفدع", emoji: "🐸" }
+];
 
-        .stat-badge {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 6px 12px;
-            border-radius: 12px;
-        }
+const COLORS_DATA = [
+    { nameEn: "Red", nameAr: "أحمر", hex: "#ef4444" },
+    { nameEn: "Blue", nameAr: "أزرق", hex: "#3b82f6" },
+    { nameEn: "Green", nameAr: "أخضر", hex: "#10b981" },
+    { nameEn: "Yellow", nameAr: "أصفر", hex: "#f59e0b" },
+    { nameEn: "Purple", nameAr: "بنفسجي", hex: "#8b5cf6" },
+    { nameEn: "Pink", nameAr: "وردي", hex: "#ec4899" }
+];
 
-        .score-val { color: var(--accent-yellow); }
-        .streak-val { color: var(--accent-pink); }
+let currentGameMode = 'all';
+let currentAnswer = null;
+let wordToSpeak = "";
+let isLocked = false;
+let userScore = 0;
 
-        /* Game Container */
-        .game-card {
-            width: 100%;
-            max-width: 500px;
-            background: var(--card-bg);
-            border-radius: 28px;
-            padding: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            min-height: 480px;
-        }
+function renderInfiniteKidsGames(container) {
+    container.innerHTML = `
+        <div class="games-wrapper" style="text-align:center; padding: 10px;">
+            <div style="background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 20px; display: inline-block; margin-bottom: 10px; font-weight: bold;">
+                ⭐ النقاط: <span id="gameScore">${userScore}</span>
+            </div>
 
-        .category-tag {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
-        }
+            <div id="gameCategory" style="font-size: 0.9rem; color: #FFDD59; font-weight: bold; margin-bottom: 5px;"></div>
+            <h3 id="gameQuestion" style="margin-bottom: 15px; font-size: 1.2rem;"></h3>
 
-        .question-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 15px;
-            color: #e2e8f0;
-            line-height: 1.4;
-        }
+            <button id="btnSpeak" onclick="speakCurrentWord()" style="display:none; margin: 0 auto 15px auto; background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">
+                🔊 استمع للكلمة
+            </button>
 
-        /* Visual Display Arena */
-        .visual-arena {
-            width: 100%;
-            height: 180px;
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            border: 2px dashed rgba(255, 255, 255, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
+            <div id="visualDisplay" style="min-height: 120px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); border-radius: 15px; margin-bottom: 20px; padding: 10px;"></div>
 
-        .main-emoji {
-            font-size: 5rem;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
-            animation: bounce 2s infinite ease-in-out;
-        }
+            <div id="optionsGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-10px) scale(1.05); }
-        }
-
-        .grid-elements {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            max-width: 100%;
-        }
-
-        .grid-item {
-            font-size: 2.8rem;
-            animation: popIn 0.3s ease-out;
-        }
-
-        @keyframes popIn {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .color-box {
-            width: 70px;
-            height: 70px;
-            border-radius: 18px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            border: 3px solid rgba(255,255,255,0.3);
-            animation: popIn 0.3s ease-out;
-        }
-
-        /* Options Grid */
-        .options-container {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: auto;
-        }
-
-        .btn-option {
-            background: rgba(255, 255, 255, 0.06);
-            border: 2px solid rgba(255, 255, 255, 0.12);
-            border-radius: 18px;
-            padding: 14px 10px;
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .btn-option:active {
-            transform: scale(0.95);
-        }
-
-        .btn-option.correct {
-            background: var(--accent-green) !important;
-            border-color: #34d399 !important;
-            animation: pulse 0.4s ease;
-        }
-
-        .btn-option.wrong {
-            background: #ef4444 !important;
-            border-color: #f87171 !important;
-            animation: shake 0.4s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* Mode Selector Footer */
-        .mode-selector {
-            display: flex;
-            gap: 8px;
-            width: 100%;
-            max-width: 500px;
-            margin-top: 15px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-
-        .mode-btn {
-            flex: 1;
-            min-width: 80px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #94a3b8;
-            padding: 8px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .mode-btn.active {
-            background: var(--accent-blue);
-            color: #fff;
-            border-color: #60a5fa;
-        }
-
-        /* Sound Button */
-        .sound-speak-btn {
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid var(--accent-blue);
-            color: #60a5fa;
-            border-radius: 50px;
-            padding: 6px 14px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Confetti overlay */
-        .confetti-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 99;
-        }
-    </style>
-</head>
-<body>
-
-    <canvas id="confetti" class="confetti-canvas"></canvas>
-
-    <!-- App Header -->
-    <header class="app-header">
-        <div class="stat-badge">
-            <span>⭐</span>
-            <span>النقاط:</span>
-            <span id="score" class="score-val">0</span>
+            <div style="margin-top: 20px; display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
+                <button onclick="changeGameMode('all')" class="mode-btn">🎲 الكل</button>
+                <button onclick="changeGameMode('animals')" class="mode-btn">🦁 حيوانات</button>
+                <button onclick="changeGameMode('colors')" class="mode-btn">🎨 ألوان</button>
+                <button onclick="changeGameMode('numbers')" class="mode-btn">🔢 أرقام</button>
+            </div>
         </div>
-        <div class="stat-badge">
-            <span>🔥</span>
-            <span>الحماس:</span>
-            <span id="streak" class="streak-val">0</span>
-        </div>
-    </header>
+    `;
 
-    <!-- Main Game Card -->
-    <main class="game-card">
-        <div id="category-tag" class="category-tag">تحدي الذكاء اللانهائي</div>
-        <h2 id="question-text" class="question-title">جاري تحضير التحدي...</h2>
+    generateNextChallenge();
+}
 
-        <button id="speak-btn" class="sound-speak-btn" style="display:none;" onclick="speakCurrentWord()">
-            🔊 استمع للكلمة
-        </button>
+function changeGameMode(mode) {
+    currentGameMode = mode;
+    generateNextChallenge();
+}
 
-        <div id="visual-arena" class="visual-arena">
-            <!-- Dynamic Visual Content Inserted Here -->
-        </div>
+function generateNextChallenge() {
+    isLocked = false;
+    const speakBtn = document.getElementById('btnSpeak');
+    if (speakBtn) speakBtn.style.display = 'none';
+    wordToSpeak = "";
 
-        <div id="options-container" class="options-container">
-            <!-- Dynamic Options Buttons -->
-        </div>
-    </main>
+    let types = ['animals', 'colors', 'numbers'];
+    let type = currentGameMode === 'all' ? types[Math.floor(Math.random() * types.length)] : currentGameMode;
 
-    <!-- Game Categories Selector -->
-    <nav class="mode-selector">
-        <button class="mode-btn active" onclick="setMode('all')">🎲 الكل</button>
-        <button class="mode-btn" onclick="setMode('animals')">🦁 حيوانات</button>
-        <button class="mode-btn" onclick="setMode('colors')">🎨 ألوان</button>
-        <button class="mode-btn" onclick="setMode('numbers')">🔢 أرقام</button>
-        <button class="mode-btn" onclick="setMode('words')">🔤 كلمات</button>
-    </nav>
+    if (type === 'animals') {
+        const item = ANIMALS_DATA[Math.floor(Math.random() * ANIMALS_DATA.length)];
+        document.getElementById('gameCategory').innerText = "🦁 تحدي الحيوانات والطيور";
+        document.getElementById('gameQuestion').innerText = "ما اسم هذا الكائن باللغة الإنجليزية؟";
+        document.getElementById('visualDisplay').innerHTML = `<span style="font-size: 4rem;">${item.emoji}</span>`;
 
-    <script>
-        // Data Collections for Procedural Generation
-        const ANIMALS = [
-            { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
-            { nameEn: "Elephant", nameAr: "فيل", emoji: "🐘" },
-            { nameEn: "Monkey", nameAr: "قرد", emoji: "🐒" },
-            { nameEn: "Giraffe", nameAr: "زرافة", emoji: "🦒" },
-            { nameEn: "Tiger", nameAr: "نمر", emoji: "🐅" },
-            { nameEn: "Cat", nameAr: "قطة", emoji: "🐱" },
-            { nameEn: "Dog", nameAr: "كلب", emoji: "🐶" },
-            { nameEn: "Rabbit", nameAr: "أرنب", emoji: "🐰" },
-            { nameEn: "Panda", nameAr: "باندا", emoji: "🐼" },
-            { nameEn: "Bear", nameAr: "دب", emoji: "🐻" },
-            { nameEn: "Bird", nameAr: "عصفور", emoji: "🐦" },
-            { nameEn: "Parrot", nameAr: "ببغاء", emoji: "🦜" },
-            { nameEn: "Eagle", nameAr: "نسر", emoji: "🦅" },
-            { nameEn: "Duck", nameAr: "بطة", emoji: "🦆" },
-            { nameEn: "Owl", nameAr: "بومة", emoji: "🦉" },
-            { nameEn: "Penguin", nameAr: "بطريق", emoji: "🐧" },
-            { nameEn: "Frog", nameAr: "ضفدع", emoji: "🐸" },
-            { nameEn: "Fox", nameAr: "ثعلب", emoji: "🦊" }
-        ];
+        currentAnswer = item.nameEn;
+        wordToSpeak = item.nameEn;
+        if (speakBtn) speakBtn.style.display = 'inline-block';
 
-        const COLORS = [
-            { nameEn: "Red", nameAr: "أحمر", hex: "#ef4444" },
-            { nameEn: "Blue", nameAr: "أزرق", hex: "#3b82f6" },
-            { nameEn: "Green", nameAr: "أخضر", hex: "#10b981" },
-            { nameEn: "Yellow", nameAr: "أصفر", hex: "#f59e0b" },
-            { nameEn: "Purple", nameAr: "بنفسجي", hex: "#8b5cf6" },
-            { nameEn: "Pink", nameAr: "وردي", hex: "#ec4899" },
-            { nameEn: "Orange", nameAr: "برتقالي", hex: "#f97316" },
-            { nameEn: "White", nameAr: "أبيض", hex: "#ffffff" }
-        ];
+        let choices = shuffleArray([item, ...getRandomItems(ANIMALS_DATA, item, 3)]);
+        renderButtons(choices.map(c => ({ label: c.nameEn, val: c.nameEn, sub: c.nameAr })));
 
-        const NUMBERS = [
-            { num: 1, wordEn: "One", wordAr: "واحد" },
-            { num: 2, wordEn: "Two", wordAr: "اثنان" },
-            { num: 3, wordEn: "Three", wordAr: "ثلاثة" },
-            { num: 4, wordEn: "Four", wordAr: "أربعة" },
-            { num: 5, wordEn: "Five", wordAr: "خمسة" },
-            { num: 6, wordEn: "Six", wordAr: "ستة" },
-            { num: 7, wordEn: "Seven", wordAr: "سبعة" },
-            { num: 8, wordEn: "Eight", wordAr: "ثمانية" },
-            { num: 9, wordEn: "Nine", wordAr: "تسعة" }
-        ];
+    } else if (type === 'colors') {
+        const item = COLORS_DATA[Math.floor(Math.random() * COLORS_DATA.length)];
+        document.getElementById('gameCategory').innerText = "🎨 تحدي الألوان";
+        document.getElementById('gameQuestion').innerText = "ما هو هذا اللون باللغة الإنجليزية؟";
+        document.getElementById('visualDisplay').innerHTML = `<div style="width:70px; height:70px; background-color:${item.hex}; border-radius:15px; border:3px solid #fff;"></div>`;
 
-        // State Management
-        let currentMode = 'all';
-        let score = 0;
-        let streak = 0;
-        let currentCorrectAnswer = null;
-        let currentWordToSpeak = "";
-        let isAnsweringBlocked = false;
+        currentAnswer = item.nameEn;
+        wordToSpeak = item.nameEn;
+        if (speakBtn) speakBtn.style.display = 'inline-block';
 
-        // Sound Effects Engine (Web Audio API)
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        function playSound(type) {
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
+        let choices = shuffleArray([item, ...getRandomItems(COLORS_DATA, item, 3)]);
+        renderButtons(choices.map(c => ({ label: c.nameEn, val: c.nameEn, sub: c.nameAr })));
 
-            if (type === 'correct') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
-                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.4);
-            } else if (type === 'wrong') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-                osc.frequency.setValueAtTime(130, audioCtx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.3);
-            }
+    } else {
+        const count = Math.floor(Math.random() * 5) + 2;
+        const anim = ANIMALS_DATA[Math.floor(Math.random() * ANIMALS_DATA.length)];
+        document.getElementById('gameCategory').innerText = "🔢 حديقة الأرقام والعد";
+        document.getElementById('gameQuestion').innerText = "كم عدد العناصر الظاهرة أمامك؟";
+
+        let icons = "";
+        for (let i = 0; i < count; i++) icons += `<span style="font-size: 2.2rem; margin: 3px;">${anim.emoji}</span>`;
+        document.getElementById('visualDisplay').innerHTML = `<div style="display:flex; flex-wrap:wrap; justify-content:center;">${icons}</div>`;
+
+        currentAnswer = count.toString();
+
+        let nums = [count];
+        while (nums.length < 4) {
+            let r = Math.floor(Math.random() * 8) + 1;
+            if (!nums.includes(r)) nums.push(r);
         }
+        nums = shuffleArray(nums);
+        renderButtons(nums.map(n => ({ label: n.toString(), val: n.toString(), sub: "عنصر" })));
+    }
+}
 
-        // Text-To-Speech Pronunciation
-        function speakCurrentWord() {
-            if (!currentWordToSpeak) return;
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(currentWordToSpeak);
-            utterance.lang = 'en-US';
-            utterance.rate = 0.85;
-            window.speechSynthesis.speak(utterance);
-        }
+function renderButtons(opts) {
+    const grid = document.getElementById('optionsGrid');
+    grid.innerHTML = '';
+    opts.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.style.cssText = "background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 12px; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer;";
+        btn.innerHTML = `<div>${opt.label}</div><small style="opacity:0.7; font-size:0.8rem;">${opt.sub || ''}</small>`;
+        btn.onclick = () => handleChoice(opt.val, btn);
+        grid.appendChild(btn);
+    });
+}
 
-        // Utility: Shuffle Array
-        function shuffle(array) {
-            return [...array].sort(() => Math.random() - 0.5);
-        }
+function handleChoice(val, btn) {
+    if (isLocked) return;
+    isLocked = true;
 
-        // Mode Controller
-        function setMode(mode) {
-            currentMode = mode;
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            generateNextQuestion();
-        }
+    if (val === currentAnswer) {
+        btn.style.background = "#10b981";
+        userScore += 10;
+        document.getElementById('gameScore').innerText = userScore;
+        if (wordToSpeak) speakCurrentWord();
+    } else {
+        btn.style.background = "#ef4444";
+    }
 
-        // Main Infinite Level Generator
-        function generateNextQuestion() {
-            isAnsweringBlocked = false;
-            document.getElementById('speak-btn').style.display = 'none';
-            currentWordToSpeak = "";
+    setTimeout(() => {
+        generateNextChallenge();
+    }, 1400);
+}
 
-            let gameTypes = ['animals', 'colors', 'numbers', 'words'];
-            let selectedType = currentMode === 'all' 
-                ? gameTypes[Math.floor(Math.random() * gameTypes.length)] 
-                : currentMode;
+function speakCurrentWord() {
+    if ('speechSynthesis' in window && wordToSpeak) {
+        const utt = new SpeechSynthesisUtterance(wordToSpeak);
+        utt.lang = 'en-US';
+        window.speechSynthesis.speak(utt);
+    }
+}
 
-            switch (selectedType) {
-                case 'animals': generateAnimalGame(); break;
-                case 'colors': generateColorGame(); break;
-                case 'numbers': generateNumberGame(); break;
-                case 'words': generateWordGame(); break;
-            }
-        }
+function getRandomItems(arr, exclude, count) {
+    let filtered = arr.filter(i => i !== exclude);
+    return shuffleArray(filtered).slice(0, count);
+}
 
-        // 1. Animal / Bird Identification Generator
-        function generateAnimalGame() {
-            const animal = ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
-            const isEnglishQuestion = Math.random() > 0.5;
+function shuffleArray(arr) {
+    return [...arr].sort(() => Math.random() - 0.5);
+}
 
-            document.getElementById('category-tag').innerText = "🦁 تحدي الحيوانات والطيور";
-            document.getElementById('visual-arena').innerHTML = `<div class="main-emoji">${animal.emoji}</div>`;
-
-            let choices = [animal];
-            while (choices.length < 4) {
-                let randomAnim = ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
-                if (!choices.some(a => a.nameEn === randomAnim.nameEn)) {
-                    choices.push(randomAnim);
-                }
-            }
-            choices = shuffle(choices);
-
-            if (isEnglishQuestion) {
-                document.getElementById('question-text').innerText = `ما اسم هذا الكائن باللغة الإنجليزية؟`;
-                currentCorrectAnswer = animal.nameEn;
-                currentWordToSpeak = animal.nameEn;
-                document.getElementById('speak-btn').style.display = 'inline-flex';
-                renderOptions(choices.map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
-            } else {
-                document.getElementById('question-text').innerText = `ما هو المعنى العربي لـ '${animal.nameEn}'؟`;
-                currentCorrectAnswer = animal.nameAr;
-                currentWordToSpeak = animal.nameEn;
-                document.getElementById('speak-btn').style.display = 'inline-flex';
-                renderOptions(choices.map(c => ({ text: c.nameAr, val: c.nameAr, sub: c.nameEn })));
-            }
-        }
-
-        // 2. Color Recognition Generator
-        function generateColorGame() {
-            const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-            document.getElementById('category-tag').innerText = "🎨 تحدي الألوان الملونة";
-            document.getElementById('visual-arena').innerHTML = `<div class="color-box" style="background-color: ${color.hex};"></div>`;
-
-            let choices = [color];
-            while (choices.length < 4) {
-                let randomCol = COLORS[Math.floor(Math.random() * COLORS.length)];
-                if (!choices.some(c => c.nameEn === randomCol.nameEn)) {
-                    choices.push(randomCol);
-                }
-            }
-            choices = shuffle(choices);
-
-            document.getElementById('question-text').innerText = `ما هو اللون الموضح في الشكل؟`;
-            currentCorrectAnswer = color.nameEn;
-            currentWordToSpeak = color.nameEn;
-            document.getElementById('speak-btn').style.display = 'inline-flex';
-
-            renderOptions(choices.map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
-        }
-
-        // 3. Counting & Numbers Generator
-        function generateNumberGame() {
-            const targetNumObj = NUMBERS[Math.floor(Math.random() * NUMBERS.length)];
-            const randomAnimal = ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
-            
-            document.getElementById('category-tag').innerText = "🔢 حديقة العد والأرقام";
-            document.getElementById('question-text').innerText = `كم عدد العناصر الموجودة في المربع؟`;
-
-            let gridHTML = `<div class="grid-elements">`;
-            for (let i = 0; i < targetNumObj.num; i++) {
-                gridHTML += `<span class="grid-item">${randomAnimal.emoji}</span>`;
-            }
-            gridHTML += `</div>`;
-            document.getElementById('visual-arena').innerHTML = gridHTML;
-
-            let choices = [targetNumObj];
-            while (choices.length < 4) {
-                let randomNum = NUMBERS[Math.floor(Math.random() * NUMBERS.length)];
-                if (!choices.some(n => n.num === randomNum.num)) {
-                    choices.push(randomNum);
-                }
-            }
-            choices = shuffle(choices);
-
-            currentCorrectAnswer = targetNumObj.num.toString();
-            currentWordToSpeak = targetNumObj.wordEn;
-
-            renderOptions(choices.map(n => ({ text: `${n.num} (${n.wordEn})`, val: n.num.toString(), sub: n.wordAr })));
-        }
-
-        // 4. Word Listening & Spelling Match Generator
-        function generateWordGame() {
-            const animal = ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
-            document.getElementById('category-tag').innerText = "🔤 تحدي مفردات الذكاء";
-            document.getElementById('question-text').innerText = `اختر الصورة المطابقة للكلمة: '${animal.nameEn}'`;
-            
-            currentCorrectAnswer = animal.nameEn;
-            currentWordToSpeak = animal.nameEn;
-            document.getElementById('speak-btn').style.display = 'inline-flex';
-
-            document.getElementById('visual-arena').innerHTML = `<div style="font-size: 2.2rem; font-weight: 900; color: #60a5fa;">"${animal.nameEn}"</div>`;
-
-            let choices = [animal];
-            while (choices.length < 4) {
-                let randomAnim = ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
-                if (!choices.some(a => a.nameEn === randomAnim.nameEn)) {
-                    choices.push(randomAnim);
-                }
-            }
-            choices = shuffle(choices);
-
-            renderOptions(choices.map(c => ({ text: `${c.emoji} ${c.nameAr}`, val: c.nameEn, sub: c.nameEn })));
-        }
-
-        // Render Options Grid
-        function renderOptions(options) {
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-
-            options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'btn-option';
-                btn.innerHTML = `<span>${opt.text}</span><small style="font-size:0.8rem; opacity:0.7;">${opt.sub || ''}</small>`;
-                btn.onclick = () => checkAnswer(opt.val, btn);
-                container.appendChild(btn);
-            });
-        }
-
-        // Answer Validation & Progression
-        function checkAnswer(selectedVal, btnElement) {
-            if (isAnsweringBlocked) return;
-            isAnsweringBlocked = true;
-
-            if (selectedVal === currentCorrectAnswer) {
-                btnElement.classList.add('correct');
-                playSound('correct');
-                score += 10;
-                streak += 1;
-                triggerConfetti();
-                if (currentWordToSpeak) speakCurrentWord();
-            } else {
-                btnElement.classList.add('wrong');
-                playSound('wrong');
-                streak = 0;
-                // Highlight correct button
-                document.querySelectorAll('.btn-option').forEach(btn => {
-                    if (btn.innerText.includes(currentCorrectAnswer)) {
-                        btn.classList.add('correct');
-                    }
-                });
-            }
-
-            document.getElementById('score').innerText = score;
-            document.getElementById('streak').innerText = streak;
-
-            setTimeout(() => {
-                generateNextQuestion();
-            }, 1600);
-        }
-
-        // Simple Visual Celebration (Confetti Particle FX)
-        const canvas = document.getElementById('confetti');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        function triggerConfetti() {
-            for (let i = 0; i < 35; i++) {
-                particles.push({
-                    x: window.innerWidth / 2,
-                    y: window.innerHeight / 2,
-                    vx: (Math.random() - 0.5) * 12,
-                    vy: (Math.random() - 0.5) * 12 - 4,
-                    color: ['#ec4899', '#8b5cf6', '#3b82f6', '#10b981', '#f59e0b'][Math.floor(Math.random() * 5)],
-                    size: Math.random() * 8 + 4,
-                    life: 1
-                });
-            }
-        }
-
-        function updateConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, index) => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.2;
-                p.life -= 0.02;
-
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = Math.max(0, p.life);
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-
-                if (p.life <= 0) particles.splice(index, 1);
-            });
-            requestAnimationFrame(updateConfetti);
-        }
-        updateConfetti();
-
-        // Initialize First Challenge
-        window.onload = generateNextQuestion;
-    </script>
-</body>
-</html>
+// تشغيل الصفحة الأولى عند التحميل
+window.onload = () => {
+    const firstBtn = document.querySelector('.nav-btn');
+    switchTab('grammar', firstBtn);
+};
