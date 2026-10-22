@@ -79,7 +79,12 @@ function showView(pageId, isPush) {
     } else if (pageId === 'games') {
         document.getElementById('gamesView').classList.add('active-view');
         startInfiniteKidsGame();
+    } else if (pageId === 'dictionary') {
+        // توجيه القاموس الشامل لبحث جوجل المباشر
+        window.open('https://www.google.com/search?q=' + encodeURIComponent('قاموس ترجمة إنجليزي عربي'), '_blank');
+        document.getElementById('homeView').classList.add('active-view');
     } else {
+        // فتح تفاصيل الموسوعة والقواعد والصوتيات وأدوات الشرط والمحادثات والقصص
         openDetailedContent(pageId);
         document.getElementById('detailsView').classList.add('active-view');
     }
@@ -119,7 +124,7 @@ function playSound(type) {
 }
 
 // ==========================================
-// 🚀 موسوعة المحتوى المطور (قواعد، أدوات، صوتيات، قاموس مصور)
+// 🚀 موسوعة المحتوى الشامل (قواعد، أدوات الشرط، صوتيات، قاموس مصور)
 // ==========================================
 function openDetailedContent(type) {
     const details = document.getElementById('detailsContent');
@@ -129,7 +134,7 @@ function openDetailedContent(type) {
         details.innerHTML = `
             <h2>📖 الموسوعة الشاملة لقواعد اللغة الإنجليزية</h2>
             
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
                 <h3>1. الضمائر الشخصية (Personal Pronouns)</h3>
                 <p>• <b>I (أنا):</b> للمتكلم المفرد. <i>I am a teacher.</i></p>
                 <p>• <b>He (هو):</b> للمفرد المذكر العاقل. <i>He is smart.</i></p>
@@ -139,14 +144,14 @@ function openDetailedContent(type) {
                 <p>• <b>They (هم):</b> للجمع الغائب. <i>They are happy.</i></p>
             </div>
 
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
                 <h3>2. الأفعال المساعدة (Verb to Be & Do & Have)</h3>
                 <p>• <b>Verb to Be (يكون):</b> (Am, Is, Are) في المضارع | (Was, Were) في الماضي.</p>
                 <p>• <b>Verb to Do (يفعل):</b> (Do, Does) في المضارع | (Did) في الماضي.</p>
                 <p>• <b>Verb to Have (يملك):</b> (Have, Has) في المضارع | (Had) في الماضي.</p>
             </div>
 
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
                 <h3>3. الأزمنة الأساسية (Basic Tenses)</h3>
                 <p>• <b>المضارع البسيط (Present Simple):</b> للتعبير عن العادات والحقائق. نضع (s) مع He/She/It.</p>
                 <p>• <b>المضارع المستمر (Present Continuous):</b> للتعبير عن حدث يقع الآن (Am/Is/Are + Verb + ing).</p>
@@ -157,7 +162,7 @@ function openDetailedContent(type) {
         details.innerHTML = `
             <h2>🛠️ قسم أدوات اللغة الإنجليزية والشرط</h2>
 
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
                 <h3>1. أدوات الشرط (Conditionals - If Cases)</h3>
                 <p>• <b>الحالة الصفرية (Zero Conditional):</b> للحقائق الثابتة (If + مضارع بسيط ➔ مضارع بسيط).</p>
                 <p style="color:#4DEAEA;">مثال: <i>If you heat ice, it melts.</i> (إذا سخنت الثلج فإنه يذوب)</p>
@@ -165,17 +170,17 @@ function openDetailedContent(type) {
                 <p style="color:#4DEAEA;">مثال: <i>If you study hard, you will pass.</i> (إذا ذاكرت بجد ستنجح)</p>
                 <p>• <b>الحالة الثانية (Second Conditional):</b> خيال أو افتراض غير واقعي (If + ماضي بسيط ➔ Would + المصدر).</p>
                 <p style="color:#4DEAEA;">مثال: <i>If I had money, I would buy a car.</i> (لو كان لدي مال لاشتريت سيارة)</p>
-                <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('If you study hard, you will pass.')">🔊 استمع للأمثلة</button>
+                <button class="btn-act audio-btn" style="margin-top:8px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('If you study hard, you will pass.')">🔊 استمع للأمثلة</button>
             </div>
 
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
                 <h3>2. أدوات التعريف والنكرة (Articles)</h3>
                 <p>• <b>a:</b> تأتي قبل الاسم المفرد المعدود المبتدئ بحرف ساكن (a book, a cat).</p>
                 <p>• <b>an:</b> تأتي قبل الاسم المفرد المبتدئ بحرف متحرك a, e, i, o, u (an apple, an elephant).</p>
                 <p>• <b>the:</b> أداة التعريف للإشارة إلى شيء محدد ومعروف لدى السامع (the sun, the school).</p>
             </div>
 
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
                 <h3>3. أدوات الربط (Linking Words)</h3>
                 <p>• <b>And (و):</b> لربط فكرتين متشابهتين (I like tea and coffee).</p>
                 <p>• <b>But (ولكن):</b> للتعبير عن التناقض (He is rich but unhappy).</p>
@@ -186,60 +191,60 @@ function openDetailedContent(type) {
     } else if (type === 'phonics') {
         details.innerHTML = `
             <h2>🔊 قسم الصوتيات وتدريب النطق (Phonics)</h2>
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
                 <h3>الحروف المركبة (Digraphs)</h3>
                 <p>• <b>SH:</b> تُنطق مثل حرف (ش). مثال: <i>Fish, Shop, Ship</i></p>
                 <p>• <b>CH:</b> تُنطق مثل (تش). مثال: <i>Chair, Cheese, Teacher</i></p>
                 <p>• <b>TH:</b> تُنطق (ث) أو (ذ). مثال: <i>Think (ث), This (ذ)</i></p>
                 <p>• <b>PH:</b> تُنطق مثل حرف (ف). مثال: <i>Phone, Elephant</i></p>
-                <button class="btn-act audio-btn" style="margin-top:10px;" onclick="speak('Fish, Chair, Think, Phone')">🔊 استمع لنطق الأصوات المركبة</button>
+                <button class="btn-act audio-btn" style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('Fish, Chair, Think, Phone')">🔊 استمع لنطق الأصوات المركبة</button>
             </div>
         `;
     } else if (type === 'visual_dict') {
         details.innerHTML = `
             <h2>🖼️ القاموس المصور الناطق للأطفال</h2>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
-                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:12px; text-align:center;" onclick="speak('Apple')">
-                    <span style="font-size:3rem;">🍎</span>
-                    <div><b>Apple</b></div>
-                    <small>تفاحة</small>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:15px;">
+                <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('Apple')">
+                    <span style="font-size:3.5rem;">🍎</span>
+                    <div style="font-weight:bold; margin-top:5px;">Apple</div>
+                    <small style="opacity:0.7;">تفاحة</small>
                 </div>
-                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:12px; text-align:center;" onclick="speak('Car')">
-                    <span style="font-size:3rem;">🚗</span>
-                    <div><b>Car</b></div>
-                    <small>سيارة</small>
+                <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('Car')">
+                    <span style="font-size:3.5rem;">🚗</span>
+                    <div style="font-weight:bold; margin-top:5px;">Car</div>
+                    <small style="opacity:0.7;">سيارة</small>
                 </div>
-                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:12px; text-align:center;" onclick="speak('House')">
-                    <span style="font-size:3rem;">🏠</span>
-                    <div><b>House</b></div>
-                    <small>منزل</small>
+                <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('House')">
+                    <span style="font-size:3.5rem;">🏠</span>
+                    <div style="font-weight:bold; margin-top:5px;">House</div>
+                    <small style="opacity:0.7;">منزل</small>
                 </div>
-                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:12px; text-align:center;" onclick="speak('Sun')">
-                    <span style="font-size:3rem;">☀️</span>
-                    <div><b>Sun</b></div>
-                    <small>شمس</small>
+                <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('Sun')">
+                    <span style="font-size:3.5rem;">☀️</span>
+                    <div style="font-weight:bold; margin-top:5px;">Sun</div>
+                    <small style="opacity:0.7;">شمس</small>
                 </div>
             </div>
         `;
     } else if (type === 'dialogues') {
         details.innerHTML = `
             <h2>💬 موسوعة محادثات الحياة اليومية الشاملة</h2>
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
                 <h3>🏫 1. في المدرسة والتعارف</h3>
                 <p><b>Omar:</b> Hello! My name is Omar.</p>
                 <p style="color:#4DEAEA;">(مرحباً! اسمي عمر.)</p>
                 <p><b>Youssef:</b> Welcome Omar! I am Youssef.</p>
                 <p style="color:#4DEAEA;">(أهلاً بك يا عمر! أنا يوسف.)</p>
-                <button class="btn-act audio-btn" style="margin-top:10px;" onclick="speak('Hello! My name is Omar. Welcome Omar! I am Youssef.')">🔊 استمع للمحادثة</button>
+                <button class="btn-act audio-btn" style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('Hello! My name is Omar. Welcome Omar! I am Youssef.')">🔊 استمع للمحادثة</button>
             </div>
         `;
     } else if (type === 'stories') {
         details.innerHTML = `
             <h2>📕 القصص التعليمية الموسعة</h2>
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
                 <h3>1. The Thirsty Crow (قصة الغراب العطشان والذكاء) 🐦</h3>
                 <p>On a hot summer day, a crow became very thirsty and found a pitcher with low water...</p>
-                <button class="btn-act audio-btn" style="margin-top:10px;" onclick="speak('On a hot summer day, a crow became very thirsty and dropped stones into the pitcher.')">🔊 استمع للقصة</button>
+                <button class="btn-act audio-btn" style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('On a hot summer day, a crow became very thirsty and dropped stones into the pitcher.')">🔊 استمع للقصة</button>
             </div>
         `;
     }
@@ -448,4 +453,110 @@ async function translateText(text) {
 // Speech Recognition
 function toggleSpeech() {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRecognition = window.Sp
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recog = new SpeechRecognition();
+        recog.lang = 'ar-SA';
+        
+        recog.onstart = () => { document.getElementById('micBtn').innerText = '🎙️ جاري الاستماع بتركيز...'; };
+        recog.onresult = (e) => {
+            const text = e.results[0][0].transcript;
+            document.getElementById('arText').innerText = text;
+            translateText(text);
+            document.getElementById('micBtn').innerText = '🎙️ اضغط وتحدث بالعربية';
+        };
+        recog.onerror = () => { document.getElementById('micBtn').innerText = '🎙️ اضغط وتحدث بالعربية'; };
+        recog.start();
+    } else {
+        alert('المتصفح الحالي لا يدعم التعرف الصوتي المباشر.');
+    }
+}
+
+function speakEnglish() { speak(document.getElementById('enText').innerText); }
+function speak(text) {
+    if ('speechSynthesis' in window) {
+        const utt = new SpeechSynthesisUtterance(text);
+        utt.lang = 'en-US';
+        utt.rate = 0.85;
+        window.speechSynthesis.speak(utt);
+    }
+}
+
+// Canvas Trace Logic
+function initCanvas() {
+    canvas = document.getElementById('traceCanvas');
+    if (!canvas) return;
+    ctx = canvas.getContext('2d');
+    ctx.lineWidth = 10;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#2ED573';
+
+    canvas.addEventListener('mousedown', startD);
+    canvas.addEventListener('mousemove', drawD);
+    canvas.addEventListener('mouseup', stopD);
+
+    canvas.addEventListener('touchstart', (e) => {
+        const t = e.touches[0];
+        const r = canvas.getBoundingClientRect();
+        startD({ clientX: t.clientX - r.left, clientY: t.clientY - r.top });
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+        const t = e.touches[0];
+        const r = canvas.getBoundingClientRect();
+        drawD({ clientX: t.clientX - r.left, clientY: t.clientY - r.top });
+    });
+
+    canvas.addEventListener('touchend', stopD);
+}
+
+function startD(e) { isDrawing = true; ctx.beginPath(); ctx.moveTo(e.clientX || e.offsetX, e.clientY || e.offsetY); }
+function drawD(e) { if (!isDrawing) return; ctx.lineTo(e.clientX || e.offsetX, e.clientY || e.offsetY); ctx.stroke(); }
+function stopD() { isDrawing = false; }
+function clearBoard() { if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+function setLetterCase(type) {
+    currentCase = type;
+    document.getElementById('tabCap').classList.toggle('active', type === 'capital');
+    document.getElementById('tabSmall').classList.toggle('active', type === 'small');
+    currentLetter = type === 'capital' ? 'A' : 'a';
+    renderLettersBar();
+}
+
+function renderLettersBar() {
+    const bar = document.getElementById('lettersBar');
+    if (!bar) return;
+    bar.innerHTML = '';
+    const list = currentCase === 'capital' ? capitalList : smallList;
+
+    list.forEach(l => {
+        const b = document.createElement('button');
+        b.className = `l-btn ${l === currentLetter ? 'active' : ''}`;
+        b.innerText = l;
+        b.onclick = () => selectLetter(l);
+        bar.appendChild(b);
+    });
+
+    const ghost = document.getElementById('ghostLetter');
+    if (ghost) ghost.innerText = currentLetter;
+}
+
+function selectLetter(l) {
+    currentLetter = l;
+    renderLettersBar();
+    clearBoard();
+    speak(currentLetter);
+}
+
+function nextLetter() {
+    const list = currentCase === 'capital' ? capitalList : smallList;
+    let idx = list.indexOf(currentLetter);
+    if (idx < list.length - 1) selectLetter(list[idx + 1]);
+    else selectLetter(list[0]);
+}
+
+function speakCurrentLetter() { speak(currentLetter); }
+
+function searchGoogleTrans() {
+    const arText = document.getElementById('arText').innerText;
+    window.open(`https://translate.google.com/?sl=ar&tl=en&text=${encodeURIComponent(arText)}&op=translate`, '_blank');
+}
