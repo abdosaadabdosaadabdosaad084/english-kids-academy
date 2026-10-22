@@ -1,215 +1,180 @@
-// State & Navigation Function
-function switchTab(tabName, btnElement) {
-    // تحديث الأزرار المحددة في الشريط السفلي
-    if (btnElement) {
-        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-        btnElement.classList.add('active');
-    }
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Kids Academy</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0F1123">
 
-    const contentArea = document.getElementById('content-area');
-    const mainTitle = document.getElementById('main-title');
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    if (tabName === 'grammar') {
-        mainTitle.innerText = "قواعد اللغة الإنجليزية";
-        contentArea.innerHTML = `
-            <div class="card">
-                <h2>📖 موسوعة القواعد</h2>
-                <p>تعلم قواعد اللغة الإنجليزية الشاملة من الضمائر إلى الأزمنة بطريقة مبسطة.</p>
-            </div>`;
-    } else if (tabName === 'conversations') {
-        mainTitle.innerText = "محادثات الحياة اليومية";
-        contentArea.innerHTML = `
-            <div class="card">
-                <h2>💬 المحادثات والتعارف</h2>
-                <p>استمع وتدرب على محادثات مواقف الحياة اليومية في المدرسة والمستشفى والتسوق.</p>
-            </div>`;
-    } else if (tabName === 'stories') {
-        mainTitle.innerText = "القصص التعليمية المترجمة";
-        contentArea.innerHTML = `
-            <div class="card">
-                <h2>📚 القصص القصيرة</h2>
-                <p>اقرأ واستمع لقصص ممتعة لزيادة حصيلتك اللغوية.</p>
-            </div>`;
-    } else if (tabName === 'games') {
-        mainTitle.innerText = "🎮 عالم ألعاب الأطفال الذكي";
-        renderInfiniteKidsGames(contentArea);
-    }
-}
+    <div id="app" class="app-container">
 
-// ==========================================
-// 🚀 محرك ألعاب الأطفال اللانهائي التفاعلي
-// ==========================================
-const ANIMALS_DATA = [
-    { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
-    { nameEn: "Elephant", nameAr: "فيل", emoji: "🐘" },
-    { nameEn: "Monkey", nameAr: "قرد", emoji: "🐒" },
-    { nameEn: "Giraffe", nameAr: "زرافة", emoji: "🦒" },
-    { nameEn: "Tiger", nameAr: "نمر", emoji: "🐅" },
-    { nameEn: "Cat", nameAr: "قطة", emoji: "🐱" },
-    { nameEn: "Dog", nameAr: "كلب", emoji: "🐶" },
-    { nameEn: "Rabbit", nameAr: "أرنب", emoji: "🐰" },
-    { nameEn: "Panda", nameAr: "باندا", emoji: "🐼" },
-    { nameEn: "Bird", nameAr: "عصفور", emoji: "🐦" },
-    { nameEn: "Duck", nameAr: "بطة", emoji: "🦆" },
-    { nameEn: "Frog", nameAr: "ضفدع", emoji: "🐸" }
-];
+        <!-- ===== VIEW 1: HOME PAGE ===== -->
+        <div id="homeView" class="view active-view">
+            <header class="top-bar">
+                <div class="score-badge">
+                    <span id="userScore">100</span> <i class="fa-solid fa-star"></i>
+                </div>
+                <h1 class="app-title">English Kids Academy</h1>
+            </header>
 
-const COLORS_DATA = [
-    { nameEn: "Red", nameAr: "أحمر", hex: "#ef4444" },
-    { nameEn: "Blue", nameAr: "أزرق", hex: "#3b82f6" },
-    { nameEn: "Green", nameAr: "أخضر", hex: "#10b981" },
-    { nameEn: "Yellow", nameAr: "أصفر", hex: "#f59e0b" },
-    { nameEn: "Purple", nameAr: "بنفسجي", hex: "#8b5cf6" },
-    { nameEn: "Pink", nameAr: "وردي", hex: "#ec4899" }
-];
-
-let currentGameMode = 'all';
-let currentAnswer = null;
-let wordToSpeak = "";
-let isLocked = false;
-let userScore = 0;
-
-function renderInfiniteKidsGames(container) {
-    container.innerHTML = `
-        <div class="games-wrapper" style="text-align:center; padding: 10px;">
-            <div style="background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 20px; display: inline-block; margin-bottom: 10px; font-weight: bold;">
-                ⭐ النقاط: <span id="gameScore">${userScore}</span>
+            <!-- Install PWA Banner -->
+            <div class="install-banner" id="installBanner" onclick="installPWA()">
+                📲 تثبيت التطبيق على الشاشة الرئيسية للهاتف
             </div>
 
-            <div id="gameCategory" style="font-size: 0.9rem; color: #FFDD59; font-weight: bold; margin-bottom: 5px;"></div>
-            <h3 id="gameQuestion" style="margin-bottom: 15px; font-size: 1.2rem;"></h3>
+            <!-- Menu Cards -->
+            <div class="cards-grid">
+                
+                <div class="menu-card" onclick="openSection('board')">
+                    <div class="card-icon">🔤</div>
+                    <h3>الحروف والسبورة</h3>
+                </div>
 
-            <button id="btnSpeak" onclick="speakCurrentWord()" style="display:none; margin: 0 auto 15px auto; background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">
-                🔊 استمع للكلمة
-            </button>
+                <div class="menu-card" onclick="openSection('dictionary')">
+                    <div class="card-icon">📚</div>
+                    <h3>القاموس الشامل (بحث جوجل)</h3>
+                </div>
 
-            <div id="visualDisplay" style="min-height: 120px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); border-radius: 15px; margin-bottom: 20px; padding: 10px;"></div>
+                <div class="menu-card" onclick="openSection('translator')">
+                    <div class="card-icon">🎙️</div>
+                    <h3>الترجمة الفورية</h3>
+                </div>
 
-            <div id="optionsGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
+                <div class="menu-card" onclick="openSection('grammar')">
+                    <div class="card-icon">📖</div>
+                    <h3>القواعد بالتفصيل الممل</h3>
+                </div>
 
-            <div style="margin-top: 20px; display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
-                <button onclick="changeGameMode('all')" class="mode-btn">🎲 الكل</button>
-                <button onclick="changeGameMode('animals')" class="mode-btn">🦁 حيوانات</button>
-                <button onclick="changeGameMode('colors')" class="mode-btn">🎨 ألوان</button>
-                <button onclick="changeGameMode('numbers')" class="mode-btn">🔢 أرقام</button>
+                <div class="menu-card" onclick="openSection('dialogues')">
+                    <div class="card-icon">💬</div>
+                    <h3>محادثات الحياة (+100)</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('stories')">
+                    <div class="card-icon">📕</div>
+                    <h3>القصص التعليمية الموسعة</h3>
+                </div>
+
+                <div class="menu-card full-width" onclick="openSection('games')">
+                    <div class="card-icon">🎮</div>
+                    <h3>الألعاب الصوتية والتحديات</h3>
+                </div>
+
             </div>
         </div>
-    `;
 
-    generateNextChallenge();
-}
+        <!-- ===== VIEW 2: TRANSLATOR PAGE ===== -->
+        <div id="translatorView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            </div>
 
-function changeGameMode(mode) {
-    currentGameMode = mode;
-    generateNextChallenge();
-}
+            <div class="translator-container">
+                <button class="big-mic-btn" id="micBtn" onclick="toggleSpeech()">
+                    🎙️ اضغط وتحدث بالعربية
+                </button>
 
-function generateNextChallenge() {
-    isLocked = false;
-    const speakBtn = document.getElementById('btnSpeak');
-    if (speakBtn) speakBtn.style.display = 'none';
-    wordToSpeak = "";
+                <div class="result-box arabic-box">
+                    <span>العربية: <strong id="arText">سلام</strong></span>
+                </div>
 
-    let types = ['animals', 'colors', 'numbers'];
-    let type = currentGameMode === 'all' ? types[Math.floor(Math.random() * types.length)] : currentGameMode;
+                <div class="result-box english-box">
+                    <span>English: <mark id="enText">peace</mark></span>
+                    <button class="btn-speak-icon" onclick="speakEnglish()"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
 
-    if (type === 'animals') {
-        const item = ANIMALS_DATA[Math.floor(Math.random() * ANIMALS_DATA.length)];
-        document.getElementById('gameCategory').innerText = "🦁 تحدي الحيوانات والطيور";
-        document.getElementById('gameQuestion').innerText = "ما اسم هذا الكائن باللغة الإنجليزية؟";
-        document.getElementById('visualDisplay').innerHTML = `<span style="font-size: 4rem;">${item.emoji}</span>`;
+                <button class="btn-google-search" onclick="searchGoogleTrans()">🔍 ابحث واستزد في Google Translate</button>
+            </div>
+        </div>
 
-        currentAnswer = item.nameEn;
-        wordToSpeak = item.nameEn;
-        if (speakBtn) speakBtn.style.display = 'inline-block';
+        <!-- ===== VIEW 3: BOARD PAGE ===== -->
+        <div id="boardView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            </div>
 
-        let choices = shuffleArray([item, ...getRandomItems(ANIMALS_DATA, item, 3)]);
-        renderButtons(choices.map(c => ({ label: c.nameEn, val: c.nameEn, sub: c.nameAr })));
+            <div class="board-container">
+                <div class="board-tabs">
+                    <button class="tab-b active" id="tabCap" onclick="setLetterCase('capital')">Capital A-Z</button>
+                    <button class="tab-b" id="tabSmall" onclick="setLetterCase('small')">Small a-z</button>
+                </div>
 
-    } else if (type === 'colors') {
-        const item = COLORS_DATA[Math.floor(Math.random() * COLORS_DATA.length)];
-        document.getElementById('gameCategory').innerText = "🎨 تحدي الألوان";
-        document.getElementById('gameQuestion').innerText = "ما هو هذا اللون باللغة الإنجليزية؟";
-        document.getElementById('visualDisplay').innerHTML = `<div style="width:70px; height:70px; background-color:${item.hex}; border-radius:15px; border:3px solid #fff;"></div>`;
+                <div class="letters-bar" id="lettersBar"></div>
 
-        currentAnswer = item.nameEn;
-        wordToSpeak = item.nameEn;
-        if (speakBtn) speakBtn.style.display = 'inline-block';
+                <div class="canvas-box">
+                    <div class="ghost-letter-bg" id="ghostLetter">A</div>
+                    <canvas id="traceCanvas" width="300" height="250"></canvas>
+                </div>
 
-        let choices = shuffleArray([item, ...getRandomItems(COLORS_DATA, item, 3)]);
-        renderButtons(choices.map(c => ({ label: c.nameEn, val: c.nameEn, sub: c.nameAr })));
+                <div class="board-actions">
+                    <button class="btn-act clear-btn" onclick="clearBoard()">🗑️ مسح</button>
+                    <button class="btn-act audio-btn" onclick="speakCurrentLetter()">🔊 نطق</button>
+                    <button class="btn-act next-btn" onclick="nextLetter()">➡️ التالي</button>
+                </div>
+            </div>
+        </div>
 
-    } else {
-        const count = Math.floor(Math.random() * 5) + 2;
-        const anim = ANIMALS_DATA[Math.floor(Math.random() * ANIMALS_DATA.length)];
-        document.getElementById('gameCategory').innerText = "🔢 حديقة الأرقام والعد";
-        document.getElementById('gameQuestion').innerText = "كم عدد العناصر الظاهرة أمامك؟";
+        <!-- ===== VIEW 4: GAMES VIEW (عالم الألعاب اللانهائي الجديد) ===== -->
+        <div id="gamesView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            </div>
 
-        let icons = "";
-        for (let i = 0; i < count; i++) icons += `<span style="font-size: 2.2rem; margin: 3px;">${anim.emoji}</span>`;
-        document.getElementById('visualDisplay').innerHTML = `<div style="display:flex; flex-wrap:wrap; justify-content:center;">${icons}</div>`;
+            <div class="games-container" style="text-align: center; padding: 15px;">
+                <div id="gameCategoryTag" style="background: #ec4899; color: white; display: inline-block; padding: 6px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px;">
+                    🎮 التحديات اللانهائية
+                </div>
+                
+                <h2 id="gameQuestionText" style="color: #fff; font-size: 1.3rem; margin-bottom: 15px;">السؤال...</h2>
 
-        currentAnswer = count.toString();
+                <button id="btnSpeakWord" onclick="speakCurrentGameWord()" style="display:none; margin: 0 auto 15px auto; background: #3b82f6; color: white; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; cursor: pointer;">
+                    🔊 استمع للكلمة
+                </button>
 
-        let nums = [count];
-        while (nums.length < 4) {
-            let r = Math.floor(Math.random() * 8) + 1;
-            if (!nums.includes(r)) nums.push(r);
+                <div id="gameVisualArena" style="min-height: 140px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 20px; border: 2px dashed rgba(255,255,255,0.2); margin-bottom: 20px; padding: 10px;">
+                    <!-- المكان الذي تظهر فيه الصورة أو المربعات الملونة أو الأرقام -->
+                </div>
+
+                <div id="gameOptionsGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <!-- الخيارات التفاعلية -->
+                </div>
+
+                <div style="margin-top: 25px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="setGameCategory('all')" class="tab-b active">🎲 الكل</button>
+                    <button onclick="setGameCategory('animals')" class="tab-b">🦁 حيوانات</button>
+                    <button onclick="setGameCategory('colors')" class="tab-b">🎨 ألوان</button>
+                    <button onclick="setGameCategory('numbers')" class="tab-b">🔢 أرقام</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 5: DETAILS VIEW ===== -->
+        <div id="detailsView" class="view">
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            </div>
+            <div class="details-content" id="detailsContent"></div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
         }
-        nums = shuffleArray(nums);
-        renderButtons(nums.map(n => ({ label: n.toString(), val: n.toString(), sub: "عنصر" })));
-    }
-}
-
-function renderButtons(opts) {
-    const grid = document.getElementById('optionsGrid');
-    grid.innerHTML = '';
-    opts.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.style.cssText = "background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 12px; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer;";
-        btn.innerHTML = `<div>${opt.label}</div><small style="opacity:0.7; font-size:0.8rem;">${opt.sub || ''}</small>`;
-        btn.onclick = () => handleChoice(opt.val, btn);
-        grid.appendChild(btn);
-    });
-}
-
-function handleChoice(val, btn) {
-    if (isLocked) return;
-    isLocked = true;
-
-    if (val === currentAnswer) {
-        btn.style.background = "#10b981";
-        userScore += 10;
-        document.getElementById('gameScore').innerText = userScore;
-        if (wordToSpeak) speakCurrentWord();
-    } else {
-        btn.style.background = "#ef4444";
-    }
-
-    setTimeout(() => {
-        generateNextChallenge();
-    }, 1400);
-}
-
-function speakCurrentWord() {
-    if ('speechSynthesis' in window && wordToSpeak) {
-        const utt = new SpeechSynthesisUtterance(wordToSpeak);
-        utt.lang = 'en-US';
-        window.speechSynthesis.speak(utt);
-    }
-}
-
-function getRandomItems(arr, exclude, count) {
-    let filtered = arr.filter(i => i !== exclude);
-    return shuffleArray(filtered).slice(0, count);
-}
-
-function shuffleArray(arr) {
-    return [...arr].sort(() => Math.random() - 0.5);
-}
-
-// تشغيل الصفحة الأولى عند التحميل
-window.onload = () => {
-    const firstBtn = document.querySelector('.nav-btn');
-    switchTab('grammar', firstBtn);
-};
+    </script>
+</body>
+</html>
