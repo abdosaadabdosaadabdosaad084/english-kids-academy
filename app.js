@@ -8,21 +8,6 @@ let deferredPrompt; // PWA Native Prompt Event
 const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const smallList = "abcdefghijklmnopqrstuvwxyz".split("");
 
-// Quiz Bank
-const quizQuestions = [
-    { q: "ما معنى كلمة 'Cat'؟", opts: ["كلب", "قطة", "عصفور"], correct: 1 },
-    { q: "ما معنى كلمة 'Book'؟", opts: ["كتاب", "قلم", "مدرسة"], correct: 0 },
-    { q: "ما هي الترجمة الصحيحة لـ 'صباح الخير'؟", opts: ["Good evening", "Good morning", "Good night"], correct: 1 },
-    { q: "الضمير المناسب للمفرد المذكر العاقل (هو):", opts: ["She", "He", "They"], correct: 1 },
-    { q: "ما معنى كلمة 'Water'؟", opts: ["طعام", "ماء", "عصير"], correct: 1 },
-    { q: "ترجمة كلمة 'طبيب' هي:", opts: ["Teacher", "Doctor", "Driver"], correct: 1 },
-    { q: "أي كلمة تعني 'سيارة'؟", opts: ["Car", "Bus", "Train"], correct: 0 },
-    { q: "ما عكس كلمة 'Happy' (سعيد)؟", opts: ["Sad (حزين)", "Fast (سريع)", "Tall (طويل)"], correct: 0 },
-    { q: "ما هو الفعل المساعد الذي يأتي مع الضمير 'I' في المضارع؟", opts: ["is", "are", "am"], correct: 2 },
-    { q: "ما معنى كلمة 'Teacher'؟", opts: ["طبيب", "معلم", "مهندس"], correct: 1 }
-];
-
-let currentQuizIndex = 0;
 const transCache = JSON.parse(localStorage.getItem('offline_trans') || '{}');
 
 window.onload = () => {
@@ -56,7 +41,7 @@ function triggerPWAInstall() {
     }
 }
 
-// In-App Navigation
+// Navigation
 function initHistoryNav() {
     window.history.pushState({ page: 'home' }, '');
     window.onpopstate = (e) => {
@@ -73,7 +58,6 @@ function navigateTo(pageId) {
     showView(pageId, true);
 }
 
-// متوافق مع دالة openSection المستخدمة في واجهة البطاقات
 function openSection(pageId) {
     navigateTo(pageId);
 }
@@ -92,50 +76,12 @@ function showView(pageId, isPush) {
     } else if (pageId === 'board') {
         document.getElementById('boardView').classList.add('active-view');
         clearBoard();
-    } else if (pageId === 'dictionary') {
-        document.getElementById('dictionaryView').classList.add('active-view');
     } else if (pageId === 'games') {
         document.getElementById('gamesView').classList.add('active-view');
-        startInfiniteKidsGame(); // تشغيل الألعاب اللانهائية الجديدة فور الدخول للقسم
+        startInfiniteKidsGame();
     } else {
         openDetailedContent(pageId);
         document.getElementById('detailsView').classList.add('active-view');
-    }
-}
-
-// Full API In-App Search Dictionary
-async function searchInAppDictionary() {
-    const query = document.getElementById('dictSearchInput').value.trim();
-    const container = document.getElementById('dictResultsList');
-    
-    if (!query) {
-        container.innerHTML = `<p style="text-align:center; padding:15px; color:#aaa;">الرجاء كتابة كلمة في مربع البحث أعلاه.</p>`;
-        return;
-    }
-
-    container.innerHTML = `<p style="text-align:center; padding:15px; color:#FFDD59;">جاري البحث عن الكلمة ونطقها...</p>`;
-
-    try {
-        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(query)}&langpair=ar|en`);
-        const data = await res.json();
-
-        if (data && data.responseData && data.responseData.translatedText) {
-            let result = data.responseData.translatedText;
-            
-            container.innerHTML = `
-                <div class="dict-card-item">
-                    <div>
-                        <div style="font-size:14px; color:#aaa;">الكلمة المبحوث عنها: <strong style="color:#fff;">${query}</strong></div>
-                        <div style="font-size:20px; font-weight:bold; color:#FFDD59; margin-top:5px;">النتيجة: ${result}</div>
-                    </div>
-                    <button class="btn-speak-icon" onclick="speak('${result}')"><i class="fa-solid fa-volume-high"></i> نطق</button>
-                </div>
-            `;
-        } else {
-            container.innerHTML = `<p style="text-align:center; padding:15px; color:#FF4757;">لم نتمكن من العثور على الكلمة، تحقق من الإملاء.</p>`;
-        }
-    } catch (e) {
-        container.innerHTML = `<p style="text-align:center; padding:15px; color:#FF4757;">يرجى الاتصال بالإنترنت للبحث في القاموس لأول مرة.</p>`;
     }
 }
 
@@ -173,7 +119,134 @@ function playSound(type) {
 }
 
 // ==========================================
-// 🚀 محرك الألعاب اللانهائي الجديد (بدون ملل للأطفال)
+// 🚀 موسوعة المحتوى المطور (قواعد، أدوات، صوتيات، قاموس مصور)
+// ==========================================
+function openDetailedContent(type) {
+    const details = document.getElementById('detailsContent');
+    if (!details) return;
+    
+    if (type === 'grammar') {
+        details.innerHTML = `
+            <h2>📖 الموسوعة الشاملة لقواعد اللغة الإنجليزية</h2>
+            
+            <div class="dialogue-box">
+                <h3>1. الضمائر الشخصية (Personal Pronouns)</h3>
+                <p>• <b>I (أنا):</b> للمتكلم المفرد. <i>I am a teacher.</i></p>
+                <p>• <b>He (هو):</b> للمفرد المذكر العاقل. <i>He is smart.</i></p>
+                <p>• <b>She (هي):</b> للمفرد المؤنث العاقل. <i>She is reading.</i></p>
+                <p>• <b>It (هو/هي لغير العاقل):</b> للجماد والحيوان. <i>It is a book.</i></p>
+                <p>• <b>We (نحن):</b> للمتكلم الجمع. <i>We play tennis.</i></p>
+                <p>• <b>They (هم):</b> للجمع الغائب. <i>They are happy.</i></p>
+            </div>
+
+            <div class="dialogue-box">
+                <h3>2. الأفعال المساعدة (Verb to Be & Do & Have)</h3>
+                <p>• <b>Verb to Be (يكون):</b> (Am, Is, Are) في المضارع | (Was, Were) في الماضي.</p>
+                <p>• <b>Verb to Do (يفعل):</b> (Do, Does) في المضارع | (Did) في الماضي.</p>
+                <p>• <b>Verb to Have (يملك):</b> (Have, Has) في المضارع | (Had) في الماضي.</p>
+            </div>
+
+            <div class="dialogue-box">
+                <h3>3. الأزمنة الأساسية (Basic Tenses)</h3>
+                <p>• <b>المضارع البسيط (Present Simple):</b> للتعبير عن العادات والحقائق. نضع (s) مع He/She/It.</p>
+                <p>• <b>المضارع المستمر (Present Continuous):</b> للتعبير عن حدث يقع الآن (Am/Is/Are + Verb + ing).</p>
+                <p>• <b>الماضي البسيط (Past Simple):</b> للتعبير عن حدث انتهى في الماضي (التصريف الثاني للفعل).</p>
+            </div>
+        `;
+    } else if (type === 'tools') {
+        details.innerHTML = `
+            <h2>🛠️ قسم أدوات اللغة الإنجليزية والشرط</h2>
+
+            <div class="dialogue-box">
+                <h3>1. أدوات الشرط (Conditionals - If Cases)</h3>
+                <p>• <b>الحالة الصفرية (Zero Conditional):</b> للحقائق الثابتة (If + مضارع بسيط ➔ مضارع بسيط).</p>
+                <p style="color:#4DEAEA;">مثال: <i>If you heat ice, it melts.</i> (إذا سخنت الثلج فإنه يذوب)</p>
+                <p>• <b>الحالة الأولى (First Conditional):</b> أحداث محتملة في المستقبل (If + مضارع بسيط ➔ Will + المصدر).</p>
+                <p style="color:#4DEAEA;">مثال: <i>If you study hard, you will pass.</i> (إذا ذاكرت بجد ستنجح)</p>
+                <p>• <b>الحالة الثانية (Second Conditional):</b> خيال أو افتراض غير واقعي (If + ماضي بسيط ➔ Would + المصدر).</p>
+                <p style="color:#4DEAEA;">مثال: <i>If I had money, I would buy a car.</i> (لو كان لدي مال لاشتريت سيارة)</p>
+                <button class="btn-act audio-btn" style="margin-top:8px;" onclick="speak('If you study hard, you will pass.')">🔊 استمع للأمثلة</button>
+            </div>
+
+            <div class="dialogue-box">
+                <h3>2. أدوات التعريف والنكرة (Articles)</h3>
+                <p>• <b>a:</b> تأتي قبل الاسم المفرد المعدود المبتدئ بحرف ساكن (a book, a cat).</p>
+                <p>• <b>an:</b> تأتي قبل الاسم المفرد المبتدئ بحرف متحرك a, e, i, o, u (an apple, an elephant).</p>
+                <p>• <b>the:</b> أداة التعريف للإشارة إلى شيء محدد ومعروف لدى السامع (the sun, the school).</p>
+            </div>
+
+            <div class="dialogue-box">
+                <h3>3. أدوات الربط (Linking Words)</h3>
+                <p>• <b>And (و):</b> لربط فكرتين متشابهتين (I like tea and coffee).</p>
+                <p>• <b>But (ولكن):</b> للتعبير عن التناقض (He is rich but unhappy).</p>
+                <p>• <b>Because (لأن):</b> لبيان السبب (I stayed home because it was raining).</p>
+                <p>• <b>So (لذلك):</b> لبيان النتيجة (She was sick so she went to the doctor).</p>
+            </div>
+        `;
+    } else if (type === 'phonics') {
+        details.innerHTML = `
+            <h2>🔊 قسم الصوتيات وتدريب النطق (Phonics)</h2>
+            <div class="dialogue-box">
+                <h3>الحروف المركبة (Digraphs)</h3>
+                <p>• <b>SH:</b> تُنطق مثل حرف (ش). مثال: <i>Fish, Shop, Ship</i></p>
+                <p>• <b>CH:</b> تُنطق مثل (تش). مثال: <i>Chair, Cheese, Teacher</i></p>
+                <p>• <b>TH:</b> تُنطق (ث) أو (ذ). مثال: <i>Think (ث), This (ذ)</i></p>
+                <p>• <b>PH:</b> تُنطق مثل حرف (ف). مثال: <i>Phone, Elephant</i></p>
+                <button class="btn-act audio-btn" style="margin-top:10px;" onclick="speak('Fish, Chair, Think, Phone')">🔊 استمع لنطق الأصوات المركبة</button>
+            </div>
+        `;
+    } else if (type === 'visual_dict') {
+        details.innerHTML = `
+            <h2>🖼️ القاموس المصور الناطق للأطفال</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:12px; text-align:center;" onclick="speak('Apple')">
+                    <span style="font-size:3rem;">🍎</span>
+                    <div><b>Apple</b></div>
+                    <small>تفاحة</small>
+                </div>
+                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:12px; text-align:center;" onclick="speak('Car')">
+                    <span style="font-size:3rem;">🚗</span>
+                    <div><b>Car</b></div>
+                    <small>سيارة</small>
+                </div>
+                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:12px; text-align:center;" onclick="speak('House')">
+                    <span style="font-size:3rem;">🏠</span>
+                    <div><b>House</b></div>
+                    <small>منزل</small>
+                </div>
+                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:12px; text-align:center;" onclick="speak('Sun')">
+                    <span style="font-size:3rem;">☀️</span>
+                    <div><b>Sun</b></div>
+                    <small>شمس</small>
+                </div>
+            </div>
+        `;
+    } else if (type === 'dialogues') {
+        details.innerHTML = `
+            <h2>💬 موسوعة محادثات الحياة اليومية الشاملة</h2>
+            <div class="dialogue-box">
+                <h3>🏫 1. في المدرسة والتعارف</h3>
+                <p><b>Omar:</b> Hello! My name is Omar.</p>
+                <p style="color:#4DEAEA;">(مرحباً! اسمي عمر.)</p>
+                <p><b>Youssef:</b> Welcome Omar! I am Youssef.</p>
+                <p style="color:#4DEAEA;">(أهلاً بك يا عمر! أنا يوسف.)</p>
+                <button class="btn-act audio-btn" style="margin-top:10px;" onclick="speak('Hello! My name is Omar. Welcome Omar! I am Youssef.')">🔊 استمع للمحادثة</button>
+            </div>
+        `;
+    } else if (type === 'stories') {
+        details.innerHTML = `
+            <h2>📕 القصص التعليمية الموسعة</h2>
+            <div class="dialogue-box">
+                <h3>1. The Thirsty Crow (قصة الغراب العطشان والذكاء) 🐦</h3>
+                <p>On a hot summer day, a crow became very thirsty and found a pitcher with low water...</p>
+                <button class="btn-act audio-btn" style="margin-top:10px;" onclick="speak('On a hot summer day, a crow became very thirsty and dropped stones into the pitcher.')">🔊 استمع للقصة</button>
+            </div>
+        `;
+    }
+}
+
+// ==========================================
+// 🚀 محرك الألعاب اللانهائي
 // ==========================================
 const INF_ANIMALS = [
     { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
@@ -343,48 +416,6 @@ function speakCurrentGameWord() {
     if (infWordToSpeak) speak(infWordToSpeak);
 }
 
-// DETAILED CONTENT (الشرح الموسع والتفصيل الممل)
-function openDetailedContent(type) {
-    const details = document.getElementById('detailsContent');
-    if (!details) return;
-    
-    if (type === 'grammar') {
-        details.innerHTML = `
-            <h2>📖 موسوعة قواعد اللغة الإنجليزية (شرح وافٍ وتفصيل ممل)</h2>
-            <h3>1. الضمائر الشخصية الشاملة (Personal Pronouns)</h3>
-            <p>الضمائر هي الكلمات التي تحل محل الاسم لتجنب تكراره في الجملة:</p>
-            <ul>
-                <li><b>I (أنا):</b> مثال: <i>I am a student.</i></li>
-                <li><b>He (هو) / She (هي) / It (لغير العاقل):</b> أمثلة: <i>He is a doctor.</i> | <i>She is reading.</i> | <i>It is a cat.</i></li>
-                <li><b>We (نحن) / They (هم) / You (أنتم):</b> أمثلة: <i>We learn English.</i> | <i>They play football.</i></li>
-            </ul>
-            <h3>2. زمن المضارع البسيط (Present Simple Tense)</h3>
-            <p>للتعبير عن العادات والحقائق. مع (He, She, It) نضيف دائماً حرف (s) لنهاية الفعل، ومع باقي الضمائر يبقى الفعل في المصدر.</p>
-        `;
-    } else if (type === 'dialogues') {
-        details.innerHTML = `
-            <h2>💬 موسوعة محادثات الحياة اليومية الشاملة</h2>
-            <div class="dialogue-box">
-                <h3>🏫 1. في المدرسة والتعارف</h3>
-                <p><b>Omar:</b> Hello! My name is Omar.</p>
-                <p style="color:#4DEAEA;">(مرحباً! اسمي عمر.)</p>
-                <p><b>Youssef:</b> Welcome Omar! I am Youssef.</p>
-                <p style="color:#4DEAEA;">(أهلاً بك يا عمر! أنا يوسف.)</p>
-                <button class="btn-act audio-btn" style="margin-top:10px;" onclick="speak('Hello! My name is Omar. Welcome Omar! I am Youssef.')">🔊 استمع للمحادثة</button>
-            </div>
-        `;
-    } else if (type === 'stories') {
-        details.innerHTML = `
-            <h2>📕 القصص التعليمية الموسعة</h2>
-            <div class="dialogue-box">
-                <h3>1. The Thirsty Crow (قصة الغراب العطشان والذكاء) 🐦</h3>
-                <p>On a hot summer day, a crow became very thirsty and found a pitcher with low water...</p>
-                <button class="btn-act audio-btn" style="margin-top:10px;" onclick="speak('On a hot summer day, a crow became very thirsty and dropped stones into the pitcher.')">🔊 استمع للقصة</button>
-            </div>
-        `;
-    }
-}
-
 // Clean Real Translator
 async function translateText(text) {
     let clean = text.trim();
@@ -417,110 +448,4 @@ async function translateText(text) {
 // Speech Recognition
 function toggleSpeech() {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recog = new SpeechRecognition();
-        recog.lang = 'ar-SA';
-        
-        recog.onstart = () => { document.getElementById('micBtn').innerText = '🎙️ جاري الاستماع بتركيز...'; };
-        recog.onresult = (e) => {
-            const text = e.results[0][0].transcript;
-            document.getElementById('arText').innerText = text;
-            translateText(text);
-            document.getElementById('micBtn').innerText = '🎙️ اضغط وتحدث بالعربية';
-        };
-        recog.onerror = () => { document.getElementById('micBtn').innerText = '🎙️ اضغط وتحدث بالعربية'; };
-        recog.start();
-    } else {
-        alert('المتصفح الحالي لا يدعم التعرف الصوتي المباشر.');
-    }
-}
-
-function speakEnglish() { speak(document.getElementById('enText').innerText); }
-function speak(text) {
-    if ('speechSynthesis' in window) {
-        const utt = new SpeechSynthesisUtterance(text);
-        utt.lang = 'en-US';
-        utt.rate = 0.85;
-        window.speechSynthesis.speak(utt);
-    }
-}
-
-// Canvas Trace Logic
-function initCanvas() {
-    canvas = document.getElementById('traceCanvas');
-    if (!canvas) return;
-    ctx = canvas.getContext('2d');
-    ctx.lineWidth = 10;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#2ED573';
-
-    canvas.addEventListener('mousedown', startD);
-    canvas.addEventListener('mousemove', drawD);
-    canvas.addEventListener('mouseup', stopD);
-
-    canvas.addEventListener('touchstart', (e) => {
-        const t = e.touches[0];
-        const r = canvas.getBoundingClientRect();
-        startD({ clientX: t.clientX - r.left, clientY: t.clientY - r.top });
-    });
-
-    canvas.addEventListener('touchmove', (e) => {
-        const t = e.touches[0];
-        const r = canvas.getBoundingClientRect();
-        drawD({ clientX: t.clientX - r.left, clientY: t.clientY - r.top });
-    });
-
-    canvas.addEventListener('touchend', stopD);
-}
-
-function startD(e) { isDrawing = true; ctx.beginPath(); ctx.moveTo(e.clientX || e.offsetX, e.clientY || e.offsetY); }
-function drawD(e) { if (!isDrawing) return; ctx.lineTo(e.clientX || e.offsetX, e.clientY || e.offsetY); ctx.stroke(); }
-function stopD() { isDrawing = false; }
-function clearBoard() { if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); }
-
-function setLetterCase(type) {
-    currentCase = type;
-    document.getElementById('tabCap').classList.toggle('active', type === 'capital');
-    document.getElementById('tabSmall').classList.toggle('active', type === 'small');
-    currentLetter = type === 'capital' ? 'A' : 'a';
-    renderLettersBar();
-}
-
-function renderLettersBar() {
-    const bar = document.getElementById('lettersBar');
-    if (!bar) return;
-    bar.innerHTML = '';
-    const list = currentCase === 'capital' ? capitalList : smallList;
-
-    list.forEach(l => {
-        const b = document.createElement('button');
-        b.className = `l-btn ${l === currentLetter ? 'active' : ''}`;
-        b.innerText = l;
-        b.onclick = () => selectLetter(l);
-        bar.appendChild(b);
-    });
-
-    const ghost = document.getElementById('ghostLetter');
-    if (ghost) ghost.innerText = currentLetter;
-}
-
-function selectLetter(l) {
-    currentLetter = l;
-    renderLettersBar();
-    clearBoard();
-    speak(currentLetter);
-}
-
-function nextLetter() {
-    const list = currentCase === 'capital' ? capitalList : smallList;
-    let idx = list.indexOf(currentLetter);
-    if (idx < list.length - 1) selectLetter(list[idx + 1]);
-    else selectLetter(list[0]);
-}
-
-function speakCurrentLetter() { speak(currentLetter); }
-
-function searchGoogleTrans() {
-    const arText = document.getElementById('arText').innerText;
-    window.open(`https://translate.google.com/?sl=ar&tl=en&text=${encodeURIComponent(arText)}&op=translate`, '_blank');
-}
+        const SpeechRecognition = window.Sp
