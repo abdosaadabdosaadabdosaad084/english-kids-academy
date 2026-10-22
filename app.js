@@ -3,11 +3,10 @@ let currentCase = 'capital';
 let currentLetter = 'A';
 let isDrawing = false;
 let canvas, ctx;
-let deferredPrompt; // PWA Native Prompt Event
+let deferredPrompt;
 
 const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const smallList = "abcdefghijklmnopqrstuvwxyz".split("");
-
 const transCache = JSON.parse(localStorage.getItem('offline_trans') || '{}');
 
 window.onload = () => {
@@ -17,7 +16,6 @@ window.onload = () => {
     initPWAInstallPrompt();
 };
 
-// Handle Native PWA Installation
 function initPWAInstallPrompt() {
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
@@ -31,17 +29,13 @@ function triggerPWAInstall() {
     if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the PWA install prompt');
-            }
             deferredPrompt = null;
         });
     } else {
-        alert("تطبيقك جاهز! للتثبيت فوراً: اضغط على خيارات المتصفح (⋮) ثم اختر 'إضافة إلى الشاشة الرئيسية Add to Home Screen' أو 'تثبيت التطبيق Install App'.");
+        alert("تطبيقك جاهز! للتثبيت فوراً: اضغط على خيارات المتصفح (⋮) ثم اختر 'إضافة إلى الشاشة الرئيسية'.");
     }
 }
 
-// Navigation
 function initHistoryNav() {
     window.history.pushState({ page: 'home' }, '');
     window.onpopstate = (e) => {
@@ -80,51 +74,38 @@ function showView(pageId, isPush) {
         document.getElementById('gamesView').classList.add('active-view');
         startInfiniteKidsGame();
     } else if (pageId === 'dictionary') {
-        // توجيه القاموس الشامل لبحث جوجل المباشر
         window.open('https://www.google.com/search?q=' + encodeURIComponent('قاموس ترجمة إنجليزي عربي'), '_blank');
         document.getElementById('homeView').classList.add('active-view');
     } else {
-        // فتح تفاصيل الموسوعة والقواعد والصوتيات وأدوات الشرط والمحادثات والقصص
         openDetailedContent(pageId);
         document.getElementById('detailsView').classList.add('active-view');
     }
 }
 
-// Sound Effects API
 function playSound(type) {
     try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let osc = audioCtx.createOscillator();
+        let gain = audioCtx.createGain();
         if (type === 'success') {
-            let osc = audioCtx.createOscillator();
-            let gain = audioCtx.createGain();
             osc.type = 'sine';
             osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
             osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
-            osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.5);
         } else {
-            let osc = audioCtx.createOscillator();
-            let gain = audioCtx.createGain();
             osc.type = 'sawtooth';
             osc.frequency.setValueAtTime(140, audioCtx.currentTime);
-            osc.frequency.setValueAtTime(90, audioCtx.currentTime + 0.15);
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.35);
         }
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.4);
     } catch (e) {}
 }
 
 // ==========================================
-// 🚀 موسوعة المحتوى الشامل (قواعد، أدوات الشرط، صوتيات، قاموس مصور)
+// 📚 الموسوعة الشاملة الموسعة (قواعد، أدوات الشرط، محادثات، قصص)
 // ==========================================
 function openDetailedContent(type) {
     const details = document.getElementById('detailsContent');
@@ -134,147 +115,148 @@ function openDetailedContent(type) {
         details.innerHTML = `
             <h2>📖 الموسوعة الشاملة لقواعد اللغة الإنجليزية</h2>
             
-            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
                 <h3>1. الضمائر الشخصية (Personal Pronouns)</h3>
-                <p>• <b>I (أنا):</b> للمتكلم المفرد. <i>I am a teacher.</i></p>
-                <p>• <b>He (هو):</b> للمفرد المذكر العاقل. <i>He is smart.</i></p>
-                <p>• <b>She (هي):</b> للمفرد المؤنث العاقل. <i>She is reading.</i></p>
-                <p>• <b>It (هو/هي لغير العاقل):</b> للجماد والحيوان. <i>It is a book.</i></p>
-                <p>• <b>We (نحن):</b> للمتكلم الجمع. <i>We play tennis.</i></p>
-                <p>• <b>They (هم):</b> للجمع الغائب. <i>They are happy.</i></p>
+                <p>• <b>I (أنا):</b> للمتكلم المفرد. (I am happy)</p>
+                <p>• <b>He / She / It (هو / هي / لغير العاقل):</b> للمفرد الغائب.</p>
+                <p>• <b>We / They / You (نحن / هم / أنتم):</b> للجمع والمخاطب.</p>
             </div>
 
-            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
-                <h3>2. الأفعال المساعدة (Verb to Be & Do & Have)</h3>
-                <p>• <b>Verb to Be (يكون):</b> (Am, Is, Are) في المضارع | (Was, Were) في الماضي.</p>
-                <p>• <b>Verb to Do (يفعل):</b> (Do, Does) في المضارع | (Did) في الماضي.</p>
-                <p>• <b>Verb to Have (يملك):</b> (Have, Has) في المضارع | (Had) في الماضي.</p>
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
+                <h3>2. أفعال الكينونة والمساعدة (Verb to Be, Do, Have)</h3>
+                <p>• <b>Verb to Be:</b> (Am, Is, Are) للمضارع | (Was, Were) للماضي.</p>
+                <p>• <b>Verb to Do:</b> (Do, Does) للمضارع | (Did) للماضي.</p>
+                <p>• <b>Verb to Have:</b> (Have, Has) للمضارع | (Had) للماضي.</p>
             </div>
 
-            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-                <h3>3. الأزمنة الأساسية (Basic Tenses)</h3>
-                <p>• <b>المضارع البسيط (Present Simple):</b> للتعبير عن العادات والحقائق. نضع (s) مع He/She/It.</p>
-                <p>• <b>المضارع المستمر (Present Continuous):</b> للتعبير عن حدث يقع الآن (Am/Is/Are + Verb + ing).</p>
-                <p>• <b>الماضي البسيط (Past Simple):</b> للتعبير عن حدث انتهى في الماضي (التصريف الثاني للفعل).</p>
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
+                <h3>3. الأزمنة الأساسية (Tenses)</h3>
+                <p>• <b>المضارع البسيط:</b> للعادات والحقائق (يضاف s مع المفرد الغائب).</p>
+                <p>• <b>المضارع المستمر:</b> حدث يحدث الآن (Am/Is/Are + Verb + ing).</p>
+                <p>• <b>الماضي البسيط:</b> حدث انتهى (التصريف الثاني للفعل).</p>
             </div>
         `;
     } else if (type === 'tools') {
         details.innerHTML = `
-            <h2>🛠️ قسم أدوات اللغة الإنجليزية والشرط</h2>
+            <h2>🛠️ أدوات اللغة الإنجليزية والشرط (Conditionals & Tools)</h2>
 
-            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
-                <h3>1. أدوات الشرط (Conditionals - If Cases)</h3>
-                <p>• <b>الحالة الصفرية (Zero Conditional):</b> للحقائق الثابتة (If + مضارع بسيط ➔ مضارع بسيط).</p>
-                <p style="color:#4DEAEA;">مثال: <i>If you heat ice, it melts.</i> (إذا سخنت الثلج فإنه يذوب)</p>
-                <p>• <b>الحالة الأولى (First Conditional):</b> أحداث محتملة في المستقبل (If + مضارع بسيط ➔ Will + المصدر).</p>
-                <p style="color:#4DEAEA;">مثال: <i>If you study hard, you will pass.</i> (إذا ذاكرت بجد ستنجح)</p>
-                <p>• <b>الحالة الثانية (Second Conditional):</b> خيال أو افتراض غير واقعي (If + ماضي بسيط ➔ Would + المصدر).</p>
-                <p style="color:#4DEAEA;">مثال: <i>If I had money, I would buy a car.</i> (لو كان لدي مال لاشتريت سيارة)</p>
-                <button class="btn-act audio-btn" style="margin-top:8px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('If you study hard, you will pass.')">🔊 استمع للأمثلة</button>
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
+                <h3>1. أدوات الشرط (If Conditionals)</h3>
+                <p><b>• الحالة الصفرية (Zero Conditional):</b> للحقائق العلمية الثابتة.<br>
+                القاعدة: <i>If + مضارع بسيط ➔ مضارع بسيط</i><br>
+                مثال: <span style="color:#4DEAEA;">If you heat water, it boils.</span> (إذا سخنت الماء، يغلي)</p>
+
+                <p style="margin-top:10px;"><b>• الحالة الأولى (First Conditional):</b> أحداث محتملة الحدوث في المستقبل.<br>
+                القاعدة: <i>If + مضارع بسيط ➔ Will + المصدر</i><br>
+                مثال: <span style="color:#4DEAEA;">If you study hard, you will succeed.</span> (إذا ذاكرت بجد، ستنجح)</p>
+
+                <p style="margin-top:10px;"><b>• الحالة الثانية (Second Conditional):</b> للافتراض والخيال غير الواقعي.<br>
+                القاعدة: <i>If + ماضي بسيط ➔ Would + المصدر</i><br>
+                مثال: <span style="color:#4DEAEA;">If I were rich, I would buy a mansion.</span> (لو كنت غنياً، لاشتريت قصراً)</p>
+
+                <button style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('If you study hard, you will succeed.')">🔊 استمع لأدوات الشرط</button>
             </div>
 
-            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
                 <h3>2. أدوات التعريف والنكرة (Articles)</h3>
-                <p>• <b>a:</b> تأتي قبل الاسم المفرد المعدود المبتدئ بحرف ساكن (a book, a cat).</p>
-                <p>• <b>an:</b> تأتي قبل الاسم المفرد المبتدئ بحرف متحرك a, e, i, o, u (an apple, an elephant).</p>
-                <p>• <b>the:</b> أداة التعريف للإشارة إلى شيء محدد ومعروف لدى السامع (the sun, the school).</p>
+                <p>• <b>a / an:</b> تستخدم قبل الاسم المفرد المعدود النكرة (a car, an apple).</p>
+                <p>• <b>the:</b> أداة التعريف للإشارة إلى شيء معروف ومحدد (the moon, the door).</p>
             </div>
 
-            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-                <h3>3. أدوات الربط (Linking Words)</h3>
-                <p>• <b>And (و):</b> لربط فكرتين متشابهتين (I like tea and coffee).</p>
-                <p>• <b>But (ولكن):</b> للتعبير عن التناقض (He is rich but unhappy).</p>
-                <p>• <b>Because (لأن):</b> لبيان السبب (I stayed home because it was raining).</p>
-                <p>• <b>So (لذلك):</b> لبيان النتيجة (She was sick so she went to the doctor).</p>
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
+                <h3>3. أدوات الربط الهامة (Linking Words)</h3>
+                <p>• <b>And (و)</b> | <b>But (ولكن)</b> | <b>Because (لأن)</b> | <b>So (لذلك)</b> | <b>Although (على الرغم من)</b></p>
             </div>
         `;
     } else if (type === 'phonics') {
         details.innerHTML = `
-            <h2>🔊 قسم الصوتيات وتدريب النطق (Phonics)</h2>
-            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-                <h3>الحروف المركبة (Digraphs)</h3>
-                <p>• <b>SH:</b> تُنطق مثل حرف (ش). مثال: <i>Fish, Shop, Ship</i></p>
-                <p>• <b>CH:</b> تُنطق مثل (تش). مثال: <i>Chair, Cheese, Teacher</i></p>
-                <p>• <b>TH:</b> تُنطق (ث) أو (ذ). مثال: <i>Think (ث), This (ذ)</i></p>
-                <p>• <b>PH:</b> تُنطق مثل حرف (ف). مثال: <i>Phone, Elephant</i></p>
-                <button class="btn-act audio-btn" style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('Fish, Chair, Think, Phone')">🔊 استمع لنطق الأصوات المركبة</button>
+            <h2>🔊 تعليم الصوتيات والنطق الصحيح (Phonics)</h2>
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
+                <h3>أهم الحروف والأصوات المركبة:</h3>
+                <p>• <b>SH:</b> تُنطق (ش) مثل <i>Fish, Shop</i></p>
+                <p>• <b>CH:</b> تُنطق (تش) مثل <i>Chair, Watch</i></p>
+                <p>• <b>TH:</b> تُنطق (ث) أو (ذ) مثل <i>Think, This</i></p>
+                <p>• <b>PH:</b> تُنطق (ف) مثل <i>Phone, Photo</i></p>
+                <button style="margin-top:12px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('Fish, Chair, Think, Phone')">🔊 استمع للأصوات</button>
             </div>
         `;
     } else if (type === 'visual_dict') {
         details.innerHTML = `
             <h2>🖼️ القاموس المصور الناطق للأطفال</h2>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:15px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;">
                 <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('Apple')">
-                    <span style="font-size:3.5rem;">🍎</span>
+                    <span style="font-size:3rem;">🍎</span>
                     <div style="font-weight:bold; margin-top:5px;">Apple</div>
-                    <small style="opacity:0.7;">تفاحة</small>
+                    <small>تفاحة</small>
                 </div>
                 <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('Car')">
-                    <span style="font-size:3.5rem;">🚗</span>
+                    <span style="font-size:3rem;">🚗</span>
                     <div style="font-weight:bold; margin-top:5px;">Car</div>
-                    <small style="opacity:0.7;">سيارة</small>
+                    <small>سيارة</small>
                 </div>
                 <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('House')">
                     <span style="font-size:3.5rem;">🏠</span>
                     <div style="font-weight:bold; margin-top:5px;">House</div>
-                    <small style="opacity:0.7;">منزل</small>
+                    <small>منزل</small>
                 </div>
                 <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('Sun')">
                     <span style="font-size:3.5rem;">☀️</span>
                     <div style="font-weight:bold; margin-top:5px;">Sun</div>
-                    <small style="opacity:0.7;">شمس</small>
+                    <small>شمس</small>
                 </div>
             </div>
         `;
     } else if (type === 'dialogues') {
         details.innerHTML = `
-            <h2>💬 موسوعة محادثات الحياة اليومية الشاملة</h2>
-            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-                <h3>🏫 1. في المدرسة والتعارف</h3>
-                <p><b>Omar:</b> Hello! My name is Omar.</p>
-                <p style="color:#4DEAEA;">(مرحباً! اسمي عمر.)</p>
-                <p><b>Youssef:</b> Welcome Omar! I am Youssef.</p>
-                <p style="color:#4DEAEA;">(أهلاً بك يا عمر! أنا يوسف.)</p>
-                <button class="btn-act audio-btn" style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('Hello! My name is Omar. Welcome Omar! I am Youssef.')">🔊 استمع للمحادثة</button>
+            <h2>💬 محادثات الحياة اليومية الشاملة</h2>
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:12px;">
+                <h3>1. في المدرسة والتعارف (At School)</h3>
+                <p><b>Ali:</b> Hello! My name is Ali. What is your name?</p>
+                <p style="color:#4DEAEA;">(مرحباً! اسمي علي. ما اسمك؟)</p>
+                <p><b>Youssef:</b> Hi Ali! I am Youssef. Nice to meet you.</p>
+                <p style="color:#4DEAEA;">(أهلاً يا علي! أنا يوسف. تشرفت بهدك.)</p>
+                <button style="margin-top:8px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('Hello! My name is Ali. Hi Ali! I am Youssef.')">🔊 استمع للمحادثة</button>
+            </div>
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
+                <h3>2. في السوبرماركت (At the Supermarket)</h3>
+                <p><b>Customer:</b> How much is this milk?</p>
+                <p style="color:#4DEAEA;">(كم سعر هذا الحليب؟)</p>
+                <p><b>Seller:</b> It is 2 dollars.</p>
+                <p style="color:#4DEAEA;">(سعرها 2 دولار.)</p>
             </div>
         `;
     } else if (type === 'stories') {
         details.innerHTML = `
             <h2>📕 القصص التعليمية الموسعة</h2>
-            <div class="dialogue-box" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-                <h3>1. The Thirsty Crow (قصة الغراب العطشان والذكاء) 🐦</h3>
-                <p>On a hot summer day, a crow became very thirsty and found a pitcher with low water...</p>
-                <button class="btn-act audio-btn" style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('On a hot summer day, a crow became very thirsty and dropped stones into the pitcher.')">🔊 استمع للقصة</button>
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
+                <h3>The Clever Crow (الغراب الذكي) 🐦</h3>
+                <p>On a hot summer day, a crow was very thirsty. He found a pitcher with very little water at the bottom. He could not reach it with his beak. The clever crow picked up small stones and dropped them into the pitcher one by one. The water level rose up, and the crow drank happily!</p>
+                <p style="color:#4DEAEA; margin-top:8px;">(في يوم صيفي حار، عطش الغراب بشدة ووجد إبريقاً فيه ماء قليل. جمع الحصى وأسقطها داخله ليرتفع الماء ويشرب بسعادة!)</p>
+                <button style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('On a hot summer day, a crow was very thirsty and drank happily.')">🔊 استمع للقصة</button>
             </div>
         `;
     }
 }
 
 // ==========================================
-// 🚀 محرك الألعاب اللانهائي
+// 🚀 محرك الألعاب اللانهائي للأطفال
 // ==========================================
 const INF_ANIMALS = [
     { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
     { nameEn: "Elephant", nameAr: "فيل", emoji: "🐘" },
     { nameEn: "Monkey", nameAr: "قرد", emoji: "🐒" },
     { nameEn: "Giraffe", nameAr: "زرافة", emoji: "🦒" },
-    { nameEn: "Tiger", nameAr: "نمر", emoji: "🐅" },
     { nameEn: "Cat", nameAr: "قطة", emoji: "🐱" },
     { nameEn: "Dog", nameAr: "كلب", emoji: "🐶" },
-    { nameEn: "Rabbit", nameAr: "أرنب", emoji: "🐰" },
-    { nameEn: "Panda", nameAr: "باندا", emoji: "🐼" },
     { nameEn: "Bird", nameAr: "عصفور", emoji: "🐦" },
-    { nameEn: "Duck", nameAr: "بطة", emoji: "🦆" },
-    { nameEn: "Frog", nameAr: "ضفدع", emoji: "🐸" }
+    { nameEn: "Duck", nameAr: "بطة", emoji: "🦆" }
 ];
 
 const INF_COLORS = [
     { nameEn: "Red", nameAr: "أحمر", hex: "#ef4444" },
     { nameEn: "Blue", nameAr: "أزرق", hex: "#3b82f6" },
     { nameEn: "Green", nameAr: "أخضر", hex: "#10b981" },
-    { nameEn: "Yellow", nameAr: "أصفر", hex: "#f59e0b" },
-    { nameEn: "Purple", nameAr: "بنفسجي", hex: "#8b5cf6" },
-    { nameEn: "Pink", nameAr: "وردي", hex: "#ec4899" }
+    { nameEn: "Yellow", nameAr: "أصفر", hex: "#f59e0b" }
 ];
 
 let infGameMode = 'all';
@@ -297,191 +279,109 @@ function startInfiniteKidsGame() {
     let chosenType = infGameMode === 'all' ? types[Math.floor(Math.random() * types.length)] : infGameMode;
 
     if (chosenType === 'animals') {
-        generateInfAnimalChallenge();
-    } else if (chosenType === 'colors') {
-        generateInfColorChallenge();
-    } else {
-        generateInfNumberChallenge();
-    }
-}
-
-function generateInfAnimalChallenge() {
-    const item = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
-    const isEn = Math.random() > 0.5;
-
-    document.getElementById('gameCategoryTag').innerText = "🦁 تحدي الحيوانات والطيور الذكي";
-    document.getElementById('gameVisualArena').innerHTML = `<div style="font-size: 4.5rem;">${item.emoji}</div>`;
-
-    let choices = [item];
-    while (choices.length < 4) {
-        let rand = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
-        if (!choices.some(c => c.nameEn === rand.nameEn)) choices.push(rand);
-    }
-    choices = choices.sort(() => Math.random() - 0.5);
-
-    if (isEn) {
-        document.getElementById('gameQuestionText').innerText = "ما اسم هذا الكائن باللغة الإنجليزية؟";
+        const item = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
+        document.getElementById('gameCategoryTag').innerText = "🦁 تحدي الحيوانات والطيور الذكي";
+        document.getElementById('gameVisualArena').innerHTML = `<div style="font-size: 4.5rem;">${item.emoji}</div>`;
+        document.getElementById('gameQuestionText').innerText = "ما اسم هذا الكائن بالإنجليزية؟";
         infCorrectAnswer = item.nameEn;
         infWordToSpeak = item.nameEn;
-        if (document.getElementById('btnSpeakWord')) document.getElementById('btnSpeakWord').style.display = 'inline-block';
-        renderInfOptions(choices.map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
+        if (speakBtn) speakBtn.style.display = 'inline-block';
+        renderInfOptions([item, ...getRandom(INF_ANIMALS, item, 3)].map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
+    } else if (chosenType === 'colors') {
+        const col = INF_COLORS[Math.floor(Math.random() * INF_COLORS.length)];
+        document.getElementById('gameCategoryTag').innerText = "🎨 تحدي الألوان والمربعات";
+        document.getElementById('gameVisualArena').innerHTML = `<div style="width:75px; height:75px; background-color:${col.hex}; border-radius:18px; border:3px solid #fff;"></div>`;
+        document.getElementById('gameQuestionText').innerText = "ما هو هذا اللون بالإنجليزية؟";
+        infCorrectAnswer = col.nameEn;
+        infWordToSpeak = col.nameEn;
+        if (speakBtn) speakBtn.style.display = 'inline-block';
+        renderInfOptions([col, ...getRandom(INF_COLORS, col, 3)].map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
     } else {
-        document.getElementById('gameQuestionText').innerText = `ما هو المعنى العربي لـ '${item.nameEn}'؟`;
-        infCorrectAnswer = item.nameAr;
-        infWordToSpeak = item.nameEn;
-        if (document.getElementById('btnSpeakWord')) document.getElementById('btnSpeakWord').style.display = 'inline-block';
-        renderInfOptions(choices.map(c => ({ text: c.nameAr, val: c.nameAr, sub: c.nameEn })));
+        const count = Math.floor(Math.random() * 4) + 2;
+        const anim = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
+        document.getElementById('gameCategoryTag').innerText = "🔢 حديقة الأرقام والعد";
+        document.getElementById('gameQuestionText').innerText = "كم عدد العناصر في المربع؟";
+        let icons = "";
+        for (let i = 0; i < count; i++) icons += `<span style="font-size:2.3rem;">${anim.emoji}</span>`;
+        document.getElementById('gameVisualArena').innerHTML = `<div>${icons}</div>`;
+        infCorrectAnswer = count.toString();
+        let nums = [count];
+        while (nums.length < 4) {
+            let r = Math.floor(Math.random() * 7) + 1;
+            if (!nums.includes(r)) nums.push(r);
+        }
+        renderInfOptions(nums.sort(() => Math.random() - 0.5).map(n => ({ text: n.toString(), val: n.toString(), sub: "عنصر" })));
     }
 }
 
-function generateInfColorChallenge() {
-    const color = INF_COLORS[Math.floor(Math.random() * INF_COLORS.length)];
-    document.getElementById('gameCategoryTag').innerText = "🎨 تحدي الألوان والمربعات المبهجة";
-    document.getElementById('gameVisualArena').innerHTML = `<div style="width:75px; height:75px; background-color:${color.hex}; border-radius:18px; border:3px solid #fff; box-shadow:0 6px 15px rgba(0,0,0,0.4);"></div>`;
-
-    let choices = [color];
-    while (choices.length < 4) {
-        let rand = INF_COLORS[Math.floor(Math.random() * INF_COLORS.length)];
-        if (!choices.some(c => c.nameEn === rand.nameEn)) choices.push(rand);
-    }
-    choices = choices.sort(() => Math.random() - 0.5);
-
-    document.getElementById('gameQuestionText').innerText = "ما هو هذا اللون بالإنجليزية؟";
-    infCorrectAnswer = color.nameEn;
-    infWordToSpeak = color.nameEn;
-    if (document.getElementById('btnSpeakWord')) document.getElementById('btnSpeakWord').style.display = 'inline-block';
-
-    renderInfOptions(choices.map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
-}
-
-function generateInfNumberChallenge() {
-    const count = Math.floor(Math.random() * 5) + 2;
-    const anim = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
-
-    document.getElementById('gameCategoryTag').innerText = "🔢 حديقة الأرقام والعد التفاعلية";
-    document.getElementById('gameQuestionText').innerText = "كم عدد العناصر الظاهرة في المربع؟";
-
-    let gridHTML = `<div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">`;
-    for (let i = 0; i < count; i++) {
-        gridHTML += `<span style="font-size: 2.3rem;">${anim.emoji}</span>`;
-    }
-    gridHTML += `</div>`;
-    document.getElementById('gameVisualArena').innerHTML = gridHTML;
-
-    let choices = [count];
-    while (choices.length < 4) {
-        let randNum = Math.floor(Math.random() * 8) + 1;
-        if (!choices.includes(randNum)) choices.push(randNum);
-    }
-    choices = choices.sort(() => Math.random() - 0.5);
-
-    infCorrectAnswer = count.toString();
-    renderInfOptions(choices.map(num => ({ text: num.toString(), val: num.toString(), sub: "عنصر" })));
+function getRandom(arr, exclude, count) {
+    return arr.filter(i => i !== exclude).sort(() => Math.random() - 0.5).slice(0, count);
 }
 
 function renderInfOptions(opts) {
     const container = document.getElementById('gameOptionsGrid');
     if (!container) return;
     container.innerHTML = '';
-
-    opts.forEach(opt => {
+    opts.sort(() => Math.random() - 0.5).forEach(opt => {
         const btn = document.createElement('button');
-        btn.className = 'tab-b';
         btn.style.cssText = "background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 12px; border-radius: 14px; font-weight: bold; font-size: 1.1rem; cursor: pointer;";
-        btn.innerHTML = `<div>${opt.text}</div><small style="opacity:0.7; font-size:0.8rem; display:block;">${opt.sub || ''}</small>`;
-        btn.onclick = () => checkInfAnswer(opt.val, btn);
+        btn.innerHTML = `<div>${opt.text}</div><small style="opacity:0.7; font-size:0.8rem;">${opt.sub || ''}</small>`;
+        btn.onclick = () => {
+            if (infLock) return;
+            infLock = true;
+            if (opt.val === infCorrectAnswer) {
+                btn.style.background = "#10b981";
+                playSound('success');
+                let score = document.getElementById('userScore');
+                if (score) score.innerText = parseInt(score.innerText) + 15;
+                if (infWordToSpeak) speak(infWordToSpeak);
+            } else {
+                btn.style.background = "#ef4444";
+                playSound('error');
+            }
+            setTimeout(startInfiniteKidsGame, 1400);
+        };
         container.appendChild(btn);
     });
-}
-
-function checkInfAnswer(selectedVal, btnElement) {
-    if (infLock) return;
-    infLock = true;
-
-    if (selectedVal === infCorrectAnswer) {
-        btnElement.style.background = "#10b981";
-        playSound('success');
-        let scoreElem = document.getElementById('userScore');
-        if (scoreElem) scoreElem.innerText = parseInt(scoreElem.innerText) + 15;
-        if (infWordToSpeak) speak(infWordToSpeak);
-    } else {
-        btnElement.style.background = "#ef4444";
-        playSound('error');
-        document.querySelectorAll('#gameOptionsGrid button').forEach(b => {
-            if (b.innerText.includes(infCorrectAnswer)) b.style.background = "#10b981";
-        });
-    }
-
-    setTimeout(() => {
-        startInfiniteKidsGame();
-    }, 1500);
 }
 
 function speakCurrentGameWord() {
     if (infWordToSpeak) speak(infWordToSpeak);
 }
 
-// Clean Real Translator
-async function translateText(text) {
-    let clean = text.trim();
-    if (!clean) return;
-
-    if (transCache[clean]) {
-        document.getElementById('enText').innerText = transCache[clean];
-        return;
-    }
-
-    document.getElementById('enText').innerText = "جاري الترجمة الفورية...";
-
-    try {
-        const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(clean)}&langpair=ar|en`);
-        const data = await response.json();
-        
-        if (data && data.responseData && data.responseData.translatedText) {
-            let translatedResult = data.responseData.translatedText;
-            document.getElementById('enText').innerText = translatedResult;
-            transCache[clean] = translatedResult;
-            localStorage.setItem('offline_trans', JSON.stringify(transCache));
-        } else {
-            document.getElementById('enText').innerText = "تعذر الحصول على الترجمة";
-        }
-    } catch (error) {
-        document.getElementById('enText').innerText = "خطأ في الاتصال بالشبكة للترجمة الفورية";
-    }
-}
-
-// Speech Recognition
 function toggleSpeech() {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recog = new SpeechRecognition();
         recog.lang = 'ar-SA';
-        
-        recog.onstart = () => { document.getElementById('micBtn').innerText = '🎙️ جاري الاستماع بتركيز...'; };
         recog.onresult = (e) => {
-            const text = e.results[0][0].transcript;
-            document.getElementById('arText').innerText = text;
-            translateText(text);
-            document.getElementById('micBtn').innerText = '🎙️ اضغط وتحدث بالعربية';
+            let t = e.results[0][0].transcript;
+            document.getElementById('arText').innerText = t;
+            translateText(t);
         };
-        recog.onerror = () => { document.getElementById('micBtn').innerText = '🎙️ اضغط وتحدث بالعربية'; };
         recog.start();
-    } else {
-        alert('المتصفح الحالي لا يدعم التعرف الصوتي المباشر.');
     }
+}
+
+async function translateText(text) {
+    try {
+        let res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ar|en`);
+        let data = await res.json();
+        if (data && data.responseData) {
+            document.getElementById('enText').innerText = data.responseData.translatedText;
+        }
+    } catch (e) {}
 }
 
 function speakEnglish() { speak(document.getElementById('enText').innerText); }
-function speak(text) {
-    if ('speechSynthesis' in window) {
-        const utt = new SpeechSynthesisUtterance(text);
-        utt.lang = 'en-US';
-        utt.rate = 0.85;
-        window.speechSynthesis.speak(utt);
+function speak(txt) {
+    if ('speechSynthesis' in window && txt) {
+        let u = new SpeechSynthesisUtterance(txt);
+        u.lang = 'en-US';
+        window.speechSynthesis.speak(u);
     }
 }
 
-// Canvas Trace Logic
 function initCanvas() {
     canvas = document.getElementById('traceCanvas');
     if (!canvas) return;
@@ -489,35 +389,15 @@ function initCanvas() {
     ctx.lineWidth = 10;
     ctx.lineCap = 'round';
     ctx.strokeStyle = '#2ED573';
-
-    canvas.addEventListener('mousedown', startD);
-    canvas.addEventListener('mousemove', drawD);
-    canvas.addEventListener('mouseup', stopD);
-
-    canvas.addEventListener('touchstart', (e) => {
-        const t = e.touches[0];
-        const r = canvas.getBoundingClientRect();
-        startD({ clientX: t.clientX - r.left, clientY: t.clientY - r.top });
-    });
-
-    canvas.addEventListener('touchmove', (e) => {
-        const t = e.touches[0];
-        const r = canvas.getBoundingClientRect();
-        drawD({ clientX: t.clientX - r.left, clientY: t.clientY - r.top });
-    });
-
-    canvas.addEventListener('touchend', stopD);
+    canvas.addEventListener('mousedown', (e) => { isDrawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); });
+    canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); });
+    canvas.addEventListener('mouseup', () => { isDrawing = false; });
 }
 
-function startD(e) { isDrawing = true; ctx.beginPath(); ctx.moveTo(e.clientX || e.offsetX, e.clientY || e.offsetY); }
-function drawD(e) { if (!isDrawing) return; ctx.lineTo(e.clientX || e.offsetX, e.clientY || e.offsetY); ctx.stroke(); }
-function stopD() { isDrawing = false; }
 function clearBoard() { if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
 function setLetterCase(type) {
     currentCase = type;
-    document.getElementById('tabCap').classList.toggle('active', type === 'capital');
-    document.getElementById('tabSmall').classList.toggle('active', type === 'small');
     currentLetter = type === 'capital' ? 'A' : 'a';
     renderLettersBar();
 }
@@ -526,37 +406,29 @@ function renderLettersBar() {
     const bar = document.getElementById('lettersBar');
     if (!bar) return;
     bar.innerHTML = '';
-    const list = currentCase === 'capital' ? capitalList : smallList;
-
+    let list = currentCase === 'capital' ? capitalList : smallList;
     list.forEach(l => {
-        const b = document.createElement('button');
+        let b = document.createElement('button');
         b.className = `l-btn ${l === currentLetter ? 'active' : ''}`;
         b.innerText = l;
-        b.onclick = () => selectLetter(l);
+        b.onclick = () => { currentLetter = l; renderLettersBar(); clearBoard(); speak(l); };
         bar.appendChild(b);
     });
-
-    const ghost = document.getElementById('ghostLetter');
+    let ghost = document.getElementById('ghostLetter');
     if (ghost) ghost.innerText = currentLetter;
 }
 
-function selectLetter(l) {
-    currentLetter = l;
+function nextLetter() {
+    let list = currentCase === 'capital' ? capitalList : smallList;
+    let idx = list.indexOf(currentLetter);
+    if (idx < list.length - 1) currentLetter = list[idx + 1];
+    else currentLetter = list[0];
     renderLettersBar();
     clearBoard();
     speak(currentLetter);
 }
 
-function nextLetter() {
-    const list = currentCase === 'capital' ? capitalList : smallList;
-    let idx = list.indexOf(currentLetter);
-    if (idx < list.length - 1) selectLetter(list[idx + 1]);
-    else selectLetter(list[0]);
-}
-
 function speakCurrentLetter() { speak(currentLetter); }
-
 function searchGoogleTrans() {
-    const arText = document.getElementById('arText').innerText;
-    window.open(`https://translate.google.com/?sl=ar&tl=en&text=${encodeURIComponent(arText)}&op=translate`, '_blank');
+    window.open('https://translate.google.com/?sl=ar&tl=en&text=' + encodeURIComponent(document.getElementById('arText').innerText), '_blank');
 }
