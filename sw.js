@@ -32,7 +32,6 @@ self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
       if (cachedResponse) {
-        // إرجاع الملف من الكاش فوراً للسرعة، مع تحديثه في الخلفية
         fetch(event.request).then(networkResponse => {
           if (networkResponse && networkResponse.ok) {
             caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse));
