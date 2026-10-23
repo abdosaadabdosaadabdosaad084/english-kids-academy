@@ -35,52 +35,52 @@
             <!-- Menu Cards Grid -->
             <div class="cards-grid">
                 
-                <div class="menu-card" onclick="openSection('board')">
+                <div class="menu-card" onclick="openSection('boardView')">
                     <div class="card-icon">🔤</div>
                     <h3>الحروف والسبورة</h3>
                 </div>
 
-                <div class="menu-card" onclick="openSection('dictionary')">
+                <div class="menu-card" onclick="openSection('dictionaryView')">
                     <div class="card-icon">📚</div>
                     <h3>القاموس الشامل (بحث جوجل)</h3>
                 </div>
 
-                <div class="menu-card" onclick="openSection('translator')">
+                <div class="menu-card" onclick="openSection('translatorView')">
                     <div class="card-icon">🎙️</div>
                     <h3>الترجمة الفورية</h3>
                 </div>
 
-                <div class="menu-card" onclick="openSection('grammar')">
+                <div class="menu-card" onclick="openSection('grammarView')">
                     <div class="card-icon">📖</div>
                     <h3>الموسوعة الشاملة للقواعد</h3>
                 </div>
 
-                <div class="menu-card" onclick="openSection('tools')">
+                <div class="menu-card" onclick="openSection('toolsView')">
                     <div class="card-icon">🛠️</div>
                     <h3>أدوات اللغة والشرط</h3>
                 </div>
 
-                <div class="menu-card" onclick="openSection('phonics')">
+                <div class="menu-card" onclick="openSection('phonicsView')">
                     <div class="card-icon">🔊</div>
                     <h3>تعليم الصوتيات والنطق</h3>
                 </div>
 
-                <div class="menu-card" onclick="openSection('visual_dict')">
+                <div class="menu-card" onclick="openSection('visual_dictView')">
                     <div class="card-icon">🖼️</div>
                     <h3>القاموس المصور الناطق</h3>
                 </div>
 
-                <div class="menu-card" onclick="openSection('dialogues')">
+                <div class="menu-card" onclick="openSection('dialoguesView')">
                     <div class="card-icon">💬</div>
                     <h3>محادثات الحياة (+100)</h3>
                 </div>
 
-                <div class="menu-card" onclick="openSection('stories')">
+                <div class="menu-card" onclick="openSection('storiesView')">
                     <div class="card-icon">📕</div>
                     <h3>القصص التعليمية الموسعة</h3>
                 </div>
 
-                <div class="menu-card full-width" onclick="openSection('games')">
+                <div class="menu-card full-width" onclick="openSection('gamesView')">
                     <div class="card-icon">🎮</div>
                     <h3>الألعاب الصوتية والتحديات</h3>
                 </div>
@@ -133,7 +133,7 @@
 
                 <div class="board-actions">
                     <button class="btn-act clear-btn" onclick="clearBoard()">🗑️ مسح</button>
-                    <button class="btn-act audio-btn" onclick="speak(currentLetter)">🔊 نطق</button>
+                    <button class="btn-act audio-btn" onclick="speak(typeof currentLetter !== 'undefined' ? currentLetter : 'A')">🔊 نطق</button>
                     <button class="btn-act next-btn" onclick="nextLetter()">➡️ التالي</button>
                 </div>
             </div>
@@ -183,6 +183,44 @@
 
     <script src="app.js"></script>
     <script>
+        // دالة التنقل العامة للربط بين الشاشات
+        function openSection(viewId) {
+            // إخفاء جميع الشاشات
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('active-view');
+                v.style.display = 'none';
+            });
+
+            // البحث عن الشاشة المطلوبة
+            let targetView = document.getElementById(viewId);
+            
+            // إذا لم يجد الشاشة مباشرة، يبحث عن صفحة التفاصيل أو الشاشات الأخرى
+            if (!targetView) {
+                targetView = document.getElementById('detailsView');
+            }
+
+            if (targetView) {
+                targetView.classList.add('active-view');
+                targetView.style.display = 'block';
+            }
+
+            // استدعاء الدوال الخاصة في app.js إن وجدت
+            if (typeof switchView === 'function') switchView(viewId);
+            if (typeof renderSection === 'function') renderSection(viewId);
+        }
+
+        function showHome() {
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('active-view');
+                v.style.display = 'none';
+            });
+            const home = document.getElementById('homeView');
+            if (home) {
+                home.classList.add('active-view');
+                home.style.display = 'block';
+            }
+        }
+
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js');
