@@ -1,4 +1,4 @@
-const CACHE_NAME = "english-kids-academy-v8";
+const CACHE_NAME = "english-kids-academy-v9";
 
 const APP_FILES = [
   "./",
@@ -9,10 +9,10 @@ const APP_FILES = [
 ];
 
 self.addEventListener("install", event => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(APP_FILES))
-      .then(() => self.skipWaiting())
   );
 });
 
@@ -30,20 +30,24 @@ self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        if (response && (response.ok || response.type === 'opaque')) {
-          const copy = response.clone();
+    caches.match(event.request).then(cachedResponse => {
+      if (cachedResponse) {
+        // إرجاع الملف من الكاش فوراً للسرعة، مع تحديثه في الخلفية
+        fetch(event.request).then(networkResponse => {
+          if (networkResponse && networkResponse.ok) {
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse));
+          }
+        }).catch(() => {});
+        return cachedResponse;
+      }
+
+      return fetch(event.request).then(networkResponse => {
+        if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
+          const copy = networkResponse.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
         }
-        return response;
-      })
-      .catch(async () => {
-        const cached = await caches.match(event.request);
-        if (cached) return cached;
-        if (event.request.mode === "navigate") {
-          return await caches.match("./index.html");
-        }
-      })
+        return networkResponse;
+      });
+    }).catch(() => caches.match("./index.html"))
   );
 });
