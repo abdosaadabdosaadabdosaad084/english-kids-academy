@@ -13,13 +13,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ضمان ظهور الشاشة النشطة وتجنب أي تعارض */
+        .view { display: none !important; }
+        .view.active-view { display: block !important; }
+    </style>
 </head>
 <body>
 
     <div id="app" class="app-container">
 
         <!-- ===== VIEW 1: HOME PAGE ===== -->
-        <div id="homeView" class="view active-view" style="display: block;">
+        <div id="homeView" class="view active-view">
             <header class="top-bar">
                 <div class="score-badge">
                     <span id="userScore">100</span> <i class="fa-solid fa-star"></i>
@@ -28,7 +33,7 @@
             </header>
 
             <!-- Install PWA Banner -->
-            <div class="install-banner" id="installBanner" onclick="triggerPWAInstall()" style="cursor: pointer; background: #2ed573; color: #fff; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; margin-bottom: 15px;">
+            <div class="install-banner" id="installBanner" onclick="triggerPWAInstall()" style="cursor: pointer; background: #2ed573; color: #fff; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; margin-bottom: 15px; display:none;">
                 📲 تثبيت التطبيق على الشاشة الرئيسية للهاتف
             </div>
 
@@ -89,7 +94,7 @@
         </div>
 
         <!-- ===== VIEW 2: TRANSLATOR PAGE ===== -->
-        <div id="translatorView" class="view" style="display: none;">
+        <div id="translatorView" class="view">
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
@@ -113,7 +118,7 @@
         </div>
 
         <!-- ===== VIEW 3: BOARD PAGE ===== -->
-        <div id="boardView" class="view" style="display: none;">
+        <div id="boardView" class="view">
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
@@ -140,7 +145,7 @@
         </div>
 
         <!-- ===== VIEW 4: GAMES VIEW ===== -->
-        <div id="gamesView" class="view" style="display: none;">
+        <div id="gamesView" class="view">
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
@@ -171,7 +176,7 @@
         </div>
 
         <!-- ===== VIEW 5: DETAILS VIEW ===== -->
-        <div id="detailsView" class="view" style="display: none;">
+        <div id="detailsView" class="view">
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
@@ -180,7 +185,7 @@
 
     </div>
 
-    <!-- كود التشغيل الأساسي بالكامل في نفس الصفحة لمنع أي أخطاء تحميل -->
+    <!-- البرمجة والتشغيل المباشر -->
     <script>
         let currentCase = 'capital';
         let currentLetter = 'A';
@@ -216,34 +221,33 @@
         }
 
         function openSection(pageId) {
+            // إخفاء جميع الشاشات وإزالة active-view
             document.querySelectorAll('.view').forEach(v => {
                 v.classList.remove('active-view');
-                v.style.display = 'none';
             });
 
             if (pageId === 'translator') {
-                document.getElementById('translatorView').style.display = 'block';
+                document.getElementById('translatorView').classList.add('active-view');
             } else if (pageId === 'board') {
-                document.getElementById('boardView').style.display = 'block';
+                document.getElementById('boardView').classList.add('active-view');
                 clearBoard();
             } else if (pageId === 'games') {
-                document.getElementById('gamesView').style.display = 'block';
+                document.getElementById('gamesView').classList.add('active-view');
                 startInfiniteKidsGame();
             } else if (pageId === 'dictionary') {
                 window.open('https://www.google.com/search?q=' + encodeURIComponent('قاموس ترجمة إنجليزي عربي'), '_blank');
-                document.getElementById('homeView').style.display = 'block';
+                document.getElementById('homeView').classList.add('active-view');
             } else {
                 openDetailedContent(pageId);
-                document.getElementById('detailsView').style.display = 'block';
+                document.getElementById('detailsView').classList.add('active-view');
             }
         }
 
         function showHome() {
             document.querySelectorAll('.view').forEach(v => {
                 v.classList.remove('active-view');
-                v.style.display = 'none';
             });
-            document.getElementById('homeView').style.display = 'block';
+            document.getElementById('homeView').classList.add('active-view');
         }
 
         function renderLettersBar() {
@@ -351,4 +355,74 @@
         }
 
         const INF_ANIMALS = [
-            { nameEn: "Lion", nameAr: "
+            { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
+            { nameEn: "Cat", nameAr: "قطة", emoji: "🐱" },
+            { nameEn: "Dog", nameAr: "كلب", emoji: "🐶" }
+        ];
+
+        function startInfiniteKidsGame() {
+            const item = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
+            document.getElementById('gameVisualArena').innerHTML = `<div style="font-size: 4rem;">${item.emoji}</div>`;
+            document.getElementById('gameQuestionText').innerText = "ما اسم هذا الحيوان؟";
+            
+            const container = document.getElementById('gameOptionsGrid');
+            container.innerHTML = '';
+            
+            [item, {nameEn:"Elephant", nameAr:"فيل"}, {nameEn:"Monkey", nameAr:"قرد"}].sort(()=>Math.random()-0.5).forEach(opt => {
+                const btn = document.createElement('button');
+                btn.style.cssText = "background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer;";
+                btn.innerText = opt.nameEn;
+                btn.onclick = () => {
+                    if (opt.nameEn === item.nameEn) {
+                        btn.style.background = "#2ed573";
+                        speak(opt.nameEn);
+                        setTimeout(startInfiniteKidsGame, 1200);
+                    } else {
+                        btn.style.background = "#ff4757";
+                    }
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function speak(txt) {
+            if ('speechSynthesis' in window && txt) {
+                let u = new SpeechSynthesisUtterance(txt);
+                u.lang = 'en-US';
+                window.speechSynthesis.speak(u);
+            }
+        }
+
+        function initCanvas() {
+            canvas = document.getElementById('traceCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            ctx.lineWidth = 8;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#2ed573';
+            
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                isDrawing = true;
+                ctx.beginPath();
+                ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+            });
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (!isDrawing) return;
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+                ctx.stroke();
+            });
+            canvas.addEventListener('touchend', () => { isDrawing = false; });
+        }
+
+        function clearBoard() { 
+            if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</body>
+</html>
