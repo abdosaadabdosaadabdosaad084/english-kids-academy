@@ -105,3 +105,17 @@ body {
 .details-content ul { margin-right: 20px; margin-bottom: 15px; color: #CBD5E1; }
 .details-content li { margin-bottom: 6px; }
 .dialogue-box { background: #161936; padding: 16px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #1E90FF; }
+/* منع تحديد النص عند الضغط على البطاقات والأزرار لمنع تداخل بحث الهاتف */
+.menu-card, .btn-home-back, button, .app-container {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE/Edge */
+    user-select: none;         /* Standard */
+    -webkit-tap-highlight-color: transparent; /* إلغاء التحديد المزعج عند اللمس في الموبايل */
+}
+
+/* تحسين تجربة الضغط على البطاقات */
+.menu-card {
+    cursor: pointer;
+    touch-action: manipulation;
+}
