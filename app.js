@@ -389,46 +389,32 @@ function initCanvas() {
     ctx.lineWidth = 10;
     ctx.lineCap = 'round';
     ctx.strokeStyle = '#2ED573';
+    
     canvas.addEventListener('mousedown', (e) => { isDrawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); });
     canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); });
     canvas.addEventListener('mouseup', () => { isDrawing = false; });
-}
-
-function clearBoard() { if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); }
-
-function setLetterCase(type) {
-    currentCase = type;
-    currentLetter = type === 'capital' ? 'A' : 'a';
-    renderLettersBar();
-}
-
-function renderLettersBar() {
-    const bar = document.getElementById('lettersBar');
-    if (!bar) return;
-    bar.innerHTML = '';
-    let list = currentCase === 'capital' ? capitalList : smallList;
-    list.forEach(l => {
-        let b = document.createElement('button');
-        b.className = `l-btn ${l === currentLetter ? 'active' : ''}`;
-        b.innerText = l;
-        b.onclick = () => { currentLetter = l; renderLettersBar(); clearBoard(); speak(l); };
-        bar.appendChild(b);
+    
+    // دعم الأجهزة اللمسية (الهواتف المحمولة)
+    canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        isDrawing = true;
+        ctx.beginPath();
+        ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
     });
-    let ghost = document.getElementById('ghostLetter');
-    if (ghost) ghost.innerText = currentLetter;
+    canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (!isDrawing) return;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        ctx.stroke();
+    });
+    canvas.addEventListener('touchend', () => { isDrawing = false; });
 }
 
-function nextLetter() {
-    let list = currentCase === 'capital' ? capitalList : smallList;
-    let idx = list.indexOf(currentLetter);
-    if (idx < list.length - 1) currentLetter = list[idx + 1];
-    else currentLetter = list[0];
-    renderLettersBar();
-    clearBoard();
-    speak(currentLetter);
-}
-
-function speakCurrentLetter() { speak(currentLetter); }
-function searchGoogleTrans() {
-    window.open('https://translate.google.com/?sl=ar&tl=en&text=' + encodeURIComponent(document.getElementById('arText').innerText), '_blank');
-}
+// دالة مسح الشاشة المعدلة لتعمل تماماً وبشكل صحيح
+function clearBoard() { 
+    if (ctx && canvas) {
+        ctx.clearRe
