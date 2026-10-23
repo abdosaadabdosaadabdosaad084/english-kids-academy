@@ -19,7 +19,7 @@
     <div id="app" class="app-container">
 
         <!-- ===== VIEW 1: HOME PAGE ===== -->
-        <div id="homeView" class="view active-view">
+        <div id="homeView" class="view active-view" style="display: block;">
             <header class="top-bar">
                 <div class="score-badge">
                     <span id="userScore">100</span> <i class="fa-solid fa-star"></i>
@@ -28,7 +28,7 @@
             </header>
 
             <!-- Install PWA Banner -->
-            <div class="install-banner" id="installBanner" onclick="triggerPWAInstall()" style="cursor: pointer; display:none;">
+            <div class="install-banner" id="installBanner" onclick="triggerPWAInstall()" style="cursor: pointer; background: #2ed573; color: #fff; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; margin-bottom: 15px;">
                 📲 تثبيت التطبيق على الشاشة الرئيسية للهاتف
             </div>
 
@@ -89,102 +89,163 @@
         </div>
 
         <!-- ===== VIEW 2: TRANSLATOR PAGE ===== -->
-        <div id="translatorView" class="view">
-            <div class="view-header">
-                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+        <div id="translatorView" class="view" style="display: none;">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
 
-            <div class="translator-container">
-                <button class="big-mic-btn" id="micBtn" onclick="toggleSpeech()">
+            <div class="translator-container" style="text-align: center; color: #fff;">
+                <button class="big-mic-btn" id="micBtn" onclick="toggleSpeech()" style="background:#3b82f6; color:#fff; border:none; padding:15px 25px; border-radius:15px; font-size:1.1rem; font-weight:bold; margin-bottom:15px; cursor:pointer;">
                     🎙️ اضغط وتحدث بالعربية
                 </button>
 
-                <div class="result-box arabic-box">
+                <div class="result-box arabic-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:10px;">
                     <span>العربية: <strong id="arText">سلام</strong></span>
                 </div>
 
-                <div class="result-box english-box">
-                    <span>English: <mark id="enText">peace</mark></span>
-                    <button class="btn-speak-icon" onclick="speakEnglish()"><i class="fa-solid fa-volume-high"></i></button>
+                <div class="result-box english-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>English: <mark id="enText" style="background:transparent; color:#2ed573; font-weight:bold;">peace</mark></span>
+                    <button class="btn-speak-icon" onclick="speakEnglish()" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-volume-high"></i></button>
                 </div>
 
-                <button class="btn-google-search" onclick="window.open('https://translate.google.com', '_blank')">🔍 ابحث واستزد في Google Translate</button>
+                <button class="btn-google-search" onclick="window.open('https://translate.google.com', '_blank')" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:10px 15px; border-radius:10px; cursor:pointer;">🔍 ابحث واستزد في Google Translate</button>
             </div>
         </div>
 
         <!-- ===== VIEW 3: BOARD PAGE ===== -->
-        <div id="boardView" class="view">
-            <div class="view-header">
-                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+        <div id="boardView" class="view" style="display: none;">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
 
-            <div class="board-container">
-                <div class="board-tabs">
-                    <button class="tab-b active" id="tabCap" onclick="setLetterCase('capital')">Capital A-Z</button>
-                    <button class="tab-b" id="tabSmall" onclick="setLetterCase('small')">Small a-z</button>
+            <div class="board-container" style="text-align:center;">
+                <div class="board-tabs" style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
+                    <button class="tab-b active" id="tabCap" onclick="setLetterCase('capital')" style="background:#2ed573; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">Capital A-Z</button>
+                    <button class="tab-b" id="tabSmall" onclick="setLetterCase('small')" style="background:rgba(255,255,255,0.1); color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">Small a-z</button>
                 </div>
 
-                <!-- شريط الحروف الذي يظهر تفاصيل وحروف A-Z بالكامل -->
-                <div class="letters-bar" id="lettersBar" style="display:flex; overflow-x:auto; gap:5px; padding:10px 0;"></div>
+                <div class="letters-bar" id="lettersBar" style="display:flex; overflow-x:auto; gap:6px; padding:10px 0; margin-bottom:10px;"></div>
 
-                <div class="canvas-box">
-                    <div class="ghost-letter-bg" id="ghostLetter">A</div>
-                    <canvas id="traceCanvas" width="300" height="250"></canvas>
+                <div class="canvas-box" style="position:relative; width:300px; height:250px; margin:0 auto 15px auto; background:#1e272e; border-radius:15px; border:2px dashed rgba(255,255,255,0.3); display:flex; align-items:center; justify-content:center;">
+                    <div class="ghost-letter-bg" id="ghostLetter" style="position:absolute; font-size:9rem; color:rgba(255,255,255,0.15); font-weight:bold; user-select:none;">A</div>
+                    <canvas id="traceCanvas" width="300" height="250" style="position:relative; z-index:2; touch-action:none;"></canvas>
                 </div>
 
-                <div class="board-actions">
-                    <button class="btn-act clear-btn" onclick="clearBoard()">🗑️ مسح</button>
-                    <button class="btn-act audio-btn" onclick="speak(currentLetter)">🔊 نطق</button>
-                    <button class="btn-act next-btn" onclick="nextLetter()">➡️ التالي</button>
+                <div class="board-actions" style="display:flex; justify-content:center; gap:10px;">
+                    <button class="btn-act clear-btn" onclick="clearBoard()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🗑️ مسح</button>
+                    <button class="btn-act audio-btn" onclick="speak(currentLetter)" style="background:#2ed573; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🔊 نطق</button>
+                    <button class="btn-act next-btn" onclick="nextLetter()" style="background:#1e90ff; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">➡️ التالي</button>
                 </div>
             </div>
         </div>
 
         <!-- ===== VIEW 4: GAMES VIEW ===== -->
-        <div id="gamesView" class="view">
-            <div class="view-header">
-                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+        <div id="gamesView" class="view" style="display: none;">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
 
-            <div class="games-container" style="text-align: center; padding: 15px;">
+            <div class="games-container" style="text-align: center; padding: 10px;">
                 <div id="gameCategoryTag" style="background: #ec4899; color: white; display: inline-block; padding: 6px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px;">
                     🎮 التحديات اللانهائية
                 </div>
                 
-                <h2 id="gameQuestionText" style="color: #fff; font-size: 1.3rem; margin-bottom: 15px;">السؤال...</h2>
+                <h2 id="gameQuestionText" style="color: #fff; font-size: 1.2rem; margin-bottom: 15px;">السؤال...</h2>
 
                 <button id="btnSpeakWord" onclick="speakCurrentGameWord()" style="display:none; margin: 0 auto 15px auto; background: #3b82f6; color: white; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; cursor: pointer;">
                     🔊 استمع للكلمة
                 </button>
 
-                <div id="gameVisualArena" style="min-height: 140px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 20px; border: 2px dashed rgba(255,255,255,0.2); margin-bottom: 20px; padding: 10px;">
+                <div id="gameVisualArena" style="min-height: 120px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 20px; border: 2px dashed rgba(255,255,255,0.2); margin-bottom: 20px; padding: 10px;">
                 </div>
 
                 <div id="gameOptionsGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                 </div>
 
-                <div style="margin-top: 25px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                    <button onclick="setGameCategory('all')" class="tab-b active">🎲 الكل</button>
-                    <button onclick="setGameCategory('animals')" class="tab-b">🦁 حيوانات</button>
-                    <button onclick="setGameCategory('colors')" class="tab-b">🎨 ألوان</button>
-                    <button onclick="setGameCategory('numbers')" class="tab-b">🔢 أرقام</button>
+                <div style="margin-top: 20px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="setGameCategory('all')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🎲 الكل</button>
+                    <button onclick="setGameCategory('animals')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🦁 حيوانات</button>
+                    <button onclick="setGameCategory('colors')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🎨 ألوان</button>
                 </div>
             </div>
         </div>
 
         <!-- ===== VIEW 5: DETAILS VIEW ===== -->
-        <div id="detailsView" class="view">
-            <div class="view-header">
-                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+        <div id="detailsView" class="view" style="display: none;">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
-            <div class="details-content" id="detailsContent" style="padding: 15px; color: #fff;"></div>
+            <div class="details-content" id="detailsContent" style="padding: 10px; color: #fff;"></div>
         </div>
 
     </div>
 
-    <script src="app.js"></script>
+    <!-- كود التشغيل الأساسي بالكامل في نفس الصفحة لمنع أي أخطاء تحميل -->
     <script>
-        // دالة لإكمال تكوين شريط الحروف إذا لم تكن معرفة في app.js
+        let currentCase = 'capital';
+        let currentLetter = 'A';
+        let isDrawing = false;
+        let canvas, ctx;
+        let deferredPrompt;
+
+        const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        const smallList = "abcdefghijklmnopqrstuvwxyz".split("");
+
+        window.onload = () => {
+            initCanvas();
+            renderLettersBar();
+            initPWAInstallPrompt();
+        };
+
+        function initPWAInstallPrompt() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                const banner = document.getElementById('installBanner');
+                if (banner) banner.style.display = 'block';
+            });
+        }
+
+        function triggerPWAInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+            } else {
+                alert("لتثبيت التطبيق: اضغط على القائمة (⋮) في المتصفح ثم اختر 'إضافة إلى الشاشة الرئيسية'.");
+            }
+        }
+
+        function openSection(pageId) {
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('active-view');
+                v.style.display = 'none';
+            });
+
+            if (pageId === 'translator') {
+                document.getElementById('translatorView').style.display = 'block';
+            } else if (pageId === 'board') {
+                document.getElementById('boardView').style.display = 'block';
+                clearBoard();
+            } else if (pageId === 'games') {
+                document.getElementById('gamesView').style.display = 'block';
+                startInfiniteKidsGame();
+            } else if (pageId === 'dictionary') {
+                window.open('https://www.google.com/search?q=' + encodeURIComponent('قاموس ترجمة إنجليزي عربي'), '_blank');
+                document.getElementById('homeView').style.display = 'block';
+            } else {
+                openDetailedContent(pageId);
+                document.getElementById('detailsView').style.display = 'block';
+            }
+        }
+
+        function showHome() {
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('active-view');
+                v.style.display = 'none';
+            });
+            document.getElementById('homeView').style.display = 'block';
+        }
+
         function renderLettersBar() {
             const bar = document.getElementById('lettersBar');
             if (!bar) return;
@@ -193,7 +254,7 @@
             list.forEach(letter => {
                 const btn = document.createElement('button');
                 btn.innerText = letter;
-                btn.style.cssText = "min-width:40px; height:40px; background:" + (letter === currentLetter ? "#F1C40F" : "rgba(255,255,255,0.1)") + "; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;";
+                btn.style.cssText = "min-width:38px; height:38px; background:" + (letter === currentLetter ? "#f1c40f" : "rgba(255,255,255,0.1)") + "; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;";
                 btn.onclick = () => {
                     currentLetter = letter;
                     document.getElementById('ghostLetter').innerText = letter;
@@ -207,8 +268,8 @@
         function setLetterCase(cCase) {
             currentCase = cCase;
             currentLetter = cCase === 'capital' ? 'A' : 'a';
-            document.getElementById('tabCap').style.background = cCase === 'capital' ? '#2ED573' : '';
-            document.getElementById('tabSmall').style.background = cCase === 'small' ? '#2ED573' : '';
+            document.getElementById('tabCap').style.background = cCase === 'capital' ? '#2ed573' : 'rgba(255,255,255,0.1)';
+            document.getElementById('tabSmall').style.background = cCase === 'small' ? '#2ed573' : 'rgba(255,255,255,0.1)';
             document.getElementById('ghostLetter').innerText = currentLetter;
             renderLettersBar();
         }
@@ -224,12 +285,70 @@
             clearBoard();
         }
 
-        // دالة مسح السبورة بالكامل وتصحيح المشكلة السابقة
-        function clearBoard() {
-            if (ctx && canvas) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function openDetailedContent(type) {
+            const details = document.getElementById('detailsContent');
+            if (!details) return;
+            
+            if (type === 'grammar') {
+                details.innerHTML = `
+                    <h2>📖 الموسوعة الشاملة لقواعد اللغة الإنجليزية</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <h3>1. الضمائر (Pronouns)</h3>
+                        <p>• <b>I (أنا)</b> | <b>He (هو)</b> | <b>She (هي)</b></p>
+                        <p>• <b>We (نحن)</b> | <b>They (هم)</b> | <b>You (أنت/أنتم)</b></p>
+                    </div>
+                `;
+            } else if (type === 'tools') {
+                details.innerHTML = `
+                    <h2>🛠️ أدوات اللغة والشرط</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <h3>أدوات الشرط (If Conditionals)</h3>
+                        <p>• <b>If you study, you will pass.</b> (إذا ذاكرت، ستنجح)</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('If you study, you will pass.')">🔊 نطق</button>
+                    </div>
+                `;
+            } else if (type === 'phonics') {
+                details.innerHTML = `
+                    <h2>🔊 تعليم الصوتيات والنطق</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <p>• <b>SH:</b> Fish 🐟</p>
+                        <p>• <b>CH:</b> Chair 🪑</p>
+                        <p>• <b>TH:</b> Think 💭</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('Fish, Chair, Think')">🔊 نطق</button>
+                    </div>
+                `;
+            } else if (type === 'visual_dict') {
+                details.innerHTML = `
+                    <h2>🖼️ القاموس المصور الناطق</h2>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Apple')">
+                            <span style="font-size:2.5rem;">🍎</span><div>Apple</div><small>تفاحة</small>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Car')">
+                            <span style="font-size:2.5rem;">🚗</span><div>Car</div><small>سيارة</small>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'dialogues') {
+                details.innerHTML = `
+                    <h2>💬 محادثات الحياة</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <p><b>Ali:</b> Hello! How are you?</p>
+                        <p><b>Youssef:</b> I am fine, thank you!</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('Hello! How are you? I am fine, thank you!')">🔊 نطق</button>
+                    </div>
+                `;
+            } else if (type === 'stories') {
+                details.innerHTML = `
+                    <h2>📕 القصص التعليمية</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <h3>The Lion and the Mouse 🦁🐭</h3>
+                        <p>A little mouse helped a big lion.</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('A little mouse helped a big lion.')">🔊 نطق</button>
+                    </div>
+                `;
             }
         }
-    </script>
-</body>
-</html>
+
+        const INF_ANIMALS = [
+            { nameEn: "Lion", nameAr: "
