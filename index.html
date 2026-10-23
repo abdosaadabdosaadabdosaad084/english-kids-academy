@@ -28,7 +28,7 @@
             </header>
 
             <!-- Install PWA Banner -->
-            <div class="install-banner" id="installBanner" onclick="installPWA()">
+            <div class="install-banner" id="installBanner" onclick="triggerPWAInstall()" style="cursor: pointer;">
                 📲 تثبيت التطبيق على الشاشة الرئيسية للهاتف
             </div>
 
@@ -108,7 +108,7 @@
                     <button class="btn-speak-icon" onclick="speakEnglish()"><i class="fa-solid fa-volume-high"></i></button>
                 </div>
 
-                <button class="btn-google-search" onclick="searchGoogleTrans()">🔍 ابحث واستزد في Google Translate</button>
+                <button class="btn-google-search" onclick="window.open('https://translate.google.com', '_blank')">🔍 ابحث واستزد في Google Translate</button>
             </div>
         </div>
 
@@ -133,7 +133,7 @@
 
                 <div class="board-actions">
                     <button class="btn-act clear-btn" onclick="clearBoard()">🗑️ مسح</button>
-                    <button class="btn-act audio-btn" onclick="speakCurrentLetter()">🔊 نطق</button>
+                    <button class="btn-act audio-btn" onclick="speak(currentLetter)">🔊 نطق</button>
                     <button class="btn-act next-btn" onclick="nextLetter()">➡️ التالي</button>
                 </div>
             </div>
