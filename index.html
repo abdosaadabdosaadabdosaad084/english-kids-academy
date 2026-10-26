@@ -12,8 +12,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="style.css">
     <style>
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: #0F1123; margin: 0; padding: 10px; color: #fff; }
+        .app-container { max-width: 480px; margin: 0 auto; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .score-badge { background: #1e2235; padding: 6px 12px; border-radius: 20px; color: #f1c40f; font-weight: bold; }
+        .app-title { font-size: 1.2rem; margin: 0; }
+        
+        .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .menu-card { background: #1e2235; padding: 20px 10px; border-radius: 18px; text-align: center; cursor: pointer; transition: 0.2s; border: 1px solid rgba(255,255,255,0.05); }
+        .menu-card:active { transform: scale(0.96); }
+        .menu-card.full-width { grid-column: span 2; }
+        .card-icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .menu-card h3 { font-size: 0.95rem; margin: 0; color: #fff; }
+
         /* ضمان ظهور الشاشة النشطة وتجنب أي تعارض */
         .view { display: none !important; }
         .view.active-view { display: block !important; }
@@ -110,7 +123,7 @@
 
                 <div class="result-box english-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
                     <span>English: <mark id="enText" style="background:transparent; color:#2ed573; font-weight:bold;">peace</mark></span>
-                    <button class="btn-speak-icon" onclick="speakEnglish()" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-volume-high"></i></button>
+                    <button class="btn-speak-icon" onclick="speak('peace')" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-volume-high"></i></button>
                 </div>
 
                 <button class="btn-google-search" onclick="window.open('https://translate.google.com', '_blank')" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:10px 15px; border-radius:10px; cursor:pointer;">🔍 ابحث واستزد في Google Translate</button>
@@ -354,42 +367,94 @@
             }
         }
 
+        // الألعاب وتوابعها
         const INF_ANIMALS = [
             { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
+            { nameEn: "Elephant", nameAr: "فيل", emoji: "🐘" },
             { nameEn: "Cat", nameAr: "قطة", emoji: "🐱" },
             { nameEn: "Dog", nameAr: "كلب", emoji: "🐶" }
         ];
 
+        const INF_COLORS = [
+            { nameEn: "Red", nameAr: "أحمر", hex: "#ef4444" },
+            { nameEn: "Blue", nameAr: "أزرق", hex: "#3b82f6" }
+        ];
+
+        let infGameMode = 'all';
+        let infCorrectAnswer = null;
+        let infWordToSpeak = "";
+        let infLock = false;
+
+        function setGameCategory(mode) {
+            infGameMode = mode;
+            startInfiniteKidsGame();
+        }
+
         function startInfiniteKidsGame() {
-            const item = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
-            document.getElementById('gameVisualArena').innerHTML = `<div style="font-size: 4rem;">${item.emoji}</div>`;
-            document.getElementById('gameQuestionText').innerText = "ما اسم هذا الحيوان؟";
-            
-            const container = document.getElementById('gameOptionsGrid');
-            container.innerHTML = '';
-            
-            [item, {nameEn:"Elephant", nameAr:"فيل"}, {nameEn:"Monkey", nameAr:"قرد"}].sort(()=>Math.random()-0.5).forEach(opt => {
+            infLock = false;
+            const speakBtn = document.getElementById('btnSpeakWord');
+            if (speakBtn) speakBtn.style.display = 'none';
+            infWordToSpeak = "";
+
+            let types = ['animals', 'colors'];
+            let chosenType = infGameMode === 'all' ? types[Math.floor(Math.random() * types.length)] : infGameMode;
+
+            if (chosenType === 'animals') {
+                const item = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
+                document.getElementById('gameCategoryTag').innerText = "🦁 تحدي الحيوانات الذكي";
+                document.getElementById('gameVisualArena').innerHTML = `<div style="font-size: 4.5rem;">${item.emoji}</div>`;
+                document.getElementById('gameQuestionText').innerText = "ما اسم هذا الكائن بالإنجليزية؟";
+                infCorrectAnswer = item.nameEn;
+                infWordToSpeak = item.nameEn;
+                if (speakBtn) speakBtn.style.display = 'inline-block';
+                renderInfOptions([item, INF_ANIMALS[0]].map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
+            } else {
+                const col = INF_COLORS[Math.floor(Math.random() * INF_COLORS.length)];
+                document.getElementById('gameCategoryTag').innerText = "🎨 تحدي الألوان";
+                document.getElementById('gameVisualArena').innerHTML = `<div style="width:75px; height:75px; background-color:${col.hex}; border-radius:18px; border:3px solid #fff;"></div>`;
+                document.getElementById('gameQuestionText').innerText = "ما هو هذا اللون بالإنجليزية؟";
+                infCorrectAnswer = col.nameEn;
+                infWordToSpeak = col.nameEn;
+                if (speakBtn) speakBtn.style.display = 'inline-block';
+                renderInfOptions(INF_COLORS.map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
+            }
+        }
+
+        function renderInfOptions(opts) {
+            const grid = document.getElementById('gameOptionsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            opts.sort(() => Math.random() - 0.5).forEach(opt => {
                 const btn = document.createElement('button');
-                btn.style.cssText = "background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer;";
-                btn.innerText = opt.nameEn;
-                btn.onclick = () => {
-                    if (opt.nameEn === item.nameEn) {
-                        btn.style.background = "#2ed573";
-                        speak(opt.nameEn);
-                        setTimeout(startInfiniteKidsGame, 1200);
-                    } else {
-                        btn.style.background = "#ff4757";
-                    }
-                };
-                container.appendChild(btn);
+                btn.innerHTML = `<strong>${opt.text}</strong><br><small>${opt.sub || ''}</small>`;
+                btn.style.cssText = "background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:12px; border-radius:12px; font-weight:bold; cursor:pointer;";
+                btn.onclick = () => checkInfAnswer(opt.val, btn);
+                grid.appendChild(btn);
             });
         }
 
-        function speak(txt) {
-            if ('speechSynthesis' in window && txt) {
-                let u = new SpeechSynthesisUtterance(txt);
-                u.lang = 'en-US';
-                window.speechSynthesis.speak(u);
+        function checkInfAnswer(selected, btn) {
+            if (infLock) return;
+            if (selected === infCorrectAnswer) {
+                infLock = true;
+                btn.style.background = "#2ed573";
+                speak('Correct');
+                setTimeout(startInfiniteKidsGame, 1200);
+            } else {
+                btn.style.background = "#ff4757";
+                speak('Try again');
+            }
+        }
+
+        function speakCurrentGameWord() {
+            if (infWordToSpeak) speak(infWordToSpeak);
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                window.speechSynthesis.speak(utterance);
             }
         }
 
@@ -397,31 +462,46 @@
             canvas = document.getElementById('traceCanvas');
             if (!canvas) return;
             ctx = canvas.getContext('2d');
-            ctx.lineWidth = 8;
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = '#2ed573';
             
-            canvas.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const rect = canvas.getBoundingClientRect();
-                isDrawing = true;
-                ctx.beginPath();
-                ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
-            });
-            canvas.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                if (!isDrawing) return;
-                const touch = e.touches[0];
-                const rect = canvas.getBoundingClientRect();
-                ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
-                ctx.stroke();
-            });
-            canvas.addEventListener('touchend', () => { isDrawing = false; });
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDraw);
+            canvas.addEventListener('mouseleave', stopDraw);
+
+            canvas.addEventListener('touchstart', (e) => { startDraw(e.touches[0]); e.preventDefault(); });
+            canvas.addEventListener('touchmove', (e) => { draw(e.touches[0]); e.preventDefault(); });
+            canvas.addEventListener('touchend', stopDraw);
         }
 
-        function clearBoard() { 
-            if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function startDraw(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            const rect = canvas.getBoundingClientRect();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.strokeStyle = '#f1c40f';
+            ctx.lineWidth = 6;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+        }
+
+        function stopDraw() {
+            isDrawing = false;
+        }
+
+        function clearBoard() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function toggleSpeech() {
+            alert("خاصية التعرف على الصوت تعمل بالمتصفح الداعم.");
         }
     </script>
 </body>
