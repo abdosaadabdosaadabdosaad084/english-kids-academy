@@ -38,6 +38,159 @@
         }
         .content-section { background: rgba(255,255,255,0.05); padding: 18px; border-radius: 15px; margin-bottom: 15px; line-height: 1.9; border: 1px solid rgba(255,255,255,0.1); }
         .content-section h3 { color: #f1c40f; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+
+        /* --- تصميم السبورة الجديد المماثل للصورة --- */
+        .board-wrapper {
+            background-color: #0F1123;
+            min-height: 100vh;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .board-header {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .btn-home-back {
+            background: #5c1d2e;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .letters-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 6px;
+            width: 100%;
+            background: #17192a;
+            padding: 10px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            direction: ltr;
+        }
+
+        .letter-btn {
+            background: #272a3c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            height: 36px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .letter-btn.active {
+            background: #f1c40f;
+            color: #000;
+        }
+
+        .canvas-box {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background: #1c2030;
+            border-radius: 20px;
+            border: 2px dashed #4b5563;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .ghost-letter-bg {
+            position: absolute;
+            font-size: 14rem;
+            color: rgba(255, 255, 255, 0.18);
+            font-weight: 800;
+            user-select: none;
+            pointer-events: none;
+            font-family: sans-serif;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            touch-action: none;
+        }
+
+        .board-actions {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-act {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-act.clear-btn { background: #ef4444; }
+        .btn-act.audio-btn { background: #10b981; }
+        .btn-act.next-btn { background: #3b82f6; }
+
+        .numbers-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background: #17192a;
+            padding: 8px;
+            border-radius: 14px;
+            direction: ltr;
+        }
+
+        .num-btn {
+            flex: 1;
+            margin: 0 3px;
+            height: 40px;
+            background: #272a3c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .num-btn.active {
+            background: #f1c40f;
+            color: #000;
+        }
     </style>
 </head>
 <body>
@@ -97,13 +250,51 @@
             </div>
         </div>
 
+        <!-- BOARD VIEW (التصميم المطور المطابق للصورة) -->
+        <div id="boardView" class="view">
+            <div class="board-wrapper">
+                
+                <div class="board-header">
+                    <button class="btn-home-back" onclick="showHome()">
+                        الرجوع للرئيسية <i class="fa-solid fa-house"></i>
+                    </button>
+                </div>
+
+                <div class="letters-grid" id="lettersBar">
+                    <!-- يتم توليد الحروف تلقائياً هنا -->
+                </div>
+
+                <div class="canvas-box">
+                    <div class="ghost-letter-bg" id="ghostLetter">1</div>
+                    <canvas id="traceCanvas"></canvas>
+                </div>
+
+                <div class="board-actions">
+                    <button class="btn-act clear-btn" onclick="clearBoard()">
+                        مسح <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                    <button class="btn-act audio-btn" onclick="speak(currentItem)">
+                        نطق <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                    <button class="btn-act next-btn" onclick="nextItem()">
+                        التالي <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="numbers-bar" id="numbersBar">
+                    <!-- يتم توليد الأرقام تلقائياً هنا -->
+                </div>
+
+            </div>
+        </div>
+
         <!-- TRANSLATOR VIEW -->
         <div id="translatorView" class="view">
             <div class="view-header" style="margin-bottom: 15px;">
-                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
             </div>
             <div class="translator-container" style="text-align: center; color: #fff;">
-                <button class="big-mic-btn" id="micBtn" onclick="toggleSpeech()" style="background:#3b82f6; color:#fff; border:none; padding:15px 25px; border-radius:15px; font-size:1.1rem; font-weight:bold; margin-bottom:15px; cursor:pointer;">
+                <button class="big-mic-btn" id="micBtn" style="background:#3b82f6; color:#fff; border:none; padding:15px 25px; border-radius:15px; font-size:1.1rem; font-weight:bold; margin-bottom:15px; cursor:pointer;">
                     🎙️ اضغط وتحدث بالعربية للترجمة الفورية
                 </button>
                 <div class="result-box arabic-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:10px;">
@@ -113,62 +304,13 @@
                     <span>English: <mark id="enText" style="background:transparent; color:#2ed573; font-weight:bold;">Welcome to the app</mark></span>
                     <button class="btn-speak-icon" onclick="speak(document.getElementById('enText').innerText)" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-volume-high"></i></button>
                 </div>
-                <button class="btn-google-search" onclick="window.open('https://translate.google.com', '_blank')" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:10px 15px; border-radius:10px; cursor:pointer;">🔍 ابحث واستزد في Google Translate</button>
             </div>
         </div>
 
-        <!-- BOARD VIEW -->
-        <div id="boardView" class="view">
-            <div class="view-header" style="margin-bottom: 15px;">
-                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
-            </div>
-            <div class="board-container" style="text-align:center;">
-                <div class="board-tabs" style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
-                    <button class="tab-b active" id="tabCap" onclick="setLetterCase('capital')" style="background:#2ed573; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">Capital A-Z</button>
-                    <button class="tab-b" id="tabSmall" onclick="setLetterCase('small')" style="background:rgba(255,255,255,0.1); color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">Small a-z</button>
-                </div>
-                <div class="letters-bar" id="lettersBar" style="display:flex; overflow-x:auto; gap:6px; padding:10px 0; margin-bottom:10px;"></div>
-                <div class="canvas-box" style="position:relative; width:300px; height:250px; margin:0 auto 15px auto; background:#1e272e; border-radius:15px; border:2px dashed rgba(255,255,255,0.3); display:flex; align-items:center; justify-content:center;">
-                    <div class="ghost-letter-bg" id="ghostLetter" style="position:absolute; font-size:9rem; color:rgba(255,255,255,0.15); font-weight:bold; user-select:none;">A</div>
-                    <canvas id="traceCanvas" width="300" height="250" style="position:relative; z-index:2; touch-action:none;"></canvas>
-                </div>
-                <div class="board-actions" style="display:flex; justify-content:center; gap:10px;">
-                    <button class="btn-act clear-btn" onclick="clearBoard()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🗑️ مسح</button>
-                    <button class="btn-act audio-btn" onclick="speak(currentLetter)" style="background:#2ed573; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🔊 نطق</button>
-                    <button class="btn-act next-btn" onclick="nextLetter()" style="background:#1e90ff; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">➡️ التالي</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- GAMES VIEW -->
-        <div id="gamesView" class="view">
-            <div class="view-header" style="margin-bottom: 15px;">
-                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
-            </div>
-            <div class="games-container" style="text-align: center; padding: 10px;">
-                <div id="gameCategoryTag" style="background: #ec4899; color: white; display: inline-block; padding: 6px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px;">
-                    🎮 التحديات اللانهائية
-                </div>
-                <h2 id="gameQuestionText" style="color: #fff; font-size: 1.2rem; margin-bottom: 15px;">السؤال...</h2>
-                <button id="btnSpeakWord" onclick="speakCurrentGameWord()" style="display:none; margin: 0 auto 15px auto; background: #3b82f6; color: white; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; cursor: pointer;">
-                    🔊 استمع للكلمة
-                </button>
-                <div id="gameVisualArena" style="min-height: 120px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 20px; border: 2px dashed rgba(255,255,255,0.2); margin-bottom: 20px; padding: 10px;">
-                </div>
-                <div id="gameOptionsGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                </div>
-                <div style="margin-top: 20px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                    <button onclick="setGameCategory('all')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🎲 الكل</button>
-                    <button onclick="setGameCategory('animals')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🦁 حيوانات</button>
-                    <button onclick="setGameCategory('colors')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🎨 ألوان</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- DETAILS VIEW (شرح وافٍ وتفصيل كامل لكل قسم) -->
+        <!-- DETAILS VIEW -->
         <div id="detailsView" class="view">
             <div class="view-header" style="margin-bottom: 15px;">
-                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
             </div>
             <div class="details-content" id="detailsContent" style="padding: 10px; color: #fff;"></div>
         </div>
@@ -180,312 +322,113 @@
     </div>
 
     <script>
-        let currentCase = 'capital';
-        let currentLetter = 'A';
+        let currentItem = '1';
         let isDrawing = false;
         let canvas, ctx;
-        let deferredPrompt;
 
         const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-        const smallList = "abcdefghijklmnopqrstuvwxyz".split("");
+        const numbersList = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
         window.onload = () => {
             initCanvas();
             renderLettersBar();
-            initPWAInstallPrompt();
+            renderNumbersBar();
         };
 
-        function initPWAInstallPrompt() {
-            window.addEventListener('beforeinstallprompt', (e) => {
+        function initCanvas() {
+            canvas = document.getElementById('traceCanvas');
+            if(!canvas) return;
+            ctx = canvas.getContext('2d');
+            
+            // ضبط حجم الكانفاس ليتناسب مع الحاوية بشكل ممتازة
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+
+            ctx.lineWidth = 10;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#ffffff';
+
+            // أحداث الرسم بالماوس واللمس
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+
+            canvas.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                deferredPrompt = e;
-                const banner = document.getElementById('pwaBanner');
-                if (banner) banner.style.display = 'block';
+                startDrawing(e.touches[0]);
             });
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                draw(e.touches[0]);
+            });
+            canvas.addEventListener('touchend', stopDrawing);
         }
 
-        function triggerPWAInstall() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        document.getElementById('pwaBanner').style.display = 'none';
-                    }
-                    deferredPrompt = null;
-                });
-            } else {
-                alert("لتثبيت التطبيق: اضغط على القائمة (⋮) في المتصفح ثم اختر 'إضافة إلى الشاشة الرئيسية'.");
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function clearBoard() {
+            if(ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
         }
 
-        function openSection(pageId) {
-            document.querySelectorAll('.view').forEach(v => {
-                v.classList.remove('active-view');
-            });
-
-            if (pageId === 'translator') {
-                document.getElementById('translatorView').classList.add('active-view');
-            } else if (pageId === 'board') {
-                document.getElementById('boardView').classList.add('active-view');
-                clearBoard();
-            } else if (pageId === 'games') {
-                document.getElementById('gamesView').classList.add('active-view');
-                startInfiniteKidsGame();
-            } else if (pageId === 'dictionary') {
-                window.open('https://www.google.com/search?q=' + encodeURIComponent('قاموس ترجمة إنجليزي عربي'), '_blank');
-                document.getElementById('homeView').classList.add('active-view');
-            } else {
-                openDetailedContent(pageId);
-                document.getElementById('detailsView').classList.add('active-view');
-            }
-        }
-
-        function showHome() {
-            document.querySelectorAll('.view').forEach(v => {
-                v.classList.remove('active-view');
-            });
-            document.getElementById('homeView').classList.add('active-view');
+        function selectItem(val) {
+            currentItem = val;
+            document.getElementById('ghostLetter').innerText = val;
+            clearBoard();
+            renderLettersBar();
+            renderNumbersBar();
+            speak(val);
         }
 
         function renderLettersBar() {
             const bar = document.getElementById('lettersBar');
             if (!bar) return;
             bar.innerHTML = '';
-            const list = currentCase === 'capital' ? capitalList : smallList;
-            list.forEach(letter => {
+            capitalList.forEach(letter => {
                 const btn = document.createElement('button');
+                btn.className = `letter-btn ${letter === currentItem ? 'active' : ''}`;
                 btn.innerText = letter;
-                btn.style.cssText = "min-width:38px; height:38px; background:" + (letter === currentLetter ? "#f1c40f" : "rgba(255,255,255,0.1)") + "; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;";
-                btn.onclick = () => {
-                    currentLetter = letter;
-                    document.getElementById('ghostLetter').innerText = letter;
-                    renderLettersBar();
-                    speak(letter);
-                };
+                btn.onclick = () => selectItem(letter);
                 bar.appendChild(btn);
             });
         }
 
-        function setLetterCase(cCase) {
-            currentCase = cCase;
-            currentLetter = cCase === 'capital' ? 'A' : 'a';
-            document.getElementById('tabCap').style.background = cCase === 'capital' ? '#2ed573' : 'rgba(255,255,255,0.1)';
-            document.getElementById('tabSmall').style.background = cCase === 'small' ? '#2ed573' : 'rgba(255,255,255,0.1)';
-            document.getElementById('ghostLetter').innerText = currentLetter;
-            renderLettersBar();
-        }
-
-        function nextLetter() {
-            const list = currentCase === 'capital' ? capitalList : smallList;
-            let idx = list.indexOf(currentLetter);
-            idx = (idx + 1) % list.length;
-            currentLetter = list[idx];
-            document.getElementById('ghostLetter').innerText = currentLetter;
-            renderLettersBar();
-            speak(currentLetter);
-            clearBoard();
-        }
-
-        // التفاصيل الشاملة والمفصلة بالكامل لكل قسم دون أي اختصار
-        function openDetailedContent(type) {
-            const details = document.getElementById('detailsContent');
-            if (!details) return;
-            
-            if (type === 'grammar') {
-                details.innerHTML = `
-                    <h2>📖 الموسوعة الشاملة لقواعد اللغة الإنجليزية (A1 - C1)</h2>
-                    
-                    <div class="content-section">
-                        <h3>1. الضمائر الشخصية (Personal Pronouns)</h3>
-                        <p><b>• I (أنا):</b> للمتكلم المفرد. مثال: <span style="color:#4DEAEA;">I am studying English.</span> (أنا أدرس الإنجليزية)</p>
-                        <p><b>• He / She / It (هو / هي / لغير العاقل):</b> للمفرد الغائب. مثال: <span style="color:#4DEAEA;">She reads a book every day.</span> (هي تقرأ كتاباً كل يوم)</p>
-                        <p><b>• We / They / You (نحن / هم / أنتم):</b> للجمع والمخاطب. مثال: <span style="color:#4DEAEA;">They live in Cairo.</span> (هم يعيشون في القاهرة)</p>
-                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('I am studying English. She reads a book. They live in Cairo.')">🔊 استمع للأمثلة بوضوح</button>
-                    </div>
-
-                    <div class="content-section">
-                        <h3>2. أفعال الكينونة (Verb to Be)</h3>
-                        <p>تُستخدم لوصف الحالة أو الوظيفة أو المكان:</p>
-                        <p>• <b>في المضارع:</b> (Am مع I) - (Is مع المفرد He/She/It) - (Are مع الجمع We/They/You).</p>
-                        <p>• <b>في الماضي:</b> (Was للمفرد) - (Were للجمع).</p>
-                        <p>مثال: <span style="color:#4DEAEA;">We were happy yesterday.</span> (كنّا سعداء بالأمس)</p>
-                    </div>
-
-                    <div class="content-section">
-                        <h3>3. الأزمنة الأساسية (Tenses)</h3>
-                        <p>• <b>المضارع البسيط (Present Simple):</b> يعبر عن العادات والحقائق الثابتة. يضاف (s) للفعل مع المفرد الغائب.<br>مثال: <span style="color:#4DEAEA;">He works in a bank.</span></p>
-                        <p>• <b>المضارع المستمر (Present Continuous):</b> يحدث الآن وقت الكلام (am/is/are + verb + ing).<br>مثال: <span style="color:#4DEAEA;">I am writing a code.</span></p>
-                    </div>
-                `;
-            } else if (type === 'tools') {
-                details.innerHTML = `
-                    <h2>🛠️ أدوات اللغة والشرط المتقدمة</h2>
-                    
-                    <div class="content-section">
-                        <h3>1. أدوات الشرط الأربعة (If Conditionals)</h3>
-                        <p><b>• الحالة الصفرية (Zero Conditional):</b> للحقائق العلمية المؤكدة والثابتة.<br>
-                        القاعدة: <i>If + Present Simple ➔ Present Simple</i><br>
-                        مثال: <span style="color:#4DEAEA;">If you heat water to 100 degrees, it boils.</span> (إذا سخنت الماء إلى 100 درجة، يغلي)</p>
-                        
-                        <p style="margin-top:12px;"><b>• الحالة الأولى (First Conditional):</b> للأحداث المحتملة الحدوث في المستقبل.<br>
-                        القاعدة: <i>If + Present Simple ➔ Will + المصدر</i><br>
-                        مثال: <span style="color:#4DEAEA;">If you practice daily, you will master English.</span> (إذا تدربت يومياً، ستتقن الإنجليزية)</p>
-                        
-                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:8px;" onclick="speak('If you heat water, it boils. If you practice daily, you will master English.')">🔊 نطق أدوات الشرط</button>
-                    </div>
-
-                    <div class="content-section">
-                        <h3>2. أدوات التعريف والتنكير (Articles: A, An, The)</h3>
-                        <p>• <b>A / An:</b> تُستخدم قبل الاسم المفرد المعدود النكرة المبدوء بحرف ساكن (a) أو متحرك (an). مثال: <span style="color:#4DEAEA;">An apple, A car.</span></p>
-                        <p>• <b>The:</b> أداة تعريف محددة لشيء معروف أو تم ذكره مسبقاً. مثال: <span style="color:#4DEAEA;">The sun is bright.</span></p>
-                    </div>
-                `;
-            } else if (type === 'phonics') {
-                details.innerHTML = `
-                    <h2>🔊 تعليم الصوتيات ونطق الأبجدية (IPA Phonics)</h2>
-                    
-                    <div class="content-section">
-                        <h3>أهم الحروف المركبة وأصواتها الدقيقة:</h3>
-                        <p><b>• SH /ʃ/:</b> تُنطق مثل صوت إسكات الشخص (ش)، مثل: <span style="color:#4DEAEA;">Fish 🐟, Shop 🏬, Shoe 👞</span></p>
-                        <p><b>• CH /tʃ/:</b> تُنطق دمجاً بين (ت) و (ش) مثل: <span style="color:#4DEAEA;">Chair 🪑, Watch ⌚, Child 👶</span></p>
-                        <p><b>• TH /θ/ أو /ð/:</b> تُنطق بوضع اللسان بين الأسنان (ث أو ذ)، مثل: <span style="color:#4DEAEA;">Think 💭, This 👈, Brother 👦</span></p>
-                        <p><b>• PH /f/:</b> تُنطق حرف (ف)، مثل: <span style="color:#4DEAEA;">Phone 📱, Photo 📷</span></p>
-                        
-                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:10px;" onclick="speak('Fish, Chair, Think, Phone')">🔊 استمع لنطق الصوتيات بوضوح</button>
-                    </div>
-                `;
-            } else if (type === 'visual_dict') {
-                details.innerHTML = `
-                    <h2>🖼️ القاموس المصور الناطق الشامل</h2>
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;">
-                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Apple')">
-                            <span style="font-size:2.5rem;">🍎</span><div style="font-weight:bold; margin-top:5px;">Apple</div><small>تفاحة</small>
-                        </div>
-                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Car')">
-                            <span style="font-size:2.5rem;">🚗</span><div style="font-weight:bold; margin-top:5px;">Car</div><small>سيارة</small>
-                        </div>
-                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Cat')">
-                            <span style="font-size:2.5rem;">🐱</span><div style="font-weight:bold; margin-top:5px;">Cat</div><small>قطة</small>
-                        </div>
-                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Book')">
-                            <span style="font-size:2.5rem;">📖</span><div style="font-weight:bold; margin-top:5px;">Book</div><small>كتاب</small>
-                        </div>
-                    </div>
-                `;
-            } else if (type === 'dialogues') {
-                details.innerHTML = `
-                    <h2>💬 محادثات الحياة اليومية (محادثات واسعة مفصلة)</h2>
-                    
-                    <div class="content-section">
-                        <h3>المحادثة الأولى: في المدرسة والتعارف (At School)</h3>
-                        <p><b>Ali:</b> Hello! My name is Ali. What is your name?</p>
-                        <p style="color:#4DEAEA;">(مرحباً! اسمي علي. ما اسمك؟)</p>
-                        <p><b>Youssef:</b> Hello Ali! My name is Youssef. Nice to meet you.</p>
-                        <p style="color:#4DEAEA;">(أهلاً يا علي! اسمي يوسف. سررت بلقائك.)</p>
-                        <p><b>Ali:</b> Nice to meet you too, Youssef. How old are you?</p>
-                        <p style="color:#4DEAEA;">(سررت بلقائك أيضاً يا يوسف. كم عمرك؟)</p>
-                        <p><b>Youssef:</b> I am ten years old. And you?</p>
-                        <p style="color:#4DEAEA;">(عمري عشر سنوات. وأنت؟)</p>
-                        
-                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:10px;" onclick="speak('Hello! My name is Ali. What is your name? Nice to meet you.')">🔊 استمع للمحادثة كاملة</button>
-                    </div>
-                `;
-            } else if (type === 'stories') {
-                details.innerHTML = `
-                    <h2>📕 القصص التعليمية الموسعة</h2>
-                    
-                    <div class="content-section">
-                        <h3>The Clever Crow (الغراب الذكي) 🐦</h3>
-                        <p><b>English:</b> On a hot summer day, a thirsty crow flew around looking for water for a long time. Finally, he found a pitcher with very little water at the bottom. He could not reach it with his beak. But he was smart; he dropped small pebbles into the pitcher one by one until the water rose to the top, and he drank happily!</p>
-                        <p style="color:#4DEAEA; margin-top:10px;"><b>العربية المفصلة:</b> (في يوم صيفي حار، طار غراب عطشان في كل مكان بحثاً عن الماء لفترة طويلة. وأخيراً، وجد إبريقاً وبداخله كمية قليلة جداً من الماء في القاع ولم يستطع الوصول إليه بمنقاره. لكنه كان ذكياً؛ حيث أخذ يلقي بحصى صغيرة داخل الإبريق واحدة تلو الأخرى حتى ارتفع الماء إلى أعلى وقام بالشرب بسعادة بالغة!)</p>
-                        
-                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:12px;" onclick="speak('On a hot summer day, a thirsty crow flew around looking for water. He was smart and drank happily.')">🔊 استمع للقصة كاملة</button>
-                    </div>
-                `;
-            }
-        }
-
-        // الألعاب
-        const INF_ANIMALS = [
-            { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
-            { nameEn: "Elephant", nameAr: "فيل", emoji: "🐘" },
-            { nameEn: "Cat", nameAr: "قطة", emoji: "🐱" },
-            { nameEn: "Dog", nameAr: "كلب", emoji: "🐶" }
-        ];
-
-        const INF_COLORS = [
-            { nameEn: "Red", nameAr: "أحمر", hex: "#ef4444" },
-            { nameEn: "Blue", nameAr: "أزرق", hex: "#3b82f6" }
-        ];
-
-        let infGameMode = 'all';
-        let infCorrectAnswer = null;
-        let infWordToSpeak = "";
-        let infLock = false;
-
-        function setGameCategory(mode) {
-            infGameMode = mode;
-            startInfiniteKidsGame();
-        }
-
-        function startInfiniteKidsGame() {
-            infLock = false;
-            const speakBtn = document.getElementById('btnSpeakWord');
-            if (speakBtn) speakBtn.style.display = 'none';
-            infWordToSpeak = "";
-
-            let types = ['animals', 'colors'];
-            let chosenType = infGameMode === 'all' ? types[Math.floor(Math.random() * types.length)] : infGameMode;
-
-            if (chosenType === 'animals') {
-                const item = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
-                document.getElementById('gameCategoryTag').innerText = "🦁 تحدي الحيوانات الذكي";
-                document.getElementById('gameVisualArena').innerHTML = `<div style="font-size: 4.5rem;">${item.emoji}</div>`;
-                document.getElementById('gameQuestionText').innerText = "ما اسم هذا الكائن بالإنجليزية؟";
-                infCorrectAnswer = item.nameEn;
-                infWordToSpeak = item.nameEn;
-                if (speakBtn) speakBtn.style.display = 'inline-block';
-                renderInfOptions([item, INF_ANIMALS[0]].map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
-            } else {
-                const col = INF_COLORS[Math.floor(Math.random() * INF_COLORS.length)];
-                document.getElementById('gameCategoryTag').innerText = "🎨 تحدي الألوان";
-                document.getElementById('gameVisualArena').innerHTML = `<div style="width:75px; height:75px; background-color:${col.hex}; border-radius:18px; border:3px solid #fff;"></div>`;
-                document.getElementById('gameQuestionText').innerText = "ما هو هذا اللون بالإنجليزية؟";
-                infCorrectAnswer = col.nameEn;
-                infWordToSpeak = col.nameEn;
-                if (speakBtn) speakBtn.style.display = 'inline-block';
-                renderInfOptions(INF_COLORS.map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
-            }
-        }
-
-        function renderInfOptions(opts) {
-            const grid = document.getElementById('gameOptionsGrid');
-            if (!grid) return;
-            grid.innerHTML = '';
-            opts.sort(() => Math.random() - 0.5).forEach(opt => {
+        function renderNumbersBar() {
+            const bar = document.getElementById('numbersBar');
+            if (!bar) return;
+            bar.innerHTML = '';
+            numbersList.forEach(num => {
                 const btn = document.createElement('button');
-                btn.innerHTML = `<strong>${opt.text}</strong><br><small>${opt.sub || ''}</small>`;
-                btn.style.cssText = "background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:12px; border-radius:12px; font-weight:bold; cursor:pointer;";
-                btn.onclick = () => checkInfAnswer(opt.val, btn);
-                grid.appendChild(btn);
+                btn.className = `num-btn ${num === currentItem ? 'active' : ''}`;
+                btn.innerText = num;
+                btn.onclick = () => selectItem(num);
+                bar.appendChild(btn);
             });
         }
 
-        function checkInfAnswer(selected, btn) {
-            if (infLock) return;
-            if (selected === infCorrectAnswer) {
-                infLock = true;
-                btn.style.background = "#2ed573";
-                speak('Correct');
-                setTimeout(startInfiniteKidsGame, 1200);
-            } else {
-                btn.style.background = "#ff4757";
-                speak('Try again');
-            }
-        }
-
-        function speakCurrentGameWord() {
-            if (infWordToSpeak) speak(infWordToSpeak);
+        function nextItem() {
+            let allItems = [...numbersList, ...capitalList];
+            let idx = allItems.indexOf(currentItem);
+            idx = (idx + 1) % allItems.length;
+            selectItem(allItems[idx]);
         }
 
         function speak(text) {
@@ -496,99 +439,23 @@
             }
         }
 
-        function initCanvas() {
-            canvas = document.getElementById('traceCanvas');
-            if (!canvas) return;
-            ctx = canvas.getContext('2d');
-            canvas.addEventListener('mousedown', startDraw);
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('mouseup', stopDraw);
-            canvas.addEventListener('mouseleave', stopDraw);
-            canvas.addEventListener('touchstart', (e) => { startDraw(e.touches[0]); e.preventDefault(); });
-            canvas.addEventListener('touchmove', (e) => { draw(e.touches[0]); e.preventDefault(); });
-            canvas.addEventListener('touchend', stopDraw);
-        }
+        function openSection(pageId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
 
-        function startDraw(e) {
-            isDrawing = true;
-            ctx.beginPath();
-            const rect = canvas.getBoundingClientRect();
-            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-        }
-
-        function draw(e) {
-            if (!isDrawing) return;
-            const rect = canvas.getBoundingClientRect();
-            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-            ctx.strokeStyle = '#f1c40f';
-            ctx.lineWidth = 6;
-            ctx.lineCap = 'round';
-            ctx.stroke();
-        }
-
-        function stopDraw() {
-            isDrawing = false;
-        }
-
-        function clearBoard() {
-            if (ctx && canvas) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (pageId === 'board') {
+                document.getElementById('boardView').classList.add('active-view');
+                setTimeout(initCanvas, 50);
+            } else if (pageId === 'translator') {
+                document.getElementById('translatorView').classList.add('active-view');
+            } else if (pageId === 'dictionary') {
+                window.open('https://www.google.com/search?q=' + encodeURIComponent('قاموس ترجمة إنجليزي عربي'), '_blank');
+                document.getElementById('homeView').classList.add('active-view');
             }
         }
 
-        // محرك الترجمة الفورية الحقيقي والمباشر (عبر API ترجمة مجاني ومضمون)
-        function toggleSpeech() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
-            if (!SpeechRecognition) {
-                alert("متصفحك الحالي لا يدعم خاصية التعرف على الصوت. يُرجى استخدام متصفح Google Chrome.");
-                return;
-            }
-
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'ar-SA';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            const micBtn = document.getElementById('micBtn');
-            if (micBtn) micBtn.innerText = "🎙️ جاري الاستماع لنصك العربي...";
-
-            recognition.onresult = function(event) {
-                const speechResult = event.results[0][0].transcript;
-                const arTextElem = document.getElementById('arText');
-                if (arTextElem) arTextElem.innerText = speechResult;
-
-                // استدعاء خدمة ترجمة فورية حقيقية عبر الإنترنت لأي نص عربي
-                const encodedText = encodeURIComponent(speechResult);
-                const translateApiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ar&tl=en&dt=t&q=${encodedText}`;
-
-                fetch(translateApiUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data && data[0] && data[0][0] && data[0][0][0]) {
-                            const translatedText = data[0][0][0];
-                            const enTextElem = document.getElementById('enText');
-                            if (enTextElem) enTextElem.innerText = translatedText;
-                        }
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        document.getElementById('enText').innerText = "Translation error occurred.";
-                    });
-
-                if (micBtn) micBtn.innerText = "🎙️ اضغط وتحدث بالعربية للترجمة الفورية";
-            };
-
-            recognition.onerror = function() {
-                alert("حدث خطأ أثناء الاستماع، تأكد من إذن الميكروفون.");
-                if (micBtn) micBtn.innerText = "🎙️ اضغط وتحدث بالعربية للترجمة الفورية";
-            };
-
-            recognition.onend = function() {
-                if (micBtn) micBtn.innerText = "🎙️ اضغط وتحدث بالعربية للترجمة الفورية";
-            };
-
-            recognition.start();
+        function showHome() {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
+            document.getElementById('homeView').classList.add('active-view');
         }
     </script>
 </body>
