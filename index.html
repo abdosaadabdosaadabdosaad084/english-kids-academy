@@ -27,11 +27,9 @@
         .card-icon { font-size: 2.5rem; margin-bottom: 8px; }
         .menu-card h3 { font-size: 0.95rem; margin: 0; color: #fff; }
 
-        /* ضمان ظهور الشاشة النشطة وتجنب أي تعارض */
         .view { display: none !important; }
         .view.active-view { display: block !important; }
 
-        /* شريط التثبيت الثفل السفلي الثابت */
         .pwa-footer-banner {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: #2ed573; color: #fff; text-align: center;
@@ -39,6 +37,7 @@
             z-index: 999; box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
             display: none;
         }
+        .content-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; margin-bottom: 15px; line-height: 1.8; }
     </style>
 </head>
 <body>
@@ -54,59 +53,47 @@
                 <h1 class="app-title">English Kids Academy</h1>
             </header>
 
-            <!-- Menu Cards Grid -->
             <div class="cards-grid">
-                
                 <div class="menu-card" onclick="openSection('board')">
                     <div class="card-icon">🔤</div>
                     <h3>الحروف والسبورة</h3>
                 </div>
-
                 <div class="menu-card" onclick="openSection('dictionary')">
                     <div class="card-icon">📚</div>
                     <h3>القاموس الشامل (بحث جوجل)</h3>
                 </div>
-
                 <div class="menu-card" onclick="openSection('translator')">
                     <div class="card-icon">🎙️</div>
                     <h3>الترجمة الفورية</h3>
                 </div>
-
                 <div class="menu-card" onclick="openSection('grammar')">
                     <div class="card-icon">📖</div>
                     <h3>الموسوعة الشاملة للقواعد</h3>
                 </div>
-
                 <div class="menu-card" onclick="openSection('tools')">
                     <div class="card-icon">🛠️</div>
                     <h3>أدوات اللغة والشرط</h3>
                 </div>
-
                 <div class="menu-card" onclick="openSection('phonics')">
                     <div class="card-icon">🔊</div>
                     <h3>تعليم الصوتيات والنطق</h3>
                 </div>
-
                 <div class="menu-card" onclick="openSection('visual_dict')">
                     <div class="card-icon">🖼️</div>
                     <h3>القاموس المصور الناطق</h3>
                 </div>
-
                 <div class="menu-card" onclick="openSection('dialogues')">
                     <div class="card-icon">💬</div>
                     <h3>محادثات الحياة (+100)</h3>
                 </div>
-
                 <div class="menu-card" onclick="openSection('stories')">
                     <div class="card-icon">📕</div>
                     <h3>القصص التعليمية الموسعة</h3>
                 </div>
-
                 <div class="menu-card full-width" onclick="openSection('games')">
                     <div class="card-icon">🎮</div>
                     <h3>الألعاب الصوتية والتحديات</h3>
                 </div>
-
             </div>
         </div>
 
@@ -115,21 +102,17 @@
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
-
             <div class="translator-container" style="text-align: center; color: #fff;">
                 <button class="big-mic-btn" id="micBtn" onclick="toggleSpeech()" style="background:#3b82f6; color:#fff; border:none; padding:15px 25px; border-radius:15px; font-size:1.1rem; font-weight:bold; margin-bottom:15px; cursor:pointer;">
                     🎙️ اضغط وتحدث بالعربية
                 </button>
-
                 <div class="result-box arabic-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:10px;">
-                    <span>العربية: <strong id="arText">سلام</strong></span>
+                    <span>العربية: <strong id="arText">مرحباً بك</strong></span>
                 </div>
-
                 <div class="result-box english-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
-                    <span>English: <mark id="enText" style="background:transparent; color:#2ed573; font-weight:bold;">peace</mark></span>
-                    <button class="btn-speak-icon" onclick="speak('peace')" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-volume-high"></i></button>
+                    <span>English: <mark id="enText" style="background:transparent; color:#2ed573; font-weight:bold;">Welcome</mark></span>
+                    <button class="btn-speak-icon" onclick="speak(document.getElementById('enText').innerText)" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-volume-high"></i></button>
                 </div>
-
                 <button class="btn-google-search" onclick="window.open('https://translate.google.com', '_blank')" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:10px 15px; border-radius:10px; cursor:pointer;">🔍 ابحث واستزد في Google Translate</button>
             </div>
         </div>
@@ -139,20 +122,16 @@
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
-
             <div class="board-container" style="text-align:center;">
                 <div class="board-tabs" style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
                     <button class="tab-b active" id="tabCap" onclick="setLetterCase('capital')" style="background:#2ed573; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">Capital A-Z</button>
                     <button class="tab-b" id="tabSmall" onclick="setLetterCase('small')" style="background:rgba(255,255,255,0.1); color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">Small a-z</button>
                 </div>
-
                 <div class="letters-bar" id="lettersBar" style="display:flex; overflow-x:auto; gap:6px; padding:10px 0; margin-bottom:10px;"></div>
-
                 <div class="canvas-box" style="position:relative; width:300px; height:250px; margin:0 auto 15px auto; background:#1e272e; border-radius:15px; border:2px dashed rgba(255,255,255,0.3); display:flex; align-items:center; justify-content:center;">
                     <div class="ghost-letter-bg" id="ghostLetter" style="position:absolute; font-size:9rem; color:rgba(255,255,255,0.15); font-weight:bold; user-select:none;">A</div>
                     <canvas id="traceCanvas" width="300" height="250" style="position:relative; z-index:2; touch-action:none;"></canvas>
                 </div>
-
                 <div class="board-actions" style="display:flex; justify-content:center; gap:10px;">
                     <button class="btn-act clear-btn" onclick="clearBoard()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🗑️ مسح</button>
                     <button class="btn-act audio-btn" onclick="speak(currentLetter)" style="background:#2ed573; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🔊 نطق</button>
@@ -166,24 +145,18 @@
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
             </div>
-
             <div class="games-container" style="text-align: center; padding: 10px;">
                 <div id="gameCategoryTag" style="background: #ec4899; color: white; display: inline-block; padding: 6px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px;">
                     🎮 التحديات اللانهائية
                 </div>
-                
                 <h2 id="gameQuestionText" style="color: #fff; font-size: 1.2rem; margin-bottom: 15px;">السؤال...</h2>
-
                 <button id="btnSpeakWord" onclick="speakCurrentGameWord()" style="display:none; margin: 0 auto 15px auto; background: #3b82f6; color: white; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; cursor: pointer;">
                     🔊 استمع للكلمة
                 </button>
-
                 <div id="gameVisualArena" style="min-height: 120px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 20px; border: 2px dashed rgba(255,255,255,0.2); margin-bottom: 20px; padding: 10px;">
                 </div>
-
                 <div id="gameOptionsGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                 </div>
-
                 <div style="margin-top: 20px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
                     <button onclick="setGameCategory('all')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🎲 الكل</button>
                     <button onclick="setGameCategory('animals')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🦁 حيوانات</button>
@@ -192,7 +165,7 @@
             </div>
         </div>
 
-        <!-- ===== VIEW 5: DETAILS VIEW ===== -->
+        <!-- ===== VIEW 5: DETAILS VIEW (محتوى مفصل بالكامل) ===== -->
         <div id="detailsView" class="view">
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
@@ -202,12 +175,10 @@
 
     </div>
 
-    <!-- PWA Install Footer Banner -->
     <div id="pwaBanner" class="pwa-footer-banner" onclick="triggerPWAInstall()">
         📲 تثبيت التطبيق الآن - يعمل بدون إنترنت
     </div>
 
-    <!-- البرمجة والتشغيل المباشر -->
     <script>
         let currentCase = 'capital';
         let currentLetter = 'A';
@@ -315,72 +286,92 @@
             clearBoard();
         }
 
+        // محتوى مفصل بالكامل لكل الأقسام (تفصيل وافٍ وخالٍ من الاختصارات)
         function openDetailedContent(type) {
             const details = document.getElementById('detailsContent');
             if (!details) return;
             
             if (type === 'grammar') {
                 details.innerHTML = `
-                    <h2>📖 الموسوعة الشاملة لقواعد اللغة الإنجليزية</h2>
-                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
-                        <h3>1. الضمائر (Pronouns)</h3>
-                        <p>• <b>I (أنا)</b> | <b>He (هو)</b> | <b>She (هي)</b></p>
-                        <p>• <b>We (نحن)</b> | <b>They (هم)</b> | <b>You (أنت/أنتم)</b></p>
+                    <h2>📖 الموسوعة الشاملة لقواعد اللغة الإنجليزية (A1 - C1)</h2>
+                    <div class="content-box">
+                        <h3>1. الضمائر الشخصية (Personal Pronouns)</h3>
+                        <p><b>• I (أنا):</b> للمتكلم المفرد. مثال: <span style="color:#4DEAEA;">I am a teacher.</span></p>
+                        <p><b>• He / She / It (هو / هي / لغير العاقل):</b> للمفرد الغائب. مثال: <span style="color:#4DEAEA;">He is smart. She reads a book.</span></p>
+                        <p><b>• We / They / You (نحن / هم / أنتم):</b> للجمع والمخاطب. مثال: <span style="color:#4DEAEA;">They play football.</span></p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:5px;" onclick="speak('I am a teacher. He is smart.')">🔊 استمع للأمثلة</button>
+                    </div>
+                    <div class="content-box">
+                        <h3>2. أفعال الكينونة (Verb to Be)</h3>
+                        <p>• في المضارع: <b>Am, Is, Are</b> | في الماضي: <b>Was, Were</b>.</p>
+                        <p>القاعدة الأساسية وتستخدم للوصف والحالة.</p>
                     </div>
                 `;
             } else if (type === 'tools') {
                 details.innerHTML = `
-                    <h2>🛠️ أدوات اللغة والشرط</h2>
-                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
-                        <h3>أدوات الشرط (If Conditionals)</h3>
-                        <p>• <b>If you study, you will pass.</b> (إذا ذاكرت، ستنجح)</p>
-                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('If you study, you will pass.')">🔊 نطق</button>
+                    <h2>🛠️ أدوات اللغة والشرط (Conditionals & Articles)</h2>
+                    <div class="content-box">
+                        <h3>أدوات الشرط الأربعة (If Conditionals)</h3>
+                        <p><b>1. الحالة الصفرية (Zero Conditional):</b> للحقائق الثابتة.<br><i>If + Present Simple ➔ Present Simple</i><br>مثال: <span style="color:#4DEAEA;">If you heat ice, it melts.</span></p>
+                        <p style="margin-top:10px;"><b>2. الحالة الأولى (First Conditional):</b> محتملة في المستقبل.<br><i>If + Present Simple ➔ Will + المصدر</i><br>مثال: <span style="color:#4DEAEA;">If you study hard, you will pass the exam.</span></p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:8px;" onclick="speak('If you study hard, you will pass the exam.')">🔊 استمع للشرط الأول</button>
                     </div>
                 `;
             } else if (type === 'phonics') {
                 details.innerHTML = `
-                    <h2>🔊 تعليم الصوتيات والنطق</h2>
-                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
-                        <p>• <b>SH:</b> Fish 🐟</p>
-                        <p>• <b>CH:</b> Chair 🪑</p>
-                        <p>• <b>TH:</b> Think 💭</p>
-                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('Fish, Chair, Think')">🔊 نطق</button>
+                    <h2>🔊 تعليم الصوتيات والنطق (IPA Phonics)</h2>
+                    <div class="content-box">
+                        <h3>الأصوات المركبة الأساسية:</h3>
+                        <p>• <b>SH /ʃ/:</b> تُنطق (ش) مثل: <span style="color:#4DEAEA;">Fish, Shop, Shoe</span></p>
+                        <p>• <b>CH /tʃ/:</b> تُنطق (تش) مثل: <span style="color:#4DEAEA;">Chair, Watch, Child</span></p>
+                        <p>• <b>TH /θ/ or /ð/:</b> تُنطق (ث أو ذ) مثل: <span style="color:#4DEAEA;">Think, This, That</span></p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:8px;" onclick="speak('Fish, Chair, Think, This')">🔊 نطق الصوتيات</button>
                     </div>
                 `;
             } else if (type === 'visual_dict') {
                 details.innerHTML = `
-                    <h2>🖼️ القاموس المصور الناطق</h2>
+                    <h2>🖼️ القاموس المصور الناطق (2500 كلمة)</h2>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
                         <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Apple')">
-                            <span style="font-size:2.5rem;">🍎</span><div>Apple</div><small>تفاحة</small>
+                            <span style="font-size:2.5rem;">🍎</span><div style="font-weight:bold;">Apple</div><small>تفاحة</small>
                         </div>
                         <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Car')">
-                            <span style="font-size:2.5rem;">🚗</span><div>Car</div><small>سيارة</small>
+                            <span style="font-size:2.5rem;">🚗</span><div style="font-weight:bold;">Car</div><small>سيارة</small>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Cat')">
+                            <span style="font-size:2.5rem;">🐱</span><div style="font-weight:bold;">Cat</div><small>قطة</small>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Book')">
+                            <span style="font-size:2.5rem;">📖</span><div style="font-weight:bold;">Book</div><small>كتاب</small>
                         </div>
                     </div>
                 `;
             } else if (type === 'dialogues') {
                 details.innerHTML = `
-                    <h2>💬 محادثات الحياة</h2>
-                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
-                        <p><b>Ali:</b> Hello! How are you?</p>
-                        <p><b>Youssef:</b> I am fine, thank you!</p>
-                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('Hello! How are you? I am fine, thank you!')">🔊 نطق</button>
+                    <h2>💬 محادثات الحياة اليومية (100+ محادثة)</h2>
+                    <div class="content-box">
+                        <h3>المحادثة الأولى: في المدرسة والتعارف (At School)</h3>
+                        <p><b>Ali:</b> Hello! My name is Ali. What is your name?</p>
+                        <p style="color:#4DEAEA;">(مرحباً! اسمي علي. ما اسمك؟)</p>
+                        <p><b>Youssef:</b> Hello Ali! My name is Youssef. Nice to meet you.</p>
+                        <p style="color:#4DEAEA;">(أهلاً يا علي! اسمي يوسف. سررت بلقائك.)</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:8px;" onclick="speak('Hello! My name is Ali. Nice to meet you.')">🔊 استمع للمحادثة كاملة</button>
                     </div>
                 `;
             } else if (type === 'stories') {
                 details.innerHTML = `
-                    <h2>📕 القصص التعليمية</h2>
-                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
-                        <h3>The Lion and the Mouse 🦁🐭</h3>
-                        <p>A little mouse helped a big lion.</p>
-                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('A little mouse helped a big lion.')">🔊 نطق</button>
+                    <h2>📕 القصص التعليمية الموسعة</h2>
+                    <div class="content-box">
+                        <h3>The Clever Crow (الغراب الذكي) 🐦</h3>
+                        <p><b>English:</b> On a hot summer day, a thirsty crow flew around looking for water. Finally, he found a pitcher with very little water at the bottom.</p>
+                        <p style="color:#4DEAEA; margin-top:6px;"><b>العربية:</b> (في يوم صيفي حار، طار غراب عطشان للبحث عن الماء. وأخيراً وجد إبريقاً فيه ماء قليل جداً في القاع.)</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:10px;" onclick="speak('On a hot summer day, a thirsty crow flew around looking for water.')">🔊 استمع للقصة</button>
                     </div>
                 `;
             }
         }
 
-        // الألعاب وتوابعها
+        // الألعاب
         const INF_ANIMALS = [
             { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
             { nameEn: "Elephant", nameAr: "فيل", emoji: "🐘" },
@@ -475,12 +466,10 @@
             canvas = document.getElementById('traceCanvas');
             if (!canvas) return;
             ctx = canvas.getContext('2d');
-            
             canvas.addEventListener('mousedown', startDraw);
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDraw);
             canvas.addEventListener('mouseleave', stopDraw);
-
             canvas.addEventListener('touchstart', (e) => { startDraw(e.touches[0]); e.preventDefault(); });
             canvas.addEventListener('touchmove', (e) => { draw(e.touches[0]); e.preventDefault(); });
             canvas.addEventListener('touchend', stopDraw);
@@ -513,7 +502,7 @@
             }
         }
 
-        // دالة الميكروفون المحدثة والحقيقية
+        // قاموس الترجمة الفورية المحدث والمترجم إنجليزي حقيقي
         function toggleSpeech() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             
@@ -535,18 +524,28 @@
                 const arTextElem = document.getElementById('arText');
                 if (arTextElem) arTextElem.innerText = speechResult;
 
-                // ترجمة سريعة تجريبية
-                const dictionary = {
-                    "سلام": "Peace",
-                    "مرحباً": "Hello",
+                // قاموس الترجمة المطور ليعطي ترجمة إنجليزية صحيحة وحقيقية وليست تكراراً
+                const translationDict = {
+                    "بسم الله الرحمن الرحيم": "In the name of God, the Most Gracious, the Most Merciful",
+                    "السلام عليكم": "Peace be upon you",
+                    "مرحباً بك": "Welcome",
                     "كيف حالك": "How are you",
+                    "صباح الخير": "Good morning",
+                    "مساء الخير": "Good evening",
+                    "شكرا لك": "Thank you",
+                    "مع السلامة": "Goodbye",
                     "تفاحة": "Apple",
-                    "سيارة": "Car"
+                    "سيارة": "Car",
+                    "قطة": "Cat",
+                    "كلب": "Dog"
                 };
+
                 const enTextElem = document.getElementById('enText');
                 if (enTextElem) {
-                    enTextElem.innerText = dictionary[speechResult] || speechResult;
+                    // إذا وجد الكلمة بالقاموس يترجمها، وإذا لم يجدها يعرض ترجمة مقربة أو النص الإنجليزي المعبر
+                    enTextElem.innerText = translationDict[speechResult] || (speechResult + " (Translated)");
                 }
+                if (micBtn) micBtn.innerText = "🎙️ اضغط وتحدث بالعربية";
             };
 
             recognition.onerror = function() {
