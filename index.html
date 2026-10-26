@@ -1,682 +1,508 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>English Kids Academy</title>
-​<!-- PWA Config -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0F0F2D">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-​<!-- Fonts & Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-​<style>
-:root {
---bg-color: #0F0F2D;
---card-bg: #1E1E4B;
---card-hover: #282866;
---accent-yellow: #FFD700;
---accent-green: #2ED573;
---accent-blue: #3B82F6;
---accent-red: #FF4757;
---accent-pink: #EC4899;
---text-main: #FFFFFF;
---text-sub: #A0A0D0;
-}
-​* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-font-family: 'Cairo', sans-serif;
--webkit-tap-highlight-color: transparent;
-}
-​body {
-background-color: var(--bg-color);
-color: var(--text-main);
-display: flex;
-justify-content: center;
-min-height: 100vh;
-padding-bottom: 70px;
-}
-​.app-container {
-width: 100%;
-max-width: 480px;
-padding: 15px;
-position: relative;
-}
-​/* Top Header */
-.top-bar {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 10px 5px 20px 5px;
-}
-​.app-title {
-font-size: 1.3rem;
-font-weight: 800;
-color: var(--text-main);
-letter-spacing: 0.5px;
-}
-​.score-badge {
-background: rgba(255, 215, 0, 0.1);
-border: 1.5px solid var(--accent-yellow);
-padding: 6px 16px;
-border-radius: 20px;
-color: var(--accent-yellow);
-font-weight: 800;
-font-size: 1.1rem;
-display: flex;
-align-items: center;
-gap: 6px;
-box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
-}
-​/* Grid Layout */
-.cards-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 14px;
-}
-​.menu-card {
-background: var(--card-bg);
-border-radius: 20px;
-padding: 22px 12px;
-text-align: center;
-cursor: pointer;
-transition: all 0.2s ease;
-border: 1px solid rgba(255, 255, 255, 0.06);
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-min-height: 135px;
-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-​.menu-card:active {
-transform: scale(0.96);
-background: var(--card-hover);
-}
-​.menu-card.full-width {
-grid-column: span 2;
-flex-direction: row;
-justify-content: center;
-gap: 15px;
-min-height: 80px;
-background: linear-gradient(135deg, #1E1E4B 0%, #2B1E66 100%);
-}
-​.card-icon {
-font-size: 2.4rem;
-margin-bottom: 10px;
-filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-}
-​.menu-card.full-width .card-icon {
-margin-bottom: 0;
-font-size: 2rem;
-}
-​.menu-card h3 {
-font-size: 0.95rem;
-font-weight: 700;
-line-height: 1.3;
-color: var(--text-main);
-}
-​/* Views Switching System */
-.view {
-display: none;
-animation: fadeIn 0.25s ease-in-out forwards;
-}
-​.view.active-view {
-display: block;
-}
-​@keyframes fadeIn {
-from { opacity: 0; transform: translateY(8px); }
-to { opacity: 1; transform: translateY(0); }
-}
-​/* Sub View Components */
-.view-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 20px;
-padding-bottom: 10px;
-border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-​.btn-home-back {
-background: var(--accent-red);
-color: #fff;
-border: none;
-padding: 8px 16px;
-border-radius: 12px;
-font-weight: 700;
-cursor: pointer;
-display: flex;
-align-items: center;
-gap: 8px;
-font-size: 0.9rem;
-}
-​.view-title {
-font-size: 1.2rem;
-font-weight: 800;
-}
-​/* PWA Install Bar Floating */
-.install-bar {
-position: fixed;
-bottom: 12px;
-left: 50%;
-transform: translateX(-50%);
-width: 92%;
-max-width: 440px;
-background: linear-gradient(90deg, #2ed573, #1e90ff);
-color: #fff;
-padding: 12px 18px;
-border-radius: 16px;
-text-align: center;
-font-weight: 800;
-font-size: 0.95rem;
-cursor: pointer;
-box-shadow: 0 10px 25px rgba(46, 213, 115, 0.4);
-z-index: 1000;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 10px;
-}
-​/* Common Content Box Styling */
-.content-card {
-background: var(--card-bg);
-border-radius: 16px;
-padding: 16px;
-margin-bottom: 14px;
-border: 1px solid rgba(255,255,255,0.08);
-}
-​.content-card h4 {
-color: var(--accent-yellow);
-margin-bottom: 8px;
-font-size: 1.1rem;
-}
-​.audio-btn {
-background: var(--accent-blue);
-color: white;
-border: none;
-padding: 6px 12px;
-border-radius: 10px;
-font-weight: bold;
-font-size: 0.85rem;
-cursor: pointer;
-display: inline-flex;
-align-items: center;
-gap: 6px;
-margin-top: 8px;
-}
-​/* Search input */
-.search-box {
-width: 100%;
-padding: 12px 15px;
-background: var(--card-bg);
-border: 1px solid rgba(255,255,255,0.15);
-border-radius: 14px;
-color: #fff;
-font-size: 1rem;
-margin-bottom: 15px;
-outline: none;
-}
-​.search-box:focus {
-border-color: var(--accent-blue);
-}
-​/* Canvas Style */
-.canvas-container {
-position: relative;
-width: 100%;
-height: 260px;
-background: #151538;
-border-radius: 20px;
-border: 2px dashed rgba(255,255,255,0.2);
-margin: 15px 0;
-display: flex;
-align-items: center;
-justify-content: center;
-overflow: hidden;
-}
-​.ghost-letter {
-position: absolute;
-font-size: 10rem;
-font-weight: 900;
-color: rgba(255, 255, 255, 0.08);
-user-select: none;
-pointer-events: none;
-}
-​canvas {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-touch-action: none;
-z-index: 10;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Kids Academy</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0F1123">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: #0F1123; margin: 0; padding: 10px; color: #fff; }
+        .app-container { max-width: 480px; margin: 0 auto; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .score-badge { background: #1e2235; padding: 6px 12px; border-radius: 20px; color: #f1c40f; font-weight: bold; }
+        .app-title { font-size: 1.2rem; margin: 0; }
+        
+        .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .menu-card { background: #1e2235; padding: 20px 10px; border-radius: 18px; text-align: center; cursor: pointer; transition: 0.2s; border: 1px solid rgba(255,255,255,0.05); }
+        .menu-card:active { transform: scale(0.96); }
+        .menu-card.full-width { grid-column: span 2; }
+        .card-icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .menu-card h3 { font-size: 0.95rem; margin: 0; color: #fff; }
+
+        /* ضمان ظهور الشاشة النشطة وتجنب أي تعارض */
+        .view { display: none !important; }
+        .view.active-view { display: block !important; }
+    </style>
 </head>
 <body>
-​<div class="app-container">
-​<!-- ===== VIEW 1: HOME PAGE ===== -->
-<div id="homeView" class="view active-view">
-<header class="top-bar">
-<h1 class="app-title">English Kids Academy</h1>
-<div class="score-badge">
-<span id="userScore">100</span> <i class="fa-solid fa-star"></i>
-</div>
-</header>
-​<!-- Cards Grid Matched 100% -->
-<div class="cards-grid">
-​<div class="menu-card" onclick="openSection('dictionary')">
-<div class="card-icon">📚</div>
-<h3>القاموس الشامل (بحث جوجل)</h3>
-</div>
-​<div class="menu-card" onclick="openSection('board')">
-<div class="card-icon">🔤</div>
-<h3>الحروف والسبورة</h3>
-</div>
-​<div class="menu-card" onclick="openSection('grammar')">
-<div class="card-icon">📖</div>
-<h3>الموسوعة الشاملة للقواعد</h3>
-</div>
-​<div class="menu-card" onclick="openSection('translator')">
-<div class="card-icon">🎤</div>
-<h3>الترجمة الفورية</h3>
-</div>
-​<div class="menu-card" onclick="openSection('phonics')">
-<div class="card-icon">🔊</div>
-<h3>تعليم الصوتيات والنطق</h3>
-</div>
-​<div class="menu-card" onclick="openSection('tools')">
-<div class="card-icon">🛠️</div>
-<h3>أدوات اللغة والشرط</h3>
-</div>
-​<div class="menu-card" onclick="openSection('dialogues')">
-<div class="card-icon">💬</div>
-<h3>محادثات الحياة (100+)</h3>
-</div>
-​<div class="menu-card" onclick="openSection('visual_dict')">
-<div class="card-icon">🖼️</div>
-<h3>القاموس المصور الناطق</h3>
-</div>
-​<div class="menu-card" onclick="openSection('stories')">
-<div class="card-icon">📕</div>
-<h3>القصص التعليمية الموسعة</h3>
-</div>
-​<div class="menu-card full-width" onclick="openSection('games')">
-<div class="card-icon">🎮</div>
-<h3>الألعاب الصوتية والتحديات</h3>
-</div>
-​</div>
-</div>
-​<!-- ===== VIEW 2: GENERIC DETAILS VIEW ===== -->
-<div id="detailsView" class="view">
-<div class="view-header">
-<button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
-<h2 class="view-title" id="detailsViewTitle">القسم</h2>
-</div>
-<div id="detailsViewContent"></div>
-</div>
-​<!-- ===== VIEW 3: BOARD PAGE ===== -->
-<div id="boardView" class="view">
-<div class="view-header">
-<button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
-<h2 class="view-title">الحروف والسبورة</h2>
-</div>
-​<div style="text-align: center;">
-<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 12px;">
-<button id="btnCap" onclick="setLetterCase('capital')" style="background: var(--accent-green); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-weight: bold; cursor: pointer;">Capital A-Z</button>
-<button id="btnSmall" onclick="setLetterCase('small')" style="background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-weight: bold; cursor: pointer;">Small a-z</button>
-</div>
-​<div id="lettersBar" style="display: flex; overflow-x: auto; gap: 8px; padding: 8px 0; margin-bottom: 10px;"></div>
-​<div class="canvas-container">
-<div class="ghost-letter" id="ghostLetter">A</div>
-<canvas id="traceCanvas"></canvas>
-</div>
-​<div style="display: flex; justify-content: center; gap: 12px;">
-<button onclick="clearCanvas()" style="background: var(--accent-red); color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer;"><i class="fa-solid fa-trash"></i> مسح</button>
-<button onclick="speakLetter()" style="background: var(--accent-green); color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer;"><i class="fa-solid fa-volume-high"></i> نطق</button>
-<button onclick="nextLetter()" style="background: var(--accent-blue); color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer;">التالي <i class="fa-solid fa-arrow-left"></i></button>
-</div>
-</div>
-</div>
-​<!-- ===== VIEW 4: TRANSLATOR PAGE ===== -->
-<div id="translatorView" class="view">
-<div class="view-header">
-<button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
-<h2 class="view-title">الترجمة الفورية</h2>
-</div>
-​<div style="text-align: center;">
-<button id="micBtn" onclick="toggleMic()" style="background: var(--accent-blue); color: #fff; border: none; padding: 18px 30px; border-radius: 20px; font-size: 1.1rem; font-weight: bold; margin-bottom: 20px; cursor: pointer; box-shadow: 0 5px 15px rgba(59,130,246,0.4);">
-🎙️ اضغط وتحدث بالعربية
-</button>
-​<div class="content-card" style="text-align: right;">
-<span style="color: var(--text-sub); font-size: 0.9rem;">النص المسموع (العربية):</span>
-<h3 id="arSpeechText" style="margin-top: 5px; color: #fff;">سلام</h3>
-</div>
-​<div class="content-card" style="text-align: right; display: flex; justify-content: space-between; align-items: center;">
-<div>
-<span style="color: var(--text-sub); font-size: 0.9rem;">الترجمة (English):</span>
-<h3 id="enTranslatedText" style="margin-top: 5px; color: var(--accent-green);">peace</h3>
-</div>
-<button class="audio-btn" onclick="speakText(document.getElementById('enTranslatedText').innerText)"><i class="fa-solid fa-volume-high"></i></button>
-</div>
-</div>
-</div>
-​<!-- ===== VIEW 5: GAMES VIEW ===== -->
-<div id="gamesView" class="view">
-<div class="view-header">
-<button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
-<h2 class="view-title">الألعاب والتحديات</h2>
-</div>
-​<div style="text-align: center;">
-<div id="gameTag" style="background: var(--accent-pink); color: white; display: inline-block; padding: 4px 14px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; margin-bottom: 12px;">تحدي الذكاء</div>
-<h3 id="gameQuestion" style="margin-bottom: 15px;">ما معنى الكلمة؟</h3>
-​<div id="gameVisual" style="min-height: 100px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border-radius: 16px; margin-bottom: 15px; font-size: 3.5rem;">🦁</div>
-​<div id="gameOptions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
-</div>
-</div>
-​<!-- Floating PWA Install Prompt -->
-<div id="installBanner" class="install-bar" onclick="triggerPWAInstall()" style="display: none;">
-<i class="fa-solid fa-download"></i> 📲 تثبيت التطبيق الآن - يعمل بدون إنترنت
-</div>
-​</div>
-​<!-- MAIN APP JAVASCRIPT LOGIC -->
-<script>
-// State Management
-let userScore = parseInt(localStorage.getItem('eka_score') || '100');
-let deferredPrompt = null;
-let currentCase = 'capital';
-let currentLetter = 'A';
-let canvas, ctx, isDrawing = false;
-​const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-const smallList = "abcdefghijklmnopqrstuvwxyz".split("");
-​// Comprehensive Local Data Repositories
-const grammarData = [
-{ title: "Personal Pronouns (الضمائر الشخصية)", rule: "I, He, She, It, We, They, You", ar: "تستخدم الضمائر للدلالة على الفاعل أو المتكلم أو المخاطب في الجملة الإنجليزية.", ex: ["I go to school.", "She likes apples.", "They play football."] },
-{ title: "Verb to Be (فعل الكينونة)", rule: "Am / Is / Are", ar: "يستخدم فعل الكينونة للتعبير عن الحالة أو الصفة أو الهوية في الوقت الحاضر.", ex: ["I am a student.", "He is brave.", "We are ready."] },
-{ title: "Present Simple (المضارع البسيط)", rule: "Subject + Verb (+s/es)", ar: "يستخدم للتعبير عن العادات والأحداث التكرارية والحقائق العلمية الثابتة.", ex: ["The sun rises in the east.", "He plays tennis every Friday.", "I live in Cairo."] },
-{ title: "If Conditional - Zero (الحالة الصفرية)", rule: "If + Present Simple -> Present Simple", ar: "تستخدم للتعبير عن الحقائق العلمية والقوانين الطبيعية المضمونة.", ex: ["If you heat water, it boils.", "If it rains, the grass gets wet."] }
-];
-​const dictionaryData = [
-{ en: "Apple", ar: "تفاحة", type: "noun", ex: "I eat a red apple." },
-{ en: "Book", ar: "كتاب", type: "noun", ex: "This book is very useful." },
-{ en: "Cat", ar: "قطة", type: "noun", ex: "The cat is sleeping under the table." },
-{ en: "Door", ar: "باب", type: "noun", ex: "Open the door please." },
-{ en: "Elephant", ar: "فيل", type: "noun", ex: "The elephant is a huge animal." }
-];
-​const phoneticsData = [
-{ sound: "/p/", symbol: "P", desc: "ينطق بإغلاق الشفتين ثم إطلاق الهواء بسرعة دون اهتزاز الأحبال الصوتية.", ex: "Pen, Pet, Apple" },
-{ sound: "/b/", symbol: "B", desc: "ينطق بإغلاق الشفتين مع اهتزاز الأحبال الصوتية أثناء خروج الصوت.", ex: "Boy, Ball, Book" },
-{ sound: "/ʃ/", symbol: "SH", desc: "ينطق مثل حرف الشين في العربية برفع وسط اللسان.", ex: "Ship, Fish, Shop" }
-];
-​const dialoguesData = [
-{ topic: "Greeting & Introductions (التعارف والتحية)", lines: [{ sp: "Ali", en: "Hello! What is your name?", ar: "مرحباً! ما اسمك؟" }, { sp: "Omar", en: "Hi! My name is Omar. Nice to meet you!", ar: "أهلاً! اسمي عمر. سررت بلقائك!" }] },
-{ topic: "At the Restaurant (في المطعم)", lines: [{ sp: "Waiter", en: "Welcome! Can I take your order?", ar: "مرحباً بك! هل يمكنني أخذ طلبك؟" }, { sp: "Customer", en: "Yes, I would like a pizza please.", ar: "نعم، أريد بيتزا من فضلك." }] }
-];
-​const storiesData = [
-{ title: "The Lion and the Clever Mouse 🦁🐭", textEn: "Once upon a time, a big lion was sleeping. A small mouse woke him up. The lion was angry, but the mouse said: 'Please let me go, I may help you one day!' Later, the lion was caught in a net, and the small mouse chewed the rope to free him.", textAr: "في قديم الزمان، كان هناك أسد ضخم نائم. أوقظه فأر صغير. غضب الأسد ولكن الفأر قال: 'دعني أذهب، قد أساعدك يوماً ما!'. لاحقاً سقط الأسد في شبكة صيد، فقام الفأر الصغير بقرض الحبال ليحرره." }
-];
-​const gamesData = [
-{ q: "ما معنى كلمة (Elephant)؟", visual: "🐘", options: ["أسد", "فيل", "قطة", "كلب"], correct: "فيل", word: "Elephant" },
-{ q: "اختر اللون الأزرق (Blue):", visual: "🎨", options: ["Red", "Blue", "Green", "Yellow"], correct: "Blue", word: "Blue" }
-];
-​// Initialization
-window.onload = () => {
-updateScoreUI();
-initPWA();
-initCanvas();
-renderLettersBar();
-};
-​// UI & Navigation Navigation
-function showHome() {
-document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
-document.getElementById('homeView').classList.add('active-view');
-}
-​function openSection(type) {
-document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
-​if (type === 'dictionary') {
-renderDictionary();
-} else if (type === 'board') {
-document.getElementById('boardView').classList.add('active-view');
-clearCanvas();
-} else if (type === 'translator') {
-document.getElementById('translatorView').classList.add('active-view');
-} else if (type === 'games') {
-document.getElementById('gamesView').classList.add('active-view');
-startNewGame();
-} else {
-renderDetailsView(type);
-}
-}
-​// Generic Content View Renderer
-function renderDetailsView(type) {
-const container = document.getElementById('detailsViewContent');
-const titleEl = document.getElementById('detailsViewTitle');
-container.innerHTML = '';
-document.getElementById('detailsView').classList.add('active-view');
-​if (type === 'grammar') {
-titleEl.innerText = "الموسوعة الشاملة للقواعد";
-grammarData.forEach(item => {
-container.innerHTML += <div class="content-card"> <h4>${item.title}</h4> <p style="color:#2ed573; font-weight:bold; margin-bottom:6px;">القاعدة: ${item.rule}</p> <p style="margin-bottom:10px; font-size:0.95rem;">${item.ar}</p> <div style="background:rgba(0,0,0,0.2); padding:10px; border-radius:10px;"> ${item.ex.map(e =><div style="margin-bottom:4px;">• {e} <button class="audio-btn" onclick="speakText('${e}')"><i class="fa-solid fa-volume-high"></i></button></div>`).join('')}
-</div>
-</div>
-`;
-});
-} else if (type === 'phonics') {
-titleEl.innerText = "تعليم الصوتيات والنطق";
-phoneticsData.forEach(item => {
-container.innerHTML += `
-<div class="content-card">
-<h4>الصوت ${item.symbol} (${item.sound})</h4>
-<p style="margin-bottom:8px;">${item.desc}</p>
-<p><b>أمثلة:</b> ${item.ex}</p>
-<button class="audio-btn" onclick="speakText('${item.ex}')"><i class="fa-solid fa-volume-high"></i> استمع للأمثلة</button>
-</div>
-`;
-});
-} else if (type === 'dialogues') {
-titleEl.innerText = "محادثات الحياة اليومية";
-dialoguesData.forEach(item => {
-container.innerHTML += `
-<div class="content-card">
-<h4>${item.topic}</h4>
-${item.lines.map(l => `
-<div style="margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;">
-<strong style="color:#3b82f6;">{l.sp}:</strong>{l.en}
-<br><small style="color:#2ed573;">({l.ar})</small>
-<button class="audio-btn" onclick="speakText('${l.en}')"><i class="fa-solid fa-volume-high"></i></button>
-</div>
-).join('')} </div> ;
-});
-} else if (type === 'stories') {
-titleEl.innerText = "القصص التعليمية الموسعة";
-storiesData.forEach(item => {
-container.innerHTML += <div class="content-card"> <h4>${item.title}</h4> <p style="font-size:1.05rem; line-height:1.6; margin-bottom:10px;">${item.textEn}</p> <p style="color:#2ed573; font-size:0.95rem; line-height:1.5;">${item.textAr}</p> <button class="audio-btn" onclick="speakText('${item.textEn}')"><i class="fa-solid fa-volume-high"></i> استمع للقصة</button> </div>;
-});
-} else {
-titleEl.innerText = "محتوى تعليمي";
-container.innerHTML = <div class="content-card"><h4>قريباً</h4><p>يتم إضافة المزيد من المحتوى لهذا القسم...</p></div>;
-}
-addScore(10);
-}
-​// Dictionary Renderer
-function renderDictionary() {
-const container = document.getElementById('detailsViewContent');
-const titleEl = document.getElementById('detailsViewTitle');
-titleEl.innerText = "القاموس الشامل الناطق";
-document.getElementById('detailsView').classList.add('active-view');
-​container.innerHTML = <input type="text" class="search-box" placeholder="ابحث عن كلمة بالإنجليزية أو العربية..." onkeyup="filterDict(this.value)"> <div id="dictList"></div>;
-filterDict('');
-}
-​function filterDict(query) {
-const listEl = document.getElementById('dictList');
-if (!listEl) return;
-const filtered = dictionaryData.filter(d => d.en.toLowerCase().includes(query.toLowerCase()) || d.ar.includes(query));
-listEl.innerHTML = filtered.map(item => <div class="content-card" style="display:flex; justify-content:space-between; align-items:center;"> <div> <h4 style="margin:0; color:#fff;">${item.en} <small style="color:#3b82f6; font-size:0.8rem;">(${item.type})</small></h4> <div style="color:#2ed573; font-weight:bold;">${item.ar}</div> <small style="color:var(--text-sub);">${item.ex}</small> </div> <button class="audio-btn" onclick="speakText('${item.en}')"><i class="fa-solid fa-volume-high"></i></button> </div>).join('');
-}
-​// Board & Canvas Functions
-function renderLettersBar() {
-const bar = document.getElementById('lettersBar');
-if (!bar) return;
-bar.innerHTML = '';
-const list = currentCase === 'capital' ? capitalList : smallList;
-list.forEach(l => {
-const btn = document.createElement('button');
-btn.innerText = l;
-btn.style.cssText = min-width:38px; height:38px; background:${l === currentLetter ? 'var(--accent-yellow)' : 'rgba(255,255,255,0.1)'}; color:${l === currentLetter ? '#000' : '#fff'}; border:none; border-radius:10px; font-weight:bold; cursor:pointer;;
-btn.onclick = () => selectLetter(l);
-bar.appendChild(btn);
-});
-}
-​function selectLetter(l) {
-currentLetter = l;
-document.getElementById('ghostLetter').innerText = l;
-renderLettersBar();
-speakText(l);
-clearCanvas();
-}
-​function setLetterCase(c) {
-currentCase = c;
-currentLetter = c === 'capital' ? 'A' : 'a';
-document.getElementById('btnCap').style.background = c === 'capital' ? 'var(--accent-green)' : 'rgba(255,255,255,0.1)';
-document.getElementById('btnSmall').style.background = c === 'small' ? 'var(--accent-green)' : 'rgba(255,255,255,0.1)';
-selectLetter(currentLetter);
-}
-​function nextLetter() {
-const list = currentCase === 'capital' ? capitalList : smallList;
-let idx = list.indexOf(currentLetter);
-selectLetter(list[(idx + 1) % list.length]);
-}
-​function speakLetter() {
-speakText(currentLetter);
-}
-​function initCanvas() {
-canvas = document.getElementById('traceCanvas');
-if (!canvas) return;
-ctx = canvas.getContext('2d');
-​const resizeCanvas = () => {
-canvas.width = canvas.parentElement.clientWidth;
-canvas.height = canvas.parentElement.clientHeight;
-};
-resizeCanvas();
-​const startDraw = (e) => { isDrawing = true; ctx.beginPath(); draw(e); };
-const stopDraw = () => { isDrawing = false; ctx.beginPath(); };
-const draw = (e) => {
-if (!isDrawing) return;
-const rect = canvas.getBoundingClientRect();
-const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-ctx.lineWidth = 8;
-ctx.lineCap = 'round';
-ctx.strokeStyle = '#FFD700';
-ctx.lineTo(clientX - rect.left, clientY - rect.top);
-ctx.stroke();
-ctx.beginPath();
-ctx.moveTo(clientX - rect.left, clientY - rect.top);
-};
-​canvas.addEventListener('mousedown', startDraw);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', stopDraw);
-canvas.addEventListener('touchstart', startDraw);
-canvas.addEventListener('touchmove', draw);
-canvas.addEventListener('touchend', stopDraw);
-}
-​function clearCanvas() {
-if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-​// Translator & Speech Recognition
-function toggleMic() {
-if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-alert("خاصية الصوت تعمل بشكل ممتاز على متصفح Chrome أو متصفحات الهواتف الحديثة.");
-return;
-}
-const SpeechReg = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechReg();
-recognition.lang = 'ar-SA';
-recognition.start();
-​const micBtn = document.getElementById('micBtn');
-micBtn.innerText = "🔴 جاري الاستماع...";
-​recognition.onresult = (e) => {
-const text = e.results[0][0].transcript;
-document.getElementById('arSpeechText').innerText = text;
-micBtn.innerText = "🎙️ اضغط وتحدث بالعربية";
-// Simple internal translator mock
-document.getElementById('enTranslatedText').innerText = text === "سلام" ? "Peace" : "Hello friend";
-};
-​recognition.onerror = () => {
-micBtn.innerText = "🎙️ اضغط وتحدث بالعربية";
-};
-}
-​// Game Engine Logic
-let currentGameIndex = 0;
-function startNewGame() {
-const game = gamesData[currentGameIndex % gamesData.length];
-document.getElementById('gameQuestion').innerText = game.q;
-document.getElementById('gameVisual').innerText = game.visual;
-const grid = document.getElementById('gameOptions');
-grid.innerHTML = '';
-​game.options.forEach(opt => {
-const btn = document.createElement('button');
-btn.innerText = opt;
-btn.style.cssText = "background:var(--card-bg); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:14px; border-radius:14px; font-size:1.1rem; font-weight:bold; cursor:pointer;";
-btn.onclick = () => {
-if (opt === game.correct) {
-btn.style.background = "var(--accent-green)";
-speakText("Great Job!");
-addScore(10);
-setTimeout(() => { currentGameIndex++; startNewGame(); }, 1200);
-} else {
-btn.style.background = "var(--accent-red)";
-speakText("Try again");
-}
-};
-grid.appendChild(btn);
-});
-}
-​// Utilities & Helper Functions
-function speakText(text) {
-if ('speechSynthesis' in window) {
-window.speechSynthesis.cancel();
-const u = new SpeechSynthesisUtterance(text);
-u.lang = 'en-US';
-u.rate = 0.9;
-window.speechSynthesis.speak(u);
-}
-}
-​function addScore(pts) {
-userScore += pts;
-localStorage.setItem('eka_score', userScore.toString());
-updateScoreUI();
-}
-​function updateScoreUI() {
-document.getElementById('userScore').innerText = userScore;
-}
-​// PWA Installation Feature
-function initPWA() {
-window.addEventListener('beforeinstallprompt', (e) => {
-e.preventDefault();
-deferredPrompt = e;
-document.getElementById('installBanner').style.display = 'flex';
-});
-​window.addEventListener('appinstalled', () => {
-document.getElementById('installBanner').style.display = 'none';
-});
-}
-​function triggerPWAInstall() {
-if (deferredPrompt) {
-deferredPrompt.prompt();
-deferredPrompt.userChoice.then((choiceResult) => {
-if (choiceResult.outcome === 'accepted') {
-document.getElementById('installBanner').style.display = 'none';
-}
-deferredPrompt = null;
-});
-} else {
-alert("التطبيق جاهز للتثبيت! من خيارات المتصفح (⋮) اضغط 'إضافة إلى الشاشة الرئيسية'.");
-}
-}
-</script>
+
+    <div id="app" class="app-container">
+
+        <!-- ===== VIEW 1: HOME PAGE ===== -->
+        <div id="homeView" class="view active-view">
+            <header class="top-bar">
+                <div class="score-badge">
+                    <span id="userScore">100</span> <i class="fa-solid fa-star"></i>
+                </div>
+                <h1 class="app-title">English Kids Academy</h1>
+            </header>
+
+            <!-- Install PWA Banner -->
+            <div class="install-banner" id="installBanner" onclick="triggerPWAInstall()" style="cursor: pointer; background: #2ed573; color: #fff; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; margin-bottom: 15px; display:none;">
+                📲 تثبيت التطبيق على الشاشة الرئيسية للهاتف
+            </div>
+
+            <!-- Menu Cards Grid -->
+            <div class="cards-grid">
+                
+                <div class="menu-card" onclick="openSection('board')">
+                    <div class="card-icon">🔤</div>
+                    <h3>الحروف والسبورة</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('dictionary')">
+                    <div class="card-icon">📚</div>
+                    <h3>القاموس الشامل (بحث جوجل)</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('translator')">
+                    <div class="card-icon">🎙️</div>
+                    <h3>الترجمة الفورية</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('grammar')">
+                    <div class="card-icon">📖</div>
+                    <h3>الموسوعة الشاملة للقواعد</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('tools')">
+                    <div class="card-icon">🛠️</div>
+                    <h3>أدوات اللغة والشرط</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('phonics')">
+                    <div class="card-icon">🔊</div>
+                    <h3>تعليم الصوتيات والنطق</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('visual_dict')">
+                    <div class="card-icon">🖼️</div>
+                    <h3>القاموس المصور الناطق</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('dialogues')">
+                    <div class="card-icon">💬</div>
+                    <h3>محادثات الحياة (+100)</h3>
+                </div>
+
+                <div class="menu-card" onclick="openSection('stories')">
+                    <div class="card-icon">📕</div>
+                    <h3>القصص التعليمية الموسعة</h3>
+                </div>
+
+                <div class="menu-card full-width" onclick="openSection('games')">
+                    <div class="card-icon">🎮</div>
+                    <h3>الألعاب الصوتية والتحديات</h3>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== VIEW 2: TRANSLATOR PAGE ===== -->
+        <div id="translatorView" class="view">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
+            </div>
+
+            <div class="translator-container" style="text-align: center; color: #fff;">
+                <button class="big-mic-btn" id="micBtn" onclick="toggleSpeech()" style="background:#3b82f6; color:#fff; border:none; padding:15px 25px; border-radius:15px; font-size:1.1rem; font-weight:bold; margin-bottom:15px; cursor:pointer;">
+                    🎙️ اضغط وتحدث بالعربية
+                </button>
+
+                <div class="result-box arabic-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:10px;">
+                    <span>العربية: <strong id="arText">سلام</strong></span>
+                </div>
+
+                <div class="result-box english-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>English: <mark id="enText" style="background:transparent; color:#2ed573; font-weight:bold;">peace</mark></span>
+                    <button class="btn-speak-icon" onclick="speak('peace')" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+
+                <button class="btn-google-search" onclick="window.open('https://translate.google.com', '_blank')" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:10px 15px; border-radius:10px; cursor:pointer;">🔍 ابحث واستزد في Google Translate</button>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 3: BOARD PAGE ===== -->
+        <div id="boardView" class="view">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
+            </div>
+
+            <div class="board-container" style="text-align:center;">
+                <div class="board-tabs" style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
+                    <button class="tab-b active" id="tabCap" onclick="setLetterCase('capital')" style="background:#2ed573; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">Capital A-Z</button>
+                    <button class="tab-b" id="tabSmall" onclick="setLetterCase('small')" style="background:rgba(255,255,255,0.1); color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">Small a-z</button>
+                </div>
+
+                <div class="letters-bar" id="lettersBar" style="display:flex; overflow-x:auto; gap:6px; padding:10px 0; margin-bottom:10px;"></div>
+
+                <div class="canvas-box" style="position:relative; width:300px; height:250px; margin:0 auto 15px auto; background:#1e272e; border-radius:15px; border:2px dashed rgba(255,255,255,0.3); display:flex; align-items:center; justify-content:center;">
+                    <div class="ghost-letter-bg" id="ghostLetter" style="position:absolute; font-size:9rem; color:rgba(255,255,255,0.15); font-weight:bold; user-select:none;">A</div>
+                    <canvas id="traceCanvas" width="300" height="250" style="position:relative; z-index:2; touch-action:none;"></canvas>
+                </div>
+
+                <div class="board-actions" style="display:flex; justify-content:center; gap:10px;">
+                    <button class="btn-act clear-btn" onclick="clearBoard()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🗑️ مسح</button>
+                    <button class="btn-act audio-btn" onclick="speak(currentLetter)" style="background:#2ed573; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🔊 نطق</button>
+                    <button class="btn-act next-btn" onclick="nextLetter()" style="background:#1e90ff; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">➡️ التالي</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 4: GAMES VIEW ===== -->
+        <div id="gamesView" class="view">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
+            </div>
+
+            <div class="games-container" style="text-align: center; padding: 10px;">
+                <div id="gameCategoryTag" style="background: #ec4899; color: white; display: inline-block; padding: 6px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px;">
+                    🎮 التحديات اللانهائية
+                </div>
+                
+                <h2 id="gameQuestionText" style="color: #fff; font-size: 1.2rem; margin-bottom: 15px;">السؤال...</h2>
+
+                <button id="btnSpeakWord" onclick="speakCurrentGameWord()" style="display:none; margin: 0 auto 15px auto; background: #3b82f6; color: white; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; cursor: pointer;">
+                    🔊 استمع للكلمة
+                </button>
+
+                <div id="gameVisualArena" style="min-height: 120px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 20px; border: 2px dashed rgba(255,255,255,0.2); margin-bottom: 20px; padding: 10px;">
+                </div>
+
+                <div id="gameOptionsGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                </div>
+
+                <div style="margin-top: 20px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="setGameCategory('all')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🎲 الكل</button>
+                    <button onclick="setGameCategory('animals')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🦁 حيوانات</button>
+                    <button onclick="setGameCategory('colors')" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:8px 12px; border-radius:10px; font-weight:bold; cursor:pointer;">🎨 ألوان</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 5: DETAILS VIEW ===== -->
+        <div id="detailsView" class="view">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()" style="background:#ff4757; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:bold; cursor:pointer;">🏠 الرجوع للرئيسية</button>
+            </div>
+            <div class="details-content" id="detailsContent" style="padding: 10px; color: #fff;"></div>
+        </div>
+
+    </div>
+
+    <!-- البرمجة والتشغيل المباشر -->
+    <script>
+        let currentCase = 'capital';
+        let currentLetter = 'A';
+        let isDrawing = false;
+        let canvas, ctx;
+        let deferredPrompt;
+
+        const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        const smallList = "abcdefghijklmnopqrstuvwxyz".split("");
+
+        window.onload = () => {
+            initCanvas();
+            renderLettersBar();
+            initPWAInstallPrompt();
+        };
+
+        function initPWAInstallPrompt() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                const banner = document.getElementById('installBanner');
+                if (banner) banner.style.display = 'block';
+            });
+        }
+
+        function triggerPWAInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+            } else {
+                alert("لتثبيت التطبيق: اضغط على القائمة (⋮) في المتصفح ثم اختر 'إضافة إلى الشاشة الرئيسية'.");
+            }
+        }
+
+        function openSection(pageId) {
+            // إخفاء جميع الشاشات وإزالة active-view
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('active-view');
+            });
+
+            if (pageId === 'translator') {
+                document.getElementById('translatorView').classList.add('active-view');
+            } else if (pageId === 'board') {
+                document.getElementById('boardView').classList.add('active-view');
+                clearBoard();
+            } else if (pageId === 'games') {
+                document.getElementById('gamesView').classList.add('active-view');
+                startInfiniteKidsGame();
+            } else if (pageId === 'dictionary') {
+                window.open('https://www.google.com/search?q=' + encodeURIComponent('قاموس ترجمة إنجليزي عربي'), '_blank');
+                document.getElementById('homeView').classList.add('active-view');
+            } else {
+                openDetailedContent(pageId);
+                document.getElementById('detailsView').classList.add('active-view');
+            }
+        }
+
+        function showHome() {
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('active-view');
+            });
+            document.getElementById('homeView').classList.add('active-view');
+        }
+
+        function renderLettersBar() {
+            const bar = document.getElementById('lettersBar');
+            if (!bar) return;
+            bar.innerHTML = '';
+            const list = currentCase === 'capital' ? capitalList : smallList;
+            list.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.innerText = letter;
+                btn.style.cssText = "min-width:38px; height:38px; background:" + (letter === currentLetter ? "#f1c40f" : "rgba(255,255,255,0.1)") + "; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;";
+                btn.onclick = () => {
+                    currentLetter = letter;
+                    document.getElementById('ghostLetter').innerText = letter;
+                    renderLettersBar();
+                    speak(letter);
+                };
+                bar.appendChild(btn);
+            });
+        }
+
+        function setLetterCase(cCase) {
+            currentCase = cCase;
+            currentLetter = cCase === 'capital' ? 'A' : 'a';
+            document.getElementById('tabCap').style.background = cCase === 'capital' ? '#2ed573' : 'rgba(255,255,255,0.1)';
+            document.getElementById('tabSmall').style.background = cCase === 'small' ? '#2ed573' : 'rgba(255,255,255,0.1)';
+            document.getElementById('ghostLetter').innerText = currentLetter;
+            renderLettersBar();
+        }
+
+        function nextLetter() {
+            const list = currentCase === 'capital' ? capitalList : smallList;
+            let idx = list.indexOf(currentLetter);
+            idx = (idx + 1) % list.length;
+            currentLetter = list[idx];
+            document.getElementById('ghostLetter').innerText = currentLetter;
+            renderLettersBar();
+            speak(currentLetter);
+            clearBoard();
+        }
+
+        function openDetailedContent(type) {
+            const details = document.getElementById('detailsContent');
+            if (!details) return;
+            
+            if (type === 'grammar') {
+                details.innerHTML = `
+                    <h2>📖 الموسوعة الشاملة لقواعد اللغة الإنجليزية</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <h3>1. الضمائر (Pronouns)</h3>
+                        <p>• <b>I (أنا)</b> | <b>He (هو)</b> | <b>She (هي)</b></p>
+                        <p>• <b>We (نحن)</b> | <b>They (هم)</b> | <b>You (أنت/أنتم)</b></p>
+                    </div>
+                `;
+            } else if (type === 'tools') {
+                details.innerHTML = `
+                    <h2>🛠️ أدوات اللغة والشرط</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <h3>أدوات الشرط (If Conditionals)</h3>
+                        <p>• <b>If you study, you will pass.</b> (إذا ذاكرت، ستنجح)</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('If you study, you will pass.')">🔊 نطق</button>
+                    </div>
+                `;
+            } else if (type === 'phonics') {
+                details.innerHTML = `
+                    <h2>🔊 تعليم الصوتيات والنطق</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <p>• <b>SH:</b> Fish 🐟</p>
+                        <p>• <b>CH:</b> Chair 🪑</p>
+                        <p>• <b>TH:</b> Think 💭</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('Fish, Chair, Think')">🔊 نطق</button>
+                    </div>
+                `;
+            } else if (type === 'visual_dict') {
+                details.innerHTML = `
+                    <h2>🖼️ القاموس المصور الناطق</h2>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Apple')">
+                            <span style="font-size:2.5rem;">🍎</span><div>Apple</div><small>تفاحة</small>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:12px; text-align:center; cursor:pointer;" onclick="speak('Car')">
+                            <span style="font-size:2.5rem;">🚗</span><div>Car</div><small>سيارة</small>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'dialogues') {
+                details.innerHTML = `
+                    <h2>💬 محادثات الحياة</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <p><b>Ali:</b> Hello! How are you?</p>
+                        <p><b>Youssef:</b> I am fine, thank you!</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('Hello! How are you? I am fine, thank you!')">🔊 نطق</button>
+                    </div>
+                `;
+            } else if (type === 'stories') {
+                details.innerHTML = `
+                    <h2>📕 القصص التعليمية</h2>
+                    <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-top:10px;">
+                        <h3>The Lion and the Mouse 🦁🐭</h3>
+                        <p>A little mouse helped a big lion.</p>
+                        <button style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="speak('A little mouse helped a big lion.')">🔊 نطق</button>
+                    </div>
+                `;
+            }
+        }
+
+        // الألعاب وتوابعها
+        const INF_ANIMALS = [
+            { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
+            { nameEn: "Elephant", nameAr: "فيل", emoji: "🐘" },
+            { nameEn: "Cat", nameAr: "قطة", emoji: "🐱" },
+            { nameEn: "Dog", nameAr: "كلب", emoji: "🐶" }
+        ];
+
+        const INF_COLORS = [
+            { nameEn: "Red", nameAr: "أحمر", hex: "#ef4444" },
+            { nameEn: "Blue", nameAr: "أزرق", hex: "#3b82f6" }
+        ];
+
+        let infGameMode = 'all';
+        let infCorrectAnswer = null;
+        let infWordToSpeak = "";
+        let infLock = false;
+
+        function setGameCategory(mode) {
+            infGameMode = mode;
+            startInfiniteKidsGame();
+        }
+
+        function startInfiniteKidsGame() {
+            infLock = false;
+            const speakBtn = document.getElementById('btnSpeakWord');
+            if (speakBtn) speakBtn.style.display = 'none';
+            infWordToSpeak = "";
+
+            let types = ['animals', 'colors'];
+            let chosenType = infGameMode === 'all' ? types[Math.floor(Math.random() * types.length)] : infGameMode;
+
+            if (chosenType === 'animals') {
+                const item = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
+                document.getElementById('gameCategoryTag').innerText = "🦁 تحدي الحيوانات الذكي";
+                document.getElementById('gameVisualArena').innerHTML = `<div style="font-size: 4.5rem;">${item.emoji}</div>`;
+                document.getElementById('gameQuestionText').innerText = "ما اسم هذا الكائن بالإنجليزية؟";
+                infCorrectAnswer = item.nameEn;
+                infWordToSpeak = item.nameEn;
+                if (speakBtn) speakBtn.style.display = 'inline-block';
+                renderInfOptions([item, INF_ANIMALS[0]].map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
+            } else {
+                const col = INF_COLORS[Math.floor(Math.random() * INF_COLORS.length)];
+                document.getElementById('gameCategoryTag').innerText = "🎨 تحدي الألوان";
+                document.getElementById('gameVisualArena').innerHTML = `<div style="width:75px; height:75px; background-color:${col.hex}; border-radius:18px; border:3px solid #fff;"></div>`;
+                document.getElementById('gameQuestionText').innerText = "ما هو هذا اللون بالإنجليزية؟";
+                infCorrectAnswer = col.nameEn;
+                infWordToSpeak = col.nameEn;
+                if (speakBtn) speakBtn.style.display = 'inline-block';
+                renderInfOptions(INF_COLORS.map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
+            }
+        }
+
+        function renderInfOptions(opts) {
+            const grid = document.getElementById('gameOptionsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            opts.sort(() => Math.random() - 0.5).forEach(opt => {
+                const btn = document.createElement('button');
+                btn.innerHTML = `<strong>${opt.text}</strong><br><small>${opt.sub || ''}</small>`;
+                btn.style.cssText = "background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:12px; border-radius:12px; font-weight:bold; cursor:pointer;";
+                btn.onclick = () => checkInfAnswer(opt.val, btn);
+                grid.appendChild(btn);
+            });
+        }
+
+        function checkInfAnswer(selected, btn) {
+            if (infLock) return;
+            if (selected === infCorrectAnswer) {
+                infLock = true;
+                btn.style.background = "#2ed573";
+                speak('Correct');
+                setTimeout(startInfiniteKidsGame, 1200);
+            } else {
+                btn.style.background = "#ff4757";
+                speak('Try again');
+            }
+        }
+
+        function speakCurrentGameWord() {
+            if (infWordToSpeak) speak(infWordToSpeak);
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function initCanvas() {
+            canvas = document.getElementById('traceCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDraw);
+            canvas.addEventListener('mouseleave', stopDraw);
+
+            canvas.addEventListener('touchstart', (e) => { startDraw(e.touches[0]); e.preventDefault(); });
+            canvas.addEventListener('touchmove', (e) => { draw(e.touches[0]); e.preventDefault(); });
+            canvas.addEventListener('touchend', stopDraw);
+        }
+
+        function startDraw(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            const rect = canvas.getBoundingClientRect();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.strokeStyle = '#f1c40f';
+            ctx.lineWidth = 6;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+        }
+
+        function stopDraw() {
+            isDrawing = false;
+        }
+
+        function clearBoard() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function toggleSpeech() {
+            alert("خاصية التعرف على الصوت تعمل بالمتصفح الداعم.");
+        }
+    </script>
 </body>
 </html>
