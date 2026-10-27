@@ -37,7 +37,7 @@
             display: none;
         }
 
-        /* --- تصميم السبورة الجديد المماثل للصورة --- */
+        /* --- تصميم السبورة الجديد --- */
         .board-wrapper {
             background-color: #0F1123;
             min-height: 100vh;
@@ -111,18 +111,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             overflow: hidden;
         }
 
+        /* تعديل حجم النص الخلفي (Ghost) ليدعم الكلمات والعبارات بالكامل وبشكل مريح */
         .ghost-letter-bg {
             position: absolute;
-            font-size: 14rem;
+            font-size: 5rem;
             color: rgba(255, 255, 255, 0.18);
             font-weight: 800;
             user-select: none;
             pointer-events: none;
             font-family: sans-serif;
+            text-align: center;
+            padding: 0 10px;
+            word-break: break-all;
         }
 
         canvas {
@@ -133,6 +137,35 @@
             height: 100%;
             z-index: 2;
             touch-action: none;
+        }
+
+        /* صندوق إدخال لكتابة الكلمات أو الأرقام الكاملة على السبورة */
+        .custom-word-box {
+            width: 100%;
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .custom-word-input {
+            flex: 1;
+            background: #17192a;
+            border: 1px solid #4b5563;
+            border-radius: 12px;
+            padding: 10px 15px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-custom-submit {
+            background: #8b5cf6;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 0 20px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .board-actions {
@@ -189,6 +222,24 @@
             background: #f1c40f;
             color: #000;
         }
+
+        /* تنسيق صفحة القواعد الشاملة */
+        .grammar-container {
+            background: linear-gradient(135deg, #f5f7fa, #e4edf5);
+            color: #34495e;
+            padding: 20px;
+            border-radius: 16px;
+            line-height: 1.8;
+            text-align: right;
+        }
+        .grammar-container h2 { color: #2980b9; border-right: 4px solid #3498db; padding-right: 12px; margin: 25px 0 15px; font-size: 1.2rem; }
+        .grammar-container h3 { color: #16a085; margin: 15px 0 8px; font-size: 1.05rem; }
+        .grammar-container table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; }
+        .grammar-container th, .grammar-container td { padding: 10px; text-align: center; border: 1px solid #ddd; font-size: 0.9rem; color: #333; }
+        .grammar-container th { background: #3498db; color: white; }
+        .grammar-container tr:nth-child(even) { background: #f8f9fa; }
+        .grammar-container .example { background: #e8f4f8; padding: 10px; border-radius: 6px; border-left: 4px solid #3498db; margin: 8px 0; font-size: 0.9rem; color: #2c3e50; }
+        .grammar-container .note { background: #fff9c4; padding: 10px; border-radius: 6px; border-left: 4px solid #f1c40f; margin: 8px 0; font-size: 0.9rem; color: #2c3e50; }
     </style>
 </head>
 <body>
@@ -248,7 +299,7 @@
             </div>
         </div>
 
-        <!-- BOARD VIEW -->
+        <!-- BOARD VIEW (مع ميزة الكلمات الكاملة والأرقام من 1 إلى 10) -->
         <div id="boardView" class="view">
             <div class="board-wrapper">
                 
@@ -258,8 +309,12 @@
                     </button>
                 </div>
 
-                <div class="letters-grid" id="lettersBar">
-                    <!-- يتم توليد الحروف تلقائياً هنا -->
+                <div class="letters-grid" id="lettersBar"></div>
+
+                <!-- خانة إضافية لكتابة وعرض أي كلمة كاملة أو جملة على السبورة -->
+                <div class="custom-word-box">
+                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب كلمة كاملة أو جملة هنا...">
+                    <button class="btn-custom-submit" onclick="applyCustomWord()">عرض</button>
                 </div>
 
                 <div class="canvas-box">
@@ -279,10 +334,89 @@
                     </button>
                 </div>
 
-                <div class="numbers-bar" id="numbersBar">
-                    <!-- يتم توليد الأرقام تلقائياً من 1 إلى 10 هنا -->
-                </div>
+                <!-- شريط الأرقام محدث من 1 حتى 10 -->
+                <div class="numbers-bar" id="numbersBar"></div>
 
+            </div>
+        </div>
+
+        <!-- GRAMMAR VIEW (الموسوعة الشاملة للقواعد التي أرسلتها) -->
+        <div id="grammarView" class="view">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            </div>
+            <div class="grammar-container">
+                <h1 style="text-align: center; color: #2c3e50; margin-bottom: 20px; font-size: 1.4rem;">📚 دليل شامل لقواعد اللغة الإنجليزية</h1>
+
+                <h2>🔹 1. الأزمنة الكاملة في اللغة الإنجليزية</h2>
+                <h3>🟢 أ — زمن المضارع</h3>
+                <p><strong>⏰ المضارع البسيط — Present Simple</strong><br>- الاستخدام: حقائق ثابتة، عادات، حقائق عامة<br>- القاعدة: الفعل + (s/es) مع الفاعل المفرد (he/she/it)</p>
+                <div class="example">✅ I play football. / She plays football.</div>
+
+                <p><strong>⏳ المضارع المستمر — Present Continuous</strong><br>- الاستخدام: حدث يحدث الآن<br>- القاعدة: am/is/are + فعل + ing</p>
+                <div class="example">✅ They are watching TV.</div>
+
+                <p><strong>✅ المضارع التام — Present Perfect</strong><br>- القاعدة: have/has + V3<br>- الاستخدام: حدث بدأ في الماضي وما زال له صلة بالحاضر</p>
+                <div class="example">✅ I have finished my homework.</div>
+
+                <h3>🟡 ب — زمن الماضي</h3>
+                <p><strong>📜 الماضي البسيط — Past Simple</strong><br>- الاستخدام: حدث انتهى في الماضي (ed للأفعال المنتظمة)</p>
+                <div class="example">✅ I worked yesterday. / She went to school.</div>
+
+                <p><strong>⏳ الماضي المستمر — Past Continuous</strong><br>- القاعدة: was/were + فعل + ing</p>
+                <div class="example">✅ I was sleeping when you called.</div>
+
+                <h3>🔵 ج — زمن المستقبل</h3>
+                <p><strong>⏳ المستقبل البسيط — Future Simple</strong><br>- القاعدة: will + الفعل</p>
+                <div class="example">✅ We will travel tomorrow.</div>
+
+                <h3>📋 ملخص صيغ جميع الأزمنة</h3>
+                <table>
+                    <tr><th>الزمن</th><th>الصيغة</th></tr>
+                    <tr><td>مضارع بسيط</td><td>V1 (+s/es)</td></tr>
+                    <tr><td>مضارع مستمر</td><td>am/is/are + V-ing</td></tr>
+                    <tr><td>مضارع تام</td><td>have/has + V3</td></tr>
+                    <tr><td>ماضي بسيط</td><td>V2</td></tr>
+                    <tr><td>ماضي مستمر</td><td>was/were + V-ing</td></tr>
+                    <tr><td>مستقبل بسيط</td><td>will + V1</td></tr>
+                </table>
+
+                <h2>🔹 2. أنواع الجمل وأدوات الربط</h2>
+                <table>
+                    <tr><th>النوع</th><th>الأداة</th><th>مثال</th></tr>
+                    <tr><td>وصفية</td><td>who/which</td><td>The girl who is smiling is my sister</td></tr>
+                    <tr><td>سببية</td><td>because</td><td>I was late because I missed the bus</td></tr>
+                    <tr><td>شرطية</td><td>if</td><td>If you study, you will pass</td></tr>
+                </table>
+
+                <h2>🔹 3. الأسماء والضمائر</h2>
+                <table>
+                    <tr><th>الضمير</th><th>المتصل بالفاعل</th><th>الملكية</th></tr>
+                    <tr><td>I</td><td>me</td><td>my</td></tr>
+                    <tr><td>You</td><td>you</td><td>your</td></tr>
+                    <tr><td>He</td><td>him</td><td>his</td></tr>
+                    <tr><td>She</td><td>her</td><td>her</td></tr>
+                </table>
+
+                <h2>🔹 4. الأفعال الناقصة (Modal Verbs)</h2>
+                <ul>
+                    <li><strong>can:</strong> أستطيع ✅ I can swim.</li>
+                    <li><strong>must:</strong> يجب ✅ You must study.</li>
+                    <li><strong>should:</strong> ينبغي ✅ You should rest.</li>
+                </ul>
+                <div class="note">💡 ملاحظة: يأتي بعدها الفعل في صورته الأصلية بدون to</div>
+
+                <h2>🔹 5. حروف الجر — Prepositions</h2>
+                <table>
+                    <tr><th>حرف الجر</th><th>الاستخدام</th><th>مثال</th></tr>
+                    <tr><td><strong>in</strong></td><td>في (مكان/وقت طويل)</td><td>in Egypt, in 2025</td></tr>
+                    <tr><td><strong>on</strong></td><td>على</td><td>on the table, on Monday</td></tr>
+                    <tr><td><strong>at</strong></td><td>عند/في (وقت محدد)</td><td>at 5 o'clock</td></tr>
+                </table>
+
+                <div class="note" style="text-align: center; margin-top: 20px;">
+                    📝 تم دمج وتحديث القواعد بالكامل لتكون مرجعاً متكاملاً لك داخل التطبيق! ❤️
+                </div>
             </div>
         </div>
 
@@ -292,9 +426,6 @@
                 <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
             </div>
             <div class="translator-container" style="text-align: center; color: #fff;">
-                <button class="big-mic-btn" id="micBtn" style="background:#3b82f6; color:#fff; border:none; padding:15px 25px; border-radius:15px; font-size:1.1rem; font-weight:bold; margin-bottom:15px; cursor:pointer;">
-                    🎙️ اضغط وتحدث بالعربية للترجمة الفورية
-                </button>
                 <div class="result-box arabic-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:10px;">
                     <span>العربية: <strong id="arText">أهلاً بك في التطبيق</strong></span>
                 </div>
@@ -307,17 +438,13 @@
 
     </div>
 
-    <div id="pwaBanner" class="pwa-footer-banner" onclick="triggerPWAInstall()">
-        📲 تثبيت التطبيق الآن - يعمل بدون إنترنت
-    </div>
-
     <script>
         let currentItem = '1';
         let isDrawing = false;
         let canvas, ctx;
 
         const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-        // تم تحديث الأرقام لتصبح من 1 حتى 10
+        // الأرقام معدلة الآن من 1 حتى 10
         const numbersList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
         window.onload = () => {
@@ -380,11 +507,27 @@
 
         function selectItem(val) {
             currentItem = val;
-            document.getElementById('ghostLetter').innerText = val;
+            const ghostEl = document.getElementById('ghostLetter');
+            ghostEl.innerText = val;
+            
+            // تصغير حجم الخط تلقائياً إذا كانت الكلمة طويلة لتناسب السبورة تماماً
+            if (val.length > 3) {
+                ghostEl.style.fontSize = "3.5rem";
+            } else {
+                ghostEl.style.fontSize = "10rem";
+            }
+
             clearBoard();
             renderLettersBar();
             renderNumbersBar();
             speak(val);
+        }
+
+        function applyCustomWord() {
+            const inputVal = document.getElementById('customWordInput').value.trim();
+            if (inputVal) {
+                selectItem(inputVal);
+            }
         }
 
         function renderLettersBar() {
@@ -416,6 +559,7 @@
         function nextItem() {
             let allItems = [...numbersList, ...capitalList];
             let idx = allItems.indexOf(currentItem);
+            if(idx === -1) idx = 0;
             idx = (idx + 1) % allItems.length;
             selectItem(allItems[idx]);
         }
@@ -434,6 +578,8 @@
             if (pageId === 'board') {
                 document.getElementById('boardView').classList.add('active-view');
                 setTimeout(initCanvas, 50);
+            } else if (pageId === 'grammar') {
+                document.getElementById('grammarView').classList.add('active-view');
             } else if (pageId === 'translator') {
                 document.getElementById('translatorView').classList.add('active-view');
             } else if (pageId === 'dictionary') {
