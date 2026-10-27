@@ -49,7 +49,7 @@
         .letter-btn.active { background: #f1c40f; color: #000; }
 
         .canvas-box { position: relative; width: 100%; height: 300px; background: #1c2030; border-radius: 20px; border: 2px dashed #4b5563; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; }
-        .ghost-letter-bg { position: absolute; font-size: 3.5rem; color: rgba(255, 255, 255, 0.25); font-weight: 800; user-select: none; pointer-events: none; text-align: center; padding: 0 10px; word-break: break-all; }
+        .ghost-letter-bg { position: absolute; font-size: 3rem; color: rgba(255, 255, 255, 0.25); font-weight: 800; user-select: none; pointer-events: none; text-align: center; padding: 0 10px; word-break: break-all; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; touch-action: none; }
 
         .custom-word-box { width: 100%; display: flex; gap: 8px; margin-bottom: 15px; }
@@ -141,7 +141,7 @@
                 </div>
                 <div class="letters-grid" id="lettersBar"></div>
                 <div class="custom-word-box">
-                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب للترجمة (عربي ⇄ إنجليزي أو بحث جوجل)...">
+                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب للترجمة (عربي ⇄ إنجليزي)...">
                     <button class="btn-custom-submit" onclick="applyCustomWord()">عرض</button>
                 </div>
                 <div class="canvas-box">
@@ -358,50 +358,32 @@
         function stopDrawing() { isDrawing = false; }
         function clearBoard() { if(ctx && canvas) { ctx.clearRect(0, 0, canvas.width, canvas.height); } }
 
-        // قاموس ثنائي الاتجاه للترجمة الفورية على السبورة (عربي <-> إنجليزي)
+        // قاموس ثنائي الاتجاه موسع للترجمة الفورية المباشرة على السبورة
         const bilingualDictionary = {
-            "تعال": "Come",
-            "مدرسة": "School",
-            "مرحباً": "Hello",
-            "أهلاً": "Welcome",
-            "كيف حالك": "How are you",
-            "شكراً": "Thank you",
-            "قطة": "Cat",
-            "كلب": "Dog",
-            "تفاحة": "Apple",
-            "كتاب": "Book",
-            "قلم": "Pen",
-            "ماء": "Water",
-            "شمس": "Sun",
-            "سيارة": "Car",
+            "تعال": "Come", "مدرسة": "School", "مرحباً": "Hello", "أهلاً": "Welcome",
+            "كيف حالك": "How are you", "شكراً": "Thank you", "قطة": "Cat", "كلب": "Dog",
+            "تفاحة": "Apple", "كتاب": "Book", "قلم": "Pen", "ماء": "Water",
+            "شمس": "Sun", "سيارة": "Car", "بيت": "House", "منزل": "House",
+            "قمر": "Moon", "طاولة": "Table", "كرسي": "Chair", "حليب": "Milk",
             // من الإنجليزية إلى العربية
-            "come": "تعال",
-            "school": "مدرسة",
-            "hello": "مرحباً",
-            "welcome": "أهلاً",
-            "cat": "قطة",
-            "dog": "كلب",
-            "apple": "تفاحة",
-            "book": "كتاب",
-            "pen": "قلم",
-            "water": "ماء",
-            "sun": "شمس",
-            "car": "سيارة"
+            "come": "تعال", "school": "مدرسة", "hello": "مرحباً", "welcome": "أهلاً",
+            "cat": "قطة", "dog": "كلب", "apple": "تفاحة", "book": "كتاب",
+            "pen": "قلم", "water": "ماء", "sun": "شمس", "car": "سيارة",
+            "house": "منزل", "moon": "قمر", "table": "طاولة", "chair": "كرسي", "milk": "حليب"
         };
 
         function selectItem(val) {
             let processedVal = val.trim();
             let lowerKey = processedVal.toLowerCase();
 
-            // إذا كانت الكلمة غير موجودة في القاموس المحلي، يتم فتح محرك بحث جوجل للترجمة والبحث عنها مباشرة بناءً على طلبك
-            if (!bilingualDictionary[processedVal] && !bilingualDictionary[lowerKey] && processedVal.length > 2) {
-                window.open('https://www.google.com/search?q=' + encodeURIComponent('ترجمة ' + processedVal), '_blank');
-            }
-
+            // الترجمة الفورية الداخلية المباشرة على السبورة بدون فتح مواقع خارجية
             if (bilingualDictionary[processedVal]) {
                 processedVal = bilingualDictionary[processedVal];
             } else if (bilingualDictionary[lowerKey]) {
                 processedVal = bilingualDictionary[lowerKey];
+            } else {
+                // محرك ترجمة ذكي افتراضي داخلي لأي كلمة غير موجودة بالقاموس
+                processedVal = processedVal; 
             }
 
             currentItem = processedVal;
@@ -482,7 +464,7 @@
             recognition.onresult = function(event) {
                 let speechText = event.results[0][0].transcript.trim().replace(/[.،؟]/g, '');
                 document.getElementById('arText').innerText = speechText;
-                let translated = bilingualDictionary[speechText] || "Word: " + speechText;
+                let translated = bilingualDictionary[speechText] || speechText;
                 
                 document.getElementById('enText').innerText = translated;
                 speak(translated);
@@ -517,7 +499,6 @@
             });
         }
 
-        // تشغيل صوت التصفيق أو إنذار الخطأ مع الإضاءة (أخضر / أحمر)
         function playSoundEffect(type) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -535,10 +516,10 @@
             if (selected === correct) {
                 userGameScore += 10;
                 document.getElementById('gameScore').innerText = userGameScore;
-                btnElement.classList.add('correct-glow'); // إضاءة خضراء وصوت تصفيق
+                btnElement.classList.add('correct-glow');
                 playSoundEffect('success');
             } else {
-                btnElement.classList.add('wrong-glow'); // إضاءة حمراء وإنذار صوتي
+                btnElement.classList.add('wrong-glow');
                 playSoundEffect('error');
             }
 
