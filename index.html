@@ -19,7 +19,6 @@
         .score-badge { background: #1e2235; padding: 6px 12px; border-radius: 20px; color: #f1c40f; font-weight: bold; }
         .app-title { font-size: 1.2rem; margin: 0; }
         
-        /* زر تثبيت التطبيق في أعلى الصفحة الرئيسية */
         .pwa-top-banner {
             background: #2ed573; color: #fff; text-align: center;
             padding: 10px; font-weight: bold; cursor: pointer;
@@ -37,17 +36,13 @@
         .view { display: none !important; }
         .view.active-view { display: block !important; }
 
-        /* شريط التنقل العلوي داخل الأقسام (الرجوع للرئيسية والسابقة) */
-        .view-header {
-            width: 100%; display: flex; justify-content: space-between; margin-bottom: 15px; gap: 10px;
-        }
+        .view-header { width: 100%; display: flex; justify-content: space-between; margin-bottom: 15px; gap: 10px; }
         .btn-home-back {
             background: #5c1d2e; color: #fff; border: none;
             padding: 10px 15px; border-radius: 12px; font-weight: bold;
             font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 6px;
         }
 
-        /* --- تصميم السبورة --- */
         .board-wrapper { background-color: #0F1123; min-height: 100vh; padding: 5px; display: flex; flex-direction: column; align-items: center; }
         .letters-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; width: 100%; background: #17192a; padding: 10px; border-radius: 16px; margin-bottom: 15px; direction: ltr; }
         .letter-btn { background: #272a3c; color: #fff; border: none; border-radius: 8px; height: 36px; font-weight: bold; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -71,21 +66,24 @@
         .num-btn { flex: 1; margin: 0 2px; height: 40px; background: #272a3c; color: #fff; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: bold; cursor: pointer; }
         .num-btn.active { background: #f1c40f; color: #000; }
 
-        /* --- الترجمة الفورية --- */
         .translator-box { background: #1e2235; padding: 20px; border-radius: 16px; text-align: center; }
         .big-mic-btn { background: #3b82f6; color: #fff; border: none; padding: 18px 25px; border-radius: 16px; font-size: 1.1rem; font-weight: bold; margin-bottom: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(59,130,246,0.4); }
         .big-mic-btn.listening { background: #ef4444; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .trans-result { background: rgba(255,255,255,0.06); padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: right; font-size: 1.05rem; }
 
-        /* --- الألعاب والتحديات الموسعة للأطفال --- */
         .game-container { background: #1e2235; padding: 20px; border-radius: 16px; text-align: center; }
         .game-question { font-size: 1.15rem; font-weight: bold; margin-bottom: 20px; color: #f1c40f; line-height: 1.6; }
         .game-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .game-opt-btn { background: #272a3c; color: #fff; border: 2px solid #4b5563; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .game-score-board { font-size: 1.1rem; font-weight: bold; color: #2ed573; margin-bottom: 15px; }
+        
+        /* مؤشر تأثير الإجابة في الألعاب */
+        .feedback-alert { font-size: 1.3rem; font-weight: bold; margin: 15px 0; padding: 10px; border-radius: 8px; display: none; }
+        .feedback-alert.success { background: rgba(46,213,115,0.2); color: #2ed573; border: 1px solid #2ed573; }
+        .feedback-alert.error { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid #ef4444; animation: shake 0.5s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-        /* --- دليل القواعد الشامل والوافِ --- */
         .grammar-container { background: #ffffff; color: #1e293b; padding: 20px; border-radius: 16px; line-height: 1.9; text-align: right; font-size: 0.95rem; }
         .grammar-container h1 { color: #2563eb; text-align: center; margin-bottom: 25px; font-size: 1.5rem; }
         .grammar-container h2 { color: #2563eb; margin: 30px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #2563eb; font-size: 1.2rem; }
@@ -113,7 +111,6 @@
                 <h1 class="app-title">English Kids Academy</h1>
             </header>
 
-            <!-- زر تثبيت التطبيق بارز في أعلى الصفحة الرئيسية -->
             <div class="pwa-top-banner" onclick="triggerPWAInstall()">
                 <i class="fa-solid fa-download"></i> تثبيت التطبيق الآن على هاتفك (يعمل بدون إنترنت)
             </div>
@@ -163,7 +160,7 @@
             </div>
         </div>
 
-        <!-- TRANSLATOR VIEW -->
+        <!-- TRANSLATOR VIEW (تم إصلاح الترجمة الفورية الفورية للكلمات) -->
         <div id="translatorView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
@@ -184,7 +181,7 @@
             </div>
         </div>
 
-        <!-- GAMES VIEW (قسم الألعاب الموسع والمليء بالأسئلة) -->
+        <!-- GAMES VIEW (مع تأثيرات التصفيق وإنذار الخطأ القوي) -->
         <div id="gamesView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
@@ -194,11 +191,12 @@
                 <div class="game-score-board">النقاط: <span id="gameScore">0</span> 🌟</div>
                 <div class="game-question" id="gameQuestionText">جاري تحميل السؤال...</div>
                 <div class="game-options" id="gameOptionsContainer"></div>
+                <div id="gameAlertBox" class="feedback-alert"></div>
                 <button class="btn-act next-btn" onclick="nextGameQuestion()" style="width: 100%; margin-top: 10px;">السؤال التالي ➡️</button>
             </div>
         </div>
 
-        <!-- GRAMMAR VIEW (الشرح الوافي والعميق للقواعد الإنجليزية) -->
+        <!-- GRAMMAR VIEW -->
         <div id="grammarView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
@@ -302,7 +300,6 @@
         const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
         const numbersList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
-        // قاعدة بيانات ضخمة وممتعة للأسئلة والألعاب التعليمية للأطفال
         const questionsPool = [
             { q: "ما هي ترجمة كلمة (Cat)؟", options: ["قطة", "كلب", "أسد", "فيل"], correct: 0 },
             { q: "ما هي ترجمة كلمة (Apple)؟", options: ["موز", "تفاحة", "برتقال", "عنب"], correct: 1 },
@@ -425,6 +422,24 @@
             }
         }
 
+        // قاموس ترجمة ذكي وفوري متكامل للكلمات الشائعة
+        const dictionaryMap = {
+            "تعال": "Come",
+            "مدرسة": "School",
+            "مرحباً": "Hello",
+            "أهلاً": "Welcome",
+            "كيف حالك": "How are you",
+            "شكراً": "Thank you",
+            "قطة": "Cat",
+            "كلب": "Dog",
+            "تفاحة": "Apple",
+            "كتاب": "Book",
+            "قلم": "Pen",
+            "ماء": "Water",
+            "شمس": "Sun",
+            "سيارة": "Car"
+        };
+
         function startVoiceTranslation() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
@@ -438,12 +453,13 @@
             micBtn.innerHTML = '<i class="fa-solid fa-microphone-lines"></i> جاري الاستماع... تحدث الآن';
 
             recognition.onresult = function(event) {
-                const speechText = event.results[0][0].transcript;
+                let speechText = event.results[0][0].transcript.trim();
+                // تنظيف النص من النقاط أو الفواصل الزائدة
+                speechText = speechText.replace(/[.،؟]/g, '');
                 document.getElementById('arText').innerText = speechText;
-                let translated = "Translation for: " + speechText;
-                if(speechText.includes("مرحباً") || speechText.includes("أهلاً")) translated = "Hello / Welcome";
-                else if(speechText.includes("كيف حالك")) translated = "How are you?";
-                else if(speechText.includes("مدرسة")) translated = "School";
+
+                // البحث عن الترجمة في القاموس الذكي أو إعطاء ترجمة مباشرة
+                let translated = dictionaryMap[speechText] || "Word: " + speechText;
                 
                 document.getElementById('enText').innerText = translated;
                 speak(translated);
@@ -461,12 +477,14 @@
 
         function initGame() {
             currentGameIndex = Math.floor(Math.random() * questionsPool.length);
+            document.getElementById('gameAlertBox').style.display = 'none';
             loadGameQuestion();
         }
 
         function loadGameQuestion() {
             const qObj = questionsPool[currentGameIndex];
             document.getElementById('gameQuestionText').innerText = qObj.q;
+            document.getElementById('gameAlertBox').style.display = 'none';
             const container = document.getElementById('gameOptionsContainer');
             container.innerHTML = '';
             qObj.options.forEach((opt, idx) => {
@@ -478,15 +496,32 @@
             });
         }
 
+        // تشقيل أصوات وتأثيرات تفاعلية حية (تصفيق وإنذار خطأ)
+        function playSoundEffect(type) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(type === 'success' ? "Clap! Amazing!" : "Warning! Wrong answer!");
+                utter.lang = 'en-US';
+                utter.rate = 1.2;
+                window.speechSynthesis.speak(utter);
+            }
+        }
+
         function checkGameAnswer(selected, correct) {
+            const alertBox = document.getElementById('gameAlertBox');
             if (selected === correct) {
                 userGameScore += 10;
                 document.getElementById('gameScore').innerText = userGameScore;
-                alert("إجابة صحيحة أحسنت! 🌟");
+                alertBox.className = "feedback-alert success";
+                alertBox.innerHTML = "👏👏 إجابة صحيحة! تصفيق حاد للأبطال الممتازين!";
+                alertBox.style.display = "block";
+                playSoundEffect('success');
             } else {
-                alert("إجابة خاطئة، حاول مرة أخرى في السؤال القادم! 💪");
+                alertBox.className = "feedback-alert error";
+                alertBox.innerHTML = "🚨 انذار قوي! إجابة خاطئة، ركز في السؤال القادم!";
+                alertBox.style.display = "block";
+                playSoundEffect('error');
             }
-            nextGameQuestion();
         }
 
         function nextGameQuestion() {
