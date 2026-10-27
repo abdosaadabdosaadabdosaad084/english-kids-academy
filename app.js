@@ -1,137 +1,244 @@
-// === English Kids Academy - Smart Teacher V2 (Fixed) ===
-const AI_TEACHER_URL = "https://round-king-d129.abdosaadabdosaad084.workers.dev/";
-
+const API_BASE = "https://round-king-d129.abdosaadabdosaad084.workers.dev/";
 const LOCAL_DICT = {
-"تلميذ":"تلميذ = Student - النطق: ستودنت - ولد ذكي يتعلم في المدرسة ⭐\nمثال: I am a smart student - أنا تلميذ شاطر",
-"التلميذ":"التلميذ = The Student - ذا ستودنت",
-"تلاميذ":"تلاميذ = Students - ستودنتس",
-"مدرسة":"مدرسة = School - النطق: سكول - مكان نتعلم فيه",
-"كتاب":"كتاب = Book - بوك",
-"قلم":"قلم = Pen - بن",
-"ولد":"ولد = Boy - بوي",
-"بنت":"بنت = Girl - جيرل",
-"معلم":"معلم = Teacher - تيتشر",
-"بيت":"بيت = House - هاوس",
-"تفاحة":"تفاحة = Apple - آبل",
-"سيارة":"سيارة = Car - كار",
-"شمس":"شمس = Sun - صن",
-"قمر":"قمر = Moon - مون",
-"ماء":"ماء = Water - ووتر",
-"اسد":"اسد = Lion - لايون - ملك الغابة"
+"تلميذ":"Student - ستودنت - ولد ذكي يتعلم في المدرسة",
+"مكان":"Place - بليس - المكان الذي نكون فيه 🏠 This is a beautiful place",
+"زمان":"Time - تايم",
+"مدرسة":"School - سكول - مكان نتعلم فيه",
+"كتاب":"Book - بوك 📚",
+"قلم":"Pen - بن ✏️",
+"قلم رصاص":"Pencil - بنسل",
+"دفتر":"Notebook - نوت بوك",
+"سبورة":"Blackboard - بلاك بورد",
+"طباشير":"Chalk - تشوك",
+"فصل":"Classroom - كلاس رووم",
+"مقعد":"Desk - ديسك",
+"حقيبة":"Bag - باج",
+"معلم":"Teacher - تيتشر 👨‍🏫",
+"معلمة":"Teacher - تيتشر بنت",
+"مدير":"Principal - برينسيبال",
+"طالب":"Student",
+"طالبة":"Student girl",
+"امتحان":"Exam - إجزام",
+"درس":"Lesson - ليسون",
+"واجب":"Homework - هوم وورك",
+"علم":"Science - ساينس",
+"رياضيات":"Math - ماث",
+"تاريخ":"History - هيستوري",
+"جغرافيا":"Geography - جيوجرافي",
+"لغة":"Language - لانجوج",
+"إنجليزي":"English - إنجليش",
+"عربي":"Arabic - أرابك",
+"قراءة":"Reading - ريدينج",
+"كتابة":"Writing - رايتنج",
+"بيت":"House - هاوس 🏠",
+"منزل":"Home - هوم",
+"باب":"Door - دور 🚪",
+"شباك":"Window - ويندو",
+"حائط":"Wall - وول",
+"سقف":"Roof - روف",
+"أرض":"Floor - فلور",
+"غرفة":"Room - رووم",
+"غرفة نوم":"Bedroom - بد رووم",
+"غرفة معيشة":"Living room - ليفينج رووم",
+"مطبخ":"Kitchen - كيتشن",
+"حمام":"Bathroom - باثرووم",
+"صالة":"Hall - هول",
+"حديقة":"Garden - جاردن",
+"كرسي":"Chair - تشير",
+"طاولة":"Table - تيبل",
+"سرير":"Bed - بد",
+"مخدة":"Pillow - بيلو",
+"بطانية":"Blanket - بلانكت",
+"مرآة":"Mirror - ميرور",
+"سجادة":"Carpet - كاربت",
+"مصباح":"Lamp - لامب",
+"ثلاجة":"Fridge - فريج",
+"غسالة":"Washing machine - واشينج ماشين",
+"مروحة":"Fan - فان",
+"تلفزيون":"TV - تي في",
+"هاتف":"Phone - فون",
+"كمبيوتر":"Computer - كمبيوتر",
+"صورة":"Picture - بيكتشر",
+"أسد":"Lion - لايون 🦁",
+"نمر":"Tiger - تايجر",
+"فيل":"Elephant - إليفانت",
+"قرد":"Monkey - مونكي",
+"قطة":"Cat - كات 🐱",
+"كلب":"Dog - دوج 🐶",
+"حصان":"Horse - هورس",
+"بقرة":"Cow - كاو",
+"خروف":"Sheep - شيب",
+"جمل":"Camel - كامل",
+"أرنب":"Rabbit - رابيت",
+"فأر":"Mouse - ماوس",
+"دب":"Bear - بير",
+"ذئب":"Wolf - وولف",
+"ثعلب":"Fox - فوكس",
+"عصفور":"Bird - بيرد",
+"نسر":"Eagle - إيجل",
+"بطة":"Duck - داك",
+"دجاجة":"Chicken - تشيكن",
+"ديك":"Rooster - روستر",
+"ببغاء":"Parrot - باروت",
+"سمكة":"Fish - فيش",
+"قرش":"Shark - شارك",
+"حوت":"Whale - ويل",
+"سلحفاة":"Turtle - تيرتل",
+"تفاحة":"Apple - آبل 🍎",
+"موز":"Banana - بنانا 🍌",
+"برتقال":"Orange - أورنج 🍊",
+"فراولة":"Strawberry - ستروبيري 🍓",
+"عنب":"Grapes - جريبس 🍇",
+"بطيخ":"Watermelon - ووترميلون 🍉",
+"مانجو":"Mango - مانجو",
+"ليمون":"Lemon - ليمون 🍋",
+"خوخ":"Peach - بيتش",
+"كمثرى":"Pear - بير",
+"طماطم":"Tomato - توماتو",
+"خيار":"Cucumber - كيوكمبر",
+"جزر":"Carrot - كاروت",
+"بطاطس":"Potato - بوتيتو",
+"بصل":"Onion - أنيون",
+"ماء":"Water - ووتر 💧",
+"حليب":"Milk - ميلك",
+"عصير":"Juice - جووس",
+"شاي":"Tea - تي",
+"قهوة":"Coffee - كوفي",
+"خبز":"Bread - بريد",
+"جبن":"Cheese - تشيز",
+"بيض":"Egg - إيج",
+"لحم":"Meat - ميت",
+"أرز":"Rice - رايس",
+"شمس":"Sun - صن ☀️",
+"قمر":"Moon - مون 🌙",
+"نجمة":"Star - ستار ⭐",
+"سماء":"Sky - سكاي",
+"سحابة":"Cloud - كلاود",
+"مطر":"Rain - رين 🌧️",
+"ثلج":"Snow - سنو ❄️",
+"رياح":"Wind - ويند",
+"بحر":"Sea - سي 🌊",
+"محيط":"Ocean - أوشن",
+"نهر":"River - ريفر",
+"جبل":"Mountain - ماونتن ⛰️",
+"شجرة":"Tree - تري 🌳",
+"زهرة":"Flower - فلاور 🌸",
+"وردة":"Rose - روز 🌹",
+"أحمر":"Red - ريد 🔴",
+"أزرق":"Blue - بلو 🔵",
+"أخضر":"Green - جرين 🟢",
+"أصفر":"Yellow - يلو 🟡",
+"أبيض":"White - وايت ⚪",
+"أسود":"Black - بلاك ⚫",
+"واحد":"One - ون 1️⃣",
+"اثنان":"Two - تو 2️⃣",
+"ثلاثة":"Three - ثري 3️⃣",
+"أربعة":"Four - فور",
+"خمسة":"Five - فايف",
+"رأس":"Head - هيد",
+"وجه":"Face - فيس",
+"عين":"Eye - آي 👁️",
+"أنف":"Nose - نوز 👃",
+"فم":"Mouth - ماوث 👄",
+"أذن":"Ear - إير 👂",
+"يد":"Hand - هاند ✋",
+"قلب":"Heart - هارت ❤️",
+"قدم":"Foot - فوت 👣",
+"أم":"Mother - ماذر 👩",
+"أب":"Father - فاذر 👨",
+"أخ":"Brother - براذر 👦",
+"أخت":"Sister - سيستر 👧",
+"عائلة":"Family - فاميلي 👨‍👩‍👧‍👦",
+"ولد":"Boy - بوي 👦",
+"بنت":"Girl - جيرل 👧",
+"صديق":"Friend - فريند 🤝",
+"يأكل":"Eat - إيت 🍽️",
+"يشرب":"Drink - درينك 🥤",
+"ينام":"Sleep - سليب 😴",
+"يلعب":"Play - بلاي ⚽",
+"يقرأ":"Read - ريد 📖",
+"يكتب":"Write - رايت ✍️",
+"يجري":"Run - ران 🏃",
+"يمشي":"Walk - ووك 🚶",
+"يحب":"Love - لاف ❤️",
+"جميل":"Beautiful - بيوتيفول ✨",
+"كبير":"Big - بيج",
+"صغير":"Small - سمول",
+"سعيد":"Happy - هابي 😊",
+"حزين":"Sad - ساد 😢",
+"جيد":"Good - جود 👍",
+"سيء":"Bad - باد 👎",
+"سريع":"Fast - فاست 🚀",
+"يوم":"Day - داي ☀️",
+"ليلة":"Night - نايت 🌙",
+"صباح":"Morning - مورنينج 🌅",
+"وقت":"Time - تايم ⏰",
+"ساعة":"Clock - كلوك 🕐",
+"سيارة":"Car - كار 🚗",
+"طائرة":"Airplane - إيربلين ✈️",
+"قطار":"Train - ترين 🚆",
+"باص":"Bus - باص 🚌",
+"شارع":"Street - ستريت",
+"مدينة":"City - سيتي 🏙️",
+"مطار":"Airport - إيربورت ✈️",
+"مستشفى":"Hospital - هوسبيتال 🏥",
+"قميص":"Shirt - شيرت 👕",
+"بنطلون":"Pants - بانتس 👖",
+"حذاء":"Shoes - شوز 👟",
+"قبعة":"Hat - هات 🎩",
+"لعبة":"Toy - توي 🧸",
+"كرة":"Ball - بول ⚽",
+"هدية":"Gift - جيفت 🎁",
+"أين":"Where - وير ❓",
+"متى":"When - وين ⏰",
+"ماذا":"What - وات ❓",
+"نعم":"Yes - يس ✅",
+"لا":"No - نو ❌",
+"شكرا":"Thank you - ثانك يو 🙏",
+"مرحبا":"Hello - هالو 👋",
+"مفتاح":"Key - كي 🔑",
+"قفل":"Lock - لوك 🔒",
+"نافذة":"Window - ويندو",
+"مكتب":"Desk - ديسك",
+"راديو":"Radio - راديو",
+"جوال":"Mobile - موبايل 📱",
+"إنترنت":"Internet - إنترنت 🌐",
+"فيلم":"Movie - موفي 🎬",
+"أغنية":"Song - سونج 🎵",
+"رياضة":"Sport - سبورت",
+"كرة قدم":"Football - فوتبول ⚽",
+"جامعة":"University - يونيفرستي 🎓",
+"عطلة":"Vacation - فاكيشن",
+"حصة":"Class - كلاس",
+"تذكرة":"Ticket - تيكت 🎫",
+"سائق":"Driver - درايفر",
+"طبيب":"Doctor - دكتور 🩺",
+"مهندس":"Engineer - إنجنير",
+"طباخ":"Cook - كوك 👨‍🍳",
+"شرطي":"Policeman - بوليسمان 👮",
+"معطف":"Coat - كوت 🧥",
+"حزام":"Belt - بيلت",
+"نظارة":"Glasses - جلاسيس 👓",
+"ساعة يد":"Watch - ووتش ⌚",
+"خاتم":"Ring - رينج 💍",
+"بالون":"Balloon - بالون 🎈",
+"قصة":"Story - ستوري 📖",
+"حرف":"Letter - ليتر 🔤",
+"كلمة":"Word - وورد",
+"جملة":"Sentence - سينتنس",
+"سؤال":"Question - كويستشن ❓",
+"جواب":"Answer - آنسر ✅",
+"اسم":"Name - نيم",
+"رقم":"Number - نامبر 🔢",
+"عنوان":"Address - أدريس"
 };
 
-let currentCase = 'capital';
-let currentLetter = 'A';
-let isDrawing = false;
-let canvas, ctx;
-let deferredPrompt;
-const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-const smallList = "abcdefghijklmnopqrstuvwxyz".split("");
+let currentMode = localStorage.getItem('mode') || 'kids';
+let score = parseInt(localStorage.getItem('score')||'0');
+let learned = JSON.parse(localStorage.getItem('learned')||'[]');
+let lastAnswer = "";
 
-window.onload = () => {
-    initCanvas();
-    if (typeof renderLettersBar === 'function') renderLettersBar();
-    initHistoryNav();
-    initPWAInstallPrompt();
-    initSmartBoard();
-};
-
-function initSmartBoard() {
-    setTimeout(() => {
-        const buttons = document.querySelectorAll('button');
-        buttons.forEach(btn => {
-            if (btn.innerText.includes('ابحث واشرح')) btn.onclick = searchAndExplain;
-            if (btn.innerText.includes('مسح السبورة')) btn.onclick = clearBoard;
-            if (btn.innerText.includes('اقرأ الإجابة')) btn.onclick = speakAnswer;
-            if (btn.innerText.includes('إيقاف الصوت')) btn.onclick = () => speechSynthesis.cancel();
-        });
-    }, 1000);
-}
-
-async function searchAndExplain() {
-    const input = document.querySelector('input[placeholder*="اكتب"]') || document.querySelector('textarea') || document.querySelector('input[type="text"]');
-    const question = input ? input.value.trim() : "";
-    if (!question) { alert("اكتب سؤالك الأول يا بطل! 😊"); return; }
-
-    let target = document.querySelector('#boardView div:last-child');
-    if (target) target.innerHTML = `<div style="padding:20px;text-align:center;"><div style="font-size:2rem;">🤔</div><p style="color:#fff;">المدرس بيفكر في: <b>${question}</b></p><p style="color:#4DEAEA;">ثواني...</p></div>`;
-
-    let answer = LOCAL_DICT[question] || LOCAL_DICT[question.toLowerCase().trim()];
-    
-    // لو الكلمة مش في القاموس المحلي، جرب الـ Cloud
-    if (!answer) {
-        try {
-            const res = await fetch(AI_TEACHER_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ question: question })
-            });
-            const data = await res.json();
-            answer = data.answer;
-        } catch(e) {
-            answer = null;
-        }
-    }
-
-    // لو لسه مفيش إجابة، اعمل إجابة ذكية
-    if (!answer) {
-        if (question.includes("تلميذ")) answer = LOCAL_DICT["تلميذ"];
-        else answer = `📚 ${question} = ${question} - كلمة جميلة! ⭐\nالمعنى: ${question}\nمثال: I love ${question} - أنا أحب ${question}`;
-    }
-
-    const displayHTML = `<div style="background:rgba(255,255,255,0.06); padding:18px; border-radius:18px; border:1px solid rgba(255,255,255,0.1); text-align:right; direction:rtl; line-height:1.8; color:#fff;"><div style="color:#FFD700; font-weight:bold; margin-bottom:10px;">👨‍🏫 إجابة المدرس الذكي:</div><div style="white-space:pre-wrap;">${answer}</div><div style="margin-top:15px; display:flex; gap:8px; flex-wrap:wrap;"><button onclick="speak('${answer.replace(/'/g,"").substring(0,200)}')" style="background:#3b82f6; color:#fff; border:none; padding:8px 14px; border-radius:10px;">🔊 اسمع</button><button onclick="clearBoard()" style="background:rgba(255,255,255,0.1); color:#fff; border:none; padding:8px 14px; border-radius:10px;">🧹 مسح</button></div></div>`;
-    
-    if (target) target.innerHTML = displayHTML;
-    playSound('success');
-    speak(answer.substring(0,300));
-}
-
-function clearBoard() {
-    const target = document.querySelector('#boardView div:last-child');
-    if (target) target.innerHTML = `<div style="text-align:center; padding:40px;"><div style="font-size:3rem;">🎓</div><p style="color:#888; margin-top:10px;">السبورة جاهزة</p></div>`;
-    const input = document.querySelector('input[placeholder*="اكتب"]');
-    if (input) input.value = "";
-    speechSynthesis.cancel();
-}
-function speakAnswer() { const t = document.querySelector('#boardView div:last-child'); if (t) speak(t.innerText); }
-function speak(text) {
-    if (!text) return;
-    try {
-        speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = /[ء-ي]/.test(text) ? 'ar-SA' : 'en-US';
-        u.rate = 0.9;
-        speechSynthesis.speak(u);
-    } catch(e){}
-}
-function initPWAInstallPrompt() { window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; const b = document.getElementById('installBanner'); if(b) b.style.display='block'; }); }
-function triggerPWAInstall() { if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{deferredPrompt=null;});} else { alert("للتثبيت: اضغط ⋮ ثم 'إضافة إلى الشاشة الرئيسية'"); } }
-function initHistoryNav() { window.history.pushState({page:'home'},''); window.onpopstate = (e) => { showView(e.state?.page || 'home', false); }; }
-function navigateTo(p){ window.history.pushState({page:p},''); showView(p,true); }
-function openSection(p){ navigateTo(p); }
-function showHome(){ navigateTo('home'); }
-function showView(pageId){
-    document.querySelectorAll('.view').forEach(v=>{ v.classList.remove('active-view'); v.style.display='none'; });
-    const map = { home:'homeView', translator:'translatorView', board:'boardView', games:'gamesView' };
-    const id = map[pageId] || 'detailsView';
-    const el = document.getElementById(id);
-    if(el){ el.classList.add('active-view'); el.style.display='block'; }
-    if(pageId==='board') clearBoard();
-    if(pageId==='games' && typeof startInfiniteKidsGame==='function') startInfiniteKidsGame();
-    if(!map[pageId] && typeof openDetailedContent==='function'){ openDetailedContent(pageId); }
-}
-function playSound(type){
-    try{
-        const ac = new (window.AudioContext||window.webkitAudioContext)();
-        let o=ac.createOscillator(), g=ac.createGain();
-        o.type= type==='success'?'sine':'sawtooth';
-        o.frequency.setValueAtTime(type==='success'?523:140,ac.currentTime);
-        g.gain.setValueAtTime(0.1,ac.currentTime); g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.4);
-        o.connect(g); g.connect(ac.destination); o.start(); o.stop(ac.currentTime+0.4);
-    }catch(e){}
-}
-function initCanvas(){ canvas=document.getElementById('drawCanvas'); if(!canvas) return; ctx=canvas.getContext('2d'); }
-function openDetailedContent(type){ const d=document.getElementById('detailsContent'); if(!d) return; d.innerHTML=`<h2>📚 ${type}</h2><p>محتوى ${type}</p>`; }
-function getRandom(arr, exclude, count){ return arr.filter(x=>x!==exclude).sort(()=>0.5-Math.random()).slice(0,count); }
-function renderInfOptions(opts){ const c=document.getElementById('gameOptions'); if(!c) return; c.innerHTML=''; opts.sort(()=>0.5-Math.random()).forEach(o=>{ const
- 
+function init(){ 
+  setMode(currentMode); 
+  updateStats(); 
+  if('serviceWorker' in navigator) navigator.serviceWorker.register
