@@ -5,6 +5,9 @@ let isDrawing = false;
 let canvas, ctx;
 let deferredPrompt;
 
+// 🔥 رابط المدرس الذكي الجديد
+const AI_TEACHER_URL = "https://english-kids-teacher-84.abdosaadabdosaad084.workers.dev/";
+
 const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const smallList = "abcdefghijklmnopqrstuvwxyz".split("");
 const transCache = JSON.parse(localStorage.getItem('offline_trans') || '{}');
@@ -114,8 +117,52 @@ function playSound(type) {
 }
 
 // ==========================================
-// 📚 الموسوعة الشاملة الموسعة (قواعد، أدوات الشرط، محادثات، قصص)
+// 🤖 المدرس الذكي - مربوط بالخادم الجديد
 // ==========================================
+async function askSmartTeacher() {
+    const input = document.getElementById('translatorInput') || document.getElementById('aiQuestionInput');
+    const output = document.getElementById('translatorOutput') || document.getElementById('aiAnswerBox');
+    if (!input) {
+        alert("مش لاقي خانة السؤال! تأكد من ID في الـ HTML");
+        return;
+    }
+    const question = input.value.trim();
+    if (!question) {
+        alert("اكتب سؤالك يا بطل! 😊");
+        return;
+    }
+
+    if (output) {
+        output.innerHTML = "🤔 المدرس بيفكر... ثواني يا بطل...";
+        output.style.display = 'block';
+    }
+
+    try {
+        const res = await fetch(AI_TEACHER_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: question, level: "kids" })
+        });
+        const data = await res.json();
+        
+        if (output) {
+            output.innerHTML = `<div style="background:rgba(76,175,80,0.1); padding:15px; border-radius:15px; border-left:4px solid #4caf50;">
+                <b>👨‍🏫 المدرس الذكي:</b><br><br>${data.answer}
+                <br><br><button onclick="speak(\`${data.answer.replace(/`/g,'')}\`)" style="background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;">🔊 اسمع الإجابة</button>
+            </div>`;
+        }
+        playSound('success');
+    } catch (e) {
+        if (output) output.innerHTML = "😅 حصل مشكلة صغيرة في الاتصال، جرب تاني يا بطل!";
+        console.error(e);
+    }
+}
+
+// دالة قديمة للتوافق - بقت تنادي الجديدة
+async function translateWithAI() {
+    return askSmartTeacher();
+}
+
 function openDetailedContent(type) {
     const details = document.getElementById('detailsContent');
     if (!details) return;
@@ -142,128 +189,4 @@ function openDetailedContent(type) {
                 <p>• <b>الماضي البسيط:</b> حدث انتهى (التصريف الثاني للفعل).</p>
             </div>
         `;
-    } else if (type === 'tools') {
-        details.innerHTML = `
-            <h2>🛠️ أدوات اللغة الإنجليزية والشرط (Conditionals & Tools)</h2>
-            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:15px;">
-                <h3>1. أدوات الشرط (If Conditionals)</h3>
-                <p><b>• الحالة الصفرية (Zero Conditional):</b> للحقائق العلمية الثابتة.<br>
-                القاعدة: <i>If + مضارع بسيط ➔ مضارع بسيط</i><br>
-                مثال: <span style="color:#4DEAEA;">If you heat water, it boils.</span></p>
-                <p style="margin-top:10px;"><b>• الحالة الأولى (First Conditional):</b> أحداث محتملة الحدوث في المستقبل.<br>
-                القاعدة: <i>If + مضارع بسيط ➔ Will + المصدر</i><br>
-                مثال: <span style="color:#4DEAEA;">If you study hard, you will succeed.</span></p>
-                <button style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('If you study hard, you will succeed.')">🔊 استمع لأدوات الشرط</button>
-            </div>
-            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-                <h3>2. أدوات التعريف (Articles)</h3>
-                <p>• <b>a / an:</b> تستخدم قبل الاسم المفرد المعدود النكرة.</p>
-                <p>• <b>the:</b> أداة التعريف للإشارة إلى شيء معروف ومحدد.</p>
-            </div>
-        `;
-    } else if (type === 'phonics') {
-        details.innerHTML = `
-            <h2>🔊 تعليم الصوتيات والنطق الصحيح (Phonics)</h2>
-            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-                <h3>أهم الحروف والأصوات المركبة:</h3>
-                <p>• <b>SH:</b> تُنطق (ش) مثل <i>Fish, Shop</i></p>
-                <p>• <b>CH:</b> تُنطق (تش) مثل <i>Chair, Watch</i></p>
-                <p>• <b>TH:</b> تُنطق (ث) أو (ذ) مثل <i>Think, This</i></p>
-                <button style="margin-top:12px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('Fish, Chair, Think')">🔊 استمع للأصوات</button>
-            </div>
-        `;
-    } else if (type === 'visual_dict') {
-        details.innerHTML = `
-            <h2>🖼️ القاموس المصور الناطق للأطفال</h2>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;">
-                <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('Apple')">
-                    <span style="font-size:3rem;">🍎</span>
-                    <div style="font-weight:bold; margin-top:5px;">Apple</div>
-                    <small>تفاحة</small>
-                </div>
-                <div style="background:rgba(255,255,255,0.08); padding:15px; border-radius:15px; text-align:center; cursor:pointer;" onclick="speak('Car')">
-                    <span style="font-size:3rem;">🚗</span>
-                    <div style="font-weight:bold; margin-top:5px;">Car</div>
-                    <small>سيارة</small>
-                </div>
-            </div>
-        `;
-    } else if (type === 'dialogues') {
-        details.innerHTML = `
-            <h2>💬 محادثات الحياة اليومية الشاملة</h2>
-            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-                <h3>1. في المدرسة والتعارف (At School)</h3>
-                <p><b>Ali:</b> Hello! My name is Ali. What is your name?</p>
-                <p style="color:#4DEAEA;">(مرحباً! اسمي علي. ما اسمك؟)</p>
-                <button style="margin-top:8px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('Hello! My name is Ali.')">🔊 استمع للمحادثة</button>
-            </div>
-        `;
-    } else if (type === 'stories') {
-        details.innerHTML = `
-            <h2>📕 القصص التعليمية الموسعة</h2>
-            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-                <h3>The Clever Crow (الغراب الذكي) 🐦</h3>
-                <p>On a hot summer day, a crow was very thirsty. He found a pitcher with very little water at the bottom and drank happily!</p>
-                <p style="color:#4DEAEA; margin-top:8px;">(في يوم صيفي حار، عطش الغراب بشدة ووجد إبريقاً فيه ماء قليل وشرب بسعادة!)</p>
-                <button style="margin-top:10px; background:#3b82f6; color:#fff; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="speak('On a hot summer day, a crow was very thirsty.')">🔊 استمع للقصة</button>
-            </div>
-        `;
     }
-}
-
-// ==========================================
-// 🚀 محرك الألعاب اللانهائي للأطفال
-// ==========================================
-const INF_ANIMALS = [
-    { nameEn: "Lion", nameAr: "أسد", emoji: "🦁" },
-    { nameEn: "Elephant", nameAr: "فيل", emoji: "🐘" },
-    { nameEn: "Cat", nameAr: "قطة", emoji: "🐱" },
-    { nameEn: "Dog", nameAr: "كلب", emoji: "🐶" }
-];
-
-const INF_COLORS = [
-    { nameEn: "Red", nameAr: "أحمر", hex: "#ef4444" },
-    { nameEn: "Blue", nameAr: "أزرق", hex: "#3b82f6" }
-];
-
-let infGameMode = 'all';
-let infCorrectAnswer = null;
-let infWordToSpeak = "";
-let infLock = false;
-
-function setGameCategory(mode) {
-    infGameMode = mode;
-    startInfiniteKidsGame();
-}
-
-function startInfiniteKidsGame() {
-    infLock = false;
-    const speakBtn = document.getElementById('btnSpeakWord');
-    if (speakBtn) speakBtn.style.display = 'none';
-    infWordToSpeak = "";
-
-    let types = ['animals', 'colors', 'numbers'];
-    let chosenType = infGameMode === 'all' ? types[Math.floor(Math.random() * types.length)] : infGameMode;
-
-    if (chosenType === 'animals') {
-        const item = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
-        document.getElementById('gameCategoryTag').innerText = "🦁 تحدي الحيوانات الذكي";
-        document.getElementById('gameVisualArena').innerHTML = `<div style="font-size: 4.5rem;">${item.emoji}</div>`;
-        document.getElementById('gameQuestionText').innerText = "ما اسم هذا الكائن بالإنجليزية؟";
-        infCorrectAnswer = item.nameEn;
-        infWordToSpeak = item.nameEn;
-        if (speakBtn) speakBtn.style.display = 'inline-block';
-        renderInfOptions([item, ...getRandom(INF_ANIMALS, item, 3)].map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
-    } else if (chosenType === 'colors') {
-        const col = INF_COLORS[Math.floor(Math.random() * INF_COLORS.length)];
-        document.getElementById('gameCategoryTag').innerText = "🎨 تحدي الألوان";
-        document.getElementById('gameVisualArena').innerHTML = `<div style="width:75px; height:75px; background-color:${col.hex}; border-radius:18px; border:3px solid #fff;"></div>`;
-        document.getElementById('gameQuestionText').innerText = "ما هو هذا اللون بالإنجليزية؟";
-        infCorrectAnswer = col.nameEn;
-        infWordToSpeak = col.nameEn;
-        if (speakBtn) speakBtn.style.display = 'inline-block';
-        renderInfOptions([col, ...getRandom(INF_COLORS, col, 1)].map(c => ({ text: c.nameEn, val: c.nameEn, sub: c.nameAr })));
-    } else {
-        const count = Math.floor(Math.random() * 3) + 2;
-        const anim = INF_ANIMALS[Math.floor(Math.random() * INF_ANIMALS.length)];
-        document.getElementById('gameCategoryTag').innerText = "🔢 حديقة الأرقام والعد
