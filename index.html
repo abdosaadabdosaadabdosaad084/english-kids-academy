@@ -3,133 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Kids Academy - المدرس الذكي</title>
-<style>
-body{background:#0f172a; color:#fff; font-family:sans-serif; margin:0; padding:15px;}
-.card{background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:15px; margin-bottom:12px;}
-.btn{border:none; padding:12px 18px; border-radius:14px; cursor:pointer; font-weight:bold;}
-.btn-primary{background:linear-gradient(90deg,#6366f1,#8b5cf6); color:#fff; width:100%; font-size:1.1rem;}
-.btn-dark{background:rgba(255,255,255,0.08); color:#fff; border:1px solid rgba(255,255,255,0.1);}
-.btn-active{background:linear-gradient(90deg,#6366f1,#8b5cf6); color:#fff;}
-.input{width:100%; padding:15px; border-radius:14px; border:2px solid #334155; background:#1e293b; color:#fff; font-size:1rem; box-sizing:border-box;}
-.board{background:#111827; border-radius:20px; padding:15px; min-height:200px; border:2px solid #334155;}
-.badge{padding:6px 12px; border-radius:20px; font-size:0.8rem; background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);}
-.answer-box{background:rgba(255,255,255,0.06); padding:16px; border-radius:16px; line-height:1.8; white-space:pre-wrap;}
-</style>
+<title>English Pro Academy</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6366f1">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<!-- 🔥 أهم سطر - رابط الخادم الآمن -->
-<script>
-const API_BASE = "https://english-kids-teacher-84.abdosaadabdosaad084.workers.dev/";
-</script>
-
-<h2 style="text-align:center; color:#fde047; margin:10px 0;">English Kids Academy 🧑‍🏫<br><small style="color:#94a3b8; font-size:0.9rem;">مدرس ذكي ومحرك بحث تعليمي - لجميع الأعمار</small></h2>
-
-<div style="display:flex; gap:10px; margin:15px 0; flex-wrap:wrap;">
-<button class="btn btn-active" onclick="setMode('teacher')">🧠 المدرس الذكي</button>
-<button class="btn btn-dark" onclick="setMode('both')">🤖 المدرس + البحث</button>
-<button class="btn btn-dark" style="width:100%;" onclick="setMode('search')">🌐 البحث عبر الإنترنت</button>
+<div class="header">
+  <div class="logo"><div class="logo-icon">🎓</div><div><div>English Pro</div><div style="font-size:0.65rem;color:#94a3b8">Kids & Adults</div></div></div>
+  <div class="mode-switch">
+    <button id="mode-kids" class="mode-btn active" onclick="setMode('kids')">👶 صغار</button>
+    <button id="mode-adults" class="mode-btn" onclick="setMode('adults')">👨 كبار</button>
+  </div>
 </div>
-
-<div class="card">
-<input id="qInput" class="input" placeholder="اكتب أي سؤال أو موضوع تريد فهمه...">
-<button class="btn btn-primary" style="margin-top:12px;" onclick="searchAndExplain()">🔍 ابحث واشرح</button>
-
-<div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-<button class="btn btn-dark" onclick="speakAnswer()">🔊 اقرأ الإجابة</button>
-<button class="btn btn-dark" onclick="startVoice()">🎙️ إملاء صوتي</button>
-<button class="btn btn-dark" onclick="clearBoard()">🧹 مسح السبورة</button>
-<button class="btn btn-dark" onclick="speechSynthesis.cancel()">⏹️ إيقاف الصوت</button>
+<div class="container">
+  <div class="stats">
+    <div class="stat-card"><div class="stat-num" id="scoreNum">0</div><div class="stat-label">🏆 نقاط</div></div>
+    <div class="stat-card"><div class="stat-num" id="learnedNum">0</div><div class="stat-label">📚 تعلمت</div></div>
+    <div class="stat-card"><div class="stat-num" id="totalNum">500</div><div class="stat-label">🎯 كلمة</div></div>
+  </div>
+  <div class="search-card">
+    <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+      <span id="modeLabel" style="font-weight:700;color:#fde047">وضع الأطفال 👶</span>
+      <span class="badge badge-live" id="status">500 كلمة جاهزة ✅</span>
+    </div>
+    <div class="input-group">
+      <input id="qInput" class="input" placeholder="اكتب: مكان، تلميذ، مدرسة..." onkeypress="if(event.key==='Enter') searchAndExplain()">
+      <button class="search-btn" onclick="searchAndExplain()">🔍</button>
+    </div>
+    <div class="action-grid">
+      <button class="btn btn-primary" onclick="searchAndExplain()">🔍 ابحث واشرح</button>
+      <button class="btn btn-dark" onclick="startQuiz()">🎯 كويز</button>
+    </div>
+  </div>
+  <div class="board">
+    <div id="boardContent" style="text-align:center;padding:20px;">
+      <div style="font-size:3rem;">🎓</div>
+      <p style="margin:10px 0;font-weight:700;">أهلاً في الأكاديمية الاحترافية!</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;">
+        <div class="game-card" onclick="quickSearch('مكان')">📍 مكان</div>
+        <div class="game-card" onclick="quickSearch('تلميذ')">🧑‍🎓 تلميذ</div>
+        <div class="game-card" onclick="quickSearch('مدرسة')">🏫 مدرسة</div>
+        <div class="game-card" onclick="quickSearch('لعبة')">🧸 لعبة</div>
+      </div>
+    </div>
+  </div>
 </div>
+<div class="bottom-nav">
+  <button id="tab-home" class="nav-item active" onclick="switchTab('home')"><span class="nav-icon">🏠</span>الرئيسية</button>
+  <button id="tab-games" class="nav-item" onclick="switchTab('games')"><span class="nav-icon">🎮</span>ألعاب</button>
+  <button id="tab-fav" class="nav-item" onclick="switchTab('fav')"><span class="nav-icon">⭐</span>المفضلة</button>
 </div>
-
-<div class="board" id="board">
-<div style="display:flex; justify-content:space-between; align-items:center;">
-<span style="color:#fde047;">Smart Teacher & Search</span>
-<span class="badge" id="status">السبورة جاهزة ✅</span>
-</div>
-<hr style="border-color:rgba(255,255,255,0.1); margin:12px 0; border-style:dashed;">
-<div id="boardContent" style="text-align:center; padding:30px;">
-<div style="font-size:3rem;">🎓</div>
-<p style="color:#64748b;">اكتب سؤالك فوق واضغط ابحث واشرح</p>
-<p style="color:#475569; font-size:0.8rem;">مثال: ما معنى Apple؟ اشرح لي زمن المضارع البسيط</p>
-</div>
-</div>
-
-<div class="card" style="margin-top:12px;">
-<div style="display:flex; justify-content:space-between; align-items:center;">
-<b style="color:#fde047;">📚 سجل الأسئلة السابقة</b>
-<button class="btn btn-dark" style="padding:6px 10px; font-size:0.8rem;" onclick="clearHistory()">مسح السجل</button>
-</div>
-<div id="history" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"></div>
-</div>
-
-<p style="text-align:center; color:#475569; font-size:0.8rem; margin-top:15px;">English Kids Academy - تعلم واكتشف في كل عمر<br>ملاحظة: المدرس الذكي يعمل عبر خادم آمن Cloudflare</p>
-
-<script>
-let mode = 'teacher';
-let lastAnswer = "";
-
-function setMode(m){
-  mode = m;
-  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn-active'));
-  event.target.classList.add('btn-active');
-  if(m==='teacher') document.getElementById('status').innerText = "المدرس الذكي ✅";
-  if(m==='both') document.getElementById('status').innerText = "المدرس + البحث ✅";
-  if(m==='search') document.getElementById('status').innerText = "وضع البحث 🌐";
-}
-
-async function searchAndExplain(){
-  const q = document.getElementById('qInput').value.trim();
-  if(!q){ alert('اكتب سؤالك يا بطل! 😊'); return; }
-  
-  document.getElementById('status').innerText = "يفكر... 🤔";
-  document.getElementById('boardContent').innerHTML = `<div style="text-align:center;"><div style="font-size:2rem;">🤔</div><p>المدرس بيفكر في:<br><b style="color:#fff;">${q}</b></p><p style="color:#38bdf8;">ثواني يا بطل...</p></div>`;
-  
-  addToHistory(q);
-  
-  try{
-    const res = await fetch(API_BASE, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({question: q, mode: mode})
-    });
-    const data = await res.json();
-    lastAnswer = data.answer;
-    
-    document.getElementById('boardContent').innerHTML = `<div class="answer-box"><div style="color:#4ade80; font-weight:bold; margin-bottom:8px;">👨‍🏫 الإجابة:</div>${lastAnswer}</div>`;
-    document.getElementById('status').innerText = "تمت الإجابة ✅";
-    speak(lastAnswer.substring(0,400));
-  }catch(e){
-    console.error(e);
-    document.getElementById('boardContent').innerHTML = `<div style="color:#fb7185; text-align:center;">😅 مشكلة اتصال، جرب تاني! <br><small>${e.message}</small></div>`;
-    document.getElementById('status').innerText = "خطأ في الاتصال";
-  }
-}
-
-function speakAnswer(){ if(lastAnswer) speak(lastAnswer); }
-function speak(t){
-  try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = /[ء-ي]/.test(t) ? 'ar-SA' : 'en-US'; u.rate=0.9; speechSynthesis.speak(u);}catch(e){}
-}
-function clearBoard(){
-  document.getElementById('boardContent').innerHTML = `<div style="text-align:center; padding:30px;"><div style="font-size:3rem;">🎓</div><p style="color:#64748b;">السبورة جاهزة</p></div>`;
-  document.getElementById('qInput').value=""; lastAnswer=""; document.getElementById('status').innerText="السبورة جاهزة ✅"; speechSynthesis.cancel();
-}
-function startVoice(){
-  const rec = new (window.webkitSpeechRecognition||window.SpeechRecognition)();
-  rec.lang = 'ar-EG'; rec.onresult = (e)=>{ document.getElementById('qInput').value = e.results[0][0].transcript; searchAndExplain(); }; rec.start();
-}
-function addToHistory(q){
-  let h = JSON.parse(localStorage.getItem('qa_history')||'[]');
-  if(!h.includes(q)){ h.unshift(q); h=h.slice(0,10); localStorage.setItem('qa_history', JSON.stringify(h)); renderHistory(); }
-}
-function renderHistory(){
-  let h = JSON.parse(localStorage.getItem('qa_history')||'[]');
-  document.getElementById('history').innerHTML = h.map(x=>`<button class="btn btn-dark" style="padding:6px 12px; border-radius:20px; font-size:0.9rem;" onclick="document.getElementById('qInput').value='${x}'; searchAndExplain();">${x}</button>`).join('');
-}
-function clearHistory(){ localStorage.removeItem('qa_history'); renderHistory(); }
-renderHistory();
-</script>
-</body>
-</html>
+<script src="app.js"></script>
+</body></html>
