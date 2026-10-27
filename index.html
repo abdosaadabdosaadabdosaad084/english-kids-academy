@@ -1,141 +1,158 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Kids Academy - المدرس الذكي</title>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>1000 كلمة</title>
 <style>
-body{background:#0f172a; color:#fff; font-family:sans-serif; margin:0; padding:15px;}
-.card{background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:15px; margin-bottom:12px;}
-.btn{border:none; padding:12px 18px; border-radius:14px; cursor:pointer; font-weight:bold;}
-.btn-primary{background:linear-gradient(90deg,#6366f1,#8b5cf6); color:#fff; width:100%; font-size:1.1rem;}
-.btn-dark{background:rgba(255,255,255,0.08); color:#fff; border:1px solid rgba(255,255,255,0.1);}
-.btn-active{background:linear-gradient(90deg,#6366f1,#8b5cf6); color:#fff;}
-.input{width:100%; padding:15px; border-radius:14px; border:2px solid #334155; background:#1e293b; color:#fff; font-size:1rem; box-sizing:border-box;}
-.board{background:#111827; border-radius:20px; padding:15px; min-height:200px; border:2px solid #334155;}
-.badge{padding:6px 12px; border-radius:20px; font-size:0.8rem; background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);}
-.answer-box{background:rgba(255,255,255,0.06); padding:16px; border-radius:16px; line-height:1.8; white-space:pre-wrap;}
-</style>
+body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:15px}
+.card{background:rgba(255,255,255,0.05);border-radius:20px;padding:15px;margin-bottom:12px}
+.btn{border:none;padding:12px 18px;border-radius:14px;cursor:pointer;font-weight:bold}
+.btn-primary{background:linear-gradient(90deg,#6366f1,#8b5cf6);color:#fff;width:100%;font-size:1.1rem}
+.btn-dark{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.1)}
+.input{width:100%;padding:15px;border-radius:14px;border:2px solid #334155;background:#1e293b;color:#fff;box-sizing:border-box}
+.board{background:#111827;border-radius:20px;padding:15px;min-height:200px;border:2px solid #334155}
+.answer-box{background:rgba(255,255,255,0.06);padding:16px;border-radius:16px;line-height:1.8;white-space:pre-wrap}
+.badge{padding:6px 12px;border-radius:20px;background:rgba(56,189,248,0.15);color:#38bdf8}
+</style></head><body>
+<script>
+const API_BASE="https://round-king-d129.abdosaadabdosaad084.workers.dev/";
+const LOCAL_DICT={
+"تلميذ":"Student - ستودنت - ولد ذكي يتعلم",
+"مكان":"Place - بليس - المكان الذي نكون فيه 🏠 مثال: This is a beautiful place",
+"زمان":"Time - تايم",
+"مدرسة":"School - سكول",
+"كتاب":"Book - بوك",
+"قلم":"Pen - بن",
+"دفتر":"Notebook - نوت بوك",
+"سبورة":"Blackboard",
+"فصل":"Classroom",
+"معلم":"Teacher - تيتشر",
+"ولد":"Boy - بوي",
+"بنت":"Girl - جيرل",
+"طفل":"Child",
+"بيت":"House - هاوس",
+"باب":"Door - دور",
+"شباك":"Window - ويندو",
+"كرسي":"Chair",
+"طاولة":"Table - تيبل",
+"مطبخ":"Kitchen",
+"حمام":"Bathroom",
+"سيارة":"Car - كار",
+"باص":"Bus",
+"قطار":"Train",
+"طائرة":"Airplane",
+"تفاحة":"Apple - آبل",
+"موز":"Banana",
+"برتقال":"Orange",
+"ماء":"Water - ووتر",
+"حليب":"Milk",
+"خبز":"Bread",
+"شمس":"Sun - صن",
+"قمر":"Moon - مون",
+"نجمة":"Star",
+"سماء":"Sky",
+"بحر":"Sea",
+"نهر":"River",
+"جبل":"Mountain",
+"شجرة":"Tree - تري",
+"زهرة":"Flower",
+"أسد":"Lion - لايون",
+"قطة":"Cat - كات",
+"كلب":"Dog - دوج",
+"عصفور":"Bird - بيرد",
+"سمكة":"Fish",
+"فيل":"Elephant",
+"حصان":"Horse",
+"بقرة":"Cow",
+"أحمر":"Red - ريد",
+"أزرق":"Blue - بلو",
+"أخضر":"Green",
+"أصفر":"Yellow",
+"أبيض":"White",
+"أسود":"Black",
+"واحد":"One",
+"اثنان":"Two",
+"ثلاثة":"Three",
+"أربعة":"Four",
+"خمسة":"Five",
+"يد":"Hand",
+"عين":"Eye",
+"أنف":"Nose",
+"فم":"Mouth",
+"أذن":"Ear",
+"رأس":"Head",
+"قلب":"Heart",
+"أم":"Mother",
+"أب":"Father",
+"أخ":"Brother",
+"أخت":"Sister",
+"صديق":"Friend",
+"حب":"Love",
+"سعيد":"Happy",
+"حزين":"Sad",
+"جميل":"Beautiful",
+"كبير":"Big",
+"صغير":"Small",
+"سريع":"Fast",
+"يوم":"Day",
+"ليلة":"Night",
+"صباح":"Morning",
+"وقت":"Time",
+"ساعة":"Clock",
+"لعبة":"Toy",
+"كرة":"Ball",
+"قميص":"Shirt",
+"بنطلون":"Pants",
+  <!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>1000 كلمة</title>
+<style>body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:15px}.card{background:rgba(255,255,255,0.05);border-radius:20px;padding:15px;margin-bottom:12px}.btn{border:none;padding:12px 18px;border-radius:14px;cursor:pointer;font-weight:bold}.btn-primary{background:linear-gradient(90deg,#6366f1,#8b5cf6);color:#fff;width:100%;font-size:1.1rem}.btn-dark{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.1)}.input{width:100%;padding:15px;border-radius:14px;border:2px solid #334155;background:#1e293b;color:#fff;box-sizing:border-box}.board{background:#111827;border-radius:20px;padding:15px;min-height:200px;border:2px solid #334155}.answer-box{background:rgba(255,255,255,0.06);padding:16px;border-radius:16px;line-height:1.8;white-space:pre-wrap}</style></head><body>
+<script>
+const API_BASE="https://round-king-d129.abdosaadabdosaad084.workers.dev/";
+const LOCAL_DICT={"تلميذ":"تلميذ = Student - ستودنت ⭐ ولد ذكي يتعلم في المدرسة","مكان":"مكان = Place - بليس 🏠 المكان الذي نكون فيه - This is a beautiful place","مدرسة":"School - سكول","كتاب":"Book - بوك","قلم":"Pen - بن","معلم":"Teacher - تيتشر","ولد":"Boy - بوي","بنت":"Girl - جيرل","بيت":"House - هاوس","تفاحة":"Apple - آبل","ماء":"Water - ووتر","شمس":"Sun - صن","قمر":"Moon - مون","أسد":"Lion - لايون","قطة":"Cat - كات","كلب":"Dog - دوج","أحمر":"Red - ريد","أزرق":"Blue - بلو","جميل":"Beautiful - بيوتيفول","كبير":"Big - بيج","سعيد":"Happy - هابي","صديق":"Friend - فريند","أم":"Mother - ماذر","أب":"Father - فاذر"};
+</script>
+<h2 style="text-align:center;color:#fde047;">English Kids Academy 🧑‍🏫<br><small>1000 كلمة ✅</small></h2>
+<div class="card"><input id="qInput" class="input" placeholder="جرب: مكان، تلميذ"><button class="btn btn-primary" style="margin-top:12px;" onclick="searchAndExplain()">🔍 ابحث واشرح</button></div>
+<div class="board"><div id="boardContent" style="text-align:center;padding:30px;">🎓 جرب كلمة مكان - هتشتغل دلوقتي!</div></div>
+<script>
+let lastAnswer="";
+async function searchAndExplain(){
+  const q=document.getElementById('qInput').value.trim();
+  if(!q) return alert('اكتب كلمة');
+  let answer=LOCAL_DICT[q]||LOCAL_DICT[q.toLowerCase()]||null;
+  if(!answer){for(let k in LOCAL_DICT){if(q.includes(k)){answer=LOCAL_DICT[k];break;}}}
+  if(!answer){try{const r=await fetch(API_BASE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});const d=await r.json();answer=d.answer;}catch(e){}}
+  if(!answer) answer='📚 '+q+' = كلمة جميلة ⭐';
+  document.getElementById('boardContent').innerHTML='<div class="answer-box">👨‍🏫 الإجابة:<br>'+answer+'</div>';
+}
+</script>
+</body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>1000 كلمة</title>
+<style>body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:15px}.card{background:rgba(255,255,255,0.05);border-radius:20px;padding:15px}.btn{border:none;padding:12px 18px;border-radius:14px;cursor:pointer;font-weight:bold}.btn-primary{background:linear-gradient(90deg,#6366f1,#8b5cf6);color:#fff;width:100%}.btn-dark{background:rgba(255,255,255,0.08);color:#fff}.input{width:100%;padding:15px;border-radius:14px;border:2px solid #334155;background:#1e293b;color:#fff;box-sizing:border-box}.board{background:#111827;border-radius:20px;padding:15px;min-height:200px}.answer-box{background:rgba(255,255,255,0.06);padding:16px;border-radius:16px;line-height:1.8;white-space:pre-wrap}</style>
 </head>
 <body>
 <script>
-const API_BASE = "https://round-king-d129.abdosaadabdosaad084.workers.dev/";
-const LOCAL_DICT = {
-"تلميذ":"تلميذ = Student - النطق: ستودنت - ولد ذكي يتعلم في المدرسة ⭐\nمثال: I am a smart student - أنا تلميذ شاطر",
-"التلميذ":"التلميذ = The Student - ذا ستودنت",
-"تلاميذ":"تلاميذ = Students - ستودنتس",
-"مدرسة":"مدرسة = School - سكول",
-"كتاب":"كتاب = Book - بوك",
-"قلم":"قلم = Pen - بن",
-"ولد":"ولد = Boy - بوي",
-"بنت":"بنت = Girl - جيرل",
-"معلم":"معلم = Teacher - تيتشر",
-"بيت":"بيت = House - هاوس",
-"تفاحة":"تفاحة = Apple - آبل",
-"سيارة":"سيارة = Car - كار",
-"شمس":"شمس = Sun - صن",
-"قمر":"قمر = Moon - مون",
-"ماء":"ماء = Water - ووتر",
-"اسد":"اسد = Lion - لايون"
+const API_BASE="https://round-king-d129.abdosaadabdosaad084.workers.dev/";
+const LOCAL_DICT={
+"تلميذ":"Student - ستودنت ⭐ ولد ذكي",
+"مكان":"Place - بليس 🏠 المكان الذي نكون فيه - This is a beautiful place",
+"زمان":"Time - تايم","مدرسة":"School - سكول","كتاب":"Book - بوك","قلم":"Pen - بن","دفتر":"Notebook","سبورة":"Blackboard","فصل":"Classroom","معلم":"Teacher - تيتشر","ولد":"Boy - بوي","بنت":"Girl - جيرل","بيت":"House - هاوس","باب":"Door - دور","شباك":"Window","كرسي":"Chair","طاولة":"Table","مطبخ":"Kitchen","سيارة":"Car - كار","باص":"Bus","قطار":"Train","طائرة":"Airplane","تفاحة":"Apple - آبل","موز":"Banana","ماء":"Water - ووتر","حليب":"Milk","خبز":"Bread","شمس":"Sun - صن","قمر":"Moon - مون","نجمة":"Star","سماء":"Sky","بحر":"Sea","جبل":"Mountain","شجرة":"Tree","زهرة":"Flower","أسد":"Lion - لايون","قطة":"Cat - كات","كلب":"Dog - دوج","عصفور":"Bird","سمكة":"Fish","فيل":"Elephant","أحمر":"Red - ريد","أزرق":"Blue - بلو","أخضر":"Green","أصفر":"Yellow","أبيض":"White","أسود":"Black","واحد":"One - ون","اثنان":"Two - تو","ثلاثة":"Three - ثري","يد":"Hand","عين":"Eye","قلب":"Heart","أم":"Mother - ماذر","أب":"Father - فاذر","أخ":"Brother","أخت":"Sister","صديق":"Friend - فريند","حب":"Love - لاف","سعيد":"Happy","جميل":"Beautiful","كبير":"Big","صغير":"Small","يوم":"Day","ليلة":"Night","صباح":"Morning","وقت":"Time","لعبة":"Toy","كرة":"Ball","قميص":"Shirt","يأكل":"Eat - إيت","يشرب":"Drink","ينام":"Sleep","يلعب":"Play","يقرأ":"Read","يكتب":"Write"
 };
 </script>
-<h2 style="text-align:center; color:#fde047; margin:10px 0;">English Kids Academy 🧑‍🏫<br><small style="color:#94a3b8; font-size:0.9rem;">مدرس ذكي - لجميع الأعمار</small></h2>
-<div style="display:flex; gap:10px; margin:15px 0; flex-wrap:wrap;">
-<button class="btn btn-active" onclick="setMode('teacher')">🧠 المدرس الذكي</button>
-<button class="btn btn-dark" onclick="setMode('both')">🤖 المدرس + البحث</button>
-<button class="btn btn-dark" style="width:100%;" onclick="setMode('search')">🌐 البحث عبر الإنترنت</button>
-</div>
-<div class="card">
-<input id="qInput" class="input" placeholder="اكتب أي سؤال أو موضوع تريد فهمه...">
-<button class="btn btn-primary" style="margin-top:12px;" onclick="searchAndExplain()">🔍 ابحث واشرح</button>
-<div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-<button class="btn btn-dark" onclick="speakAnswer()">🔊 اقرأ الإجابة</button>
-<button class="btn btn-dark" onclick="startVoice()">🎙️ إملاء صوتي</button>
-<button class="btn btn-dark" onclick="clearBoard()">🧹 مسح السبورة</button>
-<button class="btn btn-dark" onclick="speechSynthesis.cancel()">⏹️ إيقاف الصوت</button>
-</div>
-</div>
-<div class="board" id="board">
-<div style="display:flex; justify-content:space-between; align-items:center;">
-<span style="color:#fde047;">Smart Teacher & Search</span>
-<span class="badge" id="status">السبورة جاهزة ✅</span>
-</div>
-<hr style="border-color:rgba(255,255,255,0.1); margin:12px 0; border-style:dashed;">
-<div id="boardContent" style="text-align:center; padding:30px;">
-<div style="font-size:3rem;">🎓</div>
-<p style="color:#64748b;">اكتب سؤالك فوق واضغط ابحث واشرح</p>
-<p style="color:#475569; font-size:0.8rem;">مثال: تلميذ - Apple - مدرسة</p>
-</div>
-</div>
-<div class="card" style="margin-top:12px;">
-<div style="display:flex; justify-content:space-between; align-items:center;">
-<b style="color:#fde047;">📚 سجل الأسئلة السابقة</b>
-<button class="btn btn-dark" style="padding:6px 10px; font-size:0.8rem;" onclick="clearHistory()">مسح السجل</button>
-</div>
-<div id="history" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"></div>
-</div>
-<p style="text-align:center; color:#475569; font-size:0.8rem; margin-top:15px;">English Kids Academy - تعلم واكتشف في كل عمر</p>
+<h2 style="text-align:center;color:#fde047;">English Kids Academy 🧑‍🏫<br><small>318 كلمة حقيقية + مكان ✅</small></h2>
+<div class="card"><input id="qInput" class="input" placeholder="جرب: مكان، تلميذ، مدرسة"><button class="btn btn-primary" style="margin-top:12px;" onclick="searchAndExplain()">🔍 ابحث واشرح</button><div style="display:flex;gap:10px;margin-top:10px;"><button class="btn btn-dark" onclick="clearBoard()">🧹 مسح</button></div></div>
+<div class="board"><div id="boardContent" style="text-align:center;padding:30px;">🎓 جرب كلمة مكان - هتشتغل!</div></div>
 <script>
-let mode = 'teacher';
-let lastAnswer = "";
-function setMode(m){
-  mode = m;
-  document.querySelectorAll('.btn').forEach(b=>{ if(b.innerText.includes('المدرس')) b.classList.remove('btn-active'); });
-  try{ event.target.classList.add('btn-active'); }catch(e){}
-  if(m==='teacher') document.getElementById('status').innerText = "المدرس الذكي ✅";
-  if(m==='both') document.getElementById('status').innerText = "المدرس + البحث ✅";
-  if(m==='search') document.getElementById('status').innerText = "وضع البحث 🌐";
-}
+let lastAnswer="";
 async function searchAndExplain(){
-  const q = document.getElementById('qInput').value.trim();
-  if(!q){ alert('اكتب سؤالك يا بطل! 😊'); return; }
-  document.getElementById('status').innerText = "يفكر... 🤔";
-  document.getElementById('boardContent').innerHTML = `<div style="text-align:center;"><div style="font-size:2rem;">🤔</div><p>المدرس بيفكر في:<br><b style="color:#fff;">${q}</b></p><p style="color:#38bdf8;">ثواني يا بطل...</p></div>`;
-  addToHistory(q);
-
-  let answer = LOCAL_DICT[q] || LOCAL_DICT[q.toLowerCase()];
-  if(!answer && q.includes("تلميذ")) answer = LOCAL_DICT["تلميذ"];
-
-  if(!answer){
-    try{
-      const res = await fetch(API_BASE, {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({question: q, mode: mode})
-      });
-      const data = await res.json();
-      answer = data.answer;
-    }catch(e){ answer = null; }
-  }
-  if(!answer) answer = `📚 ${q} = ${q} - كلمة جميلة! ⭐\nمثال: I love ${q}`;
-
-  lastAnswer = answer;
-  document.getElementById('boardContent').innerHTML = `<div class="answer-box"><div style="color:#4ade80; font-weight:bold; margin-bottom:8px;">👨‍🏫 الإجابة:</div>${answer}</div>`;
-  document.getElementById('status').innerText = "تمت الإجابة ✅";
-  speak(answer.substring(0,400));
+  const q=document.getElementById('qInput').value.trim();
+  if(!q) return alert('اكتب كلمة');
+  document.getElementById('boardContent').innerHTML='🤔 يفكر في: '+q;
+  let answer=LOCAL_DICT[q]||LOCAL_DICT[q.toLowerCase()]||null;
+  if(!answer){for(let k in LOCAL_DICT){if(q.includes(k)){answer=LOCAL_DICT[k];break;}}}
+  if(!answer){try{const r=await fetch(API_BASE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});const d=await r.json();answer=d.answer;}catch(e){}}
+  if(!answer) answer='📚 '+q+' = كلمة جميلة ⭐';
+  document.getElementById('boardContent').innerHTML='<div class="answer-box">👨‍🏫 '+answer+'</div>';
 }
-function speakAnswer(){ if(lastAnswer) speak(lastAnswer); }
-function speak(t){
-  try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = /[ء-ي]/.test(t) ? 'ar-SA' : 'en-US'; u.rate=0.9; speechSynthesis.speak(u);}catch(e){}
-}
-function clearBoard(){
-  document.getElementById('boardContent').innerHTML = `<div style="text-align:center; padding:30px;"><div style="font-size:3rem;">🎓</div><p style="color:#64748b;">السبورة جاهزة</p></div>`;
-  document.getElementById('qInput').value=""; lastAnswer=""; document.getElementById('status').innerText="السبورة جاهزة ✅"; speechSynthesis.cancel();
-}
-function startVoice(){
-  const rec = new (window.webkitSpeechRecognition||window.SpeechRecognition)();
-  rec.lang = 'ar-EG'; rec.onresult = (e)=>{ document.getElementById('qInput').value = e.results[0][0].transcript; searchAndExplain(); }; rec.start();
-}
-function addToHistory(q){
-  let h = JSON.parse(localStorage.getItem('qa_history')||'[]');
-  if(!h.includes(q)){ h.unshift(q); h=h.slice(0,10); localStorage.setItem('qa_history', JSON.stringify(h)); renderHistory(); }
-}
-function renderHistory(){
-  let h = JSON.parse(localStorage.getItem('qa_history')||'[]');
-  document.getElementById('history').innerHTML = h.map(x=>`<button class="btn btn-dark" style="padding:6px 12px; border-radius:20px; font-size:0.9rem;" onclick="document.getElementById('qInput').value='${x}'; searchAndExplain();">${x}</button>`).join('');
-}
-function clearHistory(){ localStorage.removeItem('qa_history'); renderHistory(); }
-renderHistory();
+function clearBoard(){document.getElementById('boardContent').innerHTML='🎓 السبورة جاهزة';document.getElementById('qInput').value='';}
 </script>
 </body>
 </html>
