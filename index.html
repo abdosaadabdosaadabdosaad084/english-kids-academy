@@ -1,9 +1,135 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>500 كلمة</title>
-<style>body{background:#0f172a;color:#fff;font-family:sans-serif;padding:12px}.card{background:rgba(255,255,255,0.06);border-radius:18px;padding:14px}.btn{border:none;padding:12px;border-radius:12px;font-weight:bold}.btn-primary{background:linear-gradient(90deg,#6366f1,#8b5cf6);color:#fff;width:100%}.input{width:100%;padding:14px;border-radius:12px;border:2px solid #334155;background:#1e293b;color:#fff;box-sizing:border-box}.board{background:#111827;border-radius:18px;padding:14px;min-height:200px}.answer-box{background:rgba(255,255,255,0.06);padding:14px;border-radius:14px;white-space:pre-wrap}</style></head><body>
-<script>const API_BASE="https://round-king-d129.abdosaadabdosaad084.workers.dev/";const LOCAL_DICT={"تلميذ":"Student - ستودنت - ولد ذكي يتعلم في المدرسة","مكان":"Place - بليس - المكان الذي نكون فيه 🏠","زمان":"Time - تايم","مدرسة":"School - سكول","كتاب":"Book - بوك","قلم":"Pen - بن","قلم رصاص":"Pencil - بنسل","دفتر":"Notebook - نوت بوك","سبورة":"Blackboard - بلاك بورد","طباشير":"Chalk - تشوك","فصل":"Classroom - كلاس رووم","مقعد":"Desk - ديسك","حقيبة":"Bag - باج","معلم":"Teacher - تيتشر","معلمة":"Teacher - تيتشر بنت","مدير":"Principal - برينسيبال","طالب":"Student","طالبة":"Student girl","امتحان":"Exam - إجزام","درس":"Lesson - ليسون","واجب":"Homework - هوم وورك","علم":"Science - ساينس","رياضيات":"Math - ماث","تاريخ":"History - هيستوري","جغرافيا":"Geography - جيوجرافي","لغة":"Language - لانجوج","إنجليزي":"English - إنجليش","عربي":"Arabic - أرابك","قراءة":"Reading - ريدينج","كتابة":"Writing - رايتنج","بيت":"House - هاوس","منزل":"Home - هوم","باب":"Door - دور","شباك":"Window - ويندو","حائط":"Wall - وول","سقف":"Roof - روف","أرض":"Floor - فلور","غرفة":"Room - رووم","غرفة نوم":"Bedroom - بد رووم","غرفة معيشة":"Living room - ليفينج رووم","مطبخ":"Kitchen - كيتشن","حمام":"Bathroom - باثرووم","صالة":"Hall - هول","حديقة":"Garden - جاردن","كرسي":"Chair - تشير","طاولة":"Table - تيبل","سرير":"Bed - بد","مخدة":"Pillow - بيلو","بطانية":"Blanket - بلانكت","مرآة":"Mirror - ميرور","سجادة":"Carpet - كاربت","مصباح":"Lamp - لامب","ثلاجة":"Fridge - فريج","غسالة":"Washing machine - واشينج ماشين","مروحة":"Fan - فان","تلفزيون":"TV - تي في","هاتف":"Phone - فون","كمبيوتر":"Computer - كمبيوتر","صورة":"Picture - بيكتشر","أسد":"Lion - لايون","نمر":"Tiger - تايجر","فيل":"Elephant - إليفانت","قرد":"Monkey - مونكي","قطة":"Cat - كات","كلب":"Dog - دوج","حصان":"Horse - هورس","بقرة":"Cow - كاو","خروف":"Sheep - شيب","جمل":"Camel - كامل","أرنب":"Rabbit - رابيت","فأر":"Mouse - ماوس","دب":"Bear - بير","ذئب":"Wolf - وولف","ثعلب":"Fox - فوكس","عصفور":"Bird - بيرد","نسر":"Eagle - إيجل","بطة":"Duck - داك","دجاجة":"Chicken - تشيكن","ديك":"Rooster - روستر","ببغاء":"Parrot - باروت","سمكة":"Fish - فيش","قرش":"Shark - شارك","حوت":"Whale - ويل","سلحفاة":"Turtle - تيرتل","تفاحة":"Apple - آبل","موز":"Banana - بنانا","برتقال":"Orange - أورنج","فراولة":"Strawberry - ستروبيري","عنب":"Grapes - جريبس","بطيخ":"Watermelon - ووترميلون","مانجو":"Mango - مانجو","ليمون":"Lemon - ليمون","خوخ":"Peach - بيتش","كمثرى":"Pear - بير","طماطم":"Tomato - توماتو","خيار":"Cucumber - كيوكمبر","جزر":"Carrot - كاروت","بطاطس":"Potato - بوتيتو","بصل":"Onion - أنيون","ماء":"Water - ووتر","حليب":"Milk - ميلك","عصير":"Juice - جووس","شاي":"Tea - تي","قهوة":"Coffee - كوفي","خبز":"Bread - بريد","جبن":"Cheese - تشيز","بيض":"Egg - إيج","لحم":"Meat - ميت","أرز":"Rice - رايس","شمس":"Sun - صن","قمر":"Moon - مون","نجمة":"Star - ستار","سماء":"Sky - سكاي","سحابة":"Cloud - كلاود","مطر":"Rain - رين","ثلج":"Snow - سنو","رياح":"Wind - ويند","بحر":"Sea - سي","محيط":"Ocean - أوشن","نهر":"River - ريفر","جبل":"Mountain - ماونتن","شجرة":"Tree - تري","زهرة":"Flower - فلاور","وردة":"Rose - روز","أحمر":"Red - ريد","أزرق":"Blue - بلو","أخضر":"Green - جرين","أصفر":"Yellow - يلو","أبيض":"White - وايت","أسود":"Black - بلاك","واحد":"One - ون","اثنان":"Two - تو","ثلاثة":"Three - ثري","أربعة":"Four - فور","خمسة":"Five - فايف","رأس":"Head - هيد","وجه":"Face - فيس","عين":"Eye - آي","أنف":"Nose - نوز","فم":"Mouth - ماوث","أذن":"Ear - إير","يد":"Hand - هاند","قلب":"Heart - هارت","قدم":"Foot - فوت","أم":"Mother - ماذر","أب":"Father - فاذر","أخ":"Brother - براذر","أخت":"Sister - سيستر","عائلة":"Family - فاميلي","ولد":"Boy - بوي","بنت":"Girl - جيرل","صديق":"Friend - فريند","يأكل":"Eat - إيت","يشرب":"Drink - درينك","ينام":"Sleep - سليب","يلعب":"Play - بلاي","يقرأ":"Read - ريد","يكتب":"Write - رايت","يجري":"Run - ران","يمشي":"Walk - ووك","يحب":"Love - لاف","جميل":"Beautiful - بيوتيفول","كبير":"Big - بيج","صغير":"Small - سمول","سعيد":"Happy - هابي","حزين":"Sad - ساد","جيد":"Good - جود","سيء":"Bad - باد","سريع":"Fast - فاست","يوم":"Day - داي","ليلة":"Night - نايت","صباح":"Morning - مورنينج","وقت":"Time - تايم","ساعة":"Clock - كلوك","سيارة":"Car - كار","طائرة":"Airplane - إيربلين","قطار":"Train - ترين","باص":"Bus - باص","شارع":"Street - ستريت","مدينة":"City - سيتي","مطار":"Airport - إيربورت","مستشفى":"Hospital - هوسبيتال","قميص":"Shirt - شيرت","بنطلون":"Pants - بانتس","حذاء":"Shoes - شوز","قبعة":"Hat - هات","لعبة":"Toy - توي","كرة":"Ball - بول","هدية":"Gift - جيفت","أين":"Where - وير","متى":"When - وين","ماذا":"What - وات","نعم":"Yes - يس","لا":"No - نو","شكرا":"Thank you - ثانك يو","مرحبا":"Hello - هالو","مفتاح":"Key","قفل":"Lock","نافذة":"Window","مكتب":"Desk","راديو":"Radio","جوال":"Mobile","إنترنت":"Internet","فيلم":"Movie","أغنية":"Song","رياضة":"Sport","كرة قدم":"Football","جامعة":"University","عطلة":"Vacation","حصة":"Class","تذكرة":"Ticket","سائق":"Driver","طبيب":"Doctor","مهندس":"Engineer","طباخ":"Cook","شرطي":"Policeman","معطف":"Coat","حزام":"Belt","نظارة":"Glasses","ساعة يد":"Watch","خاتم":"Ring","بالون":"Balloon","سيارة لعبة":"Toy car","قصة":"Story","حرف":"Letter","كلمة":"Word","جملة":"Sentence","سؤال":"Question","جواب":"Answer","اسم":"Name","رقم":"Number","عنوان":"Address"};</script>
-<h2 style="text-align:center;color:#fde047;">English Kids Academy - 500 كلمة ✅</h2>
-<div class="card"><input id="qInput" class="input" placeholder="جرب: مكان، تلميذ"><button class="btn btn-primary" style="margin-top:10px;" onclick="searchAndExplain()">🔍 ابحث واشرح</button></div>
-<div class="board"><div id="boardContent" style="text-align:center;padding:20px;">🎓 500 كلمة جاهزة - جرب مكان</div></div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Kids Academy - المدرس الذكي</title>
+<style>
+body{background:#0f172a; color:#fff; font-family:sans-serif; margin:0; padding:15px;}
+.card{background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:15px; margin-bottom:12px;}
+.btn{border:none; padding:12px 18px; border-radius:14px; cursor:pointer; font-weight:bold;}
+.btn-primary{background:linear-gradient(90deg,#6366f1,#8b5cf6); color:#fff; width:100%; font-size:1.1rem;}
+.btn-dark{background:rgba(255,255,255,0.08); color:#fff; border:1px solid rgba(255,255,255,0.1);}
+.btn-active{background:linear-gradient(90deg,#6366f1,#8b5cf6); color:#fff;}
+.input{width:100%; padding:15px; border-radius:14px; border:2px solid #334155; background:#1e293b; color:#fff; font-size:1rem; box-sizing:border-box;}
+.board{background:#111827; border-radius:20px; padding:15px; min-height:200px; border:2px solid #334155;}
+.badge{padding:6px 12px; border-radius:20px; font-size:0.8rem; background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);}
+.answer-box{background:rgba(255,255,255,0.06); padding:16px; border-radius:16px; line-height:1.8; white-space:pre-wrap;}
+</style>
+</head>
+<body>
+
+<!-- 🔥 أهم سطر - رابط الخادم الآمن -->
 <script>
-async function searchAndExplain(){const q=document.getElementById('qInput').value.trim();if(!q)return alert('اكتب كلمة');let a=LOCAL_DICT[q]||LOCAL_DICT[q.toLowerCase()]||null;if(!a){for(let k in LOCAL_DICT){if(q.includes(k)){a=LOCAL_DICT[k];break;}}}if(!a){try{const r=await fetch(API_BASE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});const d=await r.json();a=d.answer;}catch(e){}}if(!a)a='📚 '+q+' = كلمة جميلة ⭐';document.getElementById('boardContent').innerHTML='<div class="answer-box">👨‍🏫 '+a+'</div>';}
-</script></body></html>
+const API_BASE = "https://english-kids-teacher-84.abdosaadabdosaad084.workers.dev/";
+</script>
+
+<h2 style="text-align:center; color:#fde047; margin:10px 0;">English Kids Academy 🧑‍🏫<br><small style="color:#94a3b8; font-size:0.9rem;">مدرس ذكي ومحرك بحث تعليمي - لجميع الأعمار</small></h2>
+
+<div style="display:flex; gap:10px; margin:15px 0; flex-wrap:wrap;">
+<button class="btn btn-active" onclick="setMode('teacher')">🧠 المدرس الذكي</button>
+<button class="btn btn-dark" onclick="setMode('both')">🤖 المدرس + البحث</button>
+<button class="btn btn-dark" style="width:100%;" onclick="setMode('search')">🌐 البحث عبر الإنترنت</button>
+</div>
+
+<div class="card">
+<input id="qInput" class="input" placeholder="اكتب أي سؤال أو موضوع تريد فهمه...">
+<button class="btn btn-primary" style="margin-top:12px;" onclick="searchAndExplain()">🔍 ابحث واشرح</button>
+
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+<button class="btn btn-dark" onclick="speakAnswer()">🔊 اقرأ الإجابة</button>
+<button class="btn btn-dark" onclick="startVoice()">🎙️ إملاء صوتي</button>
+<button class="btn btn-dark" onclick="clearBoard()">🧹 مسح السبورة</button>
+<button class="btn btn-dark" onclick="speechSynthesis.cancel()">⏹️ إيقاف الصوت</button>
+</div>
+</div>
+
+<div class="board" id="board">
+<div style="display:flex; justify-content:space-between; align-items:center;">
+<span style="color:#fde047;">Smart Teacher & Search</span>
+<span class="badge" id="status">السبورة جاهزة ✅</span>
+</div>
+<hr style="border-color:rgba(255,255,255,0.1); margin:12px 0; border-style:dashed;">
+<div id="boardContent" style="text-align:center; padding:30px;">
+<div style="font-size:3rem;">🎓</div>
+<p style="color:#64748b;">اكتب سؤالك فوق واضغط ابحث واشرح</p>
+<p style="color:#475569; font-size:0.8rem;">مثال: ما معنى Apple؟ اشرح لي زمن المضارع البسيط</p>
+</div>
+</div>
+
+<div class="card" style="margin-top:12px;">
+<div style="display:flex; justify-content:space-between; align-items:center;">
+<b style="color:#fde047;">📚 سجل الأسئلة السابقة</b>
+<button class="btn btn-dark" style="padding:6px 10px; font-size:0.8rem;" onclick="clearHistory()">مسح السجل</button>
+</div>
+<div id="history" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"></div>
+</div>
+
+<p style="text-align:center; color:#475569; font-size:0.8rem; margin-top:15px;">English Kids Academy - تعلم واكتشف في كل عمر<br>ملاحظة: المدرس الذكي يعمل عبر خادم آمن Cloudflare</p>
+
+<script>
+let mode = 'teacher';
+let lastAnswer = "";
+
+function setMode(m){
+  mode = m;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn-active'));
+  event.target.classList.add('btn-active');
+  if(m==='teacher') document.getElementById('status').innerText = "المدرس الذكي ✅";
+  if(m==='both') document.getElementById('status').innerText = "المدرس + البحث ✅";
+  if(m==='search') document.getElementById('status').innerText = "وضع البحث 🌐";
+}
+
+async function searchAndExplain(){
+  const q = document.getElementById('qInput').value.trim();
+  if(!q){ alert('اكتب سؤالك يا بطل! 😊'); return; }
+  
+  document.getElementById('status').innerText = "يفكر... 🤔";
+  document.getElementById('boardContent').innerHTML = `<div style="text-align:center;"><div style="font-size:2rem;">🤔</div><p>المدرس بيفكر في:<br><b style="color:#fff;">${q}</b></p><p style="color:#38bdf8;">ثواني يا بطل...</p></div>`;
+  
+  addToHistory(q);
+  
+  try{
+    const res = await fetch(API_BASE, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({question: q, mode: mode})
+    });
+    const data = await res.json();
+    lastAnswer = data.answer;
+    
+    document.getElementById('boardContent').innerHTML = `<div class="answer-box"><div style="color:#4ade80; font-weight:bold; margin-bottom:8px;">👨‍🏫 الإجابة:</div>${lastAnswer}</div>`;
+    document.getElementById('status').innerText = "تمت الإجابة ✅";
+    speak(lastAnswer.substring(0,400));
+  }catch(e){
+    console.error(e);
+    document.getElementById('boardContent').innerHTML = `<div style="color:#fb7185; text-align:center;">😅 مشكلة اتصال، جرب تاني! <br><small>${e.message}</small></div>`;
+    document.getElementById('status').innerText = "خطأ في الاتصال";
+  }
+}
+
+function speakAnswer(){ if(lastAnswer) speak(lastAnswer); }
+function speak(t){
+  try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = /[ء-ي]/.test(t) ? 'ar-SA' : 'en-US'; u.rate=0.9; speechSynthesis.speak(u);}catch(e){}
+}
+function clearBoard(){
+  document.getElementById('boardContent').innerHTML = `<div style="text-align:center; padding:30px;"><div style="font-size:3rem;">🎓</div><p style="color:#64748b;">السبورة جاهزة</p></div>`;
+  document.getElementById('qInput').value=""; lastAnswer=""; document.getElementById('status').innerText="السبورة جاهزة ✅"; speechSynthesis.cancel();
+}
+function startVoice(){
+  const rec = new (window.webkitSpeechRecognition||window.SpeechRecognition)();
+  rec.lang = 'ar-EG'; rec.onresult = (e)=>{ document.getElementById('qInput').value = e.results[0][0].transcript; searchAndExplain(); }; rec.start();
+}
+function addToHistory(q){
+  let h = JSON.parse(localStorage.getItem('qa_history')||'[]');
+  if(!h.includes(q)){ h.unshift(q); h=h.slice(0,10); localStorage.setItem('qa_history', JSON.stringify(h)); renderHistory(); }
+}
+function renderHistory(){
+  let h = JSON.parse(localStorage.getItem('qa_history')||'[]');
+  document.getElementById('history').innerHTML = h.map(x=>`<button class="btn btn-dark" style="padding:6px 12px; border-radius:20px; font-size:0.9rem;" onclick="document.getElementById('qInput').value='${x}'; searchAndExplain();">${x}</button>`).join('');
+}
+function clearHistory(){ localStorage.removeItem('qa_history'); renderHistory(); }
+renderHistory();
+</script>
+</body>
+</html>
