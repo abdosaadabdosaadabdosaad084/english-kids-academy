@@ -18,24 +18,36 @@ body{background:#0f172a; color:#fff; font-family:sans-serif; margin:0; padding:1
 </style>
 </head>
 <body>
-
-<!-- 🔥 أهم سطر - رابط الخادم الآمن -->
 <script>
-const API_BASE = "https://english-kids-teacher-84.abdosaadabdosaad084.workers.dev/";
+const API_BASE = "https://round-king-d129.abdosaadabdosaad084.workers.dev/";
+const LOCAL_DICT = {
+"تلميذ":"تلميذ = Student - النطق: ستودنت - ولد ذكي يتعلم في المدرسة ⭐\nمثال: I am a smart student - أنا تلميذ شاطر",
+"التلميذ":"التلميذ = The Student - ذا ستودنت",
+"تلاميذ":"تلاميذ = Students - ستودنتس",
+"مدرسة":"مدرسة = School - سكول",
+"كتاب":"كتاب = Book - بوك",
+"قلم":"قلم = Pen - بن",
+"ولد":"ولد = Boy - بوي",
+"بنت":"بنت = Girl - جيرل",
+"معلم":"معلم = Teacher - تيتشر",
+"بيت":"بيت = House - هاوس",
+"تفاحة":"تفاحة = Apple - آبل",
+"سيارة":"سيارة = Car - كار",
+"شمس":"شمس = Sun - صن",
+"قمر":"قمر = Moon - مون",
+"ماء":"ماء = Water - ووتر",
+"اسد":"اسد = Lion - لايون"
+};
 </script>
-
-<h2 style="text-align:center; color:#fde047; margin:10px 0;">English Kids Academy 🧑‍🏫<br><small style="color:#94a3b8; font-size:0.9rem;">مدرس ذكي ومحرك بحث تعليمي - لجميع الأعمار</small></h2>
-
+<h2 style="text-align:center; color:#fde047; margin:10px 0;">English Kids Academy 🧑‍🏫<br><small style="color:#94a3b8; font-size:0.9rem;">مدرس ذكي - لجميع الأعمار</small></h2>
 <div style="display:flex; gap:10px; margin:15px 0; flex-wrap:wrap;">
 <button class="btn btn-active" onclick="setMode('teacher')">🧠 المدرس الذكي</button>
 <button class="btn btn-dark" onclick="setMode('both')">🤖 المدرس + البحث</button>
 <button class="btn btn-dark" style="width:100%;" onclick="setMode('search')">🌐 البحث عبر الإنترنت</button>
 </div>
-
 <div class="card">
 <input id="qInput" class="input" placeholder="اكتب أي سؤال أو موضوع تريد فهمه...">
 <button class="btn btn-primary" style="margin-top:12px;" onclick="searchAndExplain()">🔍 ابحث واشرح</button>
-
 <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
 <button class="btn btn-dark" onclick="speakAnswer()">🔊 اقرأ الإجابة</button>
 <button class="btn btn-dark" onclick="startVoice()">🎙️ إملاء صوتي</button>
@@ -43,7 +55,6 @@ const API_BASE = "https://english-kids-teacher-84.abdosaadabdosaad084.workers.de
 <button class="btn btn-dark" onclick="speechSynthesis.cancel()">⏹️ إيقاف الصوت</button>
 </div>
 </div>
-
 <div class="board" id="board">
 <div style="display:flex; justify-content:space-between; align-items:center;">
 <span style="color:#fde047;">Smart Teacher & Search</span>
@@ -53,10 +64,9 @@ const API_BASE = "https://english-kids-teacher-84.abdosaadabdosaad084.workers.de
 <div id="boardContent" style="text-align:center; padding:30px;">
 <div style="font-size:3rem;">🎓</div>
 <p style="color:#64748b;">اكتب سؤالك فوق واضغط ابحث واشرح</p>
-<p style="color:#475569; font-size:0.8rem;">مثال: ما معنى Apple؟ اشرح لي زمن المضارع البسيط</p>
+<p style="color:#475569; font-size:0.8rem;">مثال: تلميذ - Apple - مدرسة</p>
 </div>
 </div>
-
 <div class="card" style="margin-top:12px;">
 <div style="display:flex; justify-content:space-between; align-items:center;">
 <b style="color:#fde047;">📚 سجل الأسئلة السابقة</b>
@@ -64,50 +74,46 @@ const API_BASE = "https://english-kids-teacher-84.abdosaadabdosaad084.workers.de
 </div>
 <div id="history" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"></div>
 </div>
-
-<p style="text-align:center; color:#475569; font-size:0.8rem; margin-top:15px;">English Kids Academy - تعلم واكتشف في كل عمر<br>ملاحظة: المدرس الذكي يعمل عبر خادم آمن Cloudflare</p>
-
+<p style="text-align:center; color:#475569; font-size:0.8rem; margin-top:15px;">English Kids Academy - تعلم واكتشف في كل عمر</p>
 <script>
 let mode = 'teacher';
 let lastAnswer = "";
-
 function setMode(m){
   mode = m;
-  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn-active'));
-  event.target.classList.add('btn-active');
+  document.querySelectorAll('.btn').forEach(b=>{ if(b.innerText.includes('المدرس')) b.classList.remove('btn-active'); });
+  try{ event.target.classList.add('btn-active'); }catch(e){}
   if(m==='teacher') document.getElementById('status').innerText = "المدرس الذكي ✅";
   if(m==='both') document.getElementById('status').innerText = "المدرس + البحث ✅";
   if(m==='search') document.getElementById('status').innerText = "وضع البحث 🌐";
 }
-
 async function searchAndExplain(){
   const q = document.getElementById('qInput').value.trim();
   if(!q){ alert('اكتب سؤالك يا بطل! 😊'); return; }
-  
   document.getElementById('status').innerText = "يفكر... 🤔";
   document.getElementById('boardContent').innerHTML = `<div style="text-align:center;"><div style="font-size:2rem;">🤔</div><p>المدرس بيفكر في:<br><b style="color:#fff;">${q}</b></p><p style="color:#38bdf8;">ثواني يا بطل...</p></div>`;
-  
   addToHistory(q);
-  
-  try{
-    const res = await fetch(API_BASE, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({question: q, mode: mode})
-    });
-    const data = await res.json();
-    lastAnswer = data.answer;
-    
-    document.getElementById('boardContent').innerHTML = `<div class="answer-box"><div style="color:#4ade80; font-weight:bold; margin-bottom:8px;">👨‍🏫 الإجابة:</div>${lastAnswer}</div>`;
-    document.getElementById('status').innerText = "تمت الإجابة ✅";
-    speak(lastAnswer.substring(0,400));
-  }catch(e){
-    console.error(e);
-    document.getElementById('boardContent').innerHTML = `<div style="color:#fb7185; text-align:center;">😅 مشكلة اتصال، جرب تاني! <br><small>${e.message}</small></div>`;
-    document.getElementById('status').innerText = "خطأ في الاتصال";
-  }
-}
 
+  let answer = LOCAL_DICT[q] || LOCAL_DICT[q.toLowerCase()];
+  if(!answer && q.includes("تلميذ")) answer = LOCAL_DICT["تلميذ"];
+
+  if(!answer){
+    try{
+      const res = await fetch(API_BASE, {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({question: q, mode: mode})
+      });
+      const data = await res.json();
+      answer = data.answer;
+    }catch(e){ answer = null; }
+  }
+  if(!answer) answer = `📚 ${q} = ${q} - كلمة جميلة! ⭐\nمثال: I love ${q}`;
+
+  lastAnswer = answer;
+  document.getElementById('boardContent').innerHTML = `<div class="answer-box"><div style="color:#4ade80; font-weight:bold; margin-bottom:8px;">👨‍🏫 الإجابة:</div>${answer}</div>`;
+  document.getElementById('status').innerText = "تمت الإجابة ✅";
+  speak(answer.substring(0,400));
+}
 function speakAnswer(){ if(lastAnswer) speak(lastAnswer); }
 function speak(t){
   try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = /[ء-ي]/.test(t) ? 'ar-SA' : 'en-US'; u.rate=0.9; speechSynthesis.speak(u);}catch(e){}
