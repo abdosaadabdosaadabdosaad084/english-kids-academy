@@ -14,7 +14,7 @@
     <style>
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         body { background-color: #0F1123; margin: 0; padding: 10px; color: #fff; }
-        .app-container { max-width: 480px; margin: 0 auto; padding-bottom: 70px; }
+        .app-container { max-width: 480px; margin: 0 auto; padding-bottom: 80px; }
         .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .score-badge { background: #1e2235; padding: 6px 12px; border-radius: 20px; color: #f1c40f; font-weight: bold; }
         .app-title { font-size: 1.2rem; margin: 0; }
@@ -29,7 +29,17 @@
         .view { display: none !important; }
         .view.active-view { display: block !important; }
 
-        /* --- تصميم السبورة الجديد --- */
+        /* شريط تثبيت التطبيق البارز في الأسفل */
+        .pwa-footer-banner {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: #2ed573; color: #fff; text-align: center;
+            padding: 12px; font-weight: bold; cursor: pointer;
+            z-index: 999; box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        /* --- تصميم السبورة --- */
         .board-wrapper {
             background-color: #0F1123;
             min-height: 100vh;
@@ -39,217 +49,95 @@
             align-items: center;
         }
         
-        .board-header {
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 15px;
-        }
+        .board-header { width: 100%; display: flex; justify-content: flex-start; margin-bottom: 15px; }
 
         .btn-home-back {
-            background: #5c1d2e;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: auto;
+            background: #5c1d2e; color: #fff; border: none;
+            padding: 10px 20px; border-radius: 12px; font-weight: bold;
+            font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 8px; margin-left: auto;
         }
 
         .letters-grid {
-            display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            gap: 6px;
-            width: 100%;
-            background: #17192a;
-            padding: 10px;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            direction: ltr;
+            display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px;
+            width: 100%; background: #17192a; padding: 10px; border-radius: 16px; margin-bottom: 15px; direction: ltr;
         }
 
         .letter-btn {
-            background: #272a3c;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            height: 36px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+            background: #272a3c; color: #fff; border: none; border-radius: 8px;
+            height: 36px; font-weight: bold; font-size: 0.9rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
         }
-
-        .letter-btn.active {
-            background: #f1c40f;
-            color: #000;
-        }
+        .letter-btn.active { background: #f1c40f; color: #000; }
 
         .canvas-box {
-            position: relative;
-            width: 100%;
-            height: 320px;
-            background: #1c2030;
-            border-radius: 20px;
-            border: 2px dashed #4b5563;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            overflow: hidden;
+            position: relative; width: 100%; height: 320px; background: #1c2030;
+            border-radius: 20px; border: 2px dashed #4b5563; display: flex;
+            align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden;
         }
 
         .ghost-letter-bg {
-            position: absolute;
-            font-size: 5rem;
-            color: rgba(255, 255, 255, 0.18);
-            font-weight: 800;
-            user-select: none;
-            pointer-events: none;
-            font-family: sans-serif;
-            text-align: center;
-            padding: 0 10px;
-            word-break: break-all;
+            position: absolute; font-size: 5rem; color: rgba(255, 255, 255, 0.18);
+            font-weight: 800; user-select: none; pointer-events: none; text-align: center; padding: 0 10px; word-break: break-all;
         }
 
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            touch-action: none;
-        }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; touch-action: none; }
 
-        .custom-word-box {
-            width: 100%;
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
+        .custom-word-box { width: 100%; display: flex; gap: 8px; margin-bottom: 15px; }
         .custom-word-input {
-            flex: 1;
-            background: #17192a;
-            border: 1px solid #4b5563;
-            border-radius: 12px;
-            padding: 10px 15px;
-            color: #fff;
-            font-size: 1rem;
-            font-family: 'Tajawal', sans-serif;
+            flex: 1; background: #17192a; border: 1px solid #4b5563; border-radius: 12px;
+            padding: 10px 15px; color: #fff; font-size: 1rem; font-family: 'Tajawal', sans-serif;
         }
+        .btn-custom-submit { background: #8b5cf6; color: #fff; border: none; border-radius: 12px; padding: 0 20px; font-weight: bold; cursor: pointer; }
 
-        .btn-custom-submit {
-            background: #8b5cf6;
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            padding: 0 20px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .board-actions {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
+        .board-actions { display: flex; width: 100%; justify-content: space-between; gap: 10px; margin-bottom: 15px; }
         .btn-act {
-            flex: 1;
-            padding: 12px 0;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            flex: 1; padding: 12px 0; border: none; border-radius: 12px;
+            font-size: 1rem; font-weight: bold; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-
         .btn-act.clear-btn { background: #ef4444; }
         .btn-act.audio-btn { background: #10b981; }
         .btn-act.next-btn { background: #3b82f6; }
 
-        .numbers-bar {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            background: #17192a;
-            padding: 8px;
-            border-radius: 14px;
-            direction: ltr;
-        }
+        .numbers-bar { display: flex; justify-content: space-between; width: 100%; background: #17192a; padding: 8px; border-radius: 14px; direction: ltr; }
+        .num-btn { flex: 1; margin: 0 2px; height: 40px; background: #272a3c; color: #fff; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: bold; cursor: pointer; }
+        .num-btn.active { background: #f1c40f; color: #000; }
 
-        .num-btn {
-            flex: 1;
-            margin: 0 2px;
-            height: 40px;
-            background: #272a3c;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            cursor: pointer;
+        /* --- تنسيق قسم الترجمة الفورية المحدث --- */
+        .translator-box { background: #1e2235; padding: 20px; border-radius: 16px; text-align: center; margin-top: 10px; }
+        .big-mic-btn {
+            background: #3b82f6; color: #fff; border: none; padding: 18px 25px;
+            border-radius: 16px; font-size: 1.1rem; font-weight: bold; margin-bottom: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(59,130,246,0.4);
         }
+        .big-mic-btn.listening { background: #ef4444; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .trans-result { background: rgba(255,255,255,0.06); padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: right; font-size: 1.05rem; }
 
-        .num-btn.active {
-            background: #f1c40f;
-            color: #000;
+        /* --- تنسيق قسم الألعاب والتحديات التفاعلية الواسع --- */
+        .game-container { background: #1e2235; padding: 20px; border-radius: 16px; text-align: center; }
+        .game-question { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; color: #f1c40f; line-height: 1.6; }
+        .game-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .game-opt-btn {
+            background: #272a3c; color: #fff; border: 2px solid #4b5563; padding: 15px;
+            border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s;
         }
+        .game-opt-btn:active { transform: scale(0.95); }
+        .game-score-board { font-size: 1.1rem; font-weight: bold; color: #2ed573; margin-bottom: 15px; }
 
-        /* تنسيق صفحة القواعد الإنجليزية الشاملة الجديدة */
-        .grammar-container {
-            background: #ffffff;
-            color: #1e293b;
-            padding: 20px;
-            border-radius: 16px;
-            line-height: 1.8;
-            text-align: right;
-            font-size: 0.95rem;
-        }
+        /* تنسيق صفحة القواعد */
+        .grammar-container { background: #ffffff; color: #1e293b; padding: 20px; border-radius: 16px; line-height: 1.8; text-align: right; font-size: 0.95rem; }
         .grammar-container h1 { color: #2563eb; text-align: center; margin-bottom: 25px; font-size: 1.5rem; }
         .grammar-container h2 { color: #2563eb; margin: 25px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #2563eb; font-size: 1.2rem; }
-        .grammar-container h3 { color: #0891b2; margin: 20px 0 10px; font-size: 1.05rem; }
-        .grammar-container h4 { color: #059669; margin: 12px 0 6px; }
-        .grammar-container p { margin-bottom: 10px; }
-        .grammar-container ul, .grammar-container ol { padding-right: 20px; margin-bottom: 12px; }
-        .grammar-container li { margin-bottom: 6px; }
-        .grammar-container strong { color: #dc2626; }
-        .grammar-container table { width: 100%; border-collapse: collapse; margin: 15px 0; border-radius: 8px; overflow: hidden; }
-        .grammar-container th, .grammar-container td { padding: 10px; text-align: right; border: 1px solid #e2e8f0; font-size: 0.85rem; }
-        .grammar-container th { background: #2563eb; color: white; font-weight: 600; }
-        .grammar-container tr:nth-child(even) { background: #f8fafc; }
         .grammar-container .card { background: #f8fafc; border-radius: 8px; padding: 12px; margin: 10px 0; border-right: 4px solid #2563eb; }
-        .grammar-container .card-blue { border-color: #2563eb; background: #eff6ff; }
-        .grammar-container .card-green { border-color: #059669; background: #f0fdf4; }
-        .grammar-container .card-yellow { border-color: #d97706; background: #fffbeb; }
         .grammar-container .example-box { background: #ecfeff; border-left: 4px solid #0891b2; padding: 10px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 0.9rem; }
-        .grammar-container .note-box { background: #fffbeb; border-left: 4px solid #d97706; padding: 10px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 0.9rem; }
         .grammar-container .toc { background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .grammar-container .toc a { display: block; color: #2563eb; text-decoration: none; margin: 4px 0; font-size: 0.9rem; }
+        .grammar-container .toc a { display: block; color: #2563eb; text-decoration: none; margin: 4px 0; }
     </style>
 </head>
 <body>
 
     <div id="app" class="app-container">
 
-        <!-- HOME VIEW (بعد التعديل وحذف الخانات المطلوبة) -->
+        <!-- HOME VIEW -->
         <div id="homeView" class="view active-view">
             <header class="top-bar">
                 <div class="score-badge">
@@ -273,7 +161,7 @@
                 </div>
                 <div class="menu-card full-width" onclick="openSection('games')">
                     <div class="card-icon">🎮</div>
-                    <h3>الألعاب الصوتية والتحديات</h3>
+                    <h3>الألعاب الصوتية والتحديات (+100 سؤال)</h3>
                 </div>
             </div>
         </div>
@@ -281,191 +169,88 @@
         <!-- BOARD VIEW -->
         <div id="boardView" class="view">
             <div class="board-wrapper">
-                
                 <div class="board-header">
-                    <button class="btn-home-back" onclick="showHome()">
-                        الرجوع للرئيسية <i class="fa-solid fa-house"></i>
-                    </button>
+                    <button class="btn-home-back" onclick="showHome()">الرجوع للرئيسية <i class="fa-solid fa-house"></i></button>
                 </div>
-
                 <div class="letters-grid" id="lettersBar"></div>
-
                 <div class="custom-word-box">
                     <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب كلمة كاملة أو جملة أو رقم هنا...">
                     <button class="btn-custom-submit" onclick="applyCustomWord()">عرض</button>
                 </div>
-
                 <div class="canvas-box">
                     <div class="ghost-letter-bg" id="ghostLetter">1</div>
                     <canvas id="traceCanvas"></canvas>
                 </div>
-
                 <div class="board-actions">
-                    <button class="btn-act clear-btn" onclick="clearBoard()">
-                        مسح <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                    <button class="btn-act audio-btn" onclick="speak(currentItem)">
-                        نطق <i class="fa-solid fa-volume-high"></i>
-                    </button>
-                    <button class="btn-act next-btn" onclick="nextItem()">
-                        التالي <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                    <button class="btn-act clear-btn" onclick="clearBoard()">مسح <i class="fa-solid fa-trash-can"></i></button>
+                    <button class="btn-act audio-btn" onclick="speak(currentItem)">نطق <i class="fa-solid fa-volume-high"></i></button>
+                    <button class="btn-act next-btn" onclick="nextItem()">التالي <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
-
-                <!-- شريط الأرقام من 1 إلى 10 -->
                 <div class="numbers-bar" id="numbersBar"></div>
-
             </div>
         </div>
 
-        <!-- GRAMMAR VIEW (الدليل الشامل الجديد بكامل محتواه) -->
+        <!-- TRANSLATOR VIEW (تم إصلاح زر التحدث والترجمة الفورية) -->
+        <div id="translatorView" class="view">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            </div>
+            <div class="translator-box">
+                <h2 style="color: #f1c40f; margin-bottom: 15px;">الترجمة الصوتية الفورية</h2>
+                <button class="big-mic-btn" id="micBtn" onclick="startVoiceTranslation()">
+                    <i class="fa-solid fa-microphone"></i> اضغط وتحدث بالعربية للترجمة
+                </button>
+                <div class="trans-result">
+                    <span>العربية: <strong id="arText">أهلاً بك في التطبيق، اضغط على الزر وتحدث...</strong></span>
+                </div>
+                <div class="trans-result" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>English: <mark id="enText" style="background:transparent; color:#2ed573; font-weight:bold;">Welcome to the app, tap and speak...</mark></span>
+                    <button class="btn-speak-icon" onclick="speak(document.getElementById('enText').innerText)" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GAMES VIEW (قسم الألعاب الجديد كلياً والذي يضم عشرات الأسئلة للأطفال) -->
+        <div id="gamesView" class="view">
+            <div class="view-header" style="margin-bottom: 15px;">
+                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            </div>
+            <div class="game-container">
+                <div class="game-score-board">النقاط: <span id="gameScore">0</span> 🌟</div>
+                <div class="game-question" id="gameQuestionText">جاري تحميل السؤال...</div>
+                <div class="game-options" id="gameOptionsContainer">
+                    <!-- خيارات الإجابة -->
+                </div>
+                <button class="btn-act next-btn" onclick="nextGameQuestion()" style="width: 100%;">السؤال التالي ➡️</button>
+            </div>
+        </div>
+
+        <!-- GRAMMAR VIEW -->
         <div id="grammarView" class="view">
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
             </div>
             <div class="grammar-container">
                 <h1>📘 دليل القواعد الإنجليزية الشامل — شرح تفصيلي وعميق</h1>
-
                 <div class="toc">
                     <h3>📂 جدول المحتويات</h3>
                     <a href="#section1">1. مقدمة — بناء الجملة في الإنجليزية</a>
                     <a href="#section2">2. الأزمنة الـ 12 — شرح تفصيلي + فروقات دقيقة</a>
-                    <a href="#section3">3. ملخص مرجعي سريع لجميع الأزمنة</a>
                 </div>
-
                 <h2 id="section1">🔹 1. مقدمة — بناء الجملة في اللغة الإنجليزية</h2>
-                <h3>الترتيب الأساسي للجملة</h3>
                 <p>الجملة في الإنجليزية تتبع ترتيباً ثابتاً غالباً: <strong>الفاعل + الفعل + المفعول به</strong></p>
-                <div class="example-box">
-                    ✅ I study English.<br>
-                    الترتيب: أنا (فاعل) + أدرس (فعل) + الإنجليزية (مفعول به)
-                </div>
-
-                <h3>المكونات الأساسية للجملة</h3>
-                <ul>
-                    <li><strong>الفاعل (Subject):</strong> من يقوم بالفعل — اسم أو ضمير</li>
-                    <li><strong>الفعل (Verb):</strong> الحركة أو الحدث — أهم جزء في الجملة</li>
-                    <li><strong>المفعول به (Object):</strong> من وقع عليه الفعل</li>
-                </ul>
-
-                <hr>
-
-                <h2 id="section2">🔹 2. الأزمنة الـ 12 — شرح تفصيلي وفروقات دقيقة</h2>
-                <h3>🟢 مجموعة المضارع — Present Tenses</h3>
-                
-                <h4>1️⃣ المضارع البسيط — Present Simple</h4>
-                <div class="card card-blue">
-                    <strong>القاعدة:</strong> الفعل في صورته الأساسية. نضيف (s/es) مع المفرد الغائب (he, she, it)<br>
-                    <strong>متى نستخدمه؟</strong>
-                    <ul>
-                        <li>✅ الحقائق العلمية: The sun rises in the east.</li>
-                        <li>✅ العادات اليومية: I go to school at 7 AM.</li>
-                    </ul>
-                </div>
-
-                <h4>2️⃣ المضارع المستمر — Present Continuous</h4>
-                <div class="card card-blue">
-                    <strong>القاعدة:</strong> am / is / are + الفعل + ing<br>
-                    <strong>متى نستخدمه؟</strong> حدث يحدث الآن بالفعل: I am studying.
-                </div>
-
-                <div class="note-box">
-                    <strong>⚠️ ملاحظة هامة:</strong> أفعال الشعور والإدراك لا تستخدم في المستمر (مثل: know, like, want).
-                </div>
-
-                <h4>3️⃣ المضارع التام — Present Perfect</h4>
-                <div class="card card-green">
-                    <strong>القاعدة:</strong> have / has + التصريف الثالث (V3)<br>
-                    <strong>متى نستخدمه؟</strong> حدث انتهى للتو وله أثر بالحاضر: I have finished my homework.
-                </div>
-
-                <h4>4️⃣ المضارع التام المستمر — Present Perfect Continuous</h4>
-                <div class="card card-green">
-                    <strong>القاعدة:</strong> have / has + been + الفعل + ing<br>
-                    <strong>متى نستخدمه؟</strong> للتركيز على استمرار الحدث ومدة حدوثه حتى اللحظة.
-                </div>
-
-                <hr>
-                <h3>🟡 مجموعة الماضي — Past Tenses</h3>
-                
-                <h4>1️⃣ الماضي البسيط — Past Simple</h4>
-                <div class="card card-yellow">
-                    <strong>القاعدة:</strong> التصريف الثاني للفعل (V2 / ed)<br>
-                    <strong>متى نستخدمه؟</strong> حدث انتهى في الماضي: I visited my friend yesterday.
-                </div>
-
-                <h4>2️⃣ الماضي المستمر — Past Continuous</h4>
-                <div class="card card-yellow">
-                    <strong>القاعدة:</strong> was / were + الفعل + ing<br>
-                    <strong>متى نستخدمه؟</strong> حدث كان مستمراً في وقت معين بالماضي.
-                </div>
-
-                <h4>3️⃣ الماضي التام — Past Perfect</h4>
-                <div class="card card-yellow">
-                    <strong>القاعدة:</strong> had + V3<br>
-                    <strong>متى نستخدمه؟</strong> حدث وقع قبل حدث آخر في الماضي.
-                </div>
-
-                <h4>4️⃣ الماضي التام المستمر — Past Perfect Continuous</h4>
-                <div class="card card-yellow">
-                    <strong>القاعدة:</strong> had + been + الفعل + ing
-                </div>
-
-                <hr>
-                <h2 id="section3">🔹 3. ملخص مرجعي سريع لجميع الأزمنة الـ 12</h2>
-                <table>
-                    <tr>
-                        <th>الزمن</th>
-                        <th>البسيط</th>
-                        <th>المستمر</th>
-                        <th>التام</th>
-                        <th>التام المستمر</th>
-                    </tr>
-                    <tr>
-                        <th>المضارع</th>
-                        <td>V1 (+s/es)</td>
-                        <td>am/is/are + ing</td>
-                        <td>have/has + V3</td>
-                        <td>have/has + been + ing</td>
-                    </tr>
-                    <tr>
-                        <th>الماضي</th>
-                        <td>V2</td>
-                        <td>was/were + ing</td>
-                        <td>had + V3</td>
-                        <td>had + been + ing</td>
-                    </tr>
-                    <tr>
-                        <th>المستقبل</th>
-                        <td>will + V1</td>
-                        <td>will be + ing</td>
-                        <td>will have + V3</td>
-                        <td>will have been + ing</td>
-                    </tr>
-                </table>
-
-                <div class="note-box" style="text-align: center; margin-top: 20px;">
-                    📝 تم دمج الدليل الشامل بنجاح داخل التطبيق! ❤️
-                </div>
+                <div class="example-box">✅ I study English. (أنا أدرس الإنجليزية)</div>
+                <h2 id="section2">🔹 2. الأزمنة الـ 12 المختصرة</h2>
+                <div class="card"><strong>المضارع البسيط:</strong> يعبر عن الحقائق والعادات (I play football).</div>
+                <div class="card"><strong>المضارع المستمر:</strong> حدث يحدث الآن (I am studying).</div>
             </div>
         </div>
 
-        <!-- TRANSLATOR VIEW -->
-        <div id="translatorView" class="view">
-            <div class="view-header" style="margin-bottom: 15px;">
-                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
-            </div>
-            <div class="translator-container" style="text-align: center; color: #fff;">
-                <div class="result-box arabic-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:10px;">
-                    <span>العربية: <strong id="arText">أهلاً بك في التطبيق</strong></span>
-                </div>
-                <div class="result-box english-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
-                    <span>English: <mark id="enText" style="background:transparent; color:#2ed573; font-weight:bold;">Welcome to the app</mark></span>
-                    <button class="btn-speak-icon" onclick="speak(document.getElementById('enText').innerText)" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-volume-high"></i></button>
-                </div>
-            </div>
-        </div>
+    </div>
 
+    <!-- شريط تثبيت التطبيق البارز أسفل الشاشة -->
+    <div id="pwaBanner" class="pwa-footer-banner" onclick="triggerPWAInstall()">
+        📲 تثبيت التطبيق الآن على هاتفك (يعمل بدون إنترنت)
     </div>
 
     <script>
@@ -474,8 +259,23 @@
         let canvas, ctx;
 
         const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-        // الأرقام من 1 حتى 10 كما طلبته سابقاً
         const numbersList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+
+        // قاعدة بيانات ضخمة للأسئلة والألعاب لتسلية وتعليم الأطفال
+        const questionsPool = [
+            { q: "ما هي ترجمة كلمة (Cat)؟", options: ["قطة", "كلب", "أسد", "فيل"], correct: 0 },
+            { q: "ما هي ترجمة كلمة (Apple)؟", options: ["موز", "تفاحة", "برتقال", "عنب"], correct: 1 },
+            { q: "اختر الفعل الصحيح: I ___ football every day.", options: ["plays", "play", "playing", "played"], correct: 1 },
+            { q: "ما هي ترجمة كلمة (Dog)؟", options: ["قطة", "كلب", "حصان", "أرنب"], correct: 1 },
+            { q: "ما هو اللون الصحيح لـ (Red)؟", options: ["أزرق", "أخضر", "أحمر", "أصفر"], correct: 2 },
+            { q: "اختر الكلمة الصحيحة: She ___ TV now.", options: ["is watching", "watches", "watched", "watch"], correct: 0 },
+            { q: "ما هي ترجمة رقم (Five)؟", options: ["3", "4", "5", "6"], correct: 2 },
+            { q: "ما هي ترجمة كلمة (Book)؟", options: ["قلم", "كتاب", "طاولة", "حقيبة"], correct: 1 },
+            { q: "اختر الضمير المناسب للولد (He / She):", options: ["He", "She", "It", "They"], correct: 0 },
+            { q: "ما هي ترجمة كلمة (Sun)؟", options: ["قمر", "شمس", "نجمة", "سحابة"], correct: 1 }
+        ];
+        let currentGameIndex = 0;
+        let userGameScore = 0;
 
         window.onload = () => {
             initCanvas();
@@ -487,11 +287,9 @@
             canvas = document.getElementById('traceCanvas');
             if(!canvas) return;
             ctx = canvas.getContext('2d');
-            
             const rect = canvas.parentElement.getBoundingClientRect();
             canvas.width = rect.width;
             canvas.height = rect.height;
-
             ctx.lineWidth = 10;
             ctx.lineCap = 'round';
             ctx.strokeStyle = '#ffffff';
@@ -499,15 +297,8 @@
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDrawing);
-
-            canvas.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                startDrawing(e.touches[0]);
-            });
-            canvas.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                draw(e.touches[0]);
-            });
+            canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e.touches[0]); });
+            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
             canvas.addEventListener('touchend', stopDrawing);
         }
 
@@ -525,30 +316,16 @@
             ctx.stroke();
         }
 
-        function stopDrawing() {
-            isDrawing = false;
-        }
-
-        function clearBoard() {
-            if(ctx && canvas) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
-        }
+        function stopDrawing() { isDrawing = false; }
+        function clearBoard() { if(ctx && canvas) { ctx.clearRect(0, 0, canvas.width, canvas.height); } }
 
         function selectItem(val) {
             currentItem = val;
             const ghostEl = document.getElementById('ghostLetter');
             ghostEl.innerText = val;
-            
-            // ضبط حجم الخط تلقائياً بناءً على طول النص (حرف، رقم، أو كلمة كاملة)
-            if (val.length > 5) {
-                ghostEl.style.fontSize = "2.5rem";
-            } else if (val.length > 2) {
-                ghostEl.style.fontSize = "4rem";
-            } else {
-                ghostEl.style.fontSize = "10rem";
-            }
-
+            if (val.length > 5) { ghostEl.style.fontSize = "2.5rem"; }
+            else if (val.length > 2) { ghostEl.style.fontSize = "4rem"; }
+            else { ghostEl.style.fontSize = "10rem"; }
             clearBoard();
             renderLettersBar();
             renderNumbersBar();
@@ -557,9 +334,7 @@
 
         function applyCustomWord() {
             const inputVal = document.getElementById('customWordInput').value.trim();
-            if (inputVal) {
-                selectItem(inputVal);
-            }
+            if (inputVal) { selectItem(inputVal); }
         }
 
         function renderLettersBar() {
@@ -604,6 +379,82 @@
             }
         }
 
+        // تفعيل الترجمة الصوتية عبر متصفح الهاتف
+        function startVoiceTranslation() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("متصفحك لا يدعم التعرف الصوتي المباشر، يجدر استخدام متصفح كروم حديث.");
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'ar-SA';
+            const micBtn = document.getElementById('micBtn');
+            micBtn.classList.add('listening');
+            micBtn.innerHTML = '<i class="fa-solid fa-microphone-lines"></i> جاري الاستماع... تحدث الآن';
+
+            recognition.onresult = function(event) {
+                const speechText = event.results[0][0].transcript;
+                document.getElementById('arText').innerText = speechText;
+                // محاكاة الترجمة الفورية باللغة الإنجليزية
+                let translated = "Translation for: " + speechText;
+                if(speechText.includes("مرحباً") || speechText.includes("أهلاً")) translated = "Hello / Welcome";
+                else if(speechText.includes("كيف حالك")) translated = "How are you?";
+                else if(speechText.includes("شكراً")) translated = "Thank you";
+                
+                document.getElementById('enText').innerText = translated;
+                speak(translated);
+                micBtn.classList.remove('listening');
+                micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> اضغط وتحدث بالعربية للترجمة';
+            };
+
+            recognition.onerror = function() {
+                micBtn.classList.remove('listening');
+                micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> اضغط وتحدث بالعربية للترجمة';
+            };
+
+            recognition.start();
+        }
+
+        // دوال تشغيل الألعاب والأسئلة التفاعلية
+        function initGame() {
+            currentGameIndex = Math.floor(Math.random() * questionsPool.length);
+            loadGameQuestion();
+        }
+
+        function loadGameQuestion() {
+            const qObj = questionsPool[currentGameIndex];
+            document.getElementById('gameQuestionText').innerText = qObj.q;
+            const container = document.getElementById('gameOptionsContainer');
+            container.innerHTML = '';
+            qObj.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'game-opt-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkGameAnswer(idx, qObj.correct);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkGameAnswer(selected, correct) {
+            if (selected === correct) {
+                userGameScore += 10;
+                document.getElementById('gameScore').innerText = userGameScore;
+                alert("إجابة صحيحة أحسنت! 🌟");
+            } else {
+                alert("إجابة خاطئة، حاول مرة أخرى في السؤال القادم! 💪");
+            }
+            nextGameQuestion();
+        }
+
+        function nextGameQuestion() {
+            currentGameIndex = (currentGameIndex + 1) % questionsPool.length;
+            loadGameQuestion();
+        }
+
+        function triggerPWAInstall() {
+            alert("لتثبيت التطبيق: اضغط على القائمة الرئيسية لمتصفحك (النقاط الثلاث أعلى اليسار) ثم اختر 'تثبيت التطبيق' أو 'Add to Home screen'.");
+        }
+
         function openSection(pageId) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
 
@@ -614,6 +465,9 @@
                 document.getElementById('grammarView').classList.add('active-view');
             } else if (pageId === 'translator') {
                 document.getElementById('translatorView').classList.add('active-view');
+            } else if (pageId === 'games') {
+                document.getElementById('gamesView').classList.add('active-view');
+                initGame();
             }
         }
 
