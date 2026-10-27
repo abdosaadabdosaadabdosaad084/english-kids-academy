@@ -49,7 +49,7 @@
         .letter-btn.active { background: #f1c40f; color: #000; }
 
         .canvas-box { position: relative; width: 100%; height: 300px; background: #1c2030; border-radius: 20px; border: 2px dashed #4b5563; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; }
-        .ghost-letter-bg { position: absolute; font-size: 4rem; color: rgba(255, 255, 255, 0.22); font-weight: 800; user-select: none; pointer-events: none; text-align: center; padding: 0 10px; word-break: break-all; }
+        .ghost-letter-bg { position: absolute; font-size: 3.5rem; color: rgba(255, 255, 255, 0.25); font-weight: 800; user-select: none; pointer-events: none; text-align: center; padding: 0 10px; word-break: break-all; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; touch-action: none; }
 
         .custom-word-box { width: 100%; display: flex; gap: 8px; margin-bottom: 15px; }
@@ -141,7 +141,7 @@
                 </div>
                 <div class="letters-grid" id="lettersBar"></div>
                 <div class="custom-word-box">
-                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب كلمة عربية أو إنجليزية للعرض والترجمة...">
+                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب للترجمة (عربي ⇄ إنجليزي أو بحث جوجل)...">
                     <button class="btn-custom-submit" onclick="applyCustomWord()">عرض</button>
                 </div>
                 <div class="canvas-box">
@@ -391,8 +391,13 @@
 
         function selectItem(val) {
             let processedVal = val.trim();
-            // التحقق مما إذا كانت المدخلات كلمة موجودة بالقاموس لترجمتها تلقائياً
             let lowerKey = processedVal.toLowerCase();
+
+            // إذا كانت الكلمة غير موجودة في القاموس المحلي، يتم فتح محرك بحث جوجل للترجمة والبحث عنها مباشرة بناءً على طلبك
+            if (!bilingualDictionary[processedVal] && !bilingualDictionary[lowerKey] && processedVal.length > 2) {
+                window.open('https://www.google.com/search?q=' + encodeURIComponent('ترجمة ' + processedVal), '_blank');
+            }
+
             if (bilingualDictionary[processedVal]) {
                 processedVal = bilingualDictionary[processedVal];
             } else if (bilingualDictionary[lowerKey]) {
@@ -403,9 +408,9 @@
             const ghostEl = document.getElementById('ghostLetter');
             ghostEl.innerText = processedVal;
             
-            if (processedVal.length > 5) { ghostEl.style.fontSize = "2.5rem"; }
-            else if (processedVal.length > 2) { ghostEl.style.fontSize = "4rem"; }
-            else { ghostEl.style.fontSize = "8rem"; }
+            if (processedVal.length > 5) { ghostEl.style.fontSize = "2.2rem"; }
+            else if (processedVal.length > 2) { ghostEl.style.fontSize = "3.5rem"; }
+            else { ghostEl.style.fontSize = "7rem"; }
 
             clearBoard();
             renderLettersBar();
@@ -512,7 +517,7 @@
             });
         }
 
-        // تشغيل أصوات وتأثيرات التصفيق والإنذار باللونين الأخضر والأحمر
+        // تشغيل صوت التصفيق أو إنذار الخطأ مع الإضاءة (أخضر / أحمر)
         function playSoundEffect(type) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -525,12 +530,12 @@
 
         function checkGameAnswer(btnElement, selected, correct) {
             const allBtns = document.querySelectorAll('.game-opt-btn');
-            allBtns.forEach(b => b.style.pointerEvents = 'none'); // تعطيل الضغط المتكرر
+            allBtns.forEach(b => b.style.pointerEvents = 'none');
 
             if (selected === correct) {
                 userGameScore += 10;
                 document.getElementById('gameScore').innerText = userGameScore;
-                btnElement.classList.add('correct-glow'); // إضاءة خضراء وتصفيق صوتي
+                btnElement.classList.add('correct-glow'); // إضاءة خضراء وصوت تصفيق
                 playSoundEffect('success');
             } else {
                 btnElement.classList.add('wrong-glow'); // إضاءة حمراء وإنذار صوتي
