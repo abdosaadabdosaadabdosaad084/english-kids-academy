@@ -1,512 +1,174 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Kids Academy - السبورة التعليمية الذكية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0f172a;
-            --board-bg: #1e293b;
-            --board-border: #475569;
-            --chalk-white: #f8fafc;
-            --chalk-yellow: #fde047;
-            --chalk-green: #4ade80;
-            --chalk-blue: #38bdf8;
-            --chalk-pink: #f472b6;
-            --accent-purple: #8b5cf6;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--chalk-white);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 15px;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .header h1 {
-            color: var(--chalk-yellow);
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px rgba(253, 224, 71, 0.3);
-        }
-
-        .search-container {
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 14px 20px;
-            border-radius: 12px;
-            border: 2px solid var(--board-border);
-            background: var(--board-bg);
-            color: var(--chalk-white);
-            font-size: 1.1rem;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            border-color: var(--chalk-blue);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
-        }
-
-        .btn-explain {
-            padding: 14px 28px;
-            border-radius: 12px;
-            border: none;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-explain:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
-        }
-
-        .blackboard-frame {
-            width: 100%;
-            max-width: 900px;
-            background: #0f172a;
-            border: 12px solid #475569;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 50px rgba(0, 0, 0, 0.8);
-            padding: 25px;
-            min-height: 480px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .board-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px stroke #334155;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        .teacher-badge {
-            background: rgba(56, 189, 248, 0.15);
-            color: var(--chalk-blue);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            border: 1px solid var(--chalk-blue);
-        }
-
-        .board-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #64748b;
-            margin: auto;
-        }
-
-        .lesson-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .lesson-title {
-            color: var(--chalk-yellow);
-            font-size: 1.6rem;
-            border-bottom: 2px dashed #475569;
-            padding-bottom: 8px;
-        }
-
-        .alphabet-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .letter-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--board-border);
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-            transition: all 0.2s;
-        }
-
-        .letter-card:hover {
-            border-color: var(--chalk-blue);
-            transform: scale(1.05);
-        }
-
-        .letter-main {
-            font-family: 'Comic Neue', cursive, sans-serif;
-            font-size: 1.6rem;
-            color: var(--chalk-green);
-        }
-
-        .letter-word {
-            font-size: 0.95rem;
-            color: var(--chalk-yellow);
-            margin-top: 4px;
-        }
-
-        .letter-ar {
-            font-size: 0.85rem;
-            color: #94a3b8;
-        }
-
-        .example-box {
-            background: rgba(255, 255, 255, 0.04);
-            border-right: 4px solid var(--chalk-green);
-            padding: 12px 16px;
-            border-radius: 0 10px 10px 0;
-            margin: 6px 0;
-        }
-
-        .example-en {
-            direction: ltr;
-            text-align: left;
-            font-family: 'Comic Neue', cursive, sans-serif;
-            font-size: 1.3rem;
-            color: var(--chalk-green);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .example-ar {
-            color: #94a3b8;
-            font-size: 1.05rem;
-            margin-top: 4px;
-        }
-
-        .btn-audio {
-            background: none;
-            border: none;
-            color: var(--chalk-yellow);
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 4px;
-            transition: transform 0.2s;
-        }
-
-        .btn-audio:hover {
-            transform: scale(1.2);
-        }
-
-        /* ذاكرة وسجل دروس السبورة */
-        .history-section {
-            width: 100%;
-            max-width: 900px;
-            margin-top: 20px;
-            background: var(--board-bg);
-            border: 1px solid var(--board-border);
-            border-radius: 12px;
-            padding: 15px;
-        }
-
-        .history-title {
-            color: var(--chalk-yellow);
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .history-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .history-chip {
-            background: rgba(139, 92, 246, 0.2);
-            border: 1px solid var(--accent-purple);
-            color: var(--chalk-white);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .history-chip:hover {
-            background: var(--accent-purple);
-        }
-
-        .btn-clear-history {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<title>English Kids Academy | المدرس الذكي</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1222;--panel:#111c31;--board:#080e1b;--border:#34445d;--text:#f8fafc;--muted:#a8b5c9;--yellow:#fde047;--blue:#38bdf8;--green:#4ade80;--purple:#8b5cf6;--red:#fb7185}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#172440,var(--bg) 55%);color:var(--text);font-family:'Tajawal',sans-serif;min-height:100vh;padding:16px}
+.app{max-width:980px;margin:auto}.header{text-align:center;padding:8px 0 18px}.header h1{font-size:clamp(1.5rem,4vw,2.25rem);color:var(--yellow);margin:0 0 5px}.header p{color:var(--muted);margin:0}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.mode{flex:1;min-width:135px;border:1px solid var(--border);border-radius:12px;padding:11px;background:var(--panel);color:var(--text);font:inherit;font-weight:700;cursor:pointer}.mode.active{background:linear-gradient(135deg,#2563eb,#7c3aed);border-color:transparent}
+.search{display:flex;gap:10px;margin-bottom:14px}.search input{min-width:0;flex:1;padding:15px;border-radius:13px;border:2px solid var(--border);background:var(--panel);color:var(--text);font:inherit;font-size:1.05rem;outline:none}.search input:focus{border-color:var(--blue)}button{font-family:inherit}.primary{border:0;border-radius:13px;padding:13px 19px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:1rem;font-weight:800;cursor:pointer}.primary:disabled{opacity:.55;cursor:wait}.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.small{border:1px solid var(--border);border-radius:10px;background:#17243a;color:var(--text);padding:9px 12px;cursor:pointer;font-size:.95rem}.small:hover,.mode:hover{filter:brightness(1.12)}
+.frame{border:10px solid #475569;border-radius:20px;background:var(--board);min-height:430px;padding:clamp(14px,3vw,26px);box-shadow:0 18px 40px #0008}.boardhead{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px dashed #34445d;padding-bottom:12px;margin-bottom:18px;flex-wrap:wrap}.status{font-size:.9rem;color:var(--blue);background:#0d2940;border:1px solid #1d6688;border-radius:99px;padding:6px 12px}.content{line-height:1.9;overflow-wrap:anywhere}.empty{text-align:center;color:var(--muted);padding:55px 10px}.empty .emoji{font-size:3rem}.lesson-title{color:var(--yellow);font-size:clamp(1.3rem,3vw,1.8rem);margin:0 0 14px;padding-bottom:10px;border-bottom:2px dashed #334155}.answer{font-size:1.06rem;white-space:normal}.answer h2,.answer h3{color:var(--green);margin:18px 0 6px}.answer ul,.answer ol{padding-right:24px}.answer code{direction:ltr;unicode-bidi:embed;background:#1b2940;padding:2px 5px;border-radius:5px}.answer a{color:var(--blue);overflow-wrap:anywhere}.answer blockquote{border-right:4px solid var(--green);margin:12px 0;padding:8px 14px;background:#111c31;border-radius:8px}.result-card{background:#111c31;border-right:4px solid var(--green);border-radius:0 10px 10px 0;padding:14px 16px;margin:12px 0}.result-card a{color:var(--blue)}.result-meta{font-size:.9rem;color:var(--muted)}.history{margin-top:18px;border:1px solid var(--border);border-radius:13px;padding:14px;background:var(--panel)}.historyhead{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px;color:var(--yellow)}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{background:#22234d;border:1px solid #6d5bd0;color:white;border-radius:99px;padding:6px 12px;cursor:pointer;max-width:100%;overflow-wrap:anywhere}.hint{font-size:.9rem;color:var(--muted);margin-top:12px}.footer{text-align:center;color:#7f8da5;font-size:.85rem;margin:18px 0}.error{color:#fecaca;background:#451a24;border:1px solid #9f3348;border-radius:10px;padding:12px}.sources{margin-top:15px}.sources a{display:block;margin:7px 0}.hidden{display:none!important}
+@media(max-width:600px){body{padding:10px}.search{flex-direction:column}.primary{width:100%}.frame{border-width:7px;min-height:360px}.boardhead{align-items:flex-start}.mode{min-width:calc(50% - 6px)}}
+</style>
 </head>
 <body>
+<div class="app">
+  <header class="header">
+    <h1>👨‍🏫 English Kids Academy</h1>
+    <p>مدرس ذكي ومحرك بحث تعليمي — لجميع الأعمار</p>
+  </header>
 
-    <div class="header">
-        <h1>👨‍🏫 English Kids Academy</h1>
-        <p style="color: #94a3b8;">محرك السبورة التعليمية الذكية</p>
+  <div class="toolbar" role="group" aria-label="طريقة الإجابة">
+    <button class="mode active" data-mode="both" onclick="setMode('both')">🤖 المدرس + البحث</button>
+    <button class="mode" data-mode="ai" onclick="setMode('ai')">🧠 المدرس الذكي</button>
+    <button class="mode" data-mode="search" onclick="setMode('search')">🌐 البحث عبر الإنترنت</button>
+  </div>
+
+  <form class="search" id="questionForm">
+    <input id="userInput" type="search" autocomplete="off" placeholder="اكتب أي سؤال أو موضوع تريد فهمه..." aria-label="اكتب سؤالك">
+    <button class="primary" id="askButton" type="submit">ابحث واشرح 🔎</button>
+  </form>
+  <div class="tools">
+    <button class="small" onclick="startVoice()">🎙️ إملاء صوتي</button>
+    <button class="small" onclick="readAnswer()">🔊 اقرأ الإجابة</button>
+    <button class="small" onclick="stopReading()">⏹️ إيقاف الصوت</button>
+    <button class="small" onclick="clearBoard()">🧹 مسح السبورة</button>
+  </div>
+
+  <main class="frame">
+    <div class="boardhead">
+      <span class="status" id="boardStatus">السبورة جاهزة</span>
+      <span style="color:var(--yellow)">Smart Teacher & Search</span>
     </div>
+    <section id="boardContent" class="content" aria-live="polite">
+      <div class="empty"><div class="emoji">🎓</div><h2>أهلًا بك في السبورة الذكية</h2><p>اكتب سؤالًا في أي مجال، واختر المدرس الذكي أو البحث عبر الإنترنت أو كليهما.</p><p>يمكنك طلب شرح مبسط، أمثلة، ترجمة، أو خطوات حل.</p></div>
+    </section>
+  </main>
 
-    <!-- شريط الإدخال والبحث -->
-    <div class="search-container">
-        <input type="text" id="userInput" class="search-input" placeholder="اكتب سؤالك، الحروف، أو القاعدة هنا..." onkeypress="handleKeyPress(event)">
-        <button class="btn-explain" onclick="explainTopic()">
-            <span>إجابة وتوضيح</span>
-            <span>🔍</span>
-        </button>
-    </div>
+  <section class="history">
+    <div class="historyhead"><strong>📚 سجل الأسئلة السابقة</strong><button class="small" onclick="clearHistory()">مسح السجل</button></div>
+    <div class="chips" id="historyTags"><span class="result-meta">لا توجد أسئلة محفوظة.</span></div>
+  </section>
+  <p class="hint">ملاحظة: يحتاج المدرس الذكي والبحث المباشر إلى اتصال بالإنترنت وخادم آمن. لا تضع مفتاح الذكاء الاصطناعي داخل هذا الملف.</p>
+  <div class="footer">English Kids Academy · تعلم واكتشف في كل عمر</div>
+</div>
 
-    <!-- السبورة التعليمية -->
-    <div class="blackboard-frame">
-        <div class="board-header">
-            <span class="teacher-badge" id="boardStatus">السبورة جاهزة</span>
-            <span style="color: var(--chalk-yellow);">Search & Learn Engine</span>
-        </div>
+<script>
+/*
+  بعد نشر Cloudflare Worker المرفق، ضع عنوانه في API_BASE.
+  مثال: const API_BASE = "https://your-worker-name.your-subdomain.workers.dev";
+  اتركه فارغًا مؤقتًا إن لم تنشر الخادم بعد.
+*/
+const API_BASE = "";
+let currentMode = "both";
+let lastAnswerText = "";
 
-        <div class="board-content" id="boardContent">
-            <!-- تبدأ السبورة خالية تماماً -->
-            <div class="empty-state">
-                <span style="font-size: 3rem; display: block; margin-bottom: 10px;">🎓</span>
-                <p style="font-size: 1.2rem;">السبورة خالية الآن.</p>
-                <p style="font-size: 0.9rem; margin-top: 5px;">اكتب سؤالك واضغط زر البحث لتظهر الإجابة مباشرة بدون مقدمات.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ذاكرة وسجل معلومات المدرس المعتمدة -->
-    <div class="history-section">
-        <div class="history-title">
-            <span>📚 سجل دروس ومعلومات السبورة المخزنة:</span>
-            <button class="btn-clear-history" onclick="clearHistory()">مسح السجل 🗑️</button>
-        </div>
-        <div class="history-tags" id="historyTags">
-            <!-- يتم إضافة الدروس المخزنة تلقائياً -->
-        </div>
-    </div>
-
-    <script>
-        // نظام النطق الصوتي
-        function speakEnglish(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.85;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        // الحروف الإنجليزية الكاملة (26 حرف مع الكلمات والأمثلة والنطق)
-        const alphabetData = [
-            { letter: "Aa", word: "Apple", ar: "تفاحة" },
-            { letter: "Bb", word: "Book", ar: "كتاب" },
-            { letter: "Cc", word: "Cat", ar: "قطة" },
-            { letter: "Dd", word: "Dog", ar: "كلب" },
-            { letter: "Ee", word: "Elephant", ar: "فيل" },
-            { letter: "Ff", word: "Fish", ar: "سمكة" },
-            { letter: "Gg", word: "Giraffe", ar: "زرافة" },
-            { letter: "Hh", word: "House", ar: "منزل" },
-            { letter: "Ii", word: "Ice cream", ar: "مثلجات" },
-            { letter: "Jj", word: "Juice", ar: "عصير" },
-            { letter: "Kk", word: "Kite", ar: "طائرة ورقية" },
-            { letter: "Ll", word: "Lion", ar: "أسد" },
-            { letter: "Mm", word: "Monkey", ar: "قرد" },
-            { letter: "Nn", word: "Nest", ar: "عش" },
-            { letter: "Oo", word: "Orange", ar: "برتقالة" },
-            { letter: "Pp", word: "Pen", ar: "قلم" },
-            { letter: "Qq", word: "Queen", ar: "ملكة" },
-            { letter: "Rr", word: "Rabbit", ar: "أرنب" },
-            { letter: "Ss", word: "Sun", ar: "شمس" },
-            { letter: "Tt", word: "Tree", ar: "شجرة" },
-            { letter: "Uu", word: "Umbrella", ar: "مظلة" },
-            { letter: "Vv", word: "Van", ar: "شاحنة صغيرة" },
-            { letter: "Ww", word: "Watch", ar: "ساعة يد" },
-            { letter: "Xx", word: "Xylophone", ar: "آلة زيلوفون" },
-            { letter: "Yy", word: "Yellow", ar: "أصفر" },
-            { letter: "Zz", word: "Zebra", ar: "حمار وحشي" }
-        ];
-
-        // تحميل الذاكرة والسجل فور فتح الصفحة
-        document.addEventListener('DOMContentLoaded', () => {
-            loadHistory();
-        });
-
-        function handleKeyPress(e) {
-            if (e.key === 'Enter') {
-                explainTopic();
-            }
-        }
-
-        function explainTopic(customQuery = null) {
-            const query = customQuery || document.getElementById('userInput').value.trim();
-            if (!query) return;
-
-            if (!customQuery) {
-                document.getElementById('userInput').value = query;
-            }
-
-            document.getElementById('boardStatus').innerText = "تم جلب الشرح المباشر";
-            
-            // حفظ الدرس في سجل ذاكرة السبورة
-            saveToHistory(query);
-
-            const content = document.getElementById('boardContent');
-
-            // 1. التعرّف الفوري على الحروف الإنجليزية
-            if (query.includes("حروف") || query.toLowerCase().includes("alphabet") || query.toLowerCase().includes("letters")) {
-                content.innerHTML = `
-                    <div class="lesson-container">
-                        <h2 class="lesson-title">حروف اللغة الإنجليزية (English Alphabet - 26 Letters)</h2>
-                        <div class="alphabet-grid">
-                            ${alphabetData.map(item => `
-                                <div class="letter-card" onclick="speakEnglish('${item.letter}. ${item.word}')">
-                                    <div class="letter-main">${item.letter}</div>
-                                    <div class="letter-word">${item.word}</div>
-                                    <div class="letter-ar">${item.ar}</div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-                return;
-            }
-
-            // 2. التعرّف الفوري على كلمة "مدرسة"
-            if (query.includes("مدرسة") || query.toLowerCase() === "school") {
-                content.innerHTML = `
-                    <div class="lesson-container">
-                        <h2 class="lesson-title">الترجمة: مدرسة ⬅️ School</h2>
-                        <div class="example-box">
-                            <div class="example-en">
-                                <span>School</span>
-                                <button class="btn-audio" onclick="speakEnglish('School')">🔊</button>
-                            </div>
-                            <div class="example-ar">النطق الصوتي الصحيح: /skuːl/</div>
-                        </div>
-                        <div class="example-box">
-                            <div class="example-en">
-                                <span>I go to school every morning.</span>
-                                <button class="btn-audio" onclick="speakEnglish('I go to school every morning.')">🔊</button>
-                            </div>
-                            <div class="example-ar">أنا أذهب إلى المدرسة كل صباح.</div>
-                        </div>
-                    </div>
-                `;
-                speakEnglish('School');
-                return;
-            }
-
-            // 3. التعرّف الفوري على المضارع البسيط
-            if (query.includes("مضارع") || query.toLowerCase().includes("present simple")) {
-                content.innerHTML = `
-                    <div class="lesson-container">
-                        <h2 class="lesson-title">زمن المضارع البسيط (Present Simple)</h2>
-                        <div class="example-box">
-                            <div class="example-en">
-                                <span>Rule: Subject + Verb (+ s/es with He, She, It)</span>
-                            </div>
-                            <div class="example-ar">القاعدة: يتكون من الفاعل + الفعل في المصدر (ونضيف s مع He, She, It).</div>
-                        </div>
-                        <div class="example-box">
-                            <div class="example-en">
-                                <span>He plays football every day.</span>
-                                <button class="btn-audio" onclick="speakEnglish('He plays football every day.')">🔊</button>
-                            </div>
-                            <div class="example-ar">هو يلعب كرة القدم كل يوم.</div>
-                        </div>
-                    </div>
-                `;
-                return;
-            }
-
-            // 4. الإجابة الشاملة المباشرة لأي سؤال آخر
-            content.innerHTML = `
-                <div class="lesson-container">
-                    <h2 class="lesson-title">${query}</h2>
-                    <div class="example-box">
-                        <div class="example-en">
-                            <span>Key Expression for "${query}"</span>
-                            <button class="btn-audio" onclick="speakEnglish('${query}')">🔊</button>
-                        </div>
-                        <div class="example-ar">تمت معالجة وإظهار النتيجة المباشرة الخاصة بطلبك.</div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // إدارة السجل والذاكرة المحلية (LocalStorage)
-        function saveToHistory(query) {
-            let history = JSON.parse(localStorage.getItem('board_history') || '[]');
-            if (!history.includes(query)) {
-                history.unshift(query);
-                if (history.length > 10) history.pop(); // الاحتفاظ بأحدث 10 دروس
-                localStorage.setItem('board_history', JSON.stringify(history));
-                loadHistory();
-            }
-        }
-
-        function loadHistory() {
-            let history = JSON.parse(localStorage.getItem('board_history') || '[]');
-            const container = document.getElementById('historyTags');
-            if (history.length === 0) {
-                container.innerHTML = '<span style="color: #64748b; font-size: 0.9rem;">لا توجد دروس مخزنة حالياً.</span>';
-                return;
-            }
-            container.innerHTML = history.map(item => `
-                <div class="history-chip" onclick="explainTopic('${item}')">${item}</div>
-            `).join('');
-        }
-
-        function clearHistory() {
-            localStorage.removeItem('board_history');
-            loadHistory();
-        }
-    </script>
+function setMode(mode){
+  currentMode = mode;
+  document.querySelectorAll(".mode").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
+  const labels={both:"المدرس الذكي + البحث عبر الإنترنت",ai:"المدرس الذكي",search:"البحث عبر الإنترنت"};
+  document.getElementById("boardStatus").textContent=labels[mode];
+}
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function safeUrl(url){
+  try{const u=new URL(url);return (u.protocol==="https:"||u.protocol==="http:")?u.href:"#"}catch{return "#"}
+}
+function renderBasicMarkdown(text){
+  // Escapes HTML first, then supports common Markdown formatting safely.
+  let s=escapeHtml(text);
+  s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,(_,label,url)=>`<a href="${safeUrl(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`);
+  s=s.replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>");
+  s=s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");
+  s=s.replace(/`([^`]+)`/g,"<code>$1</code>");
+  s=s.replace(/^\s*[-*] (.+)$/gm,"<li>$1</li>");
+  s=s.replace(/(<li>.*<\/li>\n?)+/g,m=>`<ul>${m}</ul>`);
+  return s.split(/\n{2,}/).map(part=>/^<(h2|h3|ul|ol|blockquote)/.test(part.trim())?part:`<p>${part.replace(/\n/g,"<br>")}</p>`).join("");
+}
+function showError(message){
+  document.getElementById("boardContent").innerHTML=`<div class="error">${escapeHtml(message)}</div>`;
+}
+function setLoading(loading){
+  const button=document.getElementById("askButton");
+  button.disabled=loading;
+  button.textContent=loading?"جارٍ البحث والشرح...":"ابحث واشرح 🔎";
+  document.getElementById("boardStatus").textContent=loading?"جارٍ تجهيز الإجابة":"تم عرض النتيجة";
+}
+document.getElementById("questionForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const query=document.getElementById("userInput").value.trim();
+  if(!query)return;
+  addHistory(query);
+  if(!API_BASE){
+    showError("واجهة السبورة جاهزة، لكن الاتصال لم يُضبط بعد. انشر ملف الخادم المرفق بأمان، ثم ضع عنوانه في المتغير API_BASE أعلى هذا الملف. لا تضع مفتاح API هنا.");
+    document.getElementById("boardStatus").textContent="يلزم إعداد الاتصال الآمن";
+    return;
+  }
+  setLoading(true);
+  try{
+    let data;
+    const response=await fetch(`${API_BASE.replace(/\/$/,"")}/api/ask`,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({question:query,mode:currentMode,language:"ar"})
+    });
+    data=await response.json();
+    if(!response.ok)throw new Error(data.error||"تعذر الحصول على إجابة.");
+    lastAnswerText=data.answer||"لم تصل إجابة نصية.";
+    let html=`<h2 class="lesson-title">${escapeHtml(query)}</h2>`;
+    if(data.answer)html+=`<div class="answer">${renderBasicMarkdown(data.answer)}</div>`;
+    if(data.results&&data.results.length){
+      html+=`<div class="sources"><h3>🔎 نتائج ومصادر من الإنترنت</h3>`;
+      html+=data.results.map(r=>`<article class="result-card"><strong><a href="${safeUrl(r.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(r.title||"نتيجة بحث")}</a></strong><p>${escapeHtml(r.snippet||"")}</p><div class="result-meta">${escapeHtml(r.source||"مصدر عبر الإنترنت")}</div></article>`).join("");
+      html+="</div>";
+    }
+    if(data.note)html+=`<p class="result-meta">${escapeHtml(data.note)}</p>`;
+    document.getElementById("boardContent").innerHTML=html;
+    document.getElementById("boardStatus").textContent="اكتمل الشرح";
+  }catch(err){
+    showError((err&&err.message)||"حدث خطأ أثناء الاتصال. تحقق من إعداد الخادم واتصال الإنترنت.");
+    document.getElementById("boardStatus").textContent="تعذر إكمال الطلب";
+  }finally{setLoading(false)}
+});
+function startVoice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){alert("الإملاء الصوتي غير مدعوم في هذا المتصفح. جرّب Chrome وحدّثه.");return}
+  const recognition=new SR();recognition.lang="ar-EG";recognition.interimResults=false;recognition.maxAlternatives=1;
+  document.getElementById("boardStatus").textContent="استمع الآن...";
+  recognition.onresult=e=>{document.getElementById("userInput").value=e.results[0][0].transcript;document.getElementById("questionForm").requestSubmit()};
+  recognition.onerror=()=>{document.getElementById("boardStatus").textContent="لم يلتقط الصوت؛ حاول مرة أخرى"};
+  recognition.onend=()=>{if(document.getElementById("boardStatus").textContent==="استمع الآن...")document.getElementById("boardStatus").textContent="السبورة جاهزة"};
+  recognition.start();
+}
+function readAnswer(){
+  if(!lastAnswerText){alert("لا توجد إجابة لقراءتها بعد.");return}
+  if(!("speechSynthesis" in window)){alert("ميزة قراءة النص غير مدعومة في هذا المتصفح.");return}
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(lastAnswerText);u.lang="ar-EG";u.rate=.92;speechSynthesis.speak(u);
+}
+function stopReading(){if("speechSynthesis" in window)speechSynthesis.cancel()}
+function clearBoard(){
+  document.getElementById("userInput").value="";
+  document.getElementById("boardContent").innerHTML='<div class="empty"><div class="emoji">🎓</div><h2>السبورة جاهزة</h2><p>اكتب سؤالك التالي لبدء درس جديد.</p></div>';
+  document.getElementById("boardStatus").textContent="السبورة جاهزة";lastAnswerText="";
+}
+function getHistory(){try{return JSON.parse(localStorage.getItem("smart_board_history")||"[]")}catch{return []}}
+function addHistory(query){
+  let h=getHistory().filter(x=>x!==query);h.unshift(query);h=h.slice(0,12);
+  try{localStorage.setItem("smart_board_history",JSON.stringify(h))}catch{}
+  renderHistory();
+}
+function renderHistory(){
+  const h=getHistory(),box=document.getElementById("historyTags");
+  box.innerHTML=h.length?h.map(q=>`<button class="chip" type="button" data-query="${escapeHtml(q)}">${escapeHtml(q)}</button>`).join(""):'<span class="result-meta">لا توجد أسئلة محفوظة.</span>';
+  box.querySelectorAll("[data-query]").forEach(b=>b.addEventListener("click",()=>{document.getElementById("userInput").value=b.dataset.query;document.getElementById("questionForm").requestSubmit()}));
+}
+function clearHistory(){try{localStorage.removeItem("smart_board_history")}catch{}renderHistory()}
+renderHistory();
+</script>
 </body>
 </html>
