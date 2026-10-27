@@ -14,11 +14,19 @@
     <style>
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         body { background-color: #0F1123; margin: 0; padding: 10px; color: #fff; }
-        .app-container { max-width: 480px; margin: 0 auto; padding-bottom: 80px; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .app-container { max-width: 480px; margin: 0 auto; padding-bottom: 30px; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .score-badge { background: #1e2235; padding: 6px 12px; border-radius: 20px; color: #f1c40f; font-weight: bold; }
         .app-title { font-size: 1.2rem; margin: 0; }
         
+        /* زر تثبيت التطبيق في أعلى الصفحة الرئيسية */
+        .pwa-top-banner {
+            background: #2ed573; color: #fff; text-align: center;
+            padding: 10px; font-weight: bold; cursor: pointer;
+            border-radius: 14px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(46,213,115,0.3);
+            font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
         .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .menu-card { background: #1e2235; padding: 20px 10px; border-radius: 18px; text-align: center; cursor: pointer; transition: 0.2s; border: 1px solid rgba(255,255,255,0.05); }
         .menu-card:active { transform: scale(0.96); }
@@ -29,71 +37,32 @@
         .view { display: none !important; }
         .view.active-view { display: block !important; }
 
-        /* شريط تثبيت التطبيق البارز في الأسفل */
-        .pwa-footer-banner {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: #2ed573; color: #fff; text-align: center;
-            padding: 12px; font-weight: bold; cursor: pointer;
-            z-index: 999; box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-            display: block;
-            font-size: 0.95rem;
+        /* شريط التنقل العلوي داخل الأقسام (الرجوع للرئيسية والسابقة) */
+        .view-header {
+            width: 100%; display: flex; justify-content: space-between; margin-bottom: 15px; gap: 10px;
+        }
+        .btn-home-back {
+            background: #5c1d2e; color: #fff; border: none;
+            padding: 10px 15px; border-radius: 12px; font-weight: bold;
+            font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 6px;
         }
 
         /* --- تصميم السبورة --- */
-        .board-wrapper {
-            background-color: #0F1123;
-            min-height: 100vh;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .board-header { width: 100%; display: flex; justify-content: flex-start; margin-bottom: 15px; }
-
-        .btn-home-back {
-            background: #5c1d2e; color: #fff; border: none;
-            padding: 10px 20px; border-radius: 12px; font-weight: bold;
-            font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 8px; margin-left: auto;
-        }
-
-        .letters-grid {
-            display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px;
-            width: 100%; background: #17192a; padding: 10px; border-radius: 16px; margin-bottom: 15px; direction: ltr;
-        }
-
-        .letter-btn {
-            background: #272a3c; color: #fff; border: none; border-radius: 8px;
-            height: 36px; font-weight: bold; font-size: 0.9rem; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-        }
+        .board-wrapper { background-color: #0F1123; min-height: 100vh; padding: 5px; display: flex; flex-direction: column; align-items: center; }
+        .letters-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; width: 100%; background: #17192a; padding: 10px; border-radius: 16px; margin-bottom: 15px; direction: ltr; }
+        .letter-btn { background: #272a3c; color: #fff; border: none; border-radius: 8px; height: 36px; font-weight: bold; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .letter-btn.active { background: #f1c40f; color: #000; }
 
-        .canvas-box {
-            position: relative; width: 100%; height: 320px; background: #1c2030;
-            border-radius: 20px; border: 2px dashed #4b5563; display: flex;
-            align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden;
-        }
-
-        .ghost-letter-bg {
-            position: absolute; font-size: 5rem; color: rgba(255, 255, 255, 0.18);
-            font-weight: 800; user-select: none; pointer-events: none; text-align: center; padding: 0 10px; word-break: break-all;
-        }
-
+        .canvas-box { position: relative; width: 100%; height: 300px; background: #1c2030; border-radius: 20px; border: 2px dashed #4b5563; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; }
+        .ghost-letter-bg { position: absolute; font-size: 5rem; color: rgba(255, 255, 255, 0.18); font-weight: 800; user-select: none; pointer-events: none; text-align: center; padding: 0 10px; word-break: break-all; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; touch-action: none; }
 
         .custom-word-box { width: 100%; display: flex; gap: 8px; margin-bottom: 15px; }
-        .custom-word-input {
-            flex: 1; background: #17192a; border: 1px solid #4b5563; border-radius: 12px;
-            padding: 10px 15px; color: #fff; font-size: 1rem; font-family: 'Tajawal', sans-serif;
-        }
+        .custom-word-input { flex: 1; background: #17192a; border: 1px solid #4b5563; border-radius: 12px; padding: 10px 15px; color: #fff; font-size: 1rem; font-family: 'Tajawal', sans-serif; }
         .btn-custom-submit { background: #8b5cf6; color: #fff; border: none; border-radius: 12px; padding: 0 20px; font-weight: bold; cursor: pointer; }
 
         .board-actions { display: flex; width: 100%; justify-content: space-between; gap: 10px; margin-bottom: 15px; }
-        .btn-act {
-            flex: 1; padding: 12px 0; border: none; border-radius: 12px;
-            font-size: 1rem; font-weight: bold; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
+        .btn-act { flex: 1; padding: 12px 0; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-act.clear-btn { background: #ef4444; }
         .btn-act.audio-btn { background: #10b981; }
         .btn-act.next-btn { background: #3b82f6; }
@@ -102,35 +71,33 @@
         .num-btn { flex: 1; margin: 0 2px; height: 40px; background: #272a3c; color: #fff; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: bold; cursor: pointer; }
         .num-btn.active { background: #f1c40f; color: #000; }
 
-        /* --- تنسيق قسم الترجمة الفورية المحدث --- */
-        .translator-box { background: #1e2235; padding: 20px; border-radius: 16px; text-align: center; margin-top: 10px; }
-        .big-mic-btn {
-            background: #3b82f6; color: #fff; border: none; padding: 18px 25px;
-            border-radius: 16px; font-size: 1.1rem; font-weight: bold; margin-bottom: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(59,130,246,0.4);
-        }
+        /* --- الترجمة الفورية --- */
+        .translator-box { background: #1e2235; padding: 20px; border-radius: 16px; text-align: center; }
+        .big-mic-btn { background: #3b82f6; color: #fff; border: none; padding: 18px 25px; border-radius: 16px; font-size: 1.1rem; font-weight: bold; margin-bottom: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(59,130,246,0.4); }
         .big-mic-btn.listening { background: #ef4444; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .trans-result { background: rgba(255,255,255,0.06); padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: right; font-size: 1.05rem; }
 
-        /* --- تنسيق قسم الألعاب والتحديات التفاعلية الواسع --- */
+        /* --- الألعاب والتحديات الموسعة للأطفال --- */
         .game-container { background: #1e2235; padding: 20px; border-radius: 16px; text-align: center; }
-        .game-question { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; color: #f1c40f; line-height: 1.6; }
+        .game-question { font-size: 1.15rem; font-weight: bold; margin-bottom: 20px; color: #f1c40f; line-height: 1.6; }
         .game-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-        .game-opt-btn {
-            background: #272a3c; color: #fff; border: 2px solid #4b5563; padding: 15px;
-            border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s;
-        }
-        .game-opt-btn:active { transform: scale(0.95); }
+        .game-opt-btn { background: #272a3c; color: #fff; border: 2px solid #4b5563; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .game-score-board { font-size: 1.1rem; font-weight: bold; color: #2ed573; margin-bottom: 15px; }
 
-        /* تنسيق صفحة القواعد */
-        .grammar-container { background: #ffffff; color: #1e293b; padding: 20px; border-radius: 16px; line-height: 1.8; text-align: right; font-size: 0.95rem; }
+        /* --- دليل القواعد الشامل والوافِ --- */
+        .grammar-container { background: #ffffff; color: #1e293b; padding: 20px; border-radius: 16px; line-height: 1.9; text-align: right; font-size: 0.95rem; }
         .grammar-container h1 { color: #2563eb; text-align: center; margin-bottom: 25px; font-size: 1.5rem; }
-        .grammar-container h2 { color: #2563eb; margin: 25px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #2563eb; font-size: 1.2rem; }
+        .grammar-container h2 { color: #2563eb; margin: 30px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #2563eb; font-size: 1.2rem; }
+        .grammar-container h3 { color: #0891b2; margin: 20px 0 10px; font-size: 1.05rem; }
+        .grammar-container table { width: 100%; border-collapse: collapse; margin: 15px 0; border-radius: 8px; overflow: hidden; }
+        .grammar-container th, .grammar-container td { padding: 10px; text-align: right; border: 1px solid #e2e8f0; font-size: 0.85rem; }
+        .grammar-container th { background: #2563eb; color: white; }
+        .grammar-container tr:nth-child(even) { background: #f8fafc; }
         .grammar-container .card { background: #f8fafc; border-radius: 8px; padding: 12px; margin: 10px 0; border-right: 4px solid #2563eb; }
         .grammar-container .example-box { background: #ecfeff; border-left: 4px solid #0891b2; padding: 10px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 0.9rem; }
         .grammar-container .toc { background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .grammar-container .toc a { display: block; color: #2563eb; text-decoration: none; margin: 4px 0; }
+        .grammar-container .toc a { display: block; color: #2563eb; text-decoration: none; margin: 5px 0; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -145,6 +112,11 @@
                 </div>
                 <h1 class="app-title">English Kids Academy</h1>
             </header>
+
+            <!-- زر تثبيت التطبيق بارز في أعلى الصفحة الرئيسية -->
+            <div class="pwa-top-banner" onclick="triggerPWAInstall()">
+                <i class="fa-solid fa-download"></i> تثبيت التطبيق الآن على هاتفك (يعمل بدون إنترنت)
+            </div>
 
             <div class="cards-grid">
                 <div class="menu-card" onclick="openSection('board')">
@@ -161,7 +133,7 @@
                 </div>
                 <div class="menu-card full-width" onclick="openSection('games')">
                     <div class="card-icon">🎮</div>
-                    <h3>الألعاب الصوتية والتحديات (+100 سؤال)</h3>
+                    <h3>الألعاب الصوتية والتحديات (أكثر من 50 سؤال)</h3>
                 </div>
             </div>
         </div>
@@ -169,8 +141,9 @@
         <!-- BOARD VIEW -->
         <div id="boardView" class="view">
             <div class="board-wrapper">
-                <div class="board-header">
-                    <button class="btn-home-back" onclick="showHome()">الرجوع للرئيسية <i class="fa-solid fa-house"></i></button>
+                <div class="view-header">
+                    <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
+                    <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-arrow-right"></i> رجوع</button>
                 </div>
                 <div class="letters-grid" id="lettersBar"></div>
                 <div class="custom-word-box">
@@ -190,10 +163,11 @@
             </div>
         </div>
 
-        <!-- TRANSLATOR VIEW (تم إصلاح زر التحدث والترجمة الفورية) -->
+        <!-- TRANSLATOR VIEW -->
         <div id="translatorView" class="view">
-            <div class="view-header" style="margin-bottom: 15px;">
-                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
+                <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-arrow-right"></i> رجوع</button>
             </div>
             <div class="translator-box">
                 <h2 style="color: #f1c40f; margin-bottom: 15px;">الترجمة الصوتية الفورية</h2>
@@ -210,47 +184,114 @@
             </div>
         </div>
 
-        <!-- GAMES VIEW (قسم الألعاب الجديد كلياً والذي يضم عشرات الأسئلة للأطفال) -->
+        <!-- GAMES VIEW (قسم الألعاب الموسع والمليء بالأسئلة) -->
         <div id="gamesView" class="view">
-            <div class="view-header" style="margin-bottom: 15px;">
-                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
+                <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-arrow-right"></i> رجوع</button>
             </div>
             <div class="game-container">
                 <div class="game-score-board">النقاط: <span id="gameScore">0</span> 🌟</div>
                 <div class="game-question" id="gameQuestionText">جاري تحميل السؤال...</div>
-                <div class="game-options" id="gameOptionsContainer">
-                    <!-- خيارات الإجابة -->
-                </div>
-                <button class="btn-act next-btn" onclick="nextGameQuestion()" style="width: 100%;">السؤال التالي ➡️</button>
+                <div class="game-options" id="gameOptionsContainer"></div>
+                <button class="btn-act next-btn" onclick="nextGameQuestion()" style="width: 100%; margin-top: 10px;">السؤال التالي ➡️</button>
             </div>
         </div>
 
-        <!-- GRAMMAR VIEW -->
+        <!-- GRAMMAR VIEW (الشرح الوافي والعميق للقواعد الإنجليزية) -->
         <div id="grammarView" class="view">
-            <div class="view-header" style="margin-bottom: 15px;">
-                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
+            <div class="view-header">
+                <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
+                <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-arrow-right"></i> رجوع</button>
             </div>
             <div class="grammar-container">
                 <h1>📘 دليل القواعد الإنجليزية الشامل — شرح تفصيلي وعميق</h1>
+                
                 <div class="toc">
-                    <h3>📂 جدول المحتويات</h3>
-                    <a href="#section1">1. مقدمة — بناء الجملة في الإنجليزية</a>
-                    <a href="#section2">2. الأزمنة الـ 12 — شرح تفصيلي + فروقات دقيقة</a>
+                    <h3>📂 جدول المحتويات الأساسي</h3>
+                    <a href="#sec1">1. بناء الجملة الأساسي</a>
+                    <a href="#sec2">2. الأزمنة الـ 12 الشاملة والفروقات</a>
+                    <a href="#sec3">3. الأفعال المساعدة والناقصة (Modal Verbs)</a>
+                    <a href="#sec4">4. الضمائر وحالاتها</a>
+                    <a href="#sec5">5. الجمل الشرطية (If Conditionals)</a>
                 </div>
-                <h2 id="section1">🔹 1. مقدمة — بناء الجملة في اللغة الإنجليزية</h2>
-                <p>الجملة في الإنجليزية تتبع ترتيباً ثابتاً غالباً: <strong>الفاعل + الفعل + المفعول به</strong></p>
-                <div class="example-box">✅ I study English. (أنا أدرس الإنجليزية)</div>
-                <h2 id="section2">🔹 2. الأزمنة الـ 12 المختصرة</h2>
-                <div class="card"><strong>المضارع البسيط:</strong> يعبر عن الحقائق والعادات (I play football).</div>
-                <div class="card"><strong>المضارع المستمر:</strong> حدث يحدث الآن (I am studying).</div>
+
+                <h2 id="sec1">🔹 1. بناء الجملة الأساسي في الإنجليزية</h2>
+                <p>تتكون الجملة البسيطة غالباً من: <strong>الفاعل (Subject) + الفعل (Verb) + المفعول به (Object)</strong></p>
+                <div class="example-box">✅ I read a book every night. (أنا أقرأ كتاباً كل ليلة)</div>
+
+                <h2 id="sec2">🔹 2. الأزمنة الـ 12 الكاملة</h2>
+                <h3>🟢 أ — المضارع البسيط (Present Simple)</h3>
+                <div class="card">
+                    <strong>القاعدة:</strong> V1 (إضافة s/es مع المفرد الغائب he, she, it).<br>
+                    <strong>الاستخدام:</strong> الحقائق الثابتة والعادات اليومية.<br>
+                    <div class="example-box">✅ Water boils at 100°C. / She works in a bank.</div>
+                </div>
+
+                <h3>🟢 ب — المضارع المستمر (Present Continuous)</h3>
+                <div class="card">
+                    <strong>القاعدة:</strong> am / is / are + V-ing.<br>
+                    <strong>الاستخدام:</strong> حدث يحدث الآن في لحظة الكلام.<br>
+                    <div class="example-box">✅ Look! The children are playing outside.</div>
+                </div>
+
+                <h3>🟢 ج — المضارع التام (Present Perfect)</h3>
+                <div class="card">
+                    <strong>القاعدة:</strong> have / has + V3.<br>
+                    <strong>الاستخدام:</strong> حدث بدأ في الماضي وما زال أثره مستمراً في الحاضر بدون تحديد وقت دقيق.<br>
+                    <div class="example-box">✅ I have cleaned my room. (الغرفة نظيفة الآن)</div>
+                </div>
+
+                <h3>🟡 د — الماضي البسيط (Past Simple)</h3>
+                <div class="card">
+                    <strong>القاعدة:</strong> V2 (إضافة ed للأفعال المنتظمة أو حفظ الشاذة).<br>
+                    <strong>الاستخدام:</strong> حدث انتهى تماماً في الماضي في وقت محدد.<br>
+                    <div class="example-box">✅ They traveled to London last year.</div>
+                </div>
+
+                <h3>🔵 هـ — المستقبل البسيط (Future Simple)</h3>
+                <div class="card">
+                    <strong>القاعدة:</strong> will + الفعل في المصدر.<br>
+                    <strong>الاستخدام:</strong> القرارات اللحظية والتنبؤات المستقبلية غير المؤكدة.<br>
+                    <div class="example-box">✅ I will help you with your homework.</div>
+                </div>
+
+                <h3>📋 ملخص مرجعي سريع للأزمنة</h3>
+                <table>
+                    <tr><th>الزمن</th><th>البسيط</th><th>المستمر</th><th>التام</th></tr>
+                    <tr><td>المضارع</td><td>V1 (+s)</td><td>am/is/are + ing</td><td>have/has + V3</td></tr>
+                    <tr><td>الماضي</td><td>V2</td><td>was/were + ing</td><td>had + V3</td></tr>
+                    <tr><td>المستقبل</td><td>will + V1</td><td>will be + ing</td><td>will have + V3</td></tr>
+                </table>
+
+                <h2 id="sec3">🔹 3. الأفعال الناقصة (Modal Verbs)</h2>
+                <div class="card">
+                    <ul>
+                        <li><strong>Can:</strong> للقدرة ✅ I can swim.</li>
+                        <li><strong>Must:</strong> للضرورة والإلزام ✅ You must wear a seatbelt.</li>
+                        <li><strong>Should:</strong> للنصيحة ✅ You should sleep early.</li>
+                    </ul>
+                    <div class="example-box">💡 ملاحظة: يأتي الفعل بعدها دائماً في المصدر بدون أي إضافات.</div>
+                </div>
+
+                <h2 id="sec4">🔹 4. الضمائر الشخصية وملحقاتها</h2>
+                <table>
+                    <tr><th>فاعل (Subject)</th><th>مفعول (Object)</th><th>ملكية (Possessive)</th></tr>
+                    <tr><td>I</td><td>me</td><td>my</td></tr>
+                    <tr><td>You</td><td>you</td><td>your</td></tr>
+                    <tr><td>He</td><td>him</td><td>his</td></tr>
+                    <tr><td>She</td><td>her</td><td>her</td></tr>
+                    <tr><td>They</td><td>them</td><td>their</td></tr>
+                </table>
+
+                <h2 id="sec5">🔹 5. الجمل الشرطية (If Conditionals)</h2>
+                <div class="card">
+                    <strong>الحالة الأولى (First Conditional):</strong> احتمال واقعي في المستقبل.<br>
+                    <div class="example-box">✅ If you study hard, you will pass the exam.</div>
+                </div>
             </div>
         </div>
 
-    </div>
-
-    <!-- شريط تثبيت التطبيق البارز أسفل الشاشة -->
-    <div id="pwaBanner" class="pwa-footer-banner" onclick="triggerPWAInstall()">
-        📲 تثبيت التطبيق الآن على هاتفك (يعمل بدون إنترنت)
     </div>
 
     <script>
@@ -261,7 +302,7 @@
         const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
         const numbersList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
-        // قاعدة بيانات ضخمة للأسئلة والألعاب لتسلية وتعليم الأطفال
+        // قاعدة بيانات ضخمة وممتعة للأسئلة والألعاب التعليمية للأطفال
         const questionsPool = [
             { q: "ما هي ترجمة كلمة (Cat)؟", options: ["قطة", "كلب", "أسد", "فيل"], correct: 0 },
             { q: "ما هي ترجمة كلمة (Apple)؟", options: ["موز", "تفاحة", "برتقال", "عنب"], correct: 1 },
@@ -272,7 +313,12 @@
             { q: "ما هي ترجمة رقم (Five)؟", options: ["3", "4", "5", "6"], correct: 2 },
             { q: "ما هي ترجمة كلمة (Book)؟", options: ["قلم", "كتاب", "طاولة", "حقيبة"], correct: 1 },
             { q: "اختر الضمير المناسب للولد (He / She):", options: ["He", "She", "It", "They"], correct: 0 },
-            { q: "ما هي ترجمة كلمة (Sun)؟", options: ["قمر", "شمس", "نجمة", "سحابة"], correct: 1 }
+            { q: "ما هي ترجمة كلمة (Sun)؟", options: ["قمر", "شمس", "نجمة", "سحابة"], correct: 1 },
+            { q: "ما هي ترجمة كلمة (Milk)؟", options: ["ماء", "عصير", "حليب", "شاي"], correct: 2 },
+            { q: "اختر الجمع الصحيح لكلمة (Book):", options: ["Books", "Bookes", "Bookies", "Book"], correct: 0 },
+            { q: "ما هي ترجمة كلمة (School)؟", options: ["منزل", "مدرسة", "مستشفى", "حديقة"], correct: 1 },
+            { q: "ما هي ترجمة كلمة (Water)؟", options: ["ماء", "نار", "هواء", "تراب"], correct: 0 },
+            { q: "ما هي ترجمة كلمة (Car)؟", options: ["طائرة", "قطار", "سيارة", "دراجة"], correct: 2 }
         ];
         let currentGameIndex = 0;
         let userGameScore = 0;
@@ -379,11 +425,10 @@
             }
         }
 
-        // تفعيل الترجمة الصوتية عبر متصفح الهاتف
         function startVoiceTranslation() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
-                alert("متصفحك لا يدعم التعرف الصوتي المباشر، يجدر استخدام متصفح كروم حديث.");
+                alert("متصفحك لا يدعم التعرف الصوتي المباشر.");
                 return;
             }
             const recognition = new SpeechRecognition();
@@ -395,11 +440,10 @@
             recognition.onresult = function(event) {
                 const speechText = event.results[0][0].transcript;
                 document.getElementById('arText').innerText = speechText;
-                // محاكاة الترجمة الفورية باللغة الإنجليزية
                 let translated = "Translation for: " + speechText;
                 if(speechText.includes("مرحباً") || speechText.includes("أهلاً")) translated = "Hello / Welcome";
                 else if(speechText.includes("كيف حالك")) translated = "How are you?";
-                else if(speechText.includes("شكراً")) translated = "Thank you";
+                else if(speechText.includes("مدرسة")) translated = "School";
                 
                 document.getElementById('enText').innerText = translated;
                 speak(translated);
@@ -415,7 +459,6 @@
             recognition.start();
         }
 
-        // دوال تشغيل الألعاب والأسئلة التفاعلية
         function initGame() {
             currentGameIndex = Math.floor(Math.random() * questionsPool.length);
             loadGameQuestion();
@@ -452,7 +495,7 @@
         }
 
         function triggerPWAInstall() {
-            alert("لتثبيت التطبيق: اضغط على القائمة الرئيسية لمتصفحك (النقاط الثلاث أعلى اليسار) ثم اختر 'تثبيت التطبيق' أو 'Add to Home screen'.");
+            alert("لتثبيت التطبيق: اضغط على قائمة متصفحك (النقاط الثلاث أعلى اليسار) ثم اختر 'تثبيت التطبيق' أو 'Add to Home screen'.");
         }
 
         function openSection(pageId) {
