@@ -134,3 +134,4 @@ function initCanvas(){ canvas=document.getElementById('drawCanvas'); if(!canvas)
 function openDetailedContent(type){ const d=document.getElementById('detailsContent'); if(!d) return; d.innerHTML=`<h2>📚 ${type}</h2><p>محتوى ${type}</p>`; }
 function getRandom(arr, exclude, count){ return arr.filter(x=>x!==exclude).sort(()=>0.5-Math.random()).slice(0,count); }
 function renderInfOptions(opts){ const c=document.getElementById('gameOptions'); if(!c) return; c.innerHTML=''; opts.sort(()=>0.5-Math.random()).forEach(o=>{ const
+ 
