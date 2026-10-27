@@ -49,7 +49,7 @@
         .letter-btn.active { background: #f1c40f; color: #000; }
 
         .canvas-box { position: relative; width: 100%; height: 300px; background: #1c2030; border-radius: 20px; border: 2px dashed #4b5563; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; }
-        .ghost-letter-bg { position: absolute; font-size: 5rem; color: rgba(255, 255, 255, 0.18); font-weight: 800; user-select: none; pointer-events: none; text-align: center; padding: 0 10px; word-break: break-all; }
+        .ghost-letter-bg { position: absolute; font-size: 4rem; color: rgba(255, 255, 255, 0.22); font-weight: 800; user-select: none; pointer-events: none; text-align: center; padding: 0 10px; word-break: break-all; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; touch-action: none; }
 
         .custom-word-box { width: 100%; display: flex; gap: 8px; margin-bottom: 15px; }
@@ -76,18 +76,15 @@
         .game-question { font-size: 1.15rem; font-weight: bold; margin-bottom: 20px; color: #f1c40f; line-height: 1.6; }
         .game-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .game-opt-btn { background: #272a3c; color: #fff; border: 2px solid #4b5563; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .game-opt-btn.correct-glow { background: #2ed573 !important; color: #000 !important; border-color: #2ed573; box-shadow: 0 0 15px #2ed573; }
+        .game-opt-btn.wrong-glow { background: #ef4444 !important; color: #fff !important; border-color: #ef4444; animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
         .game-score-board { font-size: 1.1rem; font-weight: bold; color: #2ed573; margin-bottom: 15px; }
-        
-        /* مؤشر تأثير الإجابة في الألعاب */
-        .feedback-alert { font-size: 1.3rem; font-weight: bold; margin: 15px 0; padding: 10px; border-radius: 8px; display: none; }
-        .feedback-alert.success { background: rgba(46,213,115,0.2); color: #2ed573; border: 1px solid #2ed573; }
-        .feedback-alert.error { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid #ef4444; animation: shake 0.5s; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
         .grammar-container { background: #ffffff; color: #1e293b; padding: 20px; border-radius: 16px; line-height: 1.9; text-align: right; font-size: 0.95rem; }
         .grammar-container h1 { color: #2563eb; text-align: center; margin-bottom: 25px; font-size: 1.5rem; }
         .grammar-container h2 { color: #2563eb; margin: 30px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #2563eb; font-size: 1.2rem; }
-        .grammar-container h3 { color: #0891b2; margin: 20px 0 10px; font-size: 1.05rem; }
         .grammar-container table { width: 100%; border-collapse: collapse; margin: 15px 0; border-radius: 8px; overflow: hidden; }
         .grammar-container th, .grammar-container td { padding: 10px; text-align: right; border: 1px solid #e2e8f0; font-size: 0.85rem; }
         .grammar-container th { background: #2563eb; color: white; }
@@ -144,7 +141,7 @@
                 </div>
                 <div class="letters-grid" id="lettersBar"></div>
                 <div class="custom-word-box">
-                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب كلمة كاملة أو جملة أو رقم هنا...">
+                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب كلمة عربية أو إنجليزية للعرض والترجمة...">
                     <button class="btn-custom-submit" onclick="applyCustomWord()">عرض</button>
                 </div>
                 <div class="canvas-box">
@@ -160,7 +157,7 @@
             </div>
         </div>
 
-        <!-- TRANSLATOR VIEW (تم إصلاح الترجمة الفورية الفورية للكلمات) -->
+        <!-- TRANSLATOR VIEW -->
         <div id="translatorView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
@@ -181,7 +178,7 @@
             </div>
         </div>
 
-        <!-- GAMES VIEW (مع تأثيرات التصفيق وإنذار الخطأ القوي) -->
+        <!-- GAMES VIEW -->
         <div id="gamesView" class="view">
             <div class="view-header">
                 <button class="btn-home-back" onclick="showHome()"><i class="fa-solid fa-house"></i> الرئيسية</button>
@@ -191,8 +188,7 @@
                 <div class="game-score-board">النقاط: <span id="gameScore">0</span> 🌟</div>
                 <div class="game-question" id="gameQuestionText">جاري تحميل السؤال...</div>
                 <div class="game-options" id="gameOptionsContainer"></div>
-                <div id="gameAlertBox" class="feedback-alert"></div>
-                <button class="btn-act next-btn" onclick="nextGameQuestion()" style="width: 100%; margin-top: 10px;">السؤال التالي ➡️</button>
+                <button class="btn-act next-btn" onclick="nextGameQuestion()" style="width: 100%; margin-top: 15px;">السؤال التالي ➡️</button>
             </div>
         </div>
 
@@ -362,22 +358,66 @@
         function stopDrawing() { isDrawing = false; }
         function clearBoard() { if(ctx && canvas) { ctx.clearRect(0, 0, canvas.width, canvas.height); } }
 
+        // قاموس ثنائي الاتجاه للترجمة الفورية على السبورة (عربي <-> إنجليزي)
+        const bilingualDictionary = {
+            "تعال": "Come",
+            "مدرسة": "School",
+            "مرحباً": "Hello",
+            "أهلاً": "Welcome",
+            "كيف حالك": "How are you",
+            "شكراً": "Thank you",
+            "قطة": "Cat",
+            "كلب": "Dog",
+            "تفاحة": "Apple",
+            "كتاب": "Book",
+            "قلم": "Pen",
+            "ماء": "Water",
+            "شمس": "Sun",
+            "سيارة": "Car",
+            // من الإنجليزية إلى العربية
+            "come": "تعال",
+            "school": "مدرسة",
+            "hello": "مرحباً",
+            "welcome": "أهلاً",
+            "cat": "قطة",
+            "dog": "كلب",
+            "apple": "تفاحة",
+            "book": "كتاب",
+            "pen": "قلم",
+            "water": "ماء",
+            "sun": "شمس",
+            "car": "سيارة"
+        };
+
         function selectItem(val) {
-            currentItem = val;
+            let processedVal = val.trim();
+            // التحقق مما إذا كانت المدخلات كلمة موجودة بالقاموس لترجمتها تلقائياً
+            let lowerKey = processedVal.toLowerCase();
+            if (bilingualDictionary[processedVal]) {
+                processedVal = bilingualDictionary[processedVal];
+            } else if (bilingualDictionary[lowerKey]) {
+                processedVal = bilingualDictionary[lowerKey];
+            }
+
+            currentItem = processedVal;
             const ghostEl = document.getElementById('ghostLetter');
-            ghostEl.innerText = val;
-            if (val.length > 5) { ghostEl.style.fontSize = "2.5rem"; }
-            else if (val.length > 2) { ghostEl.style.fontSize = "4rem"; }
-            else { ghostEl.style.fontSize = "10rem"; }
+            ghostEl.innerText = processedVal;
+            
+            if (processedVal.length > 5) { ghostEl.style.fontSize = "2.5rem"; }
+            else if (processedVal.length > 2) { ghostEl.style.fontSize = "4rem"; }
+            else { ghostEl.style.fontSize = "8rem"; }
+
             clearBoard();
             renderLettersBar();
             renderNumbersBar();
-            speak(val);
+            speak(processedVal);
         }
 
         function applyCustomWord() {
             const inputVal = document.getElementById('customWordInput').value.trim();
-            if (inputVal) { selectItem(inputVal); }
+            if (inputVal) { 
+                selectItem(inputVal); 
+            }
         }
 
         function renderLettersBar() {
@@ -417,28 +457,10 @@
         function speak(text) {
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
+                utterance.lang = /[\u0600-\u06FF]/.test(text) ? 'ar-SA' : 'en-US';
                 window.speechSynthesis.speak(utterance);
             }
         }
-
-        // قاموس ترجمة ذكي وفوري متكامل للكلمات الشائعة
-        const dictionaryMap = {
-            "تعال": "Come",
-            "مدرسة": "School",
-            "مرحباً": "Hello",
-            "أهلاً": "Welcome",
-            "كيف حالك": "How are you",
-            "شكراً": "Thank you",
-            "قطة": "Cat",
-            "كلب": "Dog",
-            "تفاحة": "Apple",
-            "كتاب": "Book",
-            "قلم": "Pen",
-            "ماء": "Water",
-            "شمس": "Sun",
-            "سيارة": "Car"
-        };
 
         function startVoiceTranslation() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -453,13 +475,9 @@
             micBtn.innerHTML = '<i class="fa-solid fa-microphone-lines"></i> جاري الاستماع... تحدث الآن';
 
             recognition.onresult = function(event) {
-                let speechText = event.results[0][0].transcript.trim();
-                // تنظيف النص من النقاط أو الفواصل الزائدة
-                speechText = speechText.replace(/[.،؟]/g, '');
+                let speechText = event.results[0][0].transcript.trim().replace(/[.،؟]/g, '');
                 document.getElementById('arText').innerText = speechText;
-
-                // البحث عن الترجمة في القاموس الذكي أو إعطاء ترجمة مباشرة
-                let translated = dictionaryMap[speechText] || "Word: " + speechText;
+                let translated = bilingualDictionary[speechText] || "Word: " + speechText;
                 
                 document.getElementById('enText').innerText = translated;
                 speak(translated);
@@ -477,51 +495,51 @@
 
         function initGame() {
             currentGameIndex = Math.floor(Math.random() * questionsPool.length);
-            document.getElementById('gameAlertBox').style.display = 'none';
             loadGameQuestion();
         }
 
         function loadGameQuestion() {
             const qObj = questionsPool[currentGameIndex];
             document.getElementById('gameQuestionText').innerText = qObj.q;
-            document.getElementById('gameAlertBox').style.display = 'none';
             const container = document.getElementById('gameOptionsContainer');
             container.innerHTML = '';
             qObj.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
                 btn.className = 'game-opt-btn';
                 btn.innerText = opt;
-                btn.onclick = () => checkGameAnswer(idx, qObj.correct);
+                btn.onclick = () => checkGameAnswer(btn, idx, qObj.correct);
                 container.appendChild(btn);
             });
         }
 
-        // تشقيل أصوات وتأثيرات تفاعلية حية (تصفيق وإنذار خطأ)
+        // تشغيل أصوات وتأثيرات التصفيق والإنذار باللونين الأخضر والأحمر
         function playSoundEffect(type) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const utter = new SpeechSynthesisUtterance(type === 'success' ? "Clap! Amazing!" : "Warning! Wrong answer!");
+                const utter = new SpeechSynthesisUtterance(type === 'success' ? "Clap! Wonderful!" : "Warning! Wrong!");
                 utter.lang = 'en-US';
-                utter.rate = 1.2;
+                utter.rate = 1.3;
                 window.speechSynthesis.speak(utter);
             }
         }
 
-        function checkGameAnswer(selected, correct) {
-            const alertBox = document.getElementById('gameAlertBox');
+        function checkGameAnswer(btnElement, selected, correct) {
+            const allBtns = document.querySelectorAll('.game-opt-btn');
+            allBtns.forEach(b => b.style.pointerEvents = 'none'); // تعطيل الضغط المتكرر
+
             if (selected === correct) {
                 userGameScore += 10;
                 document.getElementById('gameScore').innerText = userGameScore;
-                alertBox.className = "feedback-alert success";
-                alertBox.innerHTML = "👏👏 إجابة صحيحة! تصفيق حاد للأبطال الممتازين!";
-                alertBox.style.display = "block";
+                btnElement.classList.add('correct-glow'); // إضاءة خضراء وتصفيق صوتي
                 playSoundEffect('success');
             } else {
-                alertBox.className = "feedback-alert error";
-                alertBox.innerHTML = "🚨 انذار قوي! إجابة خاطئة، ركز في السؤال القادم!";
-                alertBox.style.display = "block";
+                btnElement.classList.add('wrong-glow'); // إضاءة حمراء وإنذار صوتي
                 playSoundEffect('error');
             }
+
+            setTimeout(() => {
+                nextGameQuestion();
+            }, 1200);
         }
 
         function nextGameQuestion() {
