@@ -2,172 +2,133 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
-<title>English Kids Academy | المدرس الذكي</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Kids Academy - المدرس الذكي</title>
 <style>
-:root{--bg:#0b1222;--panel:#111c31;--board:#080e1b;--border:#34445d;--text:#f8fafc;--muted:#a8b5c9;--yellow:#fde047;--blue:#38bdf8;--green:#4ade80;--purple:#8b5cf6;--red:#fb7185}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#172440,var(--bg) 55%);color:var(--text);font-family:'Tajawal',sans-serif;min-height:100vh;padding:16px}
-.app{max-width:980px;margin:auto}.header{text-align:center;padding:8px 0 18px}.header h1{font-size:clamp(1.5rem,4vw,2.25rem);color:var(--yellow);margin:0 0 5px}.header p{color:var(--muted);margin:0}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.mode{flex:1;min-width:135px;border:1px solid var(--border);border-radius:12px;padding:11px;background:var(--panel);color:var(--text);font:inherit;font-weight:700;cursor:pointer}.mode.active{background:linear-gradient(135deg,#2563eb,#7c3aed);border-color:transparent}
-.search{display:flex;gap:10px;margin-bottom:14px}.search input{min-width:0;flex:1;padding:15px;border-radius:13px;border:2px solid var(--border);background:var(--panel);color:var(--text);font:inherit;font-size:1.05rem;outline:none}.search input:focus{border-color:var(--blue)}button{font-family:inherit}.primary{border:0;border-radius:13px;padding:13px 19px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:1rem;font-weight:800;cursor:pointer}.primary:disabled{opacity:.55;cursor:wait}.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.small{border:1px solid var(--border);border-radius:10px;background:#17243a;color:var(--text);padding:9px 12px;cursor:pointer;font-size:.95rem}.small:hover,.mode:hover{filter:brightness(1.12)}
-.frame{border:10px solid #475569;border-radius:20px;background:var(--board);min-height:430px;padding:clamp(14px,3vw,26px);box-shadow:0 18px 40px #0008}.boardhead{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px dashed #34445d;padding-bottom:12px;margin-bottom:18px;flex-wrap:wrap}.status{font-size:.9rem;color:var(--blue);background:#0d2940;border:1px solid #1d6688;border-radius:99px;padding:6px 12px}.content{line-height:1.9;overflow-wrap:anywhere}.empty{text-align:center;color:var(--muted);padding:55px 10px}.empty .emoji{font-size:3rem}.lesson-title{color:var(--yellow);font-size:clamp(1.3rem,3vw,1.8rem);margin:0 0 14px;padding-bottom:10px;border-bottom:2px dashed #334155}.answer{font-size:1.06rem;white-space:normal}.answer h2,.answer h3{color:var(--green);margin:18px 0 6px}.answer ul,.answer ol{padding-right:24px}.answer code{direction:ltr;unicode-bidi:embed;background:#1b2940;padding:2px 5px;border-radius:5px}.answer a{color:var(--blue);overflow-wrap:anywhere}.answer blockquote{border-right:4px solid var(--green);margin:12px 0;padding:8px 14px;background:#111c31;border-radius:8px}.result-card{background:#111c31;border-right:4px solid var(--green);border-radius:0 10px 10px 0;padding:14px 16px;margin:12px 0}.result-card a{color:var(--blue)}.result-meta{font-size:.9rem;color:var(--muted)}.history{margin-top:18px;border:1px solid var(--border);border-radius:13px;padding:14px;background:var(--panel)}.historyhead{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px;color:var(--yellow)}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{background:#22234d;border:1px solid #6d5bd0;color:white;border-radius:99px;padding:6px 12px;cursor:pointer;max-width:100%;overflow-wrap:anywhere}.hint{font-size:.9rem;color:var(--muted);margin-top:12px}.footer{text-align:center;color:#7f8da5;font-size:.85rem;margin:18px 0}.error{color:#fecaca;background:#451a24;border:1px solid #9f3348;border-radius:10px;padding:12px}.sources{margin-top:15px}.sources a{display:block;margin:7px 0}.hidden{display:none!important}
-@media(max-width:600px){body{padding:10px}.search{flex-direction:column}.primary{width:100%}.frame{border-width:7px;min-height:360px}.boardhead{align-items:flex-start}.mode{min-width:calc(50% - 6px)}}
+body{background:#0f172a; color:#fff; font-family:sans-serif; margin:0; padding:15px;}
+.card{background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:15px; margin-bottom:12px;}
+.btn{border:none; padding:12px 18px; border-radius:14px; cursor:pointer; font-weight:bold;}
+.btn-primary{background:linear-gradient(90deg,#6366f1,#8b5cf6); color:#fff; width:100%; font-size:1.1rem;}
+.btn-dark{background:rgba(255,255,255,0.08); color:#fff; border:1px solid rgba(255,255,255,0.1);}
+.btn-active{background:linear-gradient(90deg,#6366f1,#8b5cf6); color:#fff;}
+.input{width:100%; padding:15px; border-radius:14px; border:2px solid #334155; background:#1e293b; color:#fff; font-size:1rem; box-sizing:border-box;}
+.board{background:#111827; border-radius:20px; padding:15px; min-height:200px; border:2px solid #334155;}
+.badge{padding:6px 12px; border-radius:20px; font-size:0.8rem; background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);}
+.answer-box{background:rgba(255,255,255,0.06); padding:16px; border-radius:16px; line-height:1.8; white-space:pre-wrap;}
 </style>
 </head>
 <body>
-<div class="app">
-  <header class="header">
-    <h1>👨‍🏫 English Kids Academy</h1>
-    <p>مدرس ذكي ومحرك بحث تعليمي — لجميع الأعمار</p>
-  </header>
 
-  <div class="toolbar" role="group" aria-label="طريقة الإجابة">
-    <button class="mode active" data-mode="both" onclick="setMode('both')">🤖 المدرس + البحث</button>
-    <button class="mode" data-mode="ai" onclick="setMode('ai')">🧠 المدرس الذكي</button>
-    <button class="mode" data-mode="search" onclick="setMode('search')">🌐 البحث عبر الإنترنت</button>
-  </div>
+<!-- 🔥 أهم سطر - رابط الخادم الآمن -->
+<script>
+const API_BASE = "https://english-kids-teacher-84.abdosaadabdosaad084.workers.dev/";
+</script>
 
-  <form class="search" id="questionForm">
-    <input id="userInput" type="search" autocomplete="off" placeholder="اكتب أي سؤال أو موضوع تريد فهمه..." aria-label="اكتب سؤالك">
-    <button class="primary" id="askButton" type="submit">ابحث واشرح 🔎</button>
-  </form>
-  <div class="tools">
-    <button class="small" onclick="startVoice()">🎙️ إملاء صوتي</button>
-    <button class="small" onclick="readAnswer()">🔊 اقرأ الإجابة</button>
-    <button class="small" onclick="stopReading()">⏹️ إيقاف الصوت</button>
-    <button class="small" onclick="clearBoard()">🧹 مسح السبورة</button>
-  </div>
+<h2 style="text-align:center; color:#fde047; margin:10px 0;">English Kids Academy 🧑‍🏫<br><small style="color:#94a3b8; font-size:0.9rem;">مدرس ذكي ومحرك بحث تعليمي - لجميع الأعمار</small></h2>
 
-  <main class="frame">
-    <div class="boardhead">
-      <span class="status" id="boardStatus">السبورة جاهزة</span>
-      <span style="color:var(--yellow)">Smart Teacher & Search</span>
-    </div>
-    <section id="boardContent" class="content" aria-live="polite">
-      <div class="empty"><div class="emoji">🎓</div><h2>أهلًا بك في السبورة الذكية</h2><p>اكتب سؤالًا في أي مجال، واختر المدرس الذكي أو البحث عبر الإنترنت أو كليهما.</p><p>يمكنك طلب شرح مبسط، أمثلة، ترجمة، أو خطوات حل.</p></div>
-    </section>
-  </main>
-
-  <section class="history">
-    <div class="historyhead"><strong>📚 سجل الأسئلة السابقة</strong><button class="small" onclick="clearHistory()">مسح السجل</button></div>
-    <div class="chips" id="historyTags"><span class="result-meta">لا توجد أسئلة محفوظة.</span></div>
-  </section>
-  <p class="hint">ملاحظة: يحتاج المدرس الذكي والبحث المباشر إلى اتصال بالإنترنت وخادم آمن. لا تضع مفتاح الذكاء الاصطناعي داخل هذا الملف.</p>
-  <div class="footer">English Kids Academy · تعلم واكتشف في كل عمر</div>
+<div style="display:flex; gap:10px; margin:15px 0; flex-wrap:wrap;">
+<button class="btn btn-active" onclick="setMode('teacher')">🧠 المدرس الذكي</button>
+<button class="btn btn-dark" onclick="setMode('both')">🤖 المدرس + البحث</button>
+<button class="btn btn-dark" style="width:100%;" onclick="setMode('search')">🌐 البحث عبر الإنترنت</button>
 </div>
 
-<script>
-/*
-  بعد نشر Cloudflare Worker المرفق، ضع عنوانه في API_BASE.
-  مثال: const API_BASE = "https://your-worker-name.your-subdomain.workers.dev";
-  اتركه فارغًا مؤقتًا إن لم تنشر الخادم بعد.
-*/
-const API_BASE = "";
-let currentMode = "both";
-let lastAnswerText = "";
+<div class="card">
+<input id="qInput" class="input" placeholder="اكتب أي سؤال أو موضوع تريد فهمه...">
+<button class="btn btn-primary" style="margin-top:12px;" onclick="searchAndExplain()">🔍 ابحث واشرح</button>
 
-function setMode(mode){
-  currentMode = mode;
-  document.querySelectorAll(".mode").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
-  const labels={both:"المدرس الذكي + البحث عبر الإنترنت",ai:"المدرس الذكي",search:"البحث عبر الإنترنت"};
-  document.getElementById("boardStatus").textContent=labels[mode];
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+<button class="btn btn-dark" onclick="speakAnswer()">🔊 اقرأ الإجابة</button>
+<button class="btn btn-dark" onclick="startVoice()">🎙️ إملاء صوتي</button>
+<button class="btn btn-dark" onclick="clearBoard()">🧹 مسح السبورة</button>
+<button class="btn btn-dark" onclick="speechSynthesis.cancel()">⏹️ إيقاف الصوت</button>
+</div>
+</div>
+
+<div class="board" id="board">
+<div style="display:flex; justify-content:space-between; align-items:center;">
+<span style="color:#fde047;">Smart Teacher & Search</span>
+<span class="badge" id="status">السبورة جاهزة ✅</span>
+</div>
+<hr style="border-color:rgba(255,255,255,0.1); margin:12px 0; border-style:dashed;">
+<div id="boardContent" style="text-align:center; padding:30px;">
+<div style="font-size:3rem;">🎓</div>
+<p style="color:#64748b;">اكتب سؤالك فوق واضغط ابحث واشرح</p>
+<p style="color:#475569; font-size:0.8rem;">مثال: ما معنى Apple؟ اشرح لي زمن المضارع البسيط</p>
+</div>
+</div>
+
+<div class="card" style="margin-top:12px;">
+<div style="display:flex; justify-content:space-between; align-items:center;">
+<b style="color:#fde047;">📚 سجل الأسئلة السابقة</b>
+<button class="btn btn-dark" style="padding:6px 10px; font-size:0.8rem;" onclick="clearHistory()">مسح السجل</button>
+</div>
+<div id="history" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"></div>
+</div>
+
+<p style="text-align:center; color:#475569; font-size:0.8rem; margin-top:15px;">English Kids Academy - تعلم واكتشف في كل عمر<br>ملاحظة: المدرس الذكي يعمل عبر خادم آمن Cloudflare</p>
+
+<script>
+let mode = 'teacher';
+let lastAnswer = "";
+
+function setMode(m){
+  mode = m;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn-active'));
+  event.target.classList.add('btn-active');
+  if(m==='teacher') document.getElementById('status').innerText = "المدرس الذكي ✅";
+  if(m==='both') document.getElementById('status').innerText = "المدرس + البحث ✅";
+  if(m==='search') document.getElementById('status').innerText = "وضع البحث 🌐";
 }
-function escapeHtml(value){
-  return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function safeUrl(url){
-  try{const u=new URL(url);return (u.protocol==="https:"||u.protocol==="http:")?u.href:"#"}catch{return "#"}
-}
-function renderBasicMarkdown(text){
-  // Escapes HTML first, then supports common Markdown formatting safely.
-  let s=escapeHtml(text);
-  s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,(_,label,url)=>`<a href="${safeUrl(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`);
-  s=s.replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>");
-  s=s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");
-  s=s.replace(/`([^`]+)`/g,"<code>$1</code>");
-  s=s.replace(/^\s*[-*] (.+)$/gm,"<li>$1</li>");
-  s=s.replace(/(<li>.*<\/li>\n?)+/g,m=>`<ul>${m}</ul>`);
-  return s.split(/\n{2,}/).map(part=>/^<(h2|h3|ul|ol|blockquote)/.test(part.trim())?part:`<p>${part.replace(/\n/g,"<br>")}</p>`).join("");
-}
-function showError(message){
-  document.getElementById("boardContent").innerHTML=`<div class="error">${escapeHtml(message)}</div>`;
-}
-function setLoading(loading){
-  const button=document.getElementById("askButton");
-  button.disabled=loading;
-  button.textContent=loading?"جارٍ البحث والشرح...":"ابحث واشرح 🔎";
-  document.getElementById("boardStatus").textContent=loading?"جارٍ تجهيز الإجابة":"تم عرض النتيجة";
-}
-document.getElementById("questionForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const query=document.getElementById("userInput").value.trim();
-  if(!query)return;
-  addHistory(query);
-  if(!API_BASE){
-    showError("واجهة السبورة جاهزة، لكن الاتصال لم يُضبط بعد. انشر ملف الخادم المرفق بأمان، ثم ضع عنوانه في المتغير API_BASE أعلى هذا الملف. لا تضع مفتاح API هنا.");
-    document.getElementById("boardStatus").textContent="يلزم إعداد الاتصال الآمن";
-    return;
-  }
-  setLoading(true);
+
+async function searchAndExplain(){
+  const q = document.getElementById('qInput').value.trim();
+  if(!q){ alert('اكتب سؤالك يا بطل! 😊'); return; }
+  
+  document.getElementById('status').innerText = "يفكر... 🤔";
+  document.getElementById('boardContent').innerHTML = `<div style="text-align:center;"><div style="font-size:2rem;">🤔</div><p>المدرس بيفكر في:<br><b style="color:#fff;">${q}</b></p><p style="color:#38bdf8;">ثواني يا بطل...</p></div>`;
+  
+  addToHistory(q);
+  
   try{
-    let data;
-    const response=await fetch(`${API_BASE.replace(/\/$/,"")}/api/ask`,{
-      method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({question:query,mode:currentMode,language:"ar"})
+    const res = await fetch(API_BASE, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({question: q, mode: mode})
     });
-    data=await response.json();
-    if(!response.ok)throw new Error(data.error||"تعذر الحصول على إجابة.");
-    lastAnswerText=data.answer||"لم تصل إجابة نصية.";
-    let html=`<h2 class="lesson-title">${escapeHtml(query)}</h2>`;
-    if(data.answer)html+=`<div class="answer">${renderBasicMarkdown(data.answer)}</div>`;
-    if(data.results&&data.results.length){
-      html+=`<div class="sources"><h3>🔎 نتائج ومصادر من الإنترنت</h3>`;
-      html+=data.results.map(r=>`<article class="result-card"><strong><a href="${safeUrl(r.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(r.title||"نتيجة بحث")}</a></strong><p>${escapeHtml(r.snippet||"")}</p><div class="result-meta">${escapeHtml(r.source||"مصدر عبر الإنترنت")}</div></article>`).join("");
-      html+="</div>";
-    }
-    if(data.note)html+=`<p class="result-meta">${escapeHtml(data.note)}</p>`;
-    document.getElementById("boardContent").innerHTML=html;
-    document.getElementById("boardStatus").textContent="اكتمل الشرح";
-  }catch(err){
-    showError((err&&err.message)||"حدث خطأ أثناء الاتصال. تحقق من إعداد الخادم واتصال الإنترنت.");
-    document.getElementById("boardStatus").textContent="تعذر إكمال الطلب";
-  }finally{setLoading(false)}
-});
-function startVoice(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){alert("الإملاء الصوتي غير مدعوم في هذا المتصفح. جرّب Chrome وحدّثه.");return}
-  const recognition=new SR();recognition.lang="ar-EG";recognition.interimResults=false;recognition.maxAlternatives=1;
-  document.getElementById("boardStatus").textContent="استمع الآن...";
-  recognition.onresult=e=>{document.getElementById("userInput").value=e.results[0][0].transcript;document.getElementById("questionForm").requestSubmit()};
-  recognition.onerror=()=>{document.getElementById("boardStatus").textContent="لم يلتقط الصوت؛ حاول مرة أخرى"};
-  recognition.onend=()=>{if(document.getElementById("boardStatus").textContent==="استمع الآن...")document.getElementById("boardStatus").textContent="السبورة جاهزة"};
-  recognition.start();
+    const data = await res.json();
+    lastAnswer = data.answer;
+    
+    document.getElementById('boardContent').innerHTML = `<div class="answer-box"><div style="color:#4ade80; font-weight:bold; margin-bottom:8px;">👨‍🏫 الإجابة:</div>${lastAnswer}</div>`;
+    document.getElementById('status').innerText = "تمت الإجابة ✅";
+    speak(lastAnswer.substring(0,400));
+  }catch(e){
+    console.error(e);
+    document.getElementById('boardContent').innerHTML = `<div style="color:#fb7185; text-align:center;">😅 مشكلة اتصال، جرب تاني! <br><small>${e.message}</small></div>`;
+    document.getElementById('status').innerText = "خطأ في الاتصال";
+  }
 }
-function readAnswer(){
-  if(!lastAnswerText){alert("لا توجد إجابة لقراءتها بعد.");return}
-  if(!("speechSynthesis" in window)){alert("ميزة قراءة النص غير مدعومة في هذا المتصفح.");return}
-  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(lastAnswerText);u.lang="ar-EG";u.rate=.92;speechSynthesis.speak(u);
+
+function speakAnswer(){ if(lastAnswer) speak(lastAnswer); }
+function speak(t){
+  try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = /[ء-ي]/.test(t) ? 'ar-SA' : 'en-US'; u.rate=0.9; speechSynthesis.speak(u);}catch(e){}
 }
-function stopReading(){if("speechSynthesis" in window)speechSynthesis.cancel()}
 function clearBoard(){
-  document.getElementById("userInput").value="";
-  document.getElementById("boardContent").innerHTML='<div class="empty"><div class="emoji">🎓</div><h2>السبورة جاهزة</h2><p>اكتب سؤالك التالي لبدء درس جديد.</p></div>';
-  document.getElementById("boardStatus").textContent="السبورة جاهزة";lastAnswerText="";
+  document.getElementById('boardContent').innerHTML = `<div style="text-align:center; padding:30px;"><div style="font-size:3rem;">🎓</div><p style="color:#64748b;">السبورة جاهزة</p></div>`;
+  document.getElementById('qInput').value=""; lastAnswer=""; document.getElementById('status').innerText="السبورة جاهزة ✅"; speechSynthesis.cancel();
 }
-function getHistory(){try{return JSON.parse(localStorage.getItem("smart_board_history")||"[]")}catch{return []}}
-function addHistory(query){
-  let h=getHistory().filter(x=>x!==query);h.unshift(query);h=h.slice(0,12);
-  try{localStorage.setItem("smart_board_history",JSON.stringify(h))}catch{}
-  renderHistory();
+function startVoice(){
+  const rec = new (window.webkitSpeechRecognition||window.SpeechRecognition)();
+  rec.lang = 'ar-EG'; rec.onresult = (e)=>{ document.getElementById('qInput').value = e.results[0][0].transcript; searchAndExplain(); }; rec.start();
+}
+function addToHistory(q){
+  let h = JSON.parse(localStorage.getItem('qa_history')||'[]');
+  if(!h.includes(q)){ h.unshift(q); h=h.slice(0,10); localStorage.setItem('qa_history', JSON.stringify(h)); renderHistory(); }
 }
 function renderHistory(){
-  const h=getHistory(),box=document.getElementById("historyTags");
-  box.innerHTML=h.length?h.map(q=>`<button class="chip" type="button" data-query="${escapeHtml(q)}">${escapeHtml(q)}</button>`).join(""):'<span class="result-meta">لا توجد أسئلة محفوظة.</span>';
-  box.querySelectorAll("[data-query]").forEach(b=>b.addEventListener("click",()=>{document.getElementById("userInput").value=b.dataset.query;document.getElementById("questionForm").requestSubmit()}));
+  let h = JSON.parse(localStorage.getItem('qa_history')||'[]');
+  document.getElementById('history').innerHTML = h.map(x=>`<button class="btn btn-dark" style="padding:6px 12px; border-radius:20px; font-size:0.9rem;" onclick="document.getElementById('qInput').value='${x}'; searchAndExplain();">${x}</button>`).join('');
 }
-function clearHistory(){try{localStorage.removeItem("smart_board_history")}catch{}renderHistory()}
+function clearHistory(){ localStorage.removeItem('qa_history'); renderHistory(); }
 renderHistory();
 </script>
 </body>
