@@ -141,7 +141,7 @@
                 </div>
                 <div class="letters-grid" id="lettersBar"></div>
                 <div class="custom-word-box">
-                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب للترجمة (عربي ⇄ إنجليزي)...">
+                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب للترجمة الفورية (عربي ⇄ إنجليزي)...">
                     <button class="btn-custom-submit" onclick="applyCustomWord()">عرض</button>
                 </div>
                 <div class="canvas-box">
@@ -358,15 +358,15 @@
         function stopDrawing() { isDrawing = false; }
         function clearBoard() { if(ctx && canvas) { ctx.clearRect(0, 0, canvas.width, canvas.height); } }
 
-        // قاموس ثنائي الاتجاه موسع للترجمة الفورية المباشرة على السبورة
+        // قاموس ثنائي الاتجاه موسع للترجمة الفورية المباشرة الداخلية
         const bilingualDictionary = {
-            "تعال": "Come", "مدرسة": "School", "مرحباً": "Hello", "أهلاً": "Welcome",
+            "أسد": "Lion", "تعال": "Come", "مدرسة": "School", "مرحباً": "Hello", "أهلاً": "Welcome",
             "كيف حالك": "How are you", "شكراً": "Thank you", "قطة": "Cat", "كلب": "Dog",
             "تفاحة": "Apple", "كتاب": "Book", "قلم": "Pen", "ماء": "Water",
             "شمس": "Sun", "سيارة": "Car", "بيت": "House", "منزل": "House",
             "قمر": "Moon", "طاولة": "Table", "كرسي": "Chair", "حليب": "Milk",
             // من الإنجليزية إلى العربية
-            "come": "تعال", "school": "مدرسة", "hello": "مرحباً", "welcome": "أهلاً",
+            "lion": "أسد", "come": "تعال", "school": "مدرسة", "hello": "مرحباً", "welcome": "أهلاً",
             "cat": "قطة", "dog": "كلب", "apple": "تفاحة", "book": "كتاب",
             "pen": "قلم", "water": "ماء", "sun": "شمس", "car": "سيارة",
             "house": "منزل", "moon": "قمر", "table": "طاولة", "chair": "كرسي", "milk": "حليب"
@@ -376,14 +376,11 @@
             let processedVal = val.trim();
             let lowerKey = processedVal.toLowerCase();
 
-            // الترجمة الفورية الداخلية المباشرة على السبورة بدون فتح مواقع خارجية
+            // الترجمة الفورية الداخلية المباشرة على السبورة
             if (bilingualDictionary[processedVal]) {
                 processedVal = bilingualDictionary[processedVal];
             } else if (bilingualDictionary[lowerKey]) {
                 processedVal = bilingualDictionary[lowerKey];
-            } else {
-                // محرك ترجمة ذكي افتراضي داخلي لأي كلمة غير موجودة بالقاموس
-                processedVal = processedVal; 
             }
 
             currentItem = processedVal;
