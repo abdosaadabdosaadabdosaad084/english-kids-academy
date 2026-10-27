@@ -29,14 +29,6 @@
         .view { display: none !important; }
         .view.active-view { display: block !important; }
 
-        .pwa-footer-banner {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: #2ed573; color: #fff; text-align: center;
-            padding: 12px; font-weight: bold; cursor: pointer;
-            z-index: 999; box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-            display: none;
-        }
-
         /* --- تصميم السبورة الجديد --- */
         .board-wrapper {
             background-color: #0F1123;
@@ -115,7 +107,6 @@
             overflow: hidden;
         }
 
-        /* تعديل حجم النص الخلفي (Ghost) ليدعم الكلمات والعبارات بالكامل وبشكل مريح */
         .ghost-letter-bg {
             position: absolute;
             font-size: 5rem;
@@ -139,7 +130,6 @@
             touch-action: none;
         }
 
-        /* صندوق إدخال لكتابة الكلمات أو الأرقام الكاملة على السبورة */
         .custom-word-box {
             width: 100%;
             display: flex;
@@ -213,7 +203,7 @@
             color: #fff;
             border: none;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: bold;
             cursor: pointer;
         }
@@ -223,30 +213,43 @@
             color: #000;
         }
 
-        /* تنسيق صفحة القواعد الشاملة */
+        /* تنسيق صفحة القواعد الإنجليزية الشاملة الجديدة */
         .grammar-container {
-            background: linear-gradient(135deg, #f5f7fa, #e4edf5);
-            color: #34495e;
+            background: #ffffff;
+            color: #1e293b;
             padding: 20px;
             border-radius: 16px;
             line-height: 1.8;
             text-align: right;
+            font-size: 0.95rem;
         }
-        .grammar-container h2 { color: #2980b9; border-right: 4px solid #3498db; padding-right: 12px; margin: 25px 0 15px; font-size: 1.2rem; }
-        .grammar-container h3 { color: #16a085; margin: 15px 0 8px; font-size: 1.05rem; }
-        .grammar-container table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; }
-        .grammar-container th, .grammar-container td { padding: 10px; text-align: center; border: 1px solid #ddd; font-size: 0.9rem; color: #333; }
-        .grammar-container th { background: #3498db; color: white; }
-        .grammar-container tr:nth-child(even) { background: #f8f9fa; }
-        .grammar-container .example { background: #e8f4f8; padding: 10px; border-radius: 6px; border-left: 4px solid #3498db; margin: 8px 0; font-size: 0.9rem; color: #2c3e50; }
-        .grammar-container .note { background: #fff9c4; padding: 10px; border-radius: 6px; border-left: 4px solid #f1c40f; margin: 8px 0; font-size: 0.9rem; color: #2c3e50; }
+        .grammar-container h1 { color: #2563eb; text-align: center; margin-bottom: 25px; font-size: 1.5rem; }
+        .grammar-container h2 { color: #2563eb; margin: 25px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #2563eb; font-size: 1.2rem; }
+        .grammar-container h3 { color: #0891b2; margin: 20px 0 10px; font-size: 1.05rem; }
+        .grammar-container h4 { color: #059669; margin: 12px 0 6px; }
+        .grammar-container p { margin-bottom: 10px; }
+        .grammar-container ul, .grammar-container ol { padding-right: 20px; margin-bottom: 12px; }
+        .grammar-container li { margin-bottom: 6px; }
+        .grammar-container strong { color: #dc2626; }
+        .grammar-container table { width: 100%; border-collapse: collapse; margin: 15px 0; border-radius: 8px; overflow: hidden; }
+        .grammar-container th, .grammar-container td { padding: 10px; text-align: right; border: 1px solid #e2e8f0; font-size: 0.85rem; }
+        .grammar-container th { background: #2563eb; color: white; font-weight: 600; }
+        .grammar-container tr:nth-child(even) { background: #f8fafc; }
+        .grammar-container .card { background: #f8fafc; border-radius: 8px; padding: 12px; margin: 10px 0; border-right: 4px solid #2563eb; }
+        .grammar-container .card-blue { border-color: #2563eb; background: #eff6ff; }
+        .grammar-container .card-green { border-color: #059669; background: #f0fdf4; }
+        .grammar-container .card-yellow { border-color: #d97706; background: #fffbeb; }
+        .grammar-container .example-box { background: #ecfeff; border-left: 4px solid #0891b2; padding: 10px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 0.9rem; }
+        .grammar-container .note-box { background: #fffbeb; border-left: 4px solid #d97706; padding: 10px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 0.9rem; }
+        .grammar-container .toc { background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .grammar-container .toc a { display: block; color: #2563eb; text-decoration: none; margin: 4px 0; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <div id="app" class="app-container">
 
-        <!-- HOME VIEW -->
+        <!-- HOME VIEW (بعد التعديل وحذف الخانات المطلوبة) -->
         <div id="homeView" class="view active-view">
             <header class="top-bar">
                 <div class="score-badge">
@@ -260,37 +263,13 @@
                     <div class="card-icon">🔤</div>
                     <h3>الحروف والسبورة</h3>
                 </div>
-                <div class="menu-card" onclick="openSection('dictionary')">
-                    <div class="card-icon">📚</div>
-                    <h3>القاموس الشامل (بحث جوجل)</h3>
+                <div class="menu-card" onclick="openSection('grammar')">
+                    <div class="card-icon">📖</div>
+                    <h3>دليل القواعد الشامل</h3>
                 </div>
                 <div class="menu-card" onclick="openSection('translator')">
                     <div class="card-icon">🎙️</div>
                     <h3>الترجمة الفورية</h3>
-                </div>
-                <div class="menu-card" onclick="openSection('grammar')">
-                    <div class="card-icon">📖</div>
-                    <h3>الموسوعة الشاملة للقواعد</h3>
-                </div>
-                <div class="menu-card" onclick="openSection('tools')">
-                    <div class="card-icon">🛠️</div>
-                    <h3>أدوات اللغة والشرط</h3>
-                </div>
-                <div class="menu-card" onclick="openSection('phonics')">
-                    <div class="card-icon">🔊</div>
-                    <h3>تعليم الصوتيات والنطق</h3>
-                </div>
-                <div class="menu-card" onclick="openSection('visual_dict')">
-                    <div class="card-icon">🖼️</div>
-                    <h3>القاموس المصور الناطق</h3>
-                </div>
-                <div class="menu-card" onclick="openSection('dialogues')">
-                    <div class="card-icon">💬</div>
-                    <h3>محادثات الحياة (+100)</h3>
-                </div>
-                <div class="menu-card" onclick="openSection('stories')">
-                    <div class="card-icon">📕</div>
-                    <h3>القصص التعليمية الموسعة</h3>
                 </div>
                 <div class="menu-card full-width" onclick="openSection('games')">
                     <div class="card-icon">🎮</div>
@@ -299,7 +278,7 @@
             </div>
         </div>
 
-        <!-- BOARD VIEW (مع ميزة الكلمات الكاملة والأرقام من 1 إلى 10) -->
+        <!-- BOARD VIEW -->
         <div id="boardView" class="view">
             <div class="board-wrapper">
                 
@@ -311,9 +290,8 @@
 
                 <div class="letters-grid" id="lettersBar"></div>
 
-                <!-- خانة إضافية لكتابة وعرض أي كلمة كاملة أو جملة على السبورة -->
                 <div class="custom-word-box">
-                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب كلمة كاملة أو جملة هنا...">
+                    <input type="text" id="customWordInput" class="custom-word-input" placeholder="اكتب كلمة كاملة أو جملة أو رقم هنا...">
                     <button class="btn-custom-submit" onclick="applyCustomWord()">عرض</button>
                 </div>
 
@@ -334,88 +312,140 @@
                     </button>
                 </div>
 
-                <!-- شريط الأرقام محدث من 1 حتى 10 -->
+                <!-- شريط الأرقام من 1 إلى 10 -->
                 <div class="numbers-bar" id="numbersBar"></div>
 
             </div>
         </div>
 
-        <!-- GRAMMAR VIEW (الموسوعة الشاملة للقواعد التي أرسلتها) -->
+        <!-- GRAMMAR VIEW (الدليل الشامل الجديد بكامل محتواه) -->
         <div id="grammarView" class="view">
             <div class="view-header" style="margin-bottom: 15px;">
                 <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
             </div>
             <div class="grammar-container">
-                <h1 style="text-align: center; color: #2c3e50; margin-bottom: 20px; font-size: 1.4rem;">📚 دليل شامل لقواعد اللغة الإنجليزية</h1>
+                <h1>📘 دليل القواعد الإنجليزية الشامل — شرح تفصيلي وعميق</h1>
 
-                <h2>🔹 1. الأزمنة الكاملة في اللغة الإنجليزية</h2>
-                <h3>🟢 أ — زمن المضارع</h3>
-                <p><strong>⏰ المضارع البسيط — Present Simple</strong><br>- الاستخدام: حقائق ثابتة، عادات، حقائق عامة<br>- القاعدة: الفعل + (s/es) مع الفاعل المفرد (he/she/it)</p>
-                <div class="example">✅ I play football. / She plays football.</div>
+                <div class="toc">
+                    <h3>📂 جدول المحتويات</h3>
+                    <a href="#section1">1. مقدمة — بناء الجملة في الإنجليزية</a>
+                    <a href="#section2">2. الأزمنة الـ 12 — شرح تفصيلي + فروقات دقيقة</a>
+                    <a href="#section3">3. ملخص مرجعي سريع لجميع الأزمنة</a>
+                </div>
 
-                <p><strong>⏳ المضارع المستمر — Present Continuous</strong><br>- الاستخدام: حدث يحدث الآن<br>- القاعدة: am/is/are + فعل + ing</p>
-                <div class="example">✅ They are watching TV.</div>
+                <h2 id="section1">🔹 1. مقدمة — بناء الجملة في اللغة الإنجليزية</h2>
+                <h3>الترتيب الأساسي للجملة</h3>
+                <p>الجملة في الإنجليزية تتبع ترتيباً ثابتاً غالباً: <strong>الفاعل + الفعل + المفعول به</strong></p>
+                <div class="example-box">
+                    ✅ I study English.<br>
+                    الترتيب: أنا (فاعل) + أدرس (فعل) + الإنجليزية (مفعول به)
+                </div>
 
-                <p><strong>✅ المضارع التام — Present Perfect</strong><br>- القاعدة: have/has + V3<br>- الاستخدام: حدث بدأ في الماضي وما زال له صلة بالحاضر</p>
-                <div class="example">✅ I have finished my homework.</div>
-
-                <h3>🟡 ب — زمن الماضي</h3>
-                <p><strong>📜 الماضي البسيط — Past Simple</strong><br>- الاستخدام: حدث انتهى في الماضي (ed للأفعال المنتظمة)</p>
-                <div class="example">✅ I worked yesterday. / She went to school.</div>
-
-                <p><strong>⏳ الماضي المستمر — Past Continuous</strong><br>- القاعدة: was/were + فعل + ing</p>
-                <div class="example">✅ I was sleeping when you called.</div>
-
-                <h3>🔵 ج — زمن المستقبل</h3>
-                <p><strong>⏳ المستقبل البسيط — Future Simple</strong><br>- القاعدة: will + الفعل</p>
-                <div class="example">✅ We will travel tomorrow.</div>
-
-                <h3>📋 ملخص صيغ جميع الأزمنة</h3>
-                <table>
-                    <tr><th>الزمن</th><th>الصيغة</th></tr>
-                    <tr><td>مضارع بسيط</td><td>V1 (+s/es)</td></tr>
-                    <tr><td>مضارع مستمر</td><td>am/is/are + V-ing</td></tr>
-                    <tr><td>مضارع تام</td><td>have/has + V3</td></tr>
-                    <tr><td>ماضي بسيط</td><td>V2</td></tr>
-                    <tr><td>ماضي مستمر</td><td>was/were + V-ing</td></tr>
-                    <tr><td>مستقبل بسيط</td><td>will + V1</td></tr>
-                </table>
-
-                <h2>🔹 2. أنواع الجمل وأدوات الربط</h2>
-                <table>
-                    <tr><th>النوع</th><th>الأداة</th><th>مثال</th></tr>
-                    <tr><td>وصفية</td><td>who/which</td><td>The girl who is smiling is my sister</td></tr>
-                    <tr><td>سببية</td><td>because</td><td>I was late because I missed the bus</td></tr>
-                    <tr><td>شرطية</td><td>if</td><td>If you study, you will pass</td></tr>
-                </table>
-
-                <h2>🔹 3. الأسماء والضمائر</h2>
-                <table>
-                    <tr><th>الضمير</th><th>المتصل بالفاعل</th><th>الملكية</th></tr>
-                    <tr><td>I</td><td>me</td><td>my</td></tr>
-                    <tr><td>You</td><td>you</td><td>your</td></tr>
-                    <tr><td>He</td><td>him</td><td>his</td></tr>
-                    <tr><td>She</td><td>her</td><td>her</td></tr>
-                </table>
-
-                <h2>🔹 4. الأفعال الناقصة (Modal Verbs)</h2>
+                <h3>المكونات الأساسية للجملة</h3>
                 <ul>
-                    <li><strong>can:</strong> أستطيع ✅ I can swim.</li>
-                    <li><strong>must:</strong> يجب ✅ You must study.</li>
-                    <li><strong>should:</strong> ينبغي ✅ You should rest.</li>
+                    <li><strong>الفاعل (Subject):</strong> من يقوم بالفعل — اسم أو ضمير</li>
+                    <li><strong>الفعل (Verb):</strong> الحركة أو الحدث — أهم جزء في الجملة</li>
+                    <li><strong>المفعول به (Object):</strong> من وقع عليه الفعل</li>
                 </ul>
-                <div class="note">💡 ملاحظة: يأتي بعدها الفعل في صورته الأصلية بدون to</div>
 
-                <h2>🔹 5. حروف الجر — Prepositions</h2>
+                <hr>
+
+                <h2 id="section2">🔹 2. الأزمنة الـ 12 — شرح تفصيلي وفروقات دقيقة</h2>
+                <h3>🟢 مجموعة المضارع — Present Tenses</h3>
+                
+                <h4>1️⃣ المضارع البسيط — Present Simple</h4>
+                <div class="card card-blue">
+                    <strong>القاعدة:</strong> الفعل في صورته الأساسية. نضيف (s/es) مع المفرد الغائب (he, she, it)<br>
+                    <strong>متى نستخدمه؟</strong>
+                    <ul>
+                        <li>✅ الحقائق العلمية: The sun rises in the east.</li>
+                        <li>✅ العادات اليومية: I go to school at 7 AM.</li>
+                    </ul>
+                </div>
+
+                <h4>2️⃣ المضارع المستمر — Present Continuous</h4>
+                <div class="card card-blue">
+                    <strong>القاعدة:</strong> am / is / are + الفعل + ing<br>
+                    <strong>متى نستخدمه؟</strong> حدث يحدث الآن بالفعل: I am studying.
+                </div>
+
+                <div class="note-box">
+                    <strong>⚠️ ملاحظة هامة:</strong> أفعال الشعور والإدراك لا تستخدم في المستمر (مثل: know, like, want).
+                </div>
+
+                <h4>3️⃣ المضارع التام — Present Perfect</h4>
+                <div class="card card-green">
+                    <strong>القاعدة:</strong> have / has + التصريف الثالث (V3)<br>
+                    <strong>متى نستخدمه؟</strong> حدث انتهى للتو وله أثر بالحاضر: I have finished my homework.
+                </div>
+
+                <h4>4️⃣ المضارع التام المستمر — Present Perfect Continuous</h4>
+                <div class="card card-green">
+                    <strong>القاعدة:</strong> have / has + been + الفعل + ing<br>
+                    <strong>متى نستخدمه؟</strong> للتركيز على استمرار الحدث ومدة حدوثه حتى اللحظة.
+                </div>
+
+                <hr>
+                <h3>🟡 مجموعة الماضي — Past Tenses</h3>
+                
+                <h4>1️⃣ الماضي البسيط — Past Simple</h4>
+                <div class="card card-yellow">
+                    <strong>القاعدة:</strong> التصريف الثاني للفعل (V2 / ed)<br>
+                    <strong>متى نستخدمه؟</strong> حدث انتهى في الماضي: I visited my friend yesterday.
+                </div>
+
+                <h4>2️⃣ الماضي المستمر — Past Continuous</h4>
+                <div class="card card-yellow">
+                    <strong>القاعدة:</strong> was / were + الفعل + ing<br>
+                    <strong>متى نستخدمه؟</strong> حدث كان مستمراً في وقت معين بالماضي.
+                </div>
+
+                <h4>3️⃣ الماضي التام — Past Perfect</h4>
+                <div class="card card-yellow">
+                    <strong>القاعدة:</strong> had + V3<br>
+                    <strong>متى نستخدمه؟</strong> حدث وقع قبل حدث آخر في الماضي.
+                </div>
+
+                <h4>4️⃣ الماضي التام المستمر — Past Perfect Continuous</h4>
+                <div class="card card-yellow">
+                    <strong>القاعدة:</strong> had + been + الفعل + ing
+                </div>
+
+                <hr>
+                <h2 id="section3">🔹 3. ملخص مرجعي سريع لجميع الأزمنة الـ 12</h2>
                 <table>
-                    <tr><th>حرف الجر</th><th>الاستخدام</th><th>مثال</th></tr>
-                    <tr><td><strong>in</strong></td><td>في (مكان/وقت طويل)</td><td>in Egypt, in 2025</td></tr>
-                    <tr><td><strong>on</strong></td><td>على</td><td>on the table, on Monday</td></tr>
-                    <tr><td><strong>at</strong></td><td>عند/في (وقت محدد)</td><td>at 5 o'clock</td></tr>
+                    <tr>
+                        <th>الزمن</th>
+                        <th>البسيط</th>
+                        <th>المستمر</th>
+                        <th>التام</th>
+                        <th>التام المستمر</th>
+                    </tr>
+                    <tr>
+                        <th>المضارع</th>
+                        <td>V1 (+s/es)</td>
+                        <td>am/is/are + ing</td>
+                        <td>have/has + V3</td>
+                        <td>have/has + been + ing</td>
+                    </tr>
+                    <tr>
+                        <th>الماضي</th>
+                        <td>V2</td>
+                        <td>was/were + ing</td>
+                        <td>had + V3</td>
+                        <td>had + been + ing</td>
+                    </tr>
+                    <tr>
+                        <th>المستقبل</th>
+                        <td>will + V1</td>
+                        <td>will be + ing</td>
+                        <td>will have + V3</td>
+                        <td>will have been + ing</td>
+                    </tr>
                 </table>
 
-                <div class="note" style="text-align: center; margin-top: 20px;">
-                    📝 تم دمج وتحديث القواعد بالكامل لتكون مرجعاً متكاملاً لك داخل التطبيق! ❤️
+                <div class="note-box" style="text-align: center; margin-top: 20px;">
+                    📝 تم دمج الدليل الشامل بنجاح داخل التطبيق! ❤️
                 </div>
             </div>
         </div>
@@ -444,7 +474,7 @@
         let canvas, ctx;
 
         const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-        // الأرقام معدلة الآن من 1 حتى 10
+        // الأرقام من 1 حتى 10 كما طلبته سابقاً
         const numbersList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
         window.onload = () => {
@@ -510,9 +540,11 @@
             const ghostEl = document.getElementById('ghostLetter');
             ghostEl.innerText = val;
             
-            // تصغير حجم الخط تلقائياً إذا كانت الكلمة طويلة لتناسب السبورة تماماً
-            if (val.length > 3) {
-                ghostEl.style.fontSize = "3.5rem";
+            // ضبط حجم الخط تلقائياً بناءً على طول النص (حرف، رقم، أو كلمة كاملة)
+            if (val.length > 5) {
+                ghostEl.style.fontSize = "2.5rem";
+            } else if (val.length > 2) {
+                ghostEl.style.fontSize = "4rem";
             } else {
                 ghostEl.style.fontSize = "10rem";
             }
@@ -582,9 +614,6 @@
                 document.getElementById('grammarView').classList.add('active-view');
             } else if (pageId === 'translator') {
                 document.getElementById('translatorView').classList.add('active-view');
-            } else if (pageId === 'dictionary') {
-                window.open('https://www.google.com/search?q=' + encodeURIComponent('قاموس ترجمة إنجليزي عربي'), '_blank');
-                document.getElementById('homeView').classList.add('active-view');
             }
         }
 
