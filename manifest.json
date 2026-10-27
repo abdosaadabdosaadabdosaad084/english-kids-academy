@@ -1,28 +1,14 @@
 {
-  "id": "/english-kids-academy/",
-  "name": "English Kids Academy - أكاديمية الإنجليزية للأطفال",
-  "short_name": "Kids Academy",
-  "description": "أكاديمية تعليم اللغة الإنجليزية للأطفال من 5 إلى 13 سنة",
-  "lang": "ar",
-  "dir": "rtl",
-  "start_url": "./index.html",
-  "scope": "./",
+  "name": "English Pro Academy - أكاديمية الإنجليزية الاحترافية",
+  "short_name": "EnglishPro",
+  "description": "تعلم الإنجليزية للصغار والكبار - 500 كلمة، ألعاب، ذكاء اصطناعي",
+  "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#0F1123",
-  "theme_color": "#0F1123",
-  "icons": [
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "icons": [{
+    "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }]
 }
