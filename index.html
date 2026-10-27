@@ -36,8 +36,6 @@
             z-index: 999; box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
             display: none;
         }
-        .content-section { background: rgba(255,255,255,0.05); padding: 18px; border-radius: 15px; margin-bottom: 15px; line-height: 1.9; border: 1px solid rgba(255,255,255,0.1); }
-        .content-section h3 { color: #f1c40f; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
 
         /* --- تصميم السبورة الجديد المماثل للصورة --- */
         .board-wrapper {
@@ -176,13 +174,13 @@
 
         .num-btn {
             flex: 1;
-            margin: 0 3px;
+            margin: 0 2px;
             height: 40px;
             background: #272a3c;
             color: #fff;
             border: none;
             border-radius: 8px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
         }
@@ -250,7 +248,7 @@
             </div>
         </div>
 
-        <!-- BOARD VIEW (التصميم المطور المطابق للصورة) -->
+        <!-- BOARD VIEW -->
         <div id="boardView" class="view">
             <div class="board-wrapper">
                 
@@ -282,7 +280,7 @@
                 </div>
 
                 <div class="numbers-bar" id="numbersBar">
-                    <!-- يتم توليد الأرقام تلقائياً هنا -->
+                    <!-- يتم توليد الأرقام تلقائياً من 1 إلى 10 هنا -->
                 </div>
 
             </div>
@@ -307,14 +305,6 @@
             </div>
         </div>
 
-        <!-- DETAILS VIEW -->
-        <div id="detailsView" class="view">
-            <div class="view-header" style="margin-bottom: 15px;">
-                <button class="btn-home-back" onclick="showHome()">🏠 الرجوع للرئيسية</button>
-            </div>
-            <div class="details-content" id="detailsContent" style="padding: 10px; color: #fff;"></div>
-        </div>
-
     </div>
 
     <div id="pwaBanner" class="pwa-footer-banner" onclick="triggerPWAInstall()">
@@ -327,7 +317,8 @@
         let canvas, ctx;
 
         const capitalList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-        const numbersList = ["1", "2", "3", "4", "5", "6", "7", "8"];
+        // تم تحديث الأرقام لتصبح من 1 حتى 10
+        const numbersList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
         window.onload = () => {
             initCanvas();
@@ -340,7 +331,6 @@
             if(!canvas) return;
             ctx = canvas.getContext('2d');
             
-            // ضبط حجم الكانفاس ليتناسب مع الحاوية بشكل ممتازة
             const rect = canvas.parentElement.getBoundingClientRect();
             canvas.width = rect.width;
             canvas.height = rect.height;
@@ -349,7 +339,6 @@
             ctx.lineCap = 'round';
             ctx.strokeStyle = '#ffffff';
 
-            // أحداث الرسم بالماوس واللمس
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDrawing);
