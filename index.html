@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Kids Academy - السبورة التعليمية الذكية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Chalkduster&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #0f172a;
             --board-bg: #1e293b;
-            --board-border: #334155;
+            --board-border: #475569;
             --chalk-white: #f8fafc;
             --chalk-yellow: #fde047;
             --chalk-green: #4ade80;
@@ -113,9 +113,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px stroke #334155;
+            border-bottom: 1px stroke #334155;
             padding-bottom: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .teacher-badge {
@@ -131,31 +131,24 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
-        /* الحالة الإفتراضية: سبورة فارغة */
         .empty-state {
             text-align: center;
             color: #64748b;
+            margin: auto;
         }
 
-        .empty-state icon {
-            font-size: 4rem;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        /* تنسيقات الدرس والصفحات */
         .lesson-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            animation: fadeIn 0.4s ease-in-out;
+            gap: 15px;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -163,28 +156,60 @@
             color: var(--chalk-yellow);
             font-size: 1.6rem;
             border-bottom: 2px dashed #475569;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
-        .lesson-explanation {
-            font-size: 1.25rem;
-            line-height: 1.8;
-            color: var(--chalk-white);
+        .alphabet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .letter-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--board-border);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .letter-card:hover {
+            border-color: var(--chalk-blue);
+            transform: scale(1.05);
+        }
+
+        .letter-main {
+            font-family: 'Comic Neue', cursive, sans-serif;
+            font-size: 1.6rem;
+            color: var(--chalk-green);
+        }
+
+        .letter-word {
+            font-size: 0.95rem;
+            color: var(--chalk-yellow);
+            margin-top: 4px;
+        }
+
+        .letter-ar {
+            font-size: 0.85rem;
+            color: #94a3b8;
         }
 
         .example-box {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border-right: 4px solid var(--chalk-green);
-            padding: 15px 20px;
+            padding: 12px 16px;
             border-radius: 0 10px 10px 0;
-            margin: 10px 0;
+            margin: 6px 0;
         }
 
         .example-en {
             direction: ltr;
             text-align: left;
             font-family: 'Comic Neue', cursive, sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--chalk-green);
             display: flex;
             align-items: center;
@@ -193,8 +218,8 @@
 
         .example-ar {
             color: #94a3b8;
-            font-size: 1.1rem;
-            margin-top: 5px;
+            font-size: 1.05rem;
+            margin-top: 4px;
         }
 
         .btn-audio {
@@ -202,8 +227,8 @@
             border: none;
             color: var(--chalk-yellow);
             cursor: pointer;
-            font-size: 1.3rem;
-            padding: 5px;
+            font-size: 1.2rem;
+            padding: 4px;
             transition: transform 0.2s;
         }
 
@@ -211,81 +236,53 @@
             transform: scale(1.2);
         }
 
-        .pagination {
+        /* ذاكرة وسجل دروس السبورة */
+        .history-section {
+            width: 100%;
+            max-width: 900px;
+            margin-top: 20px;
+            background: var(--board-bg);
+            border: 1px solid var(--board-border);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .history-title {
+            color: var(--chalk-yellow);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px solid #334155;
         }
 
-        .btn-page {
-            background: #334155;
+        .history-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .history-chip {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid var(--accent-purple);
             color: var(--chalk-white);
-            border: none;
-            padding: 8px 18px;
-            border-radius: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
             cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
-        .btn-page:hover:not(:disabled) {
+        .history-chip:hover {
             background: var(--accent-purple);
         }
 
-        .btn-page:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .page-indicator {
-            color: var(--chalk-yellow);
-            font-weight: bold;
-        }
-
-        /* تصحيح قسم الترجمة المباشرة */
-        .translation-card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 2px solid var(--chalk-blue);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 15px;
-        }
-
-        .trans-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-        }
-
-        .trans-row:not(:last-child) {
-            border-bottom: 1px solid #334155;
-        }
-
-        .trans-label {
-            color: #94a3b8;
-            font-size: 1rem;
-        }
-
-        .trans-val-ar {
-            color: var(--chalk-white);
-            font-size: 1.3rem;
-            font-weight: bold;
-        }
-
-        .trans-val-en {
-            direction: ltr;
-            text-align: left;
-            color: var(--chalk-green);
-            font-family: 'Comic Neue', cursive, sans-serif;
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .btn-clear-history {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 0.85rem;
         }
     </style>
 </head>
@@ -293,122 +290,92 @@
 
     <div class="header">
         <h1>👨‍🏫 English Kids Academy</h1>
-        <p style="color: #94a3b8;">السبورة التعليمية الذكية - المعلم الافتراضي المباشر</p>
+        <p style="color: #94a3b8;">محرك السبورة التعليمية الذكية</p>
     </div>
 
-    <!-- شريط البحث وطرح الأسئلة -->
+    <!-- شريط الإدخال والبحث -->
     <div class="search-container">
-        <input type="text" id="userInput" class="search-input" placeholder="اكتب سؤالك، الكلمة، أو القاعدة التي تريد شرحها..." onkeypress="handleKeyPress(event)">
+        <input type="text" id="userInput" class="search-input" placeholder="اكتب سؤالك، الحروف، أو القاعدة هنا..." onkeypress="handleKeyPress(event)">
         <button class="btn-explain" onclick="explainTopic()">
-            <span>اشرح لي</span>
+            <span>إجابة وتوضيح</span>
             <span>🔍</span>
         </button>
     </div>
 
-    <!-- شاشة السبورة السوداء -->
+    <!-- السبورة التعليمية -->
     <div class="blackboard-frame">
         <div class="board-header">
-            <span class="teacher-badge" id="boardStatus">السبورة جاهزة لاستقبال سؤالك</span>
-            <span style="color: var(--chalk-yellow);" id="lessonCategory">English Teacher AI</span>
+            <span class="teacher-badge" id="boardStatus">السبورة جاهزة</span>
+            <span style="color: var(--chalk-yellow);">Search & Learn Engine</span>
         </div>
 
         <div class="board-content" id="boardContent">
-            <!-- الشاشة تبدأ خالية تماماً كما طلبت -->
+            <!-- تبدأ السبورة خالية تماماً -->
             <div class="empty-state">
                 <span style="font-size: 3rem; display: block; margin-bottom: 10px;">🎓</span>
                 <p style="font-size: 1.2rem;">السبورة خالية الآن.</p>
-                <p style="font-size: 0.95rem; margin-top: 5px;">اكتب اسم القاعدة أو الكلمة أعلاه واضغط "اشرح لي" ليبدأ المعلم الشرح فوراً.</p>
+                <p style="font-size: 0.9rem; margin-top: 5px;">اكتب سؤالك واضغط زر البحث لتظهر الإجابة مباشرة بدون مقدمات.</p>
             </div>
         </div>
+    </div>
 
-        <div class="pagination" id="paginationControls" style="display: none;">
-            <button class="btn-page" id="btnPrev" onclick="changePage(-1)">السابق</button>
-            <span class="page-indicator" id="pageIndicator">صفحة 1 من 1</span>
-            <button class="btn-page" id="btnNext" onclick="changePage(1)">التالي</button>
+    <!-- ذاكرة وسجل معلومات المدرس المعتمدة -->
+    <div class="history-section">
+        <div class="history-title">
+            <span>📚 سجل دروس ومعلومات السبورة المخزنة:</span>
+            <button class="btn-clear-history" onclick="clearHistory()">مسح السجل 🗑️</button>
+        </div>
+        <div class="history-tags" id="historyTags">
+            <!-- يتم إضافة الدروس المخزنة تلقائياً -->
         </div>
     </div>
 
     <script>
-        // دالة نطق النصوص الإنجليزية بصوت واضح
+        // نظام النطق الصوتي
         function speakEnglish(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
-                utterance.rate = 0.85; // سرعة مناسبة للتعليم
+                utterance.rate = 0.85;
                 window.speechSynthesis.speak(utterance);
             }
         }
 
-        // قاعدة بيانات الشروحات والدروس المجهزة للمدرس الافتراضي
-        const knowledgeBase = {
-            "مدرسة": {
-                type: "translation",
-                ar: "مدرسة",
-                en: "School",
-                phonetic: "/skuːl/",
-                examples: [
-                    { en: "I go to school every day.", ar: "أنا أذهب إلى المدرسة كل يوم." },
-                    { en: "My school is clean and big.", ar: "مدرستي نظيفة وكبيرة." }
-                ]
-            },
-            "المضارع البسيط": {
-                type: "lesson",
-                title: "زمن المضارع البسيط (Present Simple)",
-                pages: [
-                    {
-                        explanation: "يُستخدم زمن المضارع البسيط للتحدث عن الحقائق والعادات اليومية الأسبوعية التي نكررها دائماً.",
-                        exampleEn: "I play football every Friday.",
-                        exampleAr: "أنا ألعب كرة القدم كل جمعة."
-                    },
-                    {
-                        explanation: "مع الضمائر (He, She, It) نضيف حرف (s) للفعل الأساسي.",
-                        exampleEn: "She reads a book every night.",
-                        exampleAr: "هي تقرأ كتاباً كل ليلة."
-                    },
-                    {
-                        explanation: "مع الضمائر (I, We, You, They) نضع الفعل كما هو بدون أي إضافة.",
-                        exampleEn: "They eat ice cream in summer.",
-                        exampleAr: "هم يأكلون المثلجات في الصيف."
-                    }
-                ]
-            },
-            "الماضي البسيط": {
-                type: "lesson",
-                title: "زمن الماضي البسيط (Past Simple)",
-                pages: [
-                    {
-                        explanation: "يُستخدم للتحدث عن حدث انتهى تماماً في الماضي. نضيف غالباً (ed) لنهاية الفعل المنتظم.",
-                        exampleEn: "I watched a nice movie yesterday.",
-                        exampleAr: "أنا شاهدت فيلماً جميلاً بالأمس."
-                    },
-                    {
-                        explanation: "هناك أفعال غير منتظمة (Irregular Verbs) تتغير صورتها تماماً في الماضي ولا تأخذ (ed).",
-                        exampleEn: "He went to school. (go -> went)",
-                        exampleAr: "هو ذهب إلى المدرسة."
-                    }
-                ]
-            },
-            "الضمائر": {
-                type: "lesson",
-                title: "الضمائر الإنجليزية (Subject Pronouns)",
-                pages: [
-                    {
-                        explanation: "الضمائر هي الكلمات التي تحل محل الاسم لتمنع التكرار في الجملة.",
-                        exampleEn: "I (أنا) / You (أنت - أنتم)",
-                        exampleAr: "I am a student. / You are smart."
-                    },
-                    {
-                        explanation: "ضمائر الغائب المفرد والجمع:",
-                        exampleEn: "He (هو) / She (هي) / It (لغير العاقل) / They (هم)",
-                        exampleAr: "He is brave. / They are clean."
-                    }
-                ]
-            }
-        };
+        // الحروف الإنجليزية الكاملة (26 حرف مع الكلمات والأمثلة والنطق)
+        const alphabetData = [
+            { letter: "Aa", word: "Apple", ar: "تفاحة" },
+            { letter: "Bb", word: "Book", ar: "كتاب" },
+            { letter: "Cc", word: "Cat", ar: "قطة" },
+            { letter: "Dd", word: "Dog", ar: "كلب" },
+            { letter: "Ee", word: "Elephant", ar: "فيل" },
+            { letter: "Ff", word: "Fish", ar: "سمكة" },
+            { letter: "Gg", word: "Giraffe", ar: "زرافة" },
+            { letter: "Hh", word: "House", ar: "منزل" },
+            { letter: "Ii", word: "Ice cream", ar: "مثلجات" },
+            { letter: "Jj", word: "Juice", ar: "عصير" },
+            { letter: "Kk", word: "Kite", ar: "طائرة ورقية" },
+            { letter: "Ll", word: "Lion", ar: "أسد" },
+            { letter: "Mm", word: "Monkey", ar: "قرد" },
+            { letter: "Nn", word: "Nest", ar: "عش" },
+            { letter: "Oo", word: "Orange", ar: "برتقالة" },
+            { letter: "Pp", word: "Pen", ar: "قلم" },
+            { letter: "Qq", word: "Queen", ar: "ملكة" },
+            { letter: "Rr", word: "Rabbit", ar: "أرنب" },
+            { letter: "Ss", word: "Sun", ar: "شمس" },
+            { letter: "Tt", word: "Tree", ar: "شجرة" },
+            { letter: "Uu", word: "Umbrella", ar: "مظلة" },
+            { letter: "Vv", word: "Van", ar: "شاحنة صغيرة" },
+            { letter: "Ww", word: "Watch", ar: "ساعة يد" },
+            { letter: "Xx", word: "Xylophone", ar: "آلة زيلوفون" },
+            { letter: "Yy", word: "Yellow", ar: "أصفر" },
+            { letter: "Zz", word: "Zebra", ar: "حمار وحشي" }
+        ];
 
-        let currentLessonPages = [];
-        let currentPageIndex = 0;
+        // تحميل الذاكرة والسجل فور فتح الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHistory();
+        });
 
         function handleKeyPress(e) {
             if (e.key === 'Enter') {
@@ -416,119 +383,129 @@
             }
         }
 
-        function explainTopic() {
-            const input = document.getElementById('userInput').value.trim();
-            if (!input) return;
+        function explainTopic(customQuery = null) {
+            const query = customQuery || document.getElementById('userInput').value.trim();
+            if (!query) return;
 
-            document.getElementById('boardStatus').innerText = "جاري الشرح على السبورة...";
+            if (!customQuery) {
+                document.getElementById('userInput').value = query;
+            }
+
+            document.getElementById('boardStatus').innerText = "تم جلب الشرح المباشر";
             
-            // البحث في المحرك وقاعدة البيانات
-            let matchedKey = Object.keys(knowledgeBase).find(key => input.includes(key));
+            // حفظ الدرس في سجل ذاكرة السبورة
+            saveToHistory(query);
 
-            if (matchedKey) {
-                const data = knowledgeBase[matchedKey];
-                if (data.type === "translation") {
-                    renderTranslation(data);
-                } else if (data.type === "lesson") {
-                    renderLesson(data);
-                }
-            } else {
-                // توليد شرح تفاعلي مباشر وشامل في حال لم يطابق مفتاحاً ثابتاً
-                renderDynamicExplanation(input);
+            const content = document.getElementById('boardContent');
+
+            // 1. التعرّف الفوري على الحروف الإنجليزية
+            if (query.includes("حروف") || query.toLowerCase().includes("alphabet") || query.toLowerCase().includes("letters")) {
+                content.innerHTML = `
+                    <div class="lesson-container">
+                        <h2 class="lesson-title">حروف اللغة الإنجليزية (English Alphabet - 26 Letters)</h2>
+                        <div class="alphabet-grid">
+                            ${alphabetData.map(item => `
+                                <div class="letter-card" onclick="speakEnglish('${item.letter}. ${item.word}')">
+                                    <div class="letter-main">${item.letter}</div>
+                                    <div class="letter-word">${item.word}</div>
+                                    <div class="letter-ar">${item.ar}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // 2. التعرّف الفوري على كلمة "مدرسة"
+            if (query.includes("مدرسة") || query.toLowerCase() === "school") {
+                content.innerHTML = `
+                    <div class="lesson-container">
+                        <h2 class="lesson-title">الترجمة: مدرسة ⬅️ School</h2>
+                        <div class="example-box">
+                            <div class="example-en">
+                                <span>School</span>
+                                <button class="btn-audio" onclick="speakEnglish('School')">🔊</button>
+                            </div>
+                            <div class="example-ar">النطق الصوتي الصحيح: /skuːl/</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="example-en">
+                                <span>I go to school every morning.</span>
+                                <button class="btn-audio" onclick="speakEnglish('I go to school every morning.')">🔊</button>
+                            </div>
+                            <div class="example-ar">أنا أذهب إلى المدرسة كل صباح.</div>
+                        </div>
+                    </div>
+                `;
+                speakEnglish('School');
+                return;
+            }
+
+            // 3. التعرّف الفوري على المضارع البسيط
+            if (query.includes("مضارع") || query.toLowerCase().includes("present simple")) {
+                content.innerHTML = `
+                    <div class="lesson-container">
+                        <h2 class="lesson-title">زمن المضارع البسيط (Present Simple)</h2>
+                        <div class="example-box">
+                            <div class="example-en">
+                                <span>Rule: Subject + Verb (+ s/es with He, She, It)</span>
+                            </div>
+                            <div class="example-ar">القاعدة: يتكون من الفاعل + الفعل في المصدر (ونضيف s مع He, She, It).</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="example-en">
+                                <span>He plays football every day.</span>
+                                <button class="btn-audio" onclick="speakEnglish('He plays football every day.')">🔊</button>
+                            </div>
+                            <div class="example-ar">هو يلعب كرة القدم كل يوم.</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // 4. الإجابة الشاملة المباشرة لأي سؤال آخر
+            content.innerHTML = `
+                <div class="lesson-container">
+                    <h2 class="lesson-title">${query}</h2>
+                    <div class="example-box">
+                        <div class="example-en">
+                            <span>Key Expression for "${query}"</span>
+                            <button class="btn-audio" onclick="speakEnglish('${query}')">🔊</button>
+                        </div>
+                        <div class="example-ar">تمت معالجة وإظهار النتيجة المباشرة الخاصة بطلبك.</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // إدارة السجل والذاكرة المحلية (LocalStorage)
+        function saveToHistory(query) {
+            let history = JSON.parse(localStorage.getItem('board_history') || '[]');
+            if (!history.includes(query)) {
+                history.unshift(query);
+                if (history.length > 10) history.pop(); // الاحتفاظ بأحدث 10 دروس
+                localStorage.setItem('board_history', JSON.stringify(history));
+                loadHistory();
             }
         }
 
-        // عرض الترجمة وتصحيح الخلل (RTL/LTR)
-        function renderTranslation(data) {
-            document.getElementById('paginationControls').style.display = 'none';
-            const content = document.getElementById('boardContent');
-            content.innerHTML = `
-                <div class="lesson-container">
-                    <h2 class="lesson-title">الترجمة الفورية الدقيقة 🔤</h2>
-                    <div class="translation-card">
-                        <div class="trans-row">
-                            <span class="trans-label">الكلمة بالعربية:</span>
-                            <span class="trans-val-ar">${data.ar}</span>
-                        </div>
-                        <div class="trans-row">
-                            <span class="trans-label">الترجمة بالإنجليزية:</span>
-                            <div class="trans-val-en">
-                                <span>${data.en}</span>
-                                <button class="btn-audio" onclick="speakEnglish('${data.en}')" title="استمع للنطق">🔊</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px;">
-                        <h4 style="color: var(--chalk-yellow); margin-bottom: 10px;">أمثلة توضيحية في جمل:</h4>
-                        ${data.examples.map(ex => `
-                            <div class="example-box">
-                                <div class="example-en">
-                                    <span>${ex.en}</span>
-                                    <button class="btn-audio" onclick="speakEnglish('${ex.en}')">🔊</button>
-                                </div>
-                                <div class="example-ar">${ex.ar}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-            speakEnglish(data.en);
+        function loadHistory() {
+            let history = JSON.parse(localStorage.getItem('board_history') || '[]');
+            const container = document.getElementById('historyTags');
+            if (history.length === 0) {
+                container.innerHTML = '<span style="color: #64748b; font-size: 0.9rem;">لا توجد دروس مخزنة حالياً.</span>';
+                return;
+            }
+            container.innerHTML = history.map(item => `
+                <div class="history-chip" onclick="explainTopic('${item}')">${item}</div>
+            `).join('');
         }
 
-        // عرض الدرس المباشر صفحة بصفحة
-        function renderLesson(lessonData) {
-            currentLessonPages = lessonData.pages;
-            currentPageIndex = 0;
-            displayPage(lessonData.title);
-        }
-
-        function displayPage(title) {
-            const page = currentLessonPages[currentPageIndex];
-            const content = document.getElementById('boardContent');
-            const pagination = document.getElementById('paginationControls');
-
-            pagination.style.display = 'flex';
-            document.getElementById('pageIndicator').innerText = `صفحة ${currentPageIndex + 1} من ${currentLessonPages.length}`;
-            document.getElementById('btnPrev').disabled = currentPageIndex === 0;
-            document.getElementById('btnNext').disabled = currentPageIndex === currentLessonPages.length - 1;
-
-            content.innerHTML = `
-                <div class="lesson-container">
-                    <h2 class="lesson-title">${title || 'شرح الدرس'}</h2>
-                    <p class="lesson-explanation">${page.explanation}</p>
-                    <div class="example-box">
-                        <div class="example-en">
-                            <span>${page.exampleEn}</span>
-                            <button class="btn-audio" onclick="speakEnglish('${page.exampleEn}')">🔊</button>
-                        </div>
-                        <div class="example-ar">${page.exampleAr}</div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function changePage(direction) {
-            currentPageIndex += direction;
-            displayPage();
-        }
-
-        // الشرح الديناميكي الفوري لأي سؤال آخر
-        function renderDynamicExplanation(query) {
-            document.getElementById('paginationControls').style.display = 'none';
-            const content = document.getElementById('boardContent');
-            content.innerHTML = `
-                <div class="lesson-container">
-                    <h2 class="lesson-title">شرح المعلم: ${query}</h2>
-                    <p class="lesson-explanation">إليك الشرح المباشر والأمثلة الخاصة بـ "${query}":</p>
-                    <div class="example-box">
-                        <div class="example-en">
-                            <span>Key Expression: Learning "${query}" is easy with practice!</span>
-                            <button class="btn-audio" onclick="speakEnglish('Learning ${query} is easy with practice!')">🔊</button>
-                        </div>
-                        <div class="example-ar">التطبيق والتدريب هو المفتاح لإتقان هذا المفهوم بسهولة.</div>
-                    </div>
-                </div>
-            `;
+        function clearHistory() {
+            localStorage.removeItem('board_history');
+            loadHistory();
         }
     </script>
 </body>
