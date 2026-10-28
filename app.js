@@ -1,244 +1,120 @@
-const API_BASE = "https://round-king-d129.abdosaadabdosaad084.workers.dev/";
-const LOCAL_DICT = {
-"تلميذ":"Student - ستودنت - ولد ذكي يتعلم في المدرسة",
-"مكان":"Place - بليس - المكان الذي نكون فيه 🏠 This is a beautiful place",
-"زمان":"Time - تايم",
-"مدرسة":"School - سكول - مكان نتعلم فيه",
-"كتاب":"Book - بوك 📚",
-"قلم":"Pen - بن ✏️",
-"قلم رصاص":"Pencil - بنسل",
-"دفتر":"Notebook - نوت بوك",
-"سبورة":"Blackboard - بلاك بورد",
-"طباشير":"Chalk - تشوك",
-"فصل":"Classroom - كلاس رووم",
-"مقعد":"Desk - ديسك",
-"حقيبة":"Bag - باج",
-"معلم":"Teacher - تيتشر 👨‍🏫",
-"معلمة":"Teacher - تيتشر بنت",
-"مدير":"Principal - برينسيبال",
-"طالب":"Student",
-"طالبة":"Student girl",
-"امتحان":"Exam - إجزام",
-"درس":"Lesson - ليسون",
-"واجب":"Homework - هوم وورك",
-"علم":"Science - ساينس",
-"رياضيات":"Math - ماث",
-"تاريخ":"History - هيستوري",
-"جغرافيا":"Geography - جيوجرافي",
-"لغة":"Language - لانجوج",
-"إنجليزي":"English - إنجليش",
-"عربي":"Arabic - أرابك",
-"قراءة":"Reading - ريدينج",
-"كتابة":"Writing - رايتنج",
-"بيت":"House - هاوس 🏠",
-"منزل":"Home - هوم",
-"باب":"Door - دور 🚪",
-"شباك":"Window - ويندو",
-"حائط":"Wall - وول",
-"سقف":"Roof - روف",
-"أرض":"Floor - فلور",
-"غرفة":"Room - رووم",
-"غرفة نوم":"Bedroom - بد رووم",
-"غرفة معيشة":"Living room - ليفينج رووم",
-"مطبخ":"Kitchen - كيتشن",
-"حمام":"Bathroom - باثرووم",
-"صالة":"Hall - هول",
-"حديقة":"Garden - جاردن",
-"كرسي":"Chair - تشير",
-"طاولة":"Table - تيبل",
-"سرير":"Bed - بد",
-"مخدة":"Pillow - بيلو",
-"بطانية":"Blanket - بلانكت",
-"مرآة":"Mirror - ميرور",
-"سجادة":"Carpet - كاربت",
-"مصباح":"Lamp - لامب",
-"ثلاجة":"Fridge - فريج",
-"غسالة":"Washing machine - واشينج ماشين",
-"مروحة":"Fan - فان",
-"تلفزيون":"TV - تي في",
-"هاتف":"Phone - فون",
-"كمبيوتر":"Computer - كمبيوتر",
-"صورة":"Picture - بيكتشر",
-"أسد":"Lion - لايون 🦁",
-"نمر":"Tiger - تايجر",
-"فيل":"Elephant - إليفانت",
-"قرد":"Monkey - مونكي",
-"قطة":"Cat - كات 🐱",
-"كلب":"Dog - دوج 🐶",
-"حصان":"Horse - هورس",
-"بقرة":"Cow - كاو",
-"خروف":"Sheep - شيب",
-"جمل":"Camel - كامل",
-"أرنب":"Rabbit - رابيت",
-"فأر":"Mouse - ماوس",
-"دب":"Bear - بير",
-"ذئب":"Wolf - وولف",
-"ثعلب":"Fox - فوكس",
-"عصفور":"Bird - بيرد",
-"نسر":"Eagle - إيجل",
-"بطة":"Duck - داك",
-"دجاجة":"Chicken - تشيكن",
-"ديك":"Rooster - روستر",
-"ببغاء":"Parrot - باروت",
-"سمكة":"Fish - فيش",
-"قرش":"Shark - شارك",
-"حوت":"Whale - ويل",
-"سلحفاة":"Turtle - تيرتل",
-"تفاحة":"Apple - آبل 🍎",
-"موز":"Banana - بنانا 🍌",
-"برتقال":"Orange - أورنج 🍊",
-"فراولة":"Strawberry - ستروبيري 🍓",
-"عنب":"Grapes - جريبس 🍇",
-"بطيخ":"Watermelon - ووترميلون 🍉",
-"مانجو":"Mango - مانجو",
-"ليمون":"Lemon - ليمون 🍋",
-"خوخ":"Peach - بيتش",
-"كمثرى":"Pear - بير",
-"طماطم":"Tomato - توماتو",
-"خيار":"Cucumber - كيوكمبر",
-"جزر":"Carrot - كاروت",
-"بطاطس":"Potato - بوتيتو",
-"بصل":"Onion - أنيون",
-"ماء":"Water - ووتر 💧",
-"حليب":"Milk - ميلك",
-"عصير":"Juice - جووس",
-"شاي":"Tea - تي",
-"قهوة":"Coffee - كوفي",
-"خبز":"Bread - بريد",
-"جبن":"Cheese - تشيز",
-"بيض":"Egg - إيج",
-"لحم":"Meat - ميت",
-"أرز":"Rice - رايس",
-"شمس":"Sun - صن ☀️",
-"قمر":"Moon - مون 🌙",
-"نجمة":"Star - ستار ⭐",
-"سماء":"Sky - سكاي",
-"سحابة":"Cloud - كلاود",
-"مطر":"Rain - رين 🌧️",
-"ثلج":"Snow - سنو ❄️",
-"رياح":"Wind - ويند",
-"بحر":"Sea - سي 🌊",
-"محيط":"Ocean - أوشن",
-"نهر":"River - ريفر",
-"جبل":"Mountain - ماونتن ⛰️",
-"شجرة":"Tree - تري 🌳",
-"زهرة":"Flower - فلاور 🌸",
-"وردة":"Rose - روز 🌹",
-"أحمر":"Red - ريد 🔴",
-"أزرق":"Blue - بلو 🔵",
-"أخضر":"Green - جرين 🟢",
-"أصفر":"Yellow - يلو 🟡",
-"أبيض":"White - وايت ⚪",
-"أسود":"Black - بلاك ⚫",
-"واحد":"One - ون 1️⃣",
-"اثنان":"Two - تو 2️⃣",
-"ثلاثة":"Three - ثري 3️⃣",
-"أربعة":"Four - فور",
-"خمسة":"Five - فايف",
-"رأس":"Head - هيد",
-"وجه":"Face - فيس",
-"عين":"Eye - آي 👁️",
-"أنف":"Nose - نوز 👃",
-"فم":"Mouth - ماوث 👄",
-"أذن":"Ear - إير 👂",
-"يد":"Hand - هاند ✋",
-"قلب":"Heart - هارت ❤️",
-"قدم":"Foot - فوت 👣",
-"أم":"Mother - ماذر 👩",
-"أب":"Father - فاذر 👨",
-"أخ":"Brother - براذر 👦",
-"أخت":"Sister - سيستر 👧",
-"عائلة":"Family - فاميلي 👨‍👩‍👧‍👦",
-"ولد":"Boy - بوي 👦",
-"بنت":"Girl - جيرل 👧",
-"صديق":"Friend - فريند 🤝",
-"يأكل":"Eat - إيت 🍽️",
-"يشرب":"Drink - درينك 🥤",
-"ينام":"Sleep - سليب 😴",
-"يلعب":"Play - بلاي ⚽",
-"يقرأ":"Read - ريد 📖",
-"يكتب":"Write - رايت ✍️",
-"يجري":"Run - ران 🏃",
-"يمشي":"Walk - ووك 🚶",
-"يحب":"Love - لاف ❤️",
-"جميل":"Beautiful - بيوتيفول ✨",
-"كبير":"Big - بيج",
-"صغير":"Small - سمول",
-"سعيد":"Happy - هابي 😊",
-"حزين":"Sad - ساد 😢",
-"جيد":"Good - جود 👍",
-"سيء":"Bad - باد 👎",
-"سريع":"Fast - فاست 🚀",
-"يوم":"Day - داي ☀️",
-"ليلة":"Night - نايت 🌙",
-"صباح":"Morning - مورنينج 🌅",
-"وقت":"Time - تايم ⏰",
-"ساعة":"Clock - كلوك 🕐",
-"سيارة":"Car - كار 🚗",
-"طائرة":"Airplane - إيربلين ✈️",
-"قطار":"Train - ترين 🚆",
-"باص":"Bus - باص 🚌",
-"شارع":"Street - ستريت",
-"مدينة":"City - سيتي 🏙️",
-"مطار":"Airport - إيربورت ✈️",
-"مستشفى":"Hospital - هوسبيتال 🏥",
-"قميص":"Shirt - شيرت 👕",
-"بنطلون":"Pants - بانتس 👖",
-"حذاء":"Shoes - شوز 👟",
-"قبعة":"Hat - هات 🎩",
-"لعبة":"Toy - توي 🧸",
-"كرة":"Ball - بول ⚽",
-"هدية":"Gift - جيفت 🎁",
-"أين":"Where - وير ❓",
-"متى":"When - وين ⏰",
-"ماذا":"What - وات ❓",
-"نعم":"Yes - يس ✅",
-"لا":"No - نو ❌",
-"شكرا":"Thank you - ثانك يو 🙏",
-"مرحبا":"Hello - هالو 👋",
-"مفتاح":"Key - كي 🔑",
-"قفل":"Lock - لوك 🔒",
-"نافذة":"Window - ويندو",
-"مكتب":"Desk - ديسك",
-"راديو":"Radio - راديو",
-"جوال":"Mobile - موبايل 📱",
-"إنترنت":"Internet - إنترنت 🌐",
-"فيلم":"Movie - موفي 🎬",
-"أغنية":"Song - سونج 🎵",
-"رياضة":"Sport - سبورت",
-"كرة قدم":"Football - فوتبول ⚽",
-"جامعة":"University - يونيفرستي 🎓",
-"عطلة":"Vacation - فاكيشن",
-"حصة":"Class - كلاس",
-"تذكرة":"Ticket - تيكت 🎫",
-"سائق":"Driver - درايفر",
-"طبيب":"Doctor - دكتور 🩺",
-"مهندس":"Engineer - إنجنير",
-"طباخ":"Cook - كوك 👨‍🍳",
-"شرطي":"Policeman - بوليسمان 👮",
-"معطف":"Coat - كوت 🧥",
-"حزام":"Belt - بيلت",
-"نظارة":"Glasses - جلاسيس 👓",
-"ساعة يد":"Watch - ووتش ⌚",
-"خاتم":"Ring - رينج 💍",
-"بالون":"Balloon - بالون 🎈",
-"قصة":"Story - ستوري 📖",
-"حرف":"Letter - ليتر 🔤",
-"كلمة":"Word - وورد",
-"جملة":"Sentence - سينتنس",
-"سؤال":"Question - كويستشن ❓",
-"جواب":"Answer - آنسر ✅",
-"اسم":"Name - نيم",
-"رقم":"Number - نامبر 🔢",
-"عنوان":"Address - أدريس"
+const DICT = {
+"مكان":"Place - بليس - المكان اللي احنا فيه 🏠",
+"تلميذ":"Student - ستودنت - ولد شاطر بيتعلم",
+"مدرسة":"School - سكول - بنتعلم فيها",
+"كتاب":"Book - بوك - بنقرا فيه 📚",
+"قلم":"Pen - بن - بنكتب بيه",
+"ولد":"Boy - بوي - ولد 👦",
+"بنت":"Girl - جيرل - بنت 👧",
+"بيت":"House - هاوس - بيتنا 🏠",
+"قطة":"Cat - كات - قطة 🐱",
+"كلب":"Dog - دوج - كلب 🐶",
+"تفاحة":"Apple - آبل - تفاحة 🍎",
+"ماء":"Water - ووتر - مية 💧",
+"شمس":"Sun - صن - شمس ☀️",
+"قمر":"Moon - مون - قمر 🌙",
+"سيارة":"Car - كار - عربية 🚗",
+"لعبة":"Toy - توي - لعبة 🧸",
+"جميل":"Beautiful - بيوتيفول - جميل ✨",
+"كبير":"Big - بيج - كبير",
+"صغير":"Small - سمول - صغير",
+"سعيد":"Happy - هابي - مبسوط 😊"
 };
 
-let currentMode = localStorage.getItem('mode') || 'kids';
-let score = parseInt(localStorage.getItem('score')||'0');
-let learned = JSON.parse(localStorage.getItem('learned')||'[]');
-let lastAnswer = "";
+let score = 0;
+let learned = [];
 
-function init(){ 
-  setMode(currentMode); 
-  updateStats(); 
-  if('serviceWorker' in navigator) navigator.serviceWorker.register
+function setMode(m){
+  localStorage.setItem('mode', m);
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  let id = 'mode-'+m;
+  let btn = document.getElementById(id);
+  if(btn) btn.classList.add('active');
+  let label = document.getElementById('modeLabel');
+  if(label) label.innerText = m=='kids'?'وضع الأطفال 👶':'وضع الكبار 👨';
+}
+
+function searchAndExplain(){
+  let input = document.getElementById('qInput');
+  let q = input ? input.value.trim() : '';
+  if(!q){ alert('اكتب كلمة الأول!'); return; }
+  
+  let answer = DICT[q] || '';
+  if(!answer){
+    for(let k in DICT){
+      if(q.includes(k) || k.includes(q)){ answer = DICT[k]; q = k; break; }
+    }
+  }
+  if(!answer) answer = q + ' = كلمة جديدة ⭐ مثال: I love ' + q;
+
+  let board = document.getElementById('boardContent');
+  if(board){
+    board.innerHTML = '<div style="background:rgba(255,255,255,0.08);padding:16px;border-radius:12px;text-align:right;"><div style="color:#fde047;font-weight:800;font-size:1.2rem;margin-bottom:8px;">'+q+'</div><div style="line-height:1.8;white-space:pre-wrap;">'+answer+'</div><button onclick="speakText(\''+answer.replace(/'/g,'')+'\')" style="margin-top:12px;width:100%;padding:10px;background:#6366f1;color:white;border:none;border-radius:8px;">🔊 استمع</button></div>';
+  }
+  
+  score += 5;
+  let s = document.getElementById('scoreNum');
+  if(s) s.innerText = score;
+  
+  let l = document.getElementById('learnedNum');
+  if(l){
+    if(!learned.includes(q)) learned.push(q);
+    l.innerText = learned.length;
+  }
+  
+  speakText(answer);
+}
+
+function speakText(t){
+  try{
+    speechSynthesis.cancel();
+    let clean = t.replace(/[^\u0600-\u06FFa-zA-Z0-9 ]/g,' ').substring(0,150);
+    let u = new SpeechSynthesisUtterance(clean);
+    u.lang = /[ء-ي]/.test(clean) ? 'ar-SA' : 'en-US';
+    u.rate = 0.9;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+function speakAnswer(){
+  let board = document.getElementById('boardContent');
+  if(board) speakText(board.innerText);
+}
+
+function clearBoard(){
+  let board = document.getElementById('boardContent');
+  if(board) board.innerHTML = '<div style="text-align:center;padding:20px;"><div style="font-size:3rem;">🎓</div><p style="margin:10px 0;font-weight:700;">أهلا يا بطل!</p><p style="color:#94a3b8;font-size:0.85rem;">اكتب: مكان، تلميذ، مدرسة</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;"><div onclick="quickSearch(\'مكان\')" style="background:rgba(255,255,255,0.08);padding:12px;border-radius:10px;cursor:pointer;">📍 مكان</div><div onclick="quickSearch(\'تلميذ\')" style="background:rgba(255,255,255,0.08);padding:12px;border-radius:10px;cursor:pointer;">🧑‍🎓 تلميذ</div></div></div>';
+  let inp = document.getElementById('qInput');
+  if(inp) inp.value='';
+}
+
+function quickSearch(w){
+  let inp = document.getElementById('qInput');
+  if(inp) inp.value = w;
+  searchAndExplain();
+}
+
+function startQuiz(){
+  let keys = Object.keys(DICT);
+  let word = keys[Math.floor(Math.random()*keys.length)];
+  let board = document.getElementById('boardContent');
+  if(board) board.innerHTML = '<div style="text-align:center;"><h3>🎯 ما معنى: '+word+'؟</h3><p style="margin:12px 0;background:rgba(255,255,255,0.08);padding:12px;border-radius:10px;">'+DICT[word]+'</p><button onclick="startQuiz()" style="width:100%;padding:12px;background:#22c55e;color:white;border:none;border-radius:10px;margin-top:10px;">🔄 سؤال تاني</button><button onclick="clearBoard()" style="width:100%;padding:10px;background:#333;color:white;border:none;border-radius:10px;margin-top:8px;">🏠 رجوع</button></div>';
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  let t = document.getElementById('tab-'+tab);
+  if(t) t.classList.add('active');
+  if(tab=='home') clearBoard();
+  if(tab=='games') startQuiz();
+  if(tab=='fav'){
+    let board = document.getElementById('boardContent');
+    if(board) board.innerHTML = '<div style="text-align:center;padding:20px;">⭐ المفضلة<br><br>تعلمت: '+learned.length+' كلمات<br>نقاط: '+score+'</div>';
+  }
+}
+
+window.onload = function(){
+  setMode(localStorage.getItem('mode')||'kids');
+  let total = document.getElementById('totalNum');
+  if(total) total.innerText = Object.keys(DICT).length;
+};
