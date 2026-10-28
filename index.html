@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>English Pro - Smart Academy</title>
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#1e1b4b">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -26,7 +26,6 @@ body{background:#0f0e2e;color:#fff}
 .card h3{margin-top:10px;font-size:18px;font-weight:800}
 .card-preview{background:#0f0e2e;border-radius:12px;padding:8px;font-size:10px;margin-bottom:6px}
 .mini-blackboard{font-size:28px;text-align:center;color:#555;border:1px dashed #333;margin:4px 0;padding:8px 0;background:#111;border-radius:6px}
-.mini-letters,.mini-numbers{font-size:8px;opacity:.7;text-align:center}
 .ai-card{background:linear-gradient(135deg,#3b38a0,#5b4ee0)}
 .learn-card{background:linear-gradient(135deg,#2e2a8a,#4a46c0)}
 .trans-card{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
@@ -85,7 +84,7 @@ body{background:#0f0e2e;color:#fff}
 <div class="card-preview"><div>اسأل... cat</div><div>🔍 🎤</div><div class="mini-blackboard">👋 أهلا يا بطل!</div></div>
 <h3>المساعد الذكي</h3></div>
 <div class="card learn-card" onclick="openScreen('learnScreen')">
-<div class="card-preview"><div class="mini-letters">A B C ... Z</div><div class="mini-blackboard">A</div><div class="mini-numbers">0 1 2 ...10</div></div>
+<div class="card-preview"><div style="font-size:8px;opacity:.7;text-align:center">A B C ... Z</div><div class="mini-blackboard">A</div><div style="font-size:8px;opacity:.7;text-align:center">0 1 2 ...10</div></div>
 <h3>لوحة التعلم</h3></div>
 <div class="card trans-card" onclick="openScreen('translatorScreen')"><div style="font-size:28px;text-align:center">🌐 ↔️ 💬</div><p>عربي ↔ إنجليزي</p><h3>المترجم</h3></div>
 <div class="card games-card" onclick="openScreen('gamesScreen')"><div style="font-size:28px;text-align:center">🎮 🏆</div><p>تحديات • كلمات • نقاط</p><h3>الألعاب</h3></div>
@@ -114,9 +113,9 @@ body{background:#0f0e2e;color:#fff}
 <div class="lang-switch"><span id="fromLang">العربية</span><button onclick="swapLang()">⇄</button><span id="toLang">English</span></div>
 <textarea id="transInput" placeholder="اكتب نص للترجمة..." oninput="autoTranslate()"></textarea>
 <div class="trans-actions"><button onclick="startVoice('transInput')">🎤 صوت</button><button onclick="autoTranslate()">🔍 ترجم</button><button onclick="clearTrans()">🧹 مسح</button></div>
-<div id="transOutput" class="trans-output">الترجمة ستظهر هنا... (يعمل بدون نت بـ 100 كلمة داخلية)</div>
+<div id="transOutput" class="trans-output">الترجمة ستظهر هنا... (يعمل بدون نت بـ 100 كلمة)</div>
 <div class="trans-actions"><button onclick="speakText('transOutput')">🔊 نطق</button><button onclick="copyTrans()">📋 نسخ</button></div>
-<p class="powered">بدون نت: قاموس داخلي • بإنترنت: Google Translate داخلياً</p>
+<p class="powered">بدون نت: قاموس داخلي • بإنترنت: Google داخلياً</p>
 </div>
 </div>
 <div id="gamesScreen" class="screen">
@@ -139,9 +138,8 @@ function speakLearn(){const val=currentLearnType==='letters'?letters[currentLear
 function speakBoardContent(text){const u=new SpeechSynthesisUtterance(text);u.lang=/[a-zA-Z]/.test(text)?'en-US':'ar-SA';u.rate=0.9;speechSynthesis.speak(u);}
 function speakBoard(id){speakBoardContent(document.getElementById(id).innerText);}
 function speakText(id){speakBoardContent(document.getElementById(id).innerText);}
-let aiHistory=[];
-function searchAI(){const q=document.getElementById('aiSearch').value.trim();if(!q)return;const board=document.getElementById('aiBoardContent');board.innerHTML=`<p>🔍 تبحث عن: <b>${q}</b></p><p class="hint-text">جاري الترجمة...</p>`;autoTranslateInternal(q,board);aiHistory.push(q);}
-async function autoTranslateInternal(q,boardEl){try{const sl=/[a-zA-Z]/.test(q)?'en':'ar';const tl=sl==='en'?'ar':'en';const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');boardEl.innerHTML=`<p style="font-size:28px;font-weight:800;color:#facc15">${q}</p><p style="font-size:22px;margin-top:10px;color:#a5b4fc">= ${trans}</p><p class="hint-text" style="margin-top:12px">ترجمة فقط</p>`;speakBoardContent(trans);}catch(e){let local=qa.find(x=>x[0].toLowerCase()===q.toLowerCase()||x[1]===q);if(local){let t=local[0].toLowerCase()===q.toLowerCase()?local[1]:local[0];boardEl.innerHTML=`<p style="font-size:28px;font-weight:800;color:#facc15">${q}</p><p style="font-size:22px;margin-top:10px;color:#a5b4fc">= ${t} (بدون نت)</p>`;speakBoardContent(t);}else{boardEl.innerHTML=`<p>${q}</p><p>= ${dictionary[q.toUpperCase()]||'غير متصل - جرب كلمة من القاموس' }</p><p class="hint-text">يعمل بدون نت بـ 100 كلمة</p>`;}}}
+function searchAI(){const q=document.getElementById('aiSearch').value.trim();if(!q)return;const board=document.getElementById('aiBoardContent');board.innerHTML=`<p>🔍 تبحث عن: <b>${q}</b></p><p class="hint-text">جاري الترجمة...</p>`;autoTranslateInternal(q,board);}
+async function autoTranslateInternal(q,boardEl){try{const sl=/[a-zA-Z]/.test(q)?'en':'ar';const tl=sl==='en'?'ar':'en';const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');boardEl.innerHTML=`<p style="font-size:28px;font-weight:800;color:#facc15">${q}</p><p style="font-size:22px;margin-top:10px;color:#a5b4fc">= ${trans}</p>`;speakBoardContent(trans);}catch(e){let local=qa.find(x=>x[0].toLowerCase()===q.toLowerCase()||x[1]===q);if(local){let t=local[0].toLowerCase()===q.toLowerCase()?local[1]:local[0];boardEl.innerHTML=`<p style="font-size:28px;font-weight:800;color:#facc15">${q}</p><p style="font-size:22px;margin-top:10px;color:#a5b4fc">= ${t} (بدون نت)</p>`;speakBoardContent(t);}else{boardEl.innerHTML=`<p>${q}</p><p>= ${dictionary[q.toUpperCase()]||'غير متصل - جرب كلمة من القاموس'}</p>`;}}}
 function clearAI(){document.getElementById('aiSearch').value='';document.getElementById('aiBoardContent').innerHTML=`<p class="welcome-text">👋 أهلا يا بطل!</p><p class="hint-text">اكتب أي كلمة فوق</p>`;}
 function translateOnly(){const q=document.getElementById('aiSearch').value;if(q)autoTranslateInternal(q,document.getElementById('aiBoardContent'));}
 function nextAI(){let next=qa[Math.floor(Math.random()*qa.length)];document.getElementById('aiSearch').value=next[0];searchAI();}
@@ -157,19 +155,17 @@ function checkAnswer(btn,chosen,correct){const buttons=document.querySelectorAll
 function nextQuestion(){qIndex=(qIndex+1)%questions.length;showQuestion();}
 function resetGame(){qIndex=0;score=0;buildQuestions();showQuestion();}
 window.onload=()=>{initLearn();buildQuestions();showQuestion();document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI()});};
-// PWA - تثبيت على الشاشة + بدون نت
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(()=>console.log('SW ready')).catch(()=>console.log('SW fail'));}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js');}
 let deferredPrompt;const installBtn=document.getElementById('installBtn');
-window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;installBtn.style.display='block';});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
 installBtn.addEventListener('click',async()=>{
   if(!deferredPrompt){
-    alert('للتثبيت: دوس 3 نقط فوق في المتصفح واختار "إضافة إلى الشاشة الرئيسية" أو Add to Home screen');
+    alert('للتثبيت: دوس 3 نقط فوق في Chrome واختار "إضافة إلى الشاشة الرئيسية"');
     return;
   }
   deferredPrompt.prompt();
   await deferredPrompt.userChoice;
   deferredPrompt=null;
-  installBtn.style.display='none';
 });
 </script>
 </body>
