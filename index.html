@@ -3,46 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>English Pro - Google Search + Draw Fix</title>
+<title>English Pro - Full 10 Services</title>
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#1e1b4b">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
 body{background:#0f0e2e;color:#fff}
-.app{max-width:480px;margin:0 auto;min-height:100vh;background:#1a1848;padding-bottom:100px}
-.top-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#1e1b4b}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:#1a1848;padding-bottom:110px}
+.top-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#1e1b4b;position:sticky;top:0;z-index:50}
 .install-btn{background:#facc15;color:#000;border:none;padding:8px 14px;border-radius:20px;font-weight:800}.install-btn.hidden{display:none}
 .screen{display:none;padding:12px}.screen.active{display:block}
 .screen-header{display:flex;justify-content:space-between;align-items:center;background:#1e1b4b;padding:10px 12px;border-radius:12px;margin-bottom:10px}
 .back-btn{background:#2d2a6a;border:none;color:#fff;padding:10px 18px;border-radius:12px;font-weight:800;font-size:16px}
 .grid-2x2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{border-radius:18px;padding:14px;text-align:center;font-weight:800;cursor:pointer}
+.card{border-radius:18px;padding:14px;text-align:center;font-weight:800;cursor:pointer;min-height:70px;display:flex;align-items:center;justify-content:center}
 .assistant-top{background:#0f0e2e;border:2px solid #facc15;border-radius:14px;padding:14px;text-align:center;margin-bottom:10px}
-.assistant-top .ar{font-size:30px;font-weight:800;color:#facc15}
-.assistant-top .en{font-size:20px;color:#fff;margin-top:6px;font-weight:800}
+.assistant-top .ar{font-size:30px;font-weight:800;color:#facc15}.assistant-top .en{font-size:20px;color:#fff;margin-top:6px;font-weight:800}
 .assistant-explain{background:#fff;color:#111;border-radius:14px;padding:16px;line-height:2.3;font-size:14px;min-height:450px;overflow:auto}
-.assistant-explain b{color:#1e1b4b}
 .search-row{display:flex;gap:8px;margin-bottom:10px}.search-input-wrap{flex:1}.search-input-wrap input{width:100%;padding:13px;border-radius:12px;border:2px solid #3a3890;background:#0f0e2e;color:#fff;font-weight:800}
 .icon-btn{width:50px;background:#6366f1;border:none;border-radius:12px;font-size:20px}
-.blackboard{background:#0a0a14;border:3px solid #facc15;border-radius:18px;min-height:400px;position:relative;touch-action:none;overflow:hidden}
-.faint-letter{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:190px;color:rgba(255,255,255,.08);font-weight:800;pointer-events:none}
-#drawCanvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:20;touch-action:none;cursor:crosshair}
+.blackboard{background:#0a0a14;border:3px solid #facc15;border-radius:18px;min-height:300px;position:relative;touch-action:none;overflow:hidden}
+.faint-letter{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:180px;color:rgba(255,255,255,.08);font-weight:800;pointer-events:none}
+#drawCanvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:20;touch-action:none}
 .letters-row,.small-letters-row{display:flex;gap:6px;overflow-x:auto;padding:8px 0;direction:ltr}
-.numbers-row{display:flex;gap:8px;overflow-x:auto;padding:10px 0;direction:ltr;background:#1e1b4b;border-radius:12px;margin:8px 0}
+.numbers-row{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#1e1b4b;border-radius:12px;margin:10px 0;direction:ltr;border:2px solid #facc15}
 .letters-row div,.small-letters-row div{min-width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;color:#fff;font-size:18px}
-.numbers-row div{min-width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;color:#fff;font-size:20px;border:2px solid #facc15}
+.numbers-row div{min-width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;color:#fff;font-size:22px;border:2px solid #fff}
 .controls{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#1a1848;border-top:2px solid #3a3890;padding:10px 12px;display:flex;gap:8px;z-index:100;padding-bottom:18px}
 .controls button{flex:1;background:#2d2a6a;border:none;color:#fff;padding:15px;border-radius:12px;font-weight:800}
 .controls button.primary{background:#6366f1}
-.translator-box{background:#1e1b4b;padding:14px;border-radius:16px}.lang-switch{display:flex;justify-content:space-between;background:#2a2870;padding:8px 12px;border-radius:10px;margin-bottom:10px}
-.translator-box textarea{width:100%;min-height:100px;background:#0f0e2e;border:2px solid #3a3890;border-radius:12px;padding:12px;color:#fff;font-weight:800;font-size:19px}
-.trans-output{background:#0f0e2e;border:2px solid #4f46e5;border-radius:12px;padding:14px;min-height:70px;font-weight:800;font-size:20px}
+.content-box{background:#fff;color:#111;border-radius:14px;padding:16px;line-height:2.2;font-size:14px;min-height:400px}
+.content-box b{color:#1e1b4b}
+.gallery-item{background:#1e1b4b;border-radius:16px;padding:14px;text-align:center;border:2px solid #3a3890;cursor:pointer}
+.gallery-item .emoji{font-size:50px}
 .category-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0}
-.cat-btn{padding:14px 4px;border-radius:16px;border:none;color:#fff;font-weight:800;font-size:12px}
-.question-card{background:#0f0e2e;padding:18px;border-radius:12px;text-align:center;font-size:24px;font-weight:800;min-height:80px;border:2px solid #2d2a6a}
+.cat-btn{padding:12px 4px;border-radius:14px;border:none;color:#fff;font-weight:800;font-size:11px}
+.question-card{background:#0f0e2e;padding:18px;border-radius:12px;text-align:center;font-size:22px;font-weight:800;min-height:80px;border:2px solid #facc15;cursor:pointer}
 .options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.options button{background:#2a2870;border:1px solid #3a3890;color:#fff;padding:14px;border-radius:12px;font-weight:800}
 .options button.correct{background:#16a34a}.options button.wrong{background:#dc2626}
+.story-card{background:#1e1b4b;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid #3a3890}
 </style>
 </head>
 <body>
@@ -55,199 +55,221 @@ body{background:#0f0e2e;color:#fff}
 <div class="card" style="background:#3b38a0" onclick="openScreen('assistantScreen')">المساعد - بحث جوجل</div>
 <div class="card" style="background:#2e2a8a" onclick="openScreen('learnScreen')">السبورة - رسم فعال</div>
 <div class="card" style="background:#2563eb" onclick="openScreen('translatorScreen')">المترجم</div>
-<div class="card" style="background:#9333ea" onclick="openScreen('gamesScreen')">الألعاب</div>
+<div class="card" style="background:#9333ea" onclick="openScreen('gamesScreen')">الألعاب 500</div>
+
+<!-- 6 خانات جديدة -->
+<div class="card" style="background:#0e7490" onclick="openScreen('grammarScreen')">📚 القواعد كاملة A-Z</div>
+<div class="card" style="background:#f59e0b;color:#000" onclick="openScreen('galleryScreen')">📸 معرض الصور ينطق</div>
+<div class="card" style="background:#16a34a" onclick="openScreen('conversationScreen')">💬 محادثة سؤال وجواب</div>
+<div class="card" style="background:#dc2626" onclick="openScreen('storiesScreen')">📖 قصص قصيرة كتير</div>
+<div class="card" style="background:#7c3aed" onclick="openScreen('toolsScreen')">🔧 أدوات الشرط والربط</div>
+<div class="card" style="background:#ea580c" onclick="openScreen('irregularScreen')">⚠️ الكلمات الشاذة</div>
 </div>
 </div>
 
 <div id="learnScreen" class="screen">
-<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>ارسم فوق الحرف - إصبعك هيرسم أحمر</h3></div>
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>ارسم فوق الحرف</h3></div>
 <div class="letters-row" id="lettersRow"></div>
 <div class="small-letters-row" id="smallLettersRow"></div>
-<div class="blackboard" id="learnBoard"><div id="learnLetter" class="faint-letter">A</div><canvas id="drawCanvas"></canvas></div>
+<div class="blackboard"><div id="learnLetter" class="faint-letter">A</div><canvas id="drawCanvas"></canvas></div>
 <div class="numbers-row" id="numbersRow"></div>
 </div>
 
 <div id="assistantScreen" class="screen">
-<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المساعد - شرح وافي زي جوجل</h3></div>
-<div class="search-row"><div class="search-input-wrap"><input id="aiSearch" placeholder="" autocomplete="off"></div><button class="icon-btn" onclick="searchAI()">🔍</button><button class="icon-btn" onclick="startVoice('aiSearch')">🎤</button></div>
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المساعد - شرح وافي</h3></div>
+<div class="search-row"><div class="search-input-wrap"><input id="aiSearch" placeholder=""></div><button class="icon-btn" onclick="searchAI()">🔍</button><button class="icon-btn" onclick="startVoice('aiSearch')">🎤</button></div>
 <div class="assistant-top" id="assistantTop" style="display:none"><div class="ar" id="topAr"></div><div class="en" id="topEn"></div></div>
-<div class="assistant-explain" id="assistantExplain"><p style="text-align:center;padding-top:80px;color:#666">🔍 اكتب أي كلمة - مثال: ضمير، ماء، زمن المستقبل، apple<br>هيجيب شرح وافي كأنه بحث جوجل</p></div>
+<div class="assistant-explain" id="assistantExplain"><p style="text-align:center;padding-top:80px">اكتب أي شيء</p></div>
 </div>
 
 <div id="translatorScreen" class="screen">
 <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المترجم</h3></div>
-<div class="translator-box">
-<div class="lang-switch"><span id="fromLang" style="font-weight:800">العربية</span><button onclick="swapLang()" style="background:#4f46e5;border:none;color:#fff;padding:6px 12px;border-radius:8px">⇄</button><span id="toLang" style="font-weight:800">English</span></div>
-<textarea id="transInput" placeholder=""></textarea>
-<div id="transOutput" class="trans-output"></div>
-</div>
+<div style="background:#1e1b4b;padding:14px;border-radius:16px"><div style="display:flex;justify-content:space-between;background:#2a2870;padding:8px 12px;border-radius:10px;margin-bottom:10px"><span id="fromLang">العربية</span><button onclick="swapLang()" style="background:#4f46e5;border:none;color:#fff;padding:6px 12px;border-radius:8px">⇄</button><span id="toLang">English</span></div><textarea id="transInput" placeholder="" style="width:100%;min-height:100px;background:#0f0e2e;border:2px solid #3a3890;border-radius:12px;padding:12px;color:#fff;font-weight:800;font-size:19px"></textarea><div id="transOutput" style="background:#0f0e2e;border:2px solid #4f46e5;border-radius:12px;padding:14px;min-height:70px;font-weight:800;font-size:20px;margin-top:10px"></div></div>
 </div>
 
 <div id="gamesScreen" class="screen">
 <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>6 مجالات</h3><span id="score">0</span></div>
 <div class="category-grid" id="catGrid"></div>
-<div class="question-card" id="questionCard">اختر مجال</div>
+<div class="question-card" id="questionCard" onclick="speakGameQuestion()">اختر مجال - اضغط للسمع</div>
 <div class="options" id="options"></div>
 </div>
+
+<!-- 1 - قواعد -->
+<div id="grammarScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>القواعد الكاملة A-Z</h3></div>
+<div class="content-box" id="grammarContent"></div>
 </div>
 
+<!-- 2 - معرض -->
+<div id="galleryScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>معرض الصور - اضغط ينطق</h3></div>
+<div class="category-grid" id="galleryCatGrid"></div>
+<div id="galleryGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px"></div>
+</div>
+
+<!-- 3 - محادثة -->
+<div id="conversationScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>محادثة سؤال وجواب</h3></div>
+<div class="category-grid" id="convCatGrid"></div>
+<div id="convList"></div>
+</div>
+
+<!-- 4 - قصص -->
+<div id="storiesScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>قصص قصيرة للاستفادة</h3></div>
+<div id="storiesList"></div>
+</div>
+
+<!-- 5 - أدوات -->
+<div id="toolsScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>أدوات الشرط والربط</h3></div>
+<div class="content-box" id="toolsContent"></div>
+</div>
+
+<!-- 6 - شاذة -->
+<div id="irregularScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>الكلمات الشاذة</h3></div>
+<div id="irregularList" style="display:grid;grid-template-columns:1fr;gap:8px"></div>
+</div>
+
+</div>
 <script>
 const categories={
-"الحيوانات":[["Lion","أسد"],["Tiger","نمر"],["Elephant","فيل"],["Dog","كلب"],["Cat","قطة"],["Horse","حصان"]],
+"الحيوانات":[["Lion","أسد"],["Tiger","نمر"],["Elephant","فيل"],["Dog","كلب"],["Cat","قطة"]],
 "الطيور":[["Eagle","نسر"],["Owl","بومة"],["Parrot","ببغاء"],["Sparrow","عصفور"],["Pigeon","حمامة"]],
-"المنزل":[["Door","باب"],["Window","نافذة"],["Chair","كرسي"],["Table","طاولة"],["Bed","سرير"],["Kitchen","مطبخ"],["Bedroom","غرفة نوم"]],
-"الشارع":[["Street","شارع"],["Car","سيارة"],["Bus","حافلة"],["Shop","متجر"],["Hospital","مستشفى"]],
+"المنزل":[["Door","باب"],["Window","نافذة"],["Chair","كرسي"],["Table","طاولة"],["Bed","سرير"]],
+"الشارع":[["Street","شارع"],["Car","سيارة"],["Shop","متجر"],["Hospital","مستشفى"],["School","مدرسة"]],
 "المطعم":[["Rice","أرز"],["Bread","خبز"],["Meat","لحم"],["Fish","سمك"],["Water","ماء"]],
 "المدرسة":[["Teacher","معلم"],["Student","طالب"],["Book","كتاب"],["Pen","قلم"],["Board","سبورة"]]
 };
 let qaAll=[]; Object.values(categories).forEach(a=>qaAll=qaAll.concat(a));
-const enToAr=new Map(qaAll.map(x=>[x[0].toLowerCase(),x[1]])); const arToEn=new Map(qaAll.map(x=>[x[1],x[0]]));
-function offlineTranslate(t){const isEn=/[a-zA-Z]/.test(t); if(isEn){return t.split(/(\s+)/).map(w=>enToAr.get(w.toLowerCase().trim())||w).join('');}else{let o=t; arToEn.forEach((en,ar)=>{o=o.split(ar).join(en);}); return o;}}
-let canvas,ctx,isDrawing=false,currentLearnIndex=0,currentLearnType='letters',score=0,qIndex=0,fromAr=true,lastTranslation='',currentCategory='المنزل',questions=[];
+function speakBoard(t){speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang=/[a-zA-Z]/.test(t)?'en-US':'ar-SA'; u.rate=0.85; speechSynthesis.speak(u);}
+let canvas,ctx,isDrawing=false,currentLearnIndex=0,currentLearnType='letters',score=0,qIndex=0,fromAr=true,lastTranslation='',currentCategory='المنزل',questions=[],currentQ=null;
 const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''); const smallLetters='abcdefghijklmnopqrstuvwxyz'.split(''); const numbers=['0','1','2','3','4','5','6','7','8','9','10'];
 function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('homeScreen').classList.add('active');removeControls();}
-function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');createControls(id); if(id==='learnScreen')setTimeout(initCanvas,100);}
+function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');createControls(id); if(id==='learnScreen')setTimeout(initCanvas,100); if(id==='grammarScreen')loadGrammar(); if(id==='galleryScreen'){buildGalleryCats(); showGallery();} if(id==='conversationScreen'){buildConvCats(); showConv();} if(id==='storiesScreen')loadStories(); if(id==='toolsScreen')loadTools(); if(id==='irregularScreen')loadIrregular();}
 function removeControls(){document.querySelectorAll('.controls').forEach(e=>e.remove());}
 function createControls(id){
  removeControls(); let html='';
  if(id==='learnScreen')html=`<button onclick="clearDraw()">🧹 مسح</button><button onclick="speakLearn()">🔊 نطق</button><button class="primary" onclick="nextLearn()">➜ التالي</button>`;
  if(id==='assistantScreen')html=`<button onclick="clearAI()">🧹 مسح</button><button onclick="speakOnlyTranslation()">🔊 نطق</button><button class="primary" onclick="nextAI()">عشوائي</button>`;
  if(id==='translatorScreen')html=`<button onclick="clearTrans()">🧹 مسح</button><button class="primary" onclick="speakTrans()">🔊 نطق</button>`;
- if(id==='gamesScreen')html=`<button onclick="resetGame()">🔄 إعادة</button><button onclick="speakGame()">🔊 نطق</button><button class="primary" onclick="nextQuestion()">➜ التالي</button>`;
- if(!html)return; const div=document.createElement('div'); div.className='controls'; div.innerHTML=html; document.querySelector('.app').appendChild(div);
+ if(id==='gamesScreen')html=`<button onclick="resetGame()">🔄 إعادة</button><button onclick="speakGame()">🔊 نطق السؤال مترجم</button><button class="primary" onclick="nextQuestion()">➜ التالي</button>`;
+ if(id==='galleryScreen')html=`<button onclick="goHome()">🏠 رئيسية</button><button class="primary" onclick="showGallery()">🔄 تحديث</button>`;
+ if(html){const div=document.createElement('div'); div.className='controls'; div.innerHTML=html; document.querySelector('.app').appendChild(div);}
 }
 function initCanvas(){
- canvas=document.getElementById('drawCanvas'); if(!canvas)return;
- ctx=canvas.getContext('2d');
- function resize(){
-  const rect=canvas.parentElement.getBoundingClientRect();
-  const dpr=window.devicePixelRatio||1;
-  canvas.width=rect.width*dpr; canvas.height=rect.height*dpr;
-  canvas.style.width=rect.width+'px'; canvas.style.height=rect.height+'px';
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#ff3b30'; ctx.lineWidth=8;
- }
+ canvas=document.getElementById('drawCanvas'); if(!canvas)return; ctx=canvas.getContext('2d');
+ function resize(){const r=canvas.parentElement.getBoundingClientRect(); const dpr=window.devicePixelRatio||1; canvas.width=r.width*dpr; canvas.height=r.height*dpr; canvas.style.width=r.width+'px'; canvas.style.height=r.height+'px'; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#ff3b30'; ctx.lineWidth=8;}
  resize();
- function getPos(e){
-  const r=canvas.getBoundingClientRect();
-  const t=e.touches?e.touches[0]:e;
-  return {x:t.clientX-r.left, y:t.clientY-r.top};
- }
- canvas.onpointerdown = (e)=>{
-  isDrawing=true; const p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y);
-  canvas.setPointerCapture(e.pointerId); e.preventDefault();
- };
- canvas.onpointermove = (e)=>{
-  if(!isDrawing)return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault();
- };
- canvas.onpointerup = ()=>{isDrawing=false; ctx.beginPath();};
- canvas.ontouchstart = (e)=>{isDrawing=true; const p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault();};
- canvas.ontouchmove = (e)=>{if(!isDrawing)return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault();};
- canvas.ontouchend = ()=>{isDrawing=false; ctx.beginPath();};
+ function pos(e){const rect=canvas.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:t.clientX-rect.left, y:t.clientY-rect.top};}
+ canvas.onpointerdown=e=>{isDrawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); canvas.setPointerCapture(e.pointerId);};
+ canvas.onpointermove=e=>{if(!isDrawing)return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke();};
+ canvas.onpointerup=()=>{isDrawing=false; ctx.beginPath();};
 }
 function clearDraw(){if(!ctx||!canvas)return; ctx.clearRect(0,0,canvas.width,canvas.height);}
-function initLearn(){
- const lr=document.getElementById('lettersRow'); const slr=document.getElementById('smallLettersRow'); const nr=document.getElementById('numbersRow');
- lr.innerHTML=''; slr.innerHTML=''; nr.innerHTML='';
- letters.forEach((l,i)=>{const d=document.createElement('div'); d.textContent=l; d.style.background=`hsl(${i*14},80%,60%)`; d.onclick=()=>{currentLearnIndex=i; currentLearnType='letters'; showLearn(); speakLearn();}; lr.appendChild(d);});
- smallLetters.forEach((l,i)=>{const d=document.createElement('div'); d.textContent=l; d.style.background=`hsl(${200+i*6},70%,60%)`; d.onclick=()=>{currentLearnIndex=i; currentLearnType='small'; showLearn(); speakLearn();}; slr.appendChild(d);});
- numbers.forEach((n,i)=>{const d=document.createElement('div'); d.textContent=n; d.style.background=`hsl(${260+i*12},80%,55%)`; d.onclick=()=>{currentLearnIndex=i; currentLearnType='numbers'; showLearn(); speakLearn();}; nr.appendChild(d);});
- showLearn();
-}
-function showLearn(){let ch='A'; if(currentLearnType==='letters')ch=letters[currentLearnIndex]; else if(currentLearnType==='small')ch=smallLetters[currentLearnIndex]; else ch=numbers[currentLearnIndex]; const el=document.getElementById('learnLetter'); if(el)el.textContent=ch; clearDraw();}
-function nextLearn(){if(currentLearnType==='letters'){currentLearnIndex=(currentLearnIndex+1)%letters.length;}else if(currentLearnType==='small'){currentLearnIndex=(currentLearnIndex+1)%smallLetters.length; if(currentLearnIndex===0)currentLearnType='numbers';}else{currentLearnIndex=(currentLearnIndex+1)%numbers.length; if(currentLearnIndex===0)currentLearnType='letters';} showLearn(); speakLearn();}
-function speakBoard(t){speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang=/[a-zA-Z]/.test(t)?'en-US':'ar-SA'; u.rate=0.85; speechSynthesis.speak(u);}
-function speakLearn(){const ch=document.getElementById('learnLetter').textContent; speakBoard(ch);}
+function initLearn(){const lr=document.getElementById('lettersRow'); const slr=document.getElementById('smallLettersRow'); const nr=document.getElementById('numbersRow'); if(!lr)return; lr.innerHTML=''; slr.innerHTML=''; nr.innerHTML=''; letters.forEach((l,i)=>{const d=document.createElement('div'); d.textContent=l; d.style.background=`hsl(${i*14},80%,60%)`; d.onclick=()=>{currentLearnIndex=i; currentLearnType='letters'; showLearn(); speakLearn();}; lr.appendChild(d);}); smallLetters.forEach((l,i)=>{const d=document.createElement('div'); d.textContent=l; d.style.background=`hsl(${200+i*6},70%,60%)`; d.onclick=()=>{currentLearnIndex=i; currentLearnType='small'; showLearn(); speakLearn();}; slr.appendChild(d);}); numbers.forEach((n,i)=>{const d=document.createElement('div'); d.textContent=n; d.style.background=`hsl(${260+i*12},80%,55%)`; d.onclick=()=>{currentLearnIndex=i; currentLearnType='numbers'; showLearn(); speakLearn();}; nr.appendChild(d);}); showLearn();}
+function showLearn(){let ch='A'; if(currentLearnType==='letters')ch=letters[currentLearnIndex]; else if(currentLearnType==='small')ch=smallLetters[currentLearnIndex]; else ch=numbers[currentLearnIndex]; document.getElementById('learnLetter').textContent=ch; clearDraw();}
+function nextLearn(){if(currentLearnType==='letters')currentLearnIndex=(currentLearnIndex+1)%letters.length; else if(currentLearnType==='small'){currentLearnIndex=(currentLearnIndex+1)%smallLetters.length; if(currentLearnIndex===0)currentLearnType='numbers';} else{currentLearnIndex=(currentLearnIndex+1)%numbers.length; if(currentLearnIndex===0)currentLearnType='letters';} showLearn(); speakLearn();}
+function speakLearn(){speakBoard(document.getElementById('learnLetter').textContent);}
 function speakOnlyTranslation(){if(lastTranslation)speakBoard(lastTranslation);}
 function speakTrans(){const t=document.getElementById('transOutput').innerText; if(t)speakBoard(t);}
-function speakGame(){const cur=questions[qIndex]; if(cur)speakBoard(cur.en+' , '+cur.correct);}
-
-// شرح وافي زي بحث جوجل - مربوط فعليا
-async function getGoogleLikeExplanation(q, translated){
- let wikiAr=''; let wikiEn=''; let dict='';
- try{
-  if(/^[a-zA-Z\s]+$/.test(q.trim())){
-   const res=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q.trim())}`);
-   if(res.ok){const j=await res.json(); wikiEn=j.extract||'';}
-  } else {
-   const res=await fetch(`https://ar.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q.trim())}`);
-   if(res.ok){const j=await res.json(); wikiAr=j.extract||'';}
-  }
- }catch(e){}
- try{
-  if(/^[a-zA-Z]+$/.test(translated.trim()) || /^[a-zA-Z]+$/.test(q.trim())){
-   const w = /^[a-zA-Z]+$/.test(q.trim())? q.trim(): translated.trim();
-   const res=await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(w)}`);
-   if(res.ok){const j=await res.json(); dict=j[0]?.meanings?.[0]?.definitions?.[0]?.definition||'';}
-  }
- }catch(e){}
-
- return `
- <div style="background:#facc15;color:#000;padding:8px 12px;border-radius:8px;font-weight:800;margin-bottom:12px">📚 نتائج البحث عن "${q}" = "${translated}"</div>
- <b>🔹 التعريف:</b><br>${wikiAr||wikiEn||`كلمة "${q}" معناها "${translated}" وهي كلمة شائعة الاستخدام في الحياة اليومية.`}<br><br>
- <b>🔹 الترجمة التفصيلية:</b><br>
- - العربية: ${q}<br>
- - الإنجليزية: ${translated}<br>
- - النطق: /${translated.toLowerCase()}/<br><br>
- <b>🔹 المعنى في القاموس:</b><br>${dict||'معنى عام يستخدم في المحادثات اليومية'}<br><br>
- <b>🔹 أمثلة وافية (5 أمثلة):</b><br>
- 1. I need ${translated} = أنا أحتاج ${q}<br>
- 2. This is ${translated} = هذا ${q}<br>
- 3. Where is the ${translated}? = أين ${q}؟<br>
- 4. I love ${translated} = أنا أحب ${q}<br>
- 5. The ${translated} is beautiful = ${q} جميل<br><br>
- <b>🔹 عبارات شائعة:</b><br>
- - a ${translated} = ${q} واحد<br>
- - the ${translated} = ${q} المحدد<br>
- - many ${translated}s = كثير من ${q}<br><br>
- <b>🔹 كيف تستخدمها:</b><br>
- استخدم "${translated}" عندما تريد أن تقول "${q}" في جملة إنجليزية. احفظ الجمل الخمسة فوق وكررها بصوت عالي.<br><br>
- <div style="background:#e0e7ff;padding:8px;border-radius:8px">💡 مصدر: Wikipedia + Dictionary API - بحث مباشر مثل جوجل</div>
- `;
-}
-
-async function autoTranslateInternal(q){
- let translated='';
- try{
-  if(navigator.onLine){
-   const sl=/[a-zA-Z]/.test(q)?'en':'ar'; const tl=sl==='en'?'ar':'en';
-   const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`;
-   const res=await fetch(url); const data=await res.json(); translated=data[0].map(x=>x[0]).join('');
-  }else{throw 0;}
- }catch{translated=offlineTranslate(q);}
- lastTranslation=translated;
- document.getElementById('assistantTop').style.display='block';
- document.getElementById('topAr').textContent=q;
- document.getElementById('topEn').textContent='= '+translated;
- document.getElementById('assistantExplain').innerHTML='<p style="text-align:center;padding-top:60px">⏳ جاري البحث في جوجل / ويكيبيديا...</p>';
- const html=await getGoogleLikeExplanation(q, translated);
- document.getElementById('assistantExplain').innerHTML=html;
-}
-function searchAI(){const q=document.getElementById('aiSearch').value.trim(); if(!q)return; autoTranslateInternal(q);}
-function clearAI(){document.getElementById('aiSearch').value=''; document.getElementById('assistantTop').style.display='none'; document.getElementById('assistantExplain').innerHTML='<p style="text-align:center;padding-top:80px;color:#666">🔍 اكتب كلمة جديدة - شرح وافي زي جوجل</p>'; lastTranslation='';}
+function offlineTranslate(t){return t;}
+async function autoTranslateInternal(q){let tr=q; try{if(navigator.onLine){const sl=/[a-zA-Z]/.test(q)?'en':'ar'; const tl=sl==='en'?'ar':'en'; const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`; const res=await fetch(url); const data=await res.json(); tr=data[0].map(x=>x[0]).join('');}}catch{} lastTranslation=tr; document.getElementById('assistantTop').style.display='block'; document.getElementById('topAr').textContent=q; document.getElementById('topEn').textContent=tr; document.getElementById('assistantExplain').innerHTML=`<b>ترجمة:</b> ${q} = ${tr}<br><br><b>شرح وافي:</b><br>كلمة "${q}" معناها "${tr}".<br>مثال: I love ${tr} = أنا أحب ${q}<br>استخدمها يوميا في جملك.<br><br><b>بحث جوجل:</b> ${q} definition - ${tr} meaning`;}
+function searchAI(){const q=document.getElementById('aiSearch').value.trim(); if(q)autoTranslateInternal(q);}
+function clearAI(){document.getElementById('aiSearch').value=''; document.getElementById('assistantTop').style.display='none'; document.getElementById('assistantExplain').innerHTML='<p style="text-align:center;padding-top:80px">اكتب أي شيء</p>';}
 function nextAI(){const n=qaAll[Math.floor(Math.random()*qaAll.length)]; document.getElementById('aiSearch').value=n[1]; searchAI();}
 function startVoice(id){const SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR)return; const r=new SR(); r.lang='ar-EG'; r.onresult=e=>{document.getElementById(id).value=e.results[0][0].transcript; if(id==='aiSearch')searchAI(); else autoTranslate();}; r.start();}
-async function autoTranslate(){const input=document.getElementById('transInput').value.trim(); if(!input){document.getElementById('transOutput').textContent=''; return;} try{if(navigator.onLine){const sl=fromAr?'ar':'en'; const tl=fromAr?'en':'ar'; const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(input)}`; const res=await fetch(url); const d=await res.json(); document.getElementById('transOutput').textContent=d[0].map(x=>x[0]).join(''); lastTranslation=d[0].map(x=>x[0]).join('');}else{throw 0;}}catch{const t=offlineTranslate(input); document.getElementById('transOutput').textContent=t; lastTranslation=t;}}
+async function autoTranslate(){const input=document.getElementById('transInput').value.trim(); if(!input){document.getElementById('transOutput').textContent=''; return;} try{const sl=fromAr?'ar':'en'; const tl=fromAr?'en':'ar'; const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(input)}`; const res=await fetch(url); const d=await res.json(); document.getElementById('transOutput').textContent=d[0].map(x=>x[0]).join(''); lastTranslation=d[0].map(x=>x[0]).join('');}catch{document.getElementById('transOutput').textContent=input;}}
 function swapLang(){fromAr=!fromAr; document.getElementById('fromLang').textContent=fromAr?'العربية':'English'; document.getElementById('toLang').textContent=fromAr?'English':'العربية'; autoTranslate();}
 function clearTrans(){document.getElementById('transInput').value=''; document.getElementById('transOutput').textContent='';}
-function buildCatButtons(){const grid=document.getElementById('catGrid'); if(!grid)return; grid.innerHTML=''; const colors=['#ef4444','#f59e0b','#10b981','#06b6d4','#8b5cf6','#ec4899']; Object.keys(categories).forEach((cat,i)=>{const b=document.createElement('button'); b.className='cat-btn'; b.style.background=colors[i%colors.length]; b.innerHTML=`${cat}<br><small>500</small>`; b.onclick=()=>{currentCategory=cat; buildQuestions(); showQuestion();}; grid.appendChild(b);});}
+function buildCatButtons(){const grid=document.getElementById('catGrid'); if(!grid)return; grid.innerHTML=''; const colors=['#ef4444','#f59e0b','#10b981','#06b6d4','#8b5cf6','#ec4899']; Object.keys(categories).forEach((cat,i)=>{const b=document.createElement('button'); b.className='cat-btn'; b.style.background=colors[i]; b.innerHTML=`${cat}<br><small>500</small>`; b.onclick=()=>{currentCategory=cat; buildQuestions(); showQuestion();}; grid.appendChild(b);});}
 function buildQuestions(){let pool=categories[currentCategory]||qaAll; while(pool.length<500)pool=pool.concat(pool); pool=pool.slice(0,500); questions=pool.map(p=>{const c=p[1]; let o=[c]; while(o.length<4){let r=qaAll[Math.floor(Math.random()*qaAll.length)][1]; if(!o.includes(r))o.push(r);} o.sort(()=>Math.random()-0.5); return {en:p[0], correct:c, opts:o};}); qIndex=0;}
-function showQuestion(){if(!questions.length)buildQuestions(); const cur=questions[qIndex]; document.getElementById('questionCard').innerHTML=`ما معنى "${cur.en}" ؟`; const opt=document.getElementById('options'); opt.innerHTML=''; cur.opts.forEach(v=>{const b=document.createElement('button'); b.textContent=v; b.onclick=()=>checkAnswer(b,v,cur.correct); opt.appendChild(b);}); document.getElementById('score').textContent=`النقاط: ${score}`;}
-function checkAnswer(btn,ch,co){document.querySelectorAll('#options button').forEach(b=>b.disabled=true); if(ch===co){btn.classList.add('correct'); score+=10;}else{btn.classList.add('wrong'); document.querySelectorAll('#options button').forEach(b=>{if(b.textContent===co)b.classList.add('correct')});} setTimeout(()=>nextQuestion(),800);}
+function showQuestion(){if(!questions.length)buildQuestions(); currentQ=questions[qIndex]; document.getElementById('questionCard').innerHTML=`ما معنى "${currentQ.en}" ؟<br><small style="color:#facc15">اضغط للسمع مترجم</small>`; const opt=document.getElementById('options'); opt.innerHTML=''; currentQ.opts.forEach(v=>{const b=document.createElement('button'); b.textContent=v; b.onclick=()=>{checkAnswer(b,v,currentQ.correct); speakBoard(v + ' , ' + currentQ.en);}; opt.appendChild(b);}); document.getElementById('score').textContent=`النقاط: ${score}`;}
+function speakGameQuestion(){if(currentQ)speakBoard(currentQ.en + ' معناها ' + currentQ.correct);}
+function speakGame(){speakGameQuestion();}
+function checkAnswer(btn,ch,co){document.querySelectorAll('#options button').forEach(b=>b.disabled=true); if(ch===co){btn.classList.add('correct'); score+=10;}else{btn.classList.add('wrong'); document.querySelectorAll('#options button').forEach(b=>{if(b.textContent===co)b.classList.add('correct')});} setTimeout(()=>nextQuestion(),900);}
 function nextQuestion(){qIndex=(qIndex+1)%questions.length; showQuestion();}
 function resetGame(){qIndex=0; score=0; buildQuestions(); showQuestion();}
 
+// جديد
+const galleryData={
+"الحيوانات":[{emoji:"🦁",ar:"أسد",en:"Lion"},{emoji:"🐯",ar:"نمر",en:"Tiger"},{emoji:"🐘",ar:"فيل",en:"Elephant"},{emoji:"🐶",ar:"كلب",en:"Dog"},{emoji:"🐱",ar:"قطة",en:"Cat"},{emoji:"🐴",ar:"حصان",en:"Horse"}],
+"الطيور":[{emoji:"🦅",ar:"نسر",en:"Eagle"},{emoji:"🦉",ar:"بومة",en:"Owl"},{emoji:"🦜",ar:"ببغاء",en:"Parrot"},{emoji:"🐦",ar:"عصفور",en:"Sparrow"}],
+"المنزل":[{emoji:"🚪",ar:"باب",en:"Door"},{emoji:"🪑",ar:"كرسي",en:"Chair"},{emoji:"🛏️",ar:"سرير",en:"Bed"}],
+"المطعم":[{emoji:"🍞",ar:"خبز",en:"Bread"},{emoji:"🍚",ar:"أرز",en:"Rice"},{emoji:"💧",ar:"ماء",en:"Water"}]
+};
+let currentGalleryCat="الحيوانات";
+function buildGalleryCats(){const grid=document.getElementById('galleryCatGrid'); if(!grid)return; grid.innerHTML=''; Object.keys(galleryData).forEach(cat=>{const b=document.createElement('button'); b.className='cat-btn'; b.style.background='#f59e0b'; b.style.color='#000'; b.textContent=cat; b.onclick=()=>{currentGalleryCat=cat; showGallery();}; grid.appendChild(b);});}
+function showGallery(){const grid=document.getElementById('galleryGrid'); if(!grid)return; grid.innerHTML=''; galleryData[currentGalleryCat].forEach(item=>{const div=document.createElement('div'); div.className='gallery-item'; div.innerHTML=`<div class="emoji">${item.emoji}</div><div style="font-weight:800;color:#facc15">${item.ar}</div><div style="color:#a5b4fc">${item.en}</div>`; div.onclick=()=>speakBoard(item.ar + ' يعني ' + item.en); grid.appendChild(div);});}
+
+const conversations={
+"المنزل":["أين المطبخ؟ - Where is the kitchen?","المطبخ هناك - The kitchen is there","هل هذا بيتك؟ - Is this your house?"],
+"المطعم":["أريد ماء - I want water","ما سعر الأرز؟ - What is rice price?","الطعام لذيذ - The food is delicious"],
+"الشارع":["أين المتجر؟ - Where is the shop?","كيف أذهب للمستشفى؟ - How to go to hospital?","الشارع مزدحم - The street is crowded"],
+"المدرسة":["أين المعلم؟ - Where is teacher?","هذا كتابي - This is my book","متى الدرس؟ - When is lesson?"]
+};
+let currentConvCat="المنزل";
+function buildConvCats(){const grid=document.getElementById('convCatGrid'); if(!grid)return; grid.innerHTML=''; Object.keys(conversations).forEach(cat=>{const b=document.createElement('button'); b.className='cat-btn'; b.style.background='#16a34a'; b.textContent=cat; b.onclick=()=>{currentConvCat=cat; showConv();}; grid.appendChild(b);});}
+function showConv(){const list=document.getElementById('convList'); if(!list)return; list.innerHTML=''; conversations[currentConvCat].forEach(line=>{const d=document.createElement('div'); d.className='story-card'; d.innerHTML=`${line} <button onclick="speakBoard('${line}')" style="float:left;background:#6366f1;border:none;color:#fff;padding:4px 10px;border-radius:8px">🔊</button>`; list.appendChild(d);});}
+
+function loadStories(){const el=document.getElementById('storiesList'); if(!el)return; const stories=[{title:"الأسد والفأر",en:"The Lion and the Mouse",txt:"كان أسد نائم، فأر صغير أيقظه. الأسد تركه. بعد أيام وقع الأسد في شبكة، الفأر قطع الشبكة وأنقذه."},{title:"السلحفاة والأرنب",en:"Turtle and Rabbit",txt:"الأرنب سريع لكن مغرور، السلحفاة بطيئة لكن مستمرة. فازت السلحفاة لأنها لم تتوقف."},{title:"الولد والكتاب",en:"Boy and Book",txt:"ولد يحب القراءة كل يوم، أصبح ذكيا ومعلمه فخور به."},{title:"في السوق",en:"At Market",txt:"ذهبت للسوق، اشتريت خبز وماء، البائع كان لطيفا."},{title:"بيتي الجميل",en:"My Beautiful House",txt:"بيتي صغير لكن نظيف، فيه باب وشباك وسرير مريح."}]; el.innerHTML=''; stories.forEach(s=>{const d=document.createElement('div'); d.className='story-card'; d.innerHTML=`<b style="color:#facc15">${s.title} - ${s.en}</b><br>${s.txt}<br><button onclick="speakBoard('${s.txt}')" style="background:#6366f1;border:none;color:#fff;padding:6px 12px;border-radius:8px;margin-top:6px">🔊 اسمع القصة مترجمة</button>`; el.appendChild(d);});}
+
+function loadGrammar(){const el=document.getElementById('grammarContent'); if(!el)return; el.innerHTML=`
+<b>📚 القواعد من الألف للياء</b><br><br>
+<b>1. الضمائر Pronouns:</b><br>
+I أنا, You أنت, He هو, She هي, We نحن, They هم<br>
+مثال: He is a teacher = هو معلم<br><br>
+<b>2. الأزمنة Tenses:</b><br>
+- Present Simple: I study everyday = أذاكر كل يوم<br>
+- Past Simple: I studied yesterday = ذاكرت أمس<br>
+- Future: I will study tomorrow = سأذاكر غدا<br><br>
+<b>3. أدوات التعريف Articles:</b><br>
+a ولد a boy, an تفاحة an apple, the الكتاب the book<br><br>
+<b>4. الجمع Plural:</b><br>
+book -> books, child -> children, man -> men<br><br>
+<b>5. الصفات Adjectives:</b><br>
+big كبير, small صغير, beautiful جميل<br><br>
+<b>6. الأسئلة:</b><br>
+What ماذا, Where أين, When متى, Why لماذا, Who من<br><br>
+<b>7. النفي:</b><br>
+I am not = أنا لست, I don't like = لا أحب<br><br>
+<b>8. الملكية:</b><br>
+my كتابي, your كتابك, his كتابه<br>
+مثال: This is my book<br>
+`;}
+
+function loadTools(){const el=document.getElementById('toolsContent'); if(!el)return; el.innerHTML=`
+<b>1. أدوات الشرط Conditional Tools</b><br>
+- if لو: If you study, you will succeed = لو ذاكرت ستنجح<br>
+- unless إلا إذا: Unless you hurry, you'll be late = إلا إذا أسرعت ستتأخر<br>
+- provided that / as long as بشرط أن: You can go provided that you finish = يمكنك الذهاب بشرط تنتهي<br>
+- in case في حالة: Take umbrella in case it rains = خذ شمسية في حالة تمطر<br><br>
+<b>2. أدوات الربط Conjunctions</b><br>
+and و, but لكن, or أو, because لأن, so لذلك, although بالرغم من<br>
+مثال: I like tea and coffee, but he likes juice<br><br>
+<b>3. أدوات التعريف والتنكير Articles</b><br>
+a, an, the كما شرحنا<br><br>
+<b>4. أدوات الاستفهام Interrogative</b><br>
+what ماذا, where أين, when متى, why لماذا, how كيف, who من, which أي<br><br>
+<b>5. أدوات النفي Negation</b><br>
+not, no, never أبدا, neither ولا, nor ولا, nothing لا شيء<br><br>
+<b>6. أدوات الجر Prepositions</b><br>
+in في, on على, under تحت, over فوق, between بين, behind خلف, in front of أمام<br>
+مثال: The book is on the table = الكتاب على الطاولة<br>
+`;}
+
+function loadIrregular(){const el=document.getElementById('irregularList'); if(!el)return; const list=[["go - went - gone","يذهب"],["be - was - been","يكون"],["have - had - had","يملك"],["do - did - done","يفعل"],["make - made - made","يصنع"],["take - took - taken","يأخذ"],["come - came - come","يأتي"],["see - saw - seen","يرى"],["eat - ate - eaten","يأكل"],["write - wrote - written","يكتب"],["speak - spoke - spoken","يتكلم"],["drink - drank - drunk","يشرب"]]; el.innerHTML=''; list.forEach(p=>{const d=document.createElement('div'); d.style.cssText='background:#1e1b4b;padding:12px;border-radius:10px;display:flex;justify-content:space-between'; d.innerHTML=`<span style="color:#facc15;font-weight:800">${p[0]}</span><span>${p[1]}</span><button onclick="speakBoard('${p[0]}')" style="background:#ea580c;border:none;color:#fff;padding:4px 8px;border-radius:8px">🔊</button>`; el.appendChild(d);});}
+
 window.onload=()=>{
- initLearn(); buildCatButtons(); buildQuestions(); showQuestion();
- document.getElementById('aiSearch').value='';
- document.getElementById('transInput').value='';
- document.getElementById('transOutput').textContent='';
+ initLearn(); buildCatButtons(); buildQuestions(); showQuestion(); buildGalleryCats(); showGallery(); buildConvCats(); showConv();
+ document.getElementById('aiSearch').value=''; document.getElementById('transInput').value=''; document.getElementById('transOutput').textContent='';
  setTimeout(initCanvas,300);
- document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI();});
+ const ai=document.getElementById('aiSearch'); if(ai)ai.addEventListener('keypress',e=>{if(e.key==='Enter')searchAI();});
 };
 let deferredPrompt; const installBtn=document.getElementById('installBtn');
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault(); deferredPrompt=e; installBtn.classList.remove('hidden');});
-installBtn.addEventListener('click',async()=>{if(!deferredPrompt)return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; installBtn.classList.add('hidden');});
+if(installBtn)installBtn.addEventListener('click',async()=>{if(!deferredPrompt)return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; installBtn.classList.add('hidden');});
 </script>
 </body>
 </html>
