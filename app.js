@@ -1,110 +1,33 @@
-const API_BASE = "https://round-king-d129.mohamedelashri14.workers.dev";
-let DB = JSON.parse(localStorage.getItem('pro_db')||'{}');
-let lastTranslation = "";
+let currentLearnIndex=0,currentLearnType='letters',score=0,qIndex=0,fromAr=true;
+const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const numbers=['0','1','2','3','4','5','6','7','8','9','10'];
+const dictionary={'A':'أ - حرف الألف','B':'ب - باء','C':'ج - كات','D':'د - دوج كلب','E':'هـ - إي','F':'ف - فيش سمكة','G':'ج - جو','H':'هـ - هاوس بيت','I':'آي - أنا','J':'ج - جوس عصير','K':'ك - كايت طائرة','L':'ل - لايون أسد','M':'م - مانجو','N':'ن - نمر','O':'أو - أورنج برتقالة','P':'ب - بن قلم','Q':'ك - كوين ملكة','R':'ر - ريد أحمر','S':'س - صن شمس','T':'ت - تايجر نمر','U':'يو - أمبريلا مظلة','V':'في - فان سيارة','W':'دبليو - ووتر ماء','X':'إكس - بوكس صندوق','Y':'واي - يلو أصفر','Z':'زد - زيبرا حمار وحشي','0':'صفر - Zero','1':'واحد - One','2':'اثنان - Two','3':'ثلاثة - Three','4':'أربعة - Four','5':'خمسة - Five','6':'ستة - Six','7':'سبعة - Seven','8':'ثمانية - Eight','9':'تسعة - Nine','10':'عشرة - Ten'};
+const qa=[['Apple','تفاحة'],['Cat','قطة'],['Dog','كلب'],['Sun','شمس'],['Water','ماء'],['Book','كتاب'],['House','بيت'],['Tiger','نمر'],['Red','أحمر'],['Blue','أزرق'],['Yellow','أصفر'],['Green','أخضر'],['One','واحد'],['Two','اثنان'],['Three','ثلاثة'],['Four','أربعة'],['Five','خمسة'],['Mother','أم'],['Father','أب'],['Friend','صديق'],['School','مدرسة'],['Car','سيارة'],['Tree','شجرة'],['Fish','سمكة'],['Bird','طائر'],['Lion','أسد'],['Elephant','فيل'],['Moon','قمر'],['Star','نجمة'],['Boy','ولد'],['Girl','بنت'],['Hand','يد'],['Eye','عين'],['Milk','حليب'],['Bread','خبز'],['Banana','موز'],['Orange','برتقالة'],['Door','باب'],['Window','نافذة'],['Chair','كرسي'],['Table','طاولة'],['Pen','قلم'],['Ball','كرة'],['Game','لعبة'],['Happy','سعيد'],['Sad','حزين'],['Big','كبير'],['Small','صغير'],['Hot','حار'],['Cold','بارد'],['Fast','سريع'],['Slow','بطيء'],['Good','جيد'],['Bad','سيء'],['New','جديد'],['Old','قديم'],['Man','رجل'],['Woman','امرأة'],['Child','طفل'],['Day','يوم'],['Night','ليل'],['Morning','صباح'],['Food','طعام'],['Name','اسم'],['Love','حب'],['Time','وقت'],['Work','عمل'],['City','مدينة'],['Sea','بحر'],['River','نهر'],['Mountain','جبل'],['Flower','زهرة'],['Garden','حديقة'],['Light','ضوء'],['Dark','ظلام'],['Fire','نار'],['Air','هواء'],['Earth','أرض'],['Sky','سماء'],['Rain','مطر'],['Snow','ثلج'],['Wind','رياح'],['Cloud','سحابة'],['Sunset','غروب'],['Sunrise','شروق'],['King','ملك'],['Queen','ملكة'],['Prince','أمير'],['Princess','أميرة'],['Castle','قلعة'],['Magic','سحر'],['Dream','حلم'],['Smile','ابتسامة'],['Heart','قلب'],['Hope','أمل'],['Help','مساعدة'],['Thank you','شكرا'],['Please','من فضلك'],['Yes','نعم'],['No','لا'],['Hello','مرحبا'],['Goodbye','وداعا'],['Come','تعال'],['Go','اذهب']];
 
-function saveDB(){ localStorage.setItem('pro_db', JSON.stringify(DB)); }
-saveDB();
-
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').classList.add('show'); });
-document.getElementById('installBtn').onclick = async ()=>{ if(deferredPrompt){ deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; document.getElementById('installBtn').classList.remove('show'); } };
-
-const colors = [['#f43f5e','#fb7185'],['#8b5cf6','#a78bfa'],['#06b6d4','#22d3ee'],['#f59e0b','#fbbf24'],['#10b981','#34d399'],['#ec4899','#f472b6']];
-
-function renderLetters(){
-  let lg=document.getElementById('lettersGrid'); 
-  let letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  lg.innerHTML=letters.map((l,i)=>{ let c=colors[i%colors.length]; return `<div style="--c1:${c[0]};--c2:${c[1]}" onclick="speakText('${l}')">${l}</div>`; }).join('');
-  let ng=document.getElementById('numbersGrid'); 
-  let nums=['0','1','2','3','4','5','6','7','8','9','10']; 
-  ng.innerHTML=nums.map((n,i)=>{ let c=colors[i%colors.length]; return `<div style="--c1:${c[0]};--c2:${c[1]}" onclick="speakText('${n}')">${n}</div>`; }).join('');
-}
-renderLetters();
-
-async function askBoard(q){
-  if(!q){ q=document.getElementById('searchInput').value.trim(); }
-  if(!q) return toast('اكتب سؤال أولا');
-  document.getElementById('searchInput').value=q;
-  let board=document.getElementById('boardContent'); 
-  let status=document.getElementById('teacherStatus');
-  status.innerText='يفكر في: '+q+'...';
-  
-  if(DB[q] && DB[q].html){ 
-    showOnBoard(q, DB[q].html); 
-    lastTranslation = DB[q].speak;
-    status.innerText='من الذاكرة - '+q; 
-    return; 
-  }
-  
-  board.innerHTML=`<div style="text-align:center;padding:30px">🤔<br>أبحث عن <b>${q}</b>...</div>`;
-  try{
-    let resultHTML='';
-    let speakOnly='';
-    
-    try{ 
-      let r=await fetch(API_BASE+'?q='+encodeURIComponent(q)); 
-      if(r.ok){ let j=await r.json(); if(j.answer){ resultHTML=j.answer; speakOnly=q; } } 
-    }catch(e){}
-
-    if(!resultHTML){
-      let lang=/[a-zA-Z]/.test(q)?'en|ar':'ar|en';
-      let resp=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(q)}&langpair=${lang}`);
-      let data=await resp.json();
-      if(data.responseData){
-        let trans=data.responseData.translatedText;
-        resultHTML=`<b>${q}</b> = ${trans}<br><br>⭐ مثال: ${q}<br>🔊 النطق: ${trans}`;
-        speakOnly=`${q} يساوي ${trans}`;
-      }
-    }
-    
-    if(!resultHTML){ resultHTML=`<b>${q}</b> = ${q}`; speakOnly=q; }
-    
-    lastTranslation = speakOnly;
-    DB[q]={html:resultHTML, speak:speakOnly};
-    saveDB(); 
-    showOnBoard(q,resultHTML); 
-    status.innerText='تم الشرح: '+q;
-  }catch(err){ board.innerHTML=`<div style="color:#f87171">⚠️ لا يوجد نت</div>`; }
-}
-
-function showOnBoard(q, html){ 
-  document.getElementById('boardContent').innerHTML=`<div style="background:rgba(255,255,255,.06);padding:14px;border-radius:14px;border-right:4px solid #fde047"><div style="color:#fde047;font-weight:800;margin-bottom:8px">📝 ${q}</div><div style="line-height:2">${html}</div></div>`; 
-}
-function clearBoard(){ document.getElementById('boardContent').innerHTML='<div class="welcome-msg"><h3>تم المسح 🧹</h3></div>'; lastTranslation=""; }
-function speakBoard(){ 
-  if(lastTranslation){ speakText(lastTranslation); } 
-  else { toast('لا يوجد ترجمة'); }
-}
-
-document.getElementById('searchBtn').onclick=()=>askBoard();
-document.getElementById('searchInput').addEventListener('keydown', e=>{ if(e.key==='Enter') askBoard(); });
-
-async function doTranslate(){
-  let text=document.getElementById('transInput').value.trim(); 
-  if(!text){ document.getElementById('transOutput').innerText='الترجمة ستظهر هنا...'; return; }
-  let from=document.getElementById('fromLang').value; let to=document.getElementById('toLang').value;
-  document.getElementById('transOutput').innerText='⏳ أترجم...';
-  try{ 
-    let r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`); 
-    let d=await r.json(); 
-    document.getElementById('transOutput').innerText=d.responseData.translatedText||'...'; 
-  }catch(e){ document.getElementById('transOutput').innerText='لا يوجد نت'; }
-}
-let ti=document.getElementById('transInput'); 
-if(ti) ti.addEventListener('input', ()=>{ clearTimeout(window.transTimer); window.transTimer=setTimeout(()=>doTranslate(),600); });
-document.getElementById('swapBtn').onclick=()=>{ let a=document.getElementById('fromLang'), b=document.getElementById('toLang'); let tmp=a.value; a.value=b.value; b.value=tmp; };
-
-const QUIZ=[{q:'ما معنى تعالى؟',opts:['Come','Go','Eat'],a:0},{q:'مكان؟',opts:['Place','Book','Water'],a:0},{q:'Cat؟',opts:['قطة','كلب','بيت'],a:0},{q:'Apple؟',opts:['تفاحة','كتاب','ماء'],a:0},{q:'Book؟',opts:['كتاب','قلم','مدرسة'],a:0}];
-function nextGame(){ let item=QUIZ[Math.floor(Math.random()*QUIZ.length)]; document.getElementById('gameQuestion').innerText=item.q; let box=document.getElementById('gameOptions'); box.innerHTML=item.opts.map((o,i)=>`<button onclick="checkAns(this,${i},${item.a})">${o}</button>`).join(''); }
-function checkAns(btn,chosen,ans){
-  let buttons=document.querySelectorAll('#gameOptions button'); buttons.forEach(b=>b.disabled=true);
-  let correctEl=document.getElementById('correctCount'), wrongEl=document.getElementById('wrongCount'), scoreEl=document.getElementById('gameScore');
-  let correct=parseInt(correctEl.innerText||0), wrong=parseInt(wrongEl.innerText||0), score=parseInt(scoreEl.innerText||0);
-  if(chosen===ans){ btn.classList.add('correct'); correct++; score+=10; speakText('ممتاز'); }else{ btn.classList.add('wrong'); buttons[ans].classList.add('correct'); wrong++; speakText('خطأ'); }
-  correctEl.innerText=correct; wrongEl.innerText=wrong; scoreEl.innerText=score; setTimeout(nextGame,1200);
-}
-nextGame();
-
-function speakText(t){ if(!t) return; try{ speechSynthesis.cancel(); let clean=t.replace(/<[^>]*>/g,' ').substring(0,180); let u=new SpeechSynthesisUtterance(clean); u.lang=/[ء-ي]/.test(clean)?'ar-SA':'en-US'; u.rate=0.9; speechSynthesis.speak(u); }catch(e){} }
-function toast(m){ let el=document.getElementById('toast'); el.innerText=m; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2500); }
-document.getElementById('voiceBtn').onclick=()=>{ let rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)(); rec.lang='ar-SA'; rec.start(); rec.onresult=e=>{ document.getElementById('searchInput').value=e.results[0][0].transcript; askBoard(); }; };
+function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function initLearn(){const lr=document.getElementById('lettersRow');const nr=document.getElementById('numbersRow');lr.innerHTML='';nr.innerHTML='';letters.forEach((l,i)=>{const d=document.createElement('div');d.textContent=l;d.style.background=`hsl(${i*14},80%,60%)`;d.onclick=()=>{currentLearnIndex=i;currentLearnType='letters';showLearn();};lr.appendChild(d);});numbers.forEach((n,i)=>{const d=document.createElement('div');d.textContent=n;d.style.background=`hsl(${120+i*20},70%,55%)`;d.onclick=()=>{currentLearnIndex=i;currentLearnType='numbers';showLearn();};nr.appendChild(d);});showLearn();}
+function showLearn(){const el=document.getElementById('learnLetter');const val=currentLearnType==='letters'?letters[currentLearnIndex]:numbers[currentLearnIndex];el.textContent=val;}
+function nextLearn(){if(currentLearnType==='letters'){currentLearnIndex=(currentLearnIndex+1)%letters.length;}else{currentLearnIndex=(currentLearnIndex+1)%numbers.length;if(currentLearnIndex===0)currentLearnType='letters';}showLearn();speakLearn();}
+function clearLearn(){document.getElementById('learnLetter').textContent='';}
+function speakLearn(){const val=currentLearnType==='letters'?letters[currentLearnIndex]:numbers[currentLearnIndex];const trans=dictionary[val]||val;speakBoardContent(val+' . '+trans);}
+function speakBoardContent(text){const u=new SpeechSynthesisUtterance(text);u.lang=/[a-zA-Z]/.test(text)?'en-US':'ar-SA';u.rate=0.9;speechSynthesis.speak(u);}
+function speakBoard(id){speakBoardContent(document.getElementById(id).innerText);}
+function speakText(id){speakBoardContent(document.getElementById(id).innerText);}
+let aiHistory=[];
+function searchAI(){const q=document.getElementById('aiSearch').value.trim();if(!q)return;const board=document.getElementById('aiBoardContent');board.innerHTML=`<p>🔍 تبحث عن: <b>${q}</b></p><p class="hint-text">جاري الترجمة...</p>`;autoTranslateInternal(q,board);aiHistory.push(q);}
+async function autoTranslateInternal(q,boardEl){try{const sl=/[a-zA-Z]/.test(q)?'en':'ar';const tl=sl==='en'?'ar':'en';const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');boardEl.innerHTML=`<p style="font-size:28px;font-weight:800;color:#facc15">${q}</p><p style="font-size:22px;margin-top:10px;color:#a5b4fc">= ${trans}</p><p class="hint-text" style="margin-top:12px">ترجمة فقط</p>`;speakBoardContent(trans);}catch(e){boardEl.innerHTML=`<p>${q}</p><p>= ${dictionary[q.toUpperCase()]||'ترجمة غير متاحة حاليا'}</p>`;}}
+function clearAI(){document.getElementById('aiSearch').value='';document.getElementById('aiBoardContent').innerHTML=`<p class="welcome-text">👋 أهلا يا بطل!</p><p class="hint-text">اكتب أي كلمة فوق</p>`;}
+function translateOnly(){const q=document.getElementById('aiSearch').value;if(q)autoTranslateInternal(q,document.getElementById('aiBoardContent'));}
+function nextAI(){let next=qa[Math.floor(Math.random()*qa.length)];document.getElementById('aiSearch').value=next[0];searchAI();}
+function startVoice(inputId){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('المتصفح لا يدعم المايك');return;}const rec=new SR();rec.lang='ar-EG';rec.onresult=e=>{document.getElementById(inputId).value=e.results[0][0].transcript;if(inputId==='aiSearch')searchAI();else autoTranslate();};rec.start();}
+async function autoTranslate(){const input=document.getElementById('transInput').value.trim();if(!input){document.getElementById('transOutput').textContent='الترجمة ستظهر هنا...';return;}const sl=fromAr?'ar':'en';const tl=fromAr?'en':'ar';try{const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(input)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');document.getElementById('transOutput').textContent=trans;}catch(e){document.getElementById('transOutput').textContent='خطأ في الاتصال';}}
+function swapLang(){fromAr=!fromAr;document.getElementById('fromLang').textContent=fromAr?'العربية':'English';document.getElementById('toLang').textContent=fromAr?'English':'العربية';autoTranslate();}
+function clearTrans(){document.getElementById('transInput').value='';document.getElementById('transOutput').textContent='الترجمة ستظهر هنا...';}
+function copyTrans(){navigator.clipboard.writeText(document.getElementById('transOutput').textContent);alert('تم النسخ');}
+let questions=[];
+function buildQuestions(){questions=qa.map(pair=>{const correct=pair[1];let opts=[correct];while(opts.length<4){let r=qa[Math.floor(Math.random()*qa.length)][1];if(!opts.includes(r))opts.push(r);}opts.sort(()=>Math.random()-0.5);return{q:`ما معنى كلمة "${pair[0]}" ؟`,correct,opts,en:pair[0]};});questions.sort(()=>Math.random()-0.5);questions=questions.slice(0,100);}
+function showQuestion(){if(questions.length===0)buildQuestions();const cur=questions[qIndex];document.getElementById('questionCard').innerHTML=`${cur.q}<br><small style="opacity:.6">${cur.en}</small>`;const optDiv=document.getElementById('options');optDiv.innerHTML='';cur.opts.forEach(o=>{const b=document.createElement('button');b.textContent=o;b.onclick=()=>checkAnswer(b,o,cur.correct);optDiv.appendChild(b);});document.getElementById('progressText').textContent=`${qIndex+1} / ${questions.length}`;document.getElementById('barFill').style.width=`${((qIndex+1)/questions.length)*100}%`;document.getElementById('score').textContent=`النقاط: ${score}`;}
+function checkAnswer(btn,chosen,correct){const buttons=document.querySelectorAll('#options button');buttons.forEach(b=>b.disabled=true);if(chosen===correct){btn.classList.add('correct');score+=10;speakBoardContent('أحسنت! '+correct);}else{btn.classList.add('wrong');buttons.forEach(b=>{if(b.textContent===correct)b.classList.add('correct')});speakBoardContent('الإجابة الصحيحة '+correct);}setTimeout(()=>{nextQuestion();},1200);}
+function nextQuestion(){qIndex=(qIndex+1)%questions.length;showQuestion();}
+function resetGame(){qIndex=0;score=0;buildQuestions();showQuestion();}
+window.onload=()=>{initLearn();buildQuestions();showQuestion();document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI()});};
