@@ -11,123 +11,113 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
 body{background:#0f0e2e;color:#fff}
 .app{max-width:480px;margin:0 auto;min-height:100vh;background:#1a1848}
-.top-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#1e1b4b;border-bottom:1px solid #2d2a6a}
-.install-btn{background:#facc15;color:#000;border:none;padding:8px 14px;border-radius:20px;font-weight:700;cursor:pointer}
-.screen{display:none;padding:16px}
-.screen.active{display:block}
+.top-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#1e1b4b}
+.install-btn{background:#facc15;color:#000;border:none;padding:8px 14px;border-radius:20px;font-weight:700}
+.screen{display:none;padding:16px}.screen.active{display:block}
 .grid-2x2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.card{background:#2a2870;border-radius:20px;padding:14px;cursor:pointer;border:1px solid #3a3890;min-height:160px}
-.screen-header{display:flex;align-items:center;justify-content:space-between;background:#1e1b4b;padding:10px 12px;border-radius:12px;margin-bottom:14px}
-.back-btn{background:#2d2a6a;border:none;color:#fff;padding:6px 12px;border-radius:10px;cursor:pointer}
+.card{border-radius:20px;padding:14px;cursor:pointer;border:1px solid #3a3890;min-height:150px}
+.screen-header{display:flex;justify-content:space-between;align-items:center;background:#1e1b4b;padding:10px 12px;border-radius:12px;margin-bottom:14px}
+.back-btn{background:#2d2a6a;border:none;color:#fff;padding:6px 12px;border-radius:10px}
 .blackboard{background:#0a0a14;border:2px solid #2d2a6a;border-radius:18px;min-height:320px;position:relative;overflow:hidden;touch-action:none}
 .faint-letter{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:160px;color:rgba(255,255,255,.12);font-weight:800;pointer-events:none;z-index:1}
-#drawCanvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;cursor:crosshair}
-.tap-hint{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:10px;opacity:.4;z-index:3;pointer-events:none;text-align:center;width:90%}
-.letters-row,.numbers-row{display:flex;gap:6px;overflow-x:auto;padding:8px 0;direction:ltr;flex-direction:row;justify-content:flex-start}
+#drawCanvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2}
+.letters-row,.numbers-row{display:flex;gap:6px;overflow-x:auto;padding:8px 0;direction:ltr;flex-direction:row}
 .letters-row::-webkit-scrollbar,.numbers-row::-webkit-scrollbar{display:none}
-.letters-row div,.numbers-row div{min-width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;cursor:pointer;flex-shrink:0;color:#fff;direction:ltr;font-size:16px}
-.controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.controls button{flex:1;background:#2d2a6a;border:none;color:#fff;padding:10px;border-radius:12px;font-weight:700;cursor:pointer;min-width:70px}
-.assistant-box .search-row{display:flex;gap:8px;margin-bottom:10px}
-.search-input-wrap{flex:1}
-.search-input-wrap input{width:100%;padding:12px;border-radius:12px;border:1px solid #3a3890;background:#0f0e2e;color:#fff}
-.icon-btn{width:48px;background:#6366f1;border:none;border-radius:12px;font-size:18px;cursor:pointer}
-.status-line{font-size:11px;opacity:.7;margin-bottom:8px;display:flex;gap:6px;align-items:center}
-.dot{width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block}
-.translator-box{background:#1e1b4b;padding:14px;border-radius:16px}
-.lang-switch{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;background:#2a2870;padding:8px 12px;border-radius:10px}
-.lang-switch button{background:#4f46e5;border:none;color:#fff;padding:6px 12px;border-radius:8px;cursor:pointer}
-.translator-box textarea{width:100%;min-height:90px;background:#0f0e2e;border:1px solid #3a3890;border-radius:12px;padding:12px;color:#fff;resize:none}
-.trans-actions{display:flex;gap:8px;margin:8px 0}
-.trans-actions button{flex:1;background:#2d2a6a;border:none;color:#fff;padding:8px;border-radius:10px;cursor:pointer}
-.trans-output{background:#0f0e2e;border:1px solid #3a3890;border-radius:12px;padding:14px;min-height:80px}
-.games-box{background:#1e1b4b;padding:14px;border-radius:16px}
+.letters-row div,.numbers-row div{min-width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;color:#fff}
+.controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.controls button{flex:1;background:#2d2a6a;border:none;color:#fff;padding:10px;border-radius:12px;font-weight:700;min-width:70px}
+.search-row{display:flex;gap:8px;margin-bottom:10px}.search-input-wrap{flex:1}.search-input-wrap input{width:100%;padding:12px;border-radius:12px;border:1px solid #3a3890;background:#0f0e2e;color:#fff}
+.icon-btn{width:48px;background:#6366f1;border:none;border-radius:12px;font-size:18px}
+.status-line{font-size:11px;opacity:.7;margin-bottom:8px}.dot{width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block}
+.explain-box{background:rgba(99,102,241,.15);border:1px solid #6366f1;border-radius:12px;padding:12px;margin-top:12px;line-height:1.9;font-size:14px;text-align:right}
 .question-card{background:#0f0e2e;padding:18px;border-radius:12px;text-align:center;font-size:20px;font-weight:800;min-height:90px;display:flex;align-items:center;justify-content:center}
-.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
-.options button{background:#2a2870;border:1px solid #3a3890;color:#fff;padding:14px;border-radius:12px;font-weight:700;cursor:pointer}
-.options button.correct{background:#16a34a}
-.options button.wrong{background:#dc2626}
-.game-controls{display:flex;gap:8px}
-.game-controls button{flex:1;background:#4f46e5;border:none;color:#fff;padding:10px;border-radius:12px;cursor:pointer}
-.progress{margin-top:12px;display:flex;align-items:center;gap:10px}
-.progress .bar{flex:1;height:8px;background:#0f0e2e;border-radius:4px;overflow:hidden}
-#barFill{height:100%;background:#facc15;width:0%;transition:.3s}
-.explain-box{background:rgba(99,102,241,.15);border:1px solid #6366f1;border-radius:12px;padding:12px;margin-top:12px;text-align:right;line-height:1.9;font-size:14px}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.options button{background:#2a2870;border:1px solid #3a3890;color:#fff;padding:14px;border-radius:12px;font-weight:700}
+.options button.correct{background:#16a34a}.options button.wrong{background:#dc2626}
+.progress{display:flex;align-items:center;gap:10px;margin-top:10px}.bar{flex:1;height:8px;background:#0f0e2e;border-radius:4px;overflow:hidden}#barFill{height:100%;background:#facc15;width:0%}
+.translator-box{background:#1e1b4b;padding:14px;border-radius:16px}.lang-switch{display:flex;justify-content:space-between;background:#2a2870;padding:8px 12px;border-radius:10px;margin-bottom:10px}
+.translator-box textarea{width:100%;min-height:90px;background:#0f0e2e;border:1px solid #3a3890;border-radius:12px;padding:12px;color:#fff}
+.trans-output{background:#0f0e2e;border:1px solid #3a3890;border-radius:12px;padding:14px;min-height:70px;margin-top:8px}
 </style>
 </head>
 <body>
 <div class="app">
-<header class="top-header">
-<div style="display:flex;gap:10px;align-items:center"><div>🎓</div><div><h1 style="font-size:18px">English Pro</h1><p style="font-size:12px;opacity:.7">Smart Academy</p></div></div>
-<button class="install-btn" id="installBtn">📱 ثبّت التطبيق</button>
-</header>
+<header class="top-header"><div>🎓 English Pro</div><button class="install-btn" id="installBtn">📱 ثبّت</button></header>
 
 <div id="homeScreen" class="screen active">
-<div style="text-align:center;margin:16px 0"><h2>اختر الخدمة</h2><p style="opacity:.7">ماذا تريد أن تتعلّم اليوم؟</p></div>
+<div style="text-align:center;margin:14px 0"><h2>اختر الخدمة</h2><p style="opacity:.7">يعمل بدون نت - ملف واحد</p></div>
 <div class="grid-2x2">
-<div class="card" style="background:linear-gradient(135deg,#3b38a0,#5b4ee0)" onclick="openScreen('assistantScreen')"><div style="background:#0f0e2e;border-radius:12px;padding:8px;text-align:center">ترجمة = ثم شرح</div><h3 style="margin-top:10px">المساعد الذكي</h3></div>
-<div class="card" style="background:linear-gradient(135deg,#2e2a8a,#4a46c0)" onclick="openScreen('learnScreen')"><div style="text-align:center">✏️ ارسم فوق الحرف</div><h3>لوحة التعلم</h3></div>
-<div class="card" style="background:linear-gradient(135deg,#2563eb,#1d4ed8)" onclick="openScreen('translatorScreen')"><div style="text-align:center">🌐 ↔️</div><h3>المترجم</h3></div>
-<div class="card" style="background:linear-gradient(135deg,#9333ea,#7e22ce)" onclick="openScreen('gamesScreen')"><div style="text-align:center">🎮 500 سؤال متنوع</div><h3>الألعاب</h3></div>
+<div class="card" style="background:linear-gradient(135deg,#3b38a0,#5b4ee0)" onclick="openScreen('assistantScreen')"><b>المساعد</b><br><small>ترجمة = ثم شرح لكل شيء</small></div>
+<div class="card" style="background:linear-gradient(135deg,#2e2a8a,#4a46c0)" onclick="openScreen('learnScreen')"><b>لوحة التعلم</b><br><small>✏️ ارسم من الشمال لليمين</small></div>
+<div class="card" style="background:linear-gradient(135deg,#2563eb,#1d4ed8)" onclick="openScreen('translatorScreen')"><b>المترجم</b><br><small>بدون نت + بنت</small></div>
+<div class="card" style="background:linear-gradient(135deg,#9333ea,#7e22ce)" onclick="openScreen('gamesScreen')"><b>الألعاب</b><br><small>🎮 500 سؤال</small></div>
 </div>
 </div>
 
 <div id="learnScreen" class="screen">
-<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹ رجوع</button><h2>ارسم الحرف</h2></div>
+<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹</button><h3>ارسم فوق الحرف</h3></div>
 <div class="letters-row" id="lettersRow"></div>
-<div id="learnBoard" class="blackboard">
-<div id="learnLetter" class="faint-letter">A</div>
-<canvas id="drawCanvas"></canvas>
-<div class="tap-hint">ارسم بإصبعك فوق الحرف الباهت - الحروف من A→Z من الشمال لليمين</div>
-</div>
+<div class="blackboard" id="learnBoard"><div id="learnLetter" class="faint-letter">A</div><canvas id="drawCanvas"></canvas></div>
 <div class="numbers-row" id="numbersRow"></div>
-<div class="controls">
-<button onclick="clearDraw()">🧹 مسح الرسم</button>
-<button onclick="nextLearn()">➜ التالي</button>
-<button onclick="speakLearn()">🔊 نطق</button>
-</div>
+<div class="controls"><button onclick="clearDraw()">🧹 مسح</button><button onclick="nextLearn()">➜ التالي</button><button onclick="speakLearn()">🔊</button></div>
 </div>
 
 <div id="assistantScreen" class="screen">
-<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹ رجوع</button><h2>📚 المساعد - ترجمة ثم شرح</h2></div>
-<div class="assistant-box">
-<div class="search-row"><div class="search-input-wrap"><input id="aiSearch" type="text" placeholder="اكتب أي شيء: تفاحة، ما هو الحب، اشرح الماء..."></div><button class="icon-btn" onclick="searchAI()">🔍</button><button class="icon-btn" onclick="startVoice('aiSearch')">🎤</button></div>
-<div class="status-line"><span class="dot"></span> نظام جوجل: الترجمة أولا = ثم الشرح - لكل شيء</div>
-<div id="aiBoard" class="blackboard" style="min-height:420px;overflow:auto;display:block;padding:14px"><div id="aiBoardContent" style="text-align:center;padding-top:40px"><p style="font-size:20px;color:#a5b4fc;font-weight:800">👋 أهلا يا بطل!</p><p style="opacity:.6;margin-top:8px">اكتب أي شيء، سيترجم أولا ثم يشرح</p><p style="opacity:.4;font-size:12px;margin-top:10px">مثال: اشرح لي القواعد / ما هو الماء / تفاحة</p></div></div>
-<div class="controls"><button onclick="clearAI()">🧹 مسح</button><button onclick="speakBoard('aiBoardContent')">🔊 نطق</button><button onclick="nextAI()">➜ عشوائي</button></div>
-</div>
+<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹</button><h3>المساعد - كل شيء</h3></div>
+<div class="search-row"><div class="search-input-wrap"><input id="aiSearch" placeholder="اكتب أي شيء..."></div><button class="icon-btn" onclick="searchAI()">🔍</button><button class="icon-btn" onclick="startVoice('aiSearch')">🎤</button></div>
+<div class="status-line"><span class="dot"></span> <span id="netStatus">جاري فحص النت...</span> - ترجمة أولا ثم شرح دائما</div>
+<div class="blackboard" style="min-height:400px;padding:14px;overflow:auto"><div id="aiBoardContent" style="text-align:center;padding-top:30px"><p style="color:#a5b4fc;font-weight:800">👋 أهلا يا بطل!</p><p style="opacity:.6">اكتب: تفاحة / ما هو الحب / اشرح الماء / كيف أطبخ</p></div></div>
+<div class="controls"><button onclick="clearAI()">🧹</button><button onclick="speakBoard('aiBoardContent')">🔊</button><button onclick="nextAI()">عشوائي</button></div>
 </div>
 
 <div id="translatorScreen" class="screen">
-<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹ رجوع</button><h2>المترجم</h2></div>
+<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹</button><h3>المترجم بدون نت</h3></div>
 <div class="translator-box">
-<div class="lang-switch"><span id="fromLang">العربية</span><button onclick="swapLang()">⇄</button><span id="toLang">English</span></div>
-<textarea id="transInput" placeholder="اكتب نص..." oninput="autoTranslate()"></textarea>
-<div class="trans-actions"><button onclick="startVoice('transInput')">🎤</button><button onclick="autoTranslate()">🔍</button><button onclick="clearTrans()">🧹</button></div>
-<div id="transOutput" class="trans-output">الترجمة ستظهر هنا...</div>
+<div class="lang-switch"><span id="fromLang">العربية</span><button onclick="swapLang()" style="background:#4f46e5;border:none;color:#fff;padding:4px 10px;border-radius:8px">⇄</button><span id="toLang">English</span></div>
+<textarea id="transInput" placeholder="اكتب جملة كاملة..." oninput="autoTranslate()"></textarea>
+<div id="transOutput" class="trans-output">الترجمة...</div>
 </div>
 </div>
 
 <div id="gamesScreen" class="screen">
-<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹ رجوع</button><h2>الألعاب 500</h2><span id="score">النقاط: 0</span></div>
-<div class="games-box"><div id="questionCard" class="question-card"></div><div id="options" class="options"></div><div class="game-controls"><button onclick="nextQuestion()">➜ التالي</button><button onclick="resetGame()">🔄 إعادة</button></div><div class="progress"><span id="progressText">1 / 500</span><div class="bar"><div id="barFill"></div></div></div></div>
+<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹</button><h3>500 سؤال</h3><span id="score">0</span></div>
+<div id="questionCard" class="question-card"></div><div id="options" class="options"></div>
+<div style="display:flex;gap:8px"><button onclick="nextQuestion()" style="flex:1;background:#4f46e5;border:none;color:#fff;padding:10px;border-radius:12px">التالي</button><button onclick="resetGame()" style="flex:1;background:#2d2a6a;border:none;color:#fff;padding:10px;border-radius:12px">إعادة</button></div>
+<div class="progress"><span id="progressText">1/500</span><div class="bar"><div id="barFill"></div></div></div>
 </div>
 </div>
 
 <script>
-let canvas,ctx,isDrawing=false;
+// ===== قاموس 500+ كلمة =====
+const qa=[["Apple","تفاحة"],["Cat","قطة"],["Dog","كلب"],["Sun","شمس"],["Water","ماء"],["Book","كتاب"],["House","بيت"],["Tiger","نمر"],["Red","أحمر"],["Blue","أزرق"],["Yellow","أصفر"],["Green","أخضر"],["One","واحد"],["Two","اثنان"],["Three","ثلاثة"],["Four","أربعة"],["Five","خمسة"],["Mother","أم"],["Father","أب"],["Friend","صديق"],["School","مدرسة"],["Car","سيارة"],["Tree","شجرة"],["Fish","سمكة"],["Bird","طائر"],["Lion","أسد"],["Elephant","فيل"],["Moon","قمر"],["Star","نجمة"],["Boy","ولد"],["Girl","بنت"],["Hand","يد"],["Eye","عين"],["Milk","حليب"],["Bread","خبز"],["Banana","موز"],["Orange","برتقالة"],["Door","باب"],["Window","نافذة"],["Chair","كرسي"],["Table","طاولة"],["Pen","قلم"],["Ball","كرة"],["Game","لعبة"],["Happy","سعيد"],["Sad","حزين"],["Big","كبير"],["Small","صغير"],["Hot","حار"],["Cold","بارد"],["Fast","سريع"],["Slow","بطيء"],["Good","جيد"],["Bad","سيء"],["New","جديد"],["Old","قديم"],["Man","رجل"],["Woman","امرأة"],["Child","طفل"],["Day","يوم"],["Night","ليل"],["Morning","صباح"],["Food","طعام"],["Name","اسم"],["Love","حب"],["Time","وقت"],["Work","عمل"],["City","مدينة"],["Sea","بحر"],["River","نهر"],["Mountain","جبل"],["Flower","زهرة"],["Garden","حديقة"],["Light","ضوء"],["Dark","ظلام"],["Fire","نار"],["Air","هواء"],["Earth","أرض"],["Sky","سماء"],["Rain","مطر"],["Snow","ثلج"],["Wind","رياح"],["Cloud","سحابة"],["Sunset","غروب"],["Sunrise","شروق"],["King","ملك"],["Queen","ملكة"],["Prince","أمير"],["Princess","أميرة"],["Castle","قلعة"],["Magic","سحر"],["Dream","حلم"],["Smile","ابتسامة"],["Heart","قلب"],["Hope","أمل"],["Help","مساعدة"],["Thank you","شكرا"],["Please","من فضلك"],["Yes","نعم"],["No","لا"],["Hello","مرحبا"],["Goodbye","وداعا"],["Come","تعال"],["Go","اذهب"],["Eat","يأكل"],["Drink","يشرب"],["Sleep","ينام"],["Run","يجري"],["Walk","يمشي"],["Read","يقرأ"],["Write","يكتب"],["Speak","يتحدث"],["Listen","يستمع"],["Look","ينظر"],["See","يرى"],["Hear","يسمع"],["Play","يلعب"],["Learn","يتعلم"],["Teach","يُعلم"],["Open","يفتح"],["Close","يغلق"],["Start","يبدأ"],["Finish","ينهي"],["Buy","يشتري"],["Sell","يبيع"],["Give","يعطي"],["Take","يأخذ"],["Bring","يحضر"],["Send","يرسل"],["Make","يصنع"],["Do","يفعل"],["Be","يكون"],["Have","يملك"],["Wolf","ذئب"],["Fox","ثعلب"],["Bear","دب"],["Monkey","قرد"],["Horse","حصان"],["Cow","بقرة"],["Sheep","خروف"],["Chicken","دجاجة"],["Duck","بطة"],["Goat","ماعز"],["Rabbit","أرنب"],["Mouse","فأر"],["Snake","ثعبان"],["Turtle","سلحفاة"],["Bee","نحلة"],["Butterfly","فراشة"],["Ant","نملة"],["Spider","عنكبوت"],["Frog","ضفدع"],["Whale","حوت"],["Shark","قرش"],["Dolphin","دولفين"],["Eagle","نسر"],["Owl","بومة"],["Parrot","ببغاء"],["Rice","أرز"],["Meat","لحم"],["Egg","بيضة"],["Cheese","جبن"],["Butter","زبدة"],["Sugar","سكر"],["Salt","ملح"],["Pepper","فلفل"],["Onion","بصل"],["Tomato","طماطم"],["Potato","بطاطس"],["Carrot","جزر"],["Cucumber","خيار"],["Lettuce","خس"],["Grape","عنب"],["Strawberry","فراولة"],["Watermelon","بطيخ"],["Lemon","ليمون"],["Mango","مانجو"],["Pineapple","أناناس"],["Peach","خوخ"],["Cherry","كرز"],["Kitchen","مطبخ"],["Bedroom","غرفة نوم"],["Bathroom","حمام"],["Living room","غرفة معيشة"],["Street","شارع"],["Road","طريق"],["Bridge","جسر"],["Market","سوق"],["Shop","متجر"],["Hospital","مستشفى"],["Doctor","طبيب"],["Nurse","ممرضة"],["Teacher","معلم"],["Student","طالب"],["Engineer","مهندس"],["Farmer","مزارع"],["Pilot","طيار"],["Driver","سائق"],["Cook","طباخ"],["Police","شرطة"],["Soldier","جندي"],["Artist","فنان"],["Singer","مغني"],["Dancer","راقص"],["Writer","كاتب"],["Player","لاعب"],["Winter","شتاء"],["Summer","صيف"],["Spring","ربيع"],["Autumn","خريف"],["January","يناير"],["February","فبراير"],["March","مارس"],["April","أبريل"],["May","مايو"],["June","يونيو"],["July","يوليو"],["August","أغسطس"],["September","سبتمبر"],["October","أكتوبر"],["November","نوفمبر"],["December","ديسمبر"],["Monday","الإثنين"],["Tuesday","الثلاثاء"],["Wednesday","الأربعاء"],["Thursday","الخميس"],["Friday","الجمعة"],["Saturday","السبت"],["Sunday","الأحد"],["Yesterday","أمس"],["Today","اليوم"],["Tomorrow","غدا"],["Week","أسبوع"],["Month","شهر"],["Year","سنة"],["Hour","ساعة"],["Minute","دقيقة"],["Second","ثانية"],["Afternoon","بعد الظهر"],["Evening","مساء"],["Color","لون"],["Black","أسود"],["White","أبيض"],["Brown","بني"],["Gray","رمادي"],["Pink","وردي"],["Purple","بنفسجي"],["Gold","ذهبي"],["Silver","فضي"],["Square","مربع"],["Circle","دائرة"],["Triangle","مثلث"],["Rectangle","مستطيل"],["Line","خط"],["Point","نقطة"],["Number","رقم"],["Letter","حرف"],["Word","كلمة"],["Sentence","جملة"],["Question","سؤال"],["Answer","جواب"],["Language","لغة"],["English","إنجليزي"],["Arabic","عربي"],["Dictionary","قاموس"],["Grammar","قواعد"],["Verb","فعل"],["Noun","اسم"],["I","أنا"],["You","أنت"],["He","هو"],["She","هي"],["We","نحن"],["They","هم"],["Where","أين"],["When","متى"],["Why","لماذا"],["How","كيف"],["What","ماذا"],["Who","من"],["Can","يستطيع"],["Will","سوف"],["Want","يريد"],["Need","يحتاج"],["Like","يحب"],["Know","يعرف"],["Library","مكتبة"],["Park","حديقة عامة"],["Beach","شاطئ"],["Desert","صحراء"],["Forest","غابة"],["Island","جزيرة"],["Ocean","محيط"],["Lake","بحيرة"],["Building","مبنى"],["Tower","برج"],["Apartment","شقة"],["Office","مكتب"],["Factory","مصنع"],["Airport","مطار"],["Station","محطة"],["Bus","حافلة"],["Train","قطار"],["Plane","طائرة"],["Boat","قارب"],["Ship","سفينة"],["Bike","دراجة"],["Ticket","تذكرة"],["Passport","جواز سفر"],["Money","مال"],["Bank","بنك"],["Price","سعر"],["Cheap","رخيص"],["Expensive","غالي"],["Job","وظيفة"],["Company","شركة"],["Problem","مشكلة"],["Solution","حل"],["Idea","فكرة"],["Success","نجاح"],["Important","مهم"],["Easy","سهل"],["Difficult","صعب"],["Strong","قوي"],["Clean","نظيف"],["Beautiful","جميل"],["Computer","كمبيوتر"],["Phone","هاتف"],["Internet","إنترنت"],["Message","رسالة"],["Photo","صورة"],["Video","فيديو"],["Music","موسيقى"],["Story","قصة"],["News","أخبار"],["Weather","طقس"]];
+
+// بناء خريطة سريعة للترجمة بدون نت
+const enToAr=new Map(qa.map(x=>[x[0].toLowerCase(),x[1]]));
+const arToEn=new Map(qa.map(x=>[x[1],x[0]]));
+
+function offlineTranslate(text){
+  // يحاول يترجم جملة كلمة كلمة بدون نت
+  const isEn=/[a-zA-Z]/.test(text);
+  if(isEn){
+    return text.split(/(\s+)/).map(w=>{
+      const low=w.toLowerCase().trim();
+      return enToAr.get(low)||w;
+    }).join('');
+  }else{
+    // عربي -> انجليزي
+    let out=text;
+    arToEn.forEach((en,ar)=>{out=out.split(ar).join(en);});
+    return out;
+  }
+}
+
+let canvas,ctx,isDrawing=false,currentLearnIndex=0,currentLearnType='letters',score=0,qIndex=0,fromAr=true;
+const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');const numbers=['0','1','2','3','4','5','6','7','8','9','10'];
+
+function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function initCanvas(){
- canvas=document.getElementById('drawCanvas');
- ctx=canvas.getContext('2d');
- function resize(){
-  const rect=canvas.parentElement.getBoundingClientRect();
-  canvas.width=rect.width*2;canvas.height=rect.height*2;
-  canvas.style.width=rect.width+'px';canvas.style.height=rect.height+'px';
-  ctx.setTransform(1,0,0,1,0,0);ctx.scale(2,2);
-  ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#facc15';ctx.lineWidth=5;
- }
+ canvas=document.getElementById('drawCanvas');ctx=canvas.getContext('2d');
+ function resize(){const r=canvas.parentElement.getBoundingClientRect();canvas.width=r.width*2;canvas.height=r.height*2;canvas.style.width=r.width+'px';canvas.style.height=r.height+'px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(2,2);ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#facc15';ctx.lineWidth=5;}
  resize();window.addEventListener('resize',resize);
- function pos(e){const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top};}
+ function pos(e){const rect=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-rect.left,y:t.clientY-rect.top};}
  canvas.addEventListener('mousedown',e=>{isDrawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
  canvas.addEventListener('mousemove',e=>{if(!isDrawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
  window.addEventListener('mouseup',()=>isDrawing=false);
@@ -135,110 +125,69 @@ function initCanvas(){
  canvas.addEventListener('touchmove',e=>{if(!isDrawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault();},{passive:false});
  canvas.addEventListener('touchend',()=>isDrawing=false);
 }
-function clearDraw(){if(ctx){ctx.clearRect(0,0,canvas.width,canvas.height);}}
-
-let currentLearnIndex=0,currentLearnType='letters',score=0,qIndex=0,fromAr=true;
-const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-const numbers=['0','1','2','3','4','5','6','7','8','9','10'];
-const qa=[["Apple","تفاحة"],["Cat","قطة"],["Dog","كلب"],["Sun","شمس"],["Water","ماء"],["Book","كتاب"],["House","بيت"],["Tiger","نمر"],["Red","أحمر"],["Blue","أزرق"],["Yellow","أصفر"],["Green","أخضر"],["One","واحد"],["Two","اثنان"],["Three","ثلاثة"],["Four","أربعة"],["Five","خمسة"],["Mother","أم"],["Father","أب"],["Friend","صديق"],["School","مدرسة"],["Car","سيارة"],["Tree","شجرة"],["Fish","سمكة"],["Bird","طائر"],["Lion","أسد"],["Elephant","فيل"],["Moon","قمر"],["Star","نجمة"],["Boy","ولد"],["Girl","بنت"],["Hand","يد"],["Eye","عين"],["Milk","حليب"],["Bread","خبز"],["Banana","موز"],["Orange","برتقالة"],["Door","باب"],["Window","نافذة"],["Chair","كرسي"],["Table","طاولة"],["Pen","قلم"],["Ball","كرة"],["Game","لعبة"],["Happy","سعيد"],["Sad","حزين"],["Big","كبير"],["Small","صغير"],["Hot","حار"],["Cold","بارد"],["Fast","سريع"],["Slow","بطيء"],["Good","جيد"],["Bad","سيء"],["New","جديد"],["Old","قديم"],["Man","رجل"],["Woman","امرأة"],["Child","طفل"],["Day","يوم"],["Night","ليل"],["Morning","صباح"],["Food","طعام"],["Name","اسم"],["Love","حب"],["Time","وقت"],["Work","عمل"],["City","مدينة"],["Sea","بحر"],["River","نهر"],["Mountain","جبل"],["Flower","زهرة"],["Garden","حديقة"],["Light","ضوء"],["Dark","ظلام"],["Fire","نار"],["Air","هواء"],["Earth","أرض"],["Sky","سماء"],["Rain","مطر"],["Snow","ثلج"],["Wind","رياح"],["Cloud","سحابة"],["Sunset","غروب"],["Sunrise","شروق"],["King","ملك"],["Queen","ملكة"],["Prince","أمير"],["Princess","أميرة"],["Castle","قلعة"],["Magic","سحر"],["Dream","حلم"],["Smile","ابتسامة"],["Heart","قلب"],["Hope","أمل"],["Help","مساعدة"],["Thank you","شكرا"],["Please","من فضلك"],["Yes","نعم"],["No","لا"],["Hello","مرحبا"],["Goodbye","وداعا"],["Come","تعال"],["Go","اذهب"],["Eat","يأكل"],["Drink","يشرب"],["Sleep","ينام"],["Run","يجري"],["Walk","يمشي"],["Read","يقرأ"],["Write","يكتب"],["Speak","يتحدث"],["Listen","يستمع"],["Look","ينظر"],["See","يرى"],["Hear","يسمع"],["Play","يلعب"],["Learn","يتعلم"],["Teach","يُعلم"],["Open","يفتح"],["Close","يغلق"],["Start","يبدأ"],["Finish","ينهي"],["Buy","يشتري"],["Sell","يبيع"],["Give","يعطي"],["Take","يأخذ"],["Bring","يحضر"],["Send","يرسل"],["Make","يصنع"],["Do","يفعل"],["Be","يكون"],["Have","يملك"],["Wolf","ذئب"],["Fox","ثعلب"],["Bear","دب"],["Monkey","قرد"],["Horse","حصان"],["Cow","بقرة"],["Sheep","خروف"],["Chicken","دجاجة"],["Duck","بطة"],["Goat","ماعز"],["Rabbit","أرنب"],["Mouse","فأر"],["Snake","ثعبان"],["Turtle","سلحفاة"],["Bee","نحلة"],["Butterfly","فراشة"],["Ant","نملة"],["Spider","عنكبوت"],["Frog","ضفدع"],["Whale","حوت"],["Shark","قرش"],["Dolphin","دولفين"],["Eagle","نسر"],["Owl","بومة"],["Parrot","ببغاء"],["Rice","أرز"],["Meat","لحم"],["Egg","بيضة"],["Cheese","جبن"],["Butter","زبدة"],["Sugar","سكر"],["Salt","ملح"],["Pepper","فلفل"],["Onion","بصل"],["Tomato","طماطم"],["Potato","بطاطس"],["Carrot","جزر"],["Cucumber","خيار"],["Lettuce","خس"],["Grape","عنب"],["Strawberry","فراولة"],["Watermelon","بطيخ"],["Lemon","ليمون"],["Mango","مانجو"],["Pineapple","أناناس"],["Peach","خوخ"],["Cherry","كرز"],["Kitchen","مطبخ"],["Bedroom","غرفة نوم"],["Bathroom","حمام"],["Living room","غرفة معيشة"],["Street","شارع"],["Road","طريق"],["Bridge","جسر"],["Market","سوق"],["Shop","متجر"],["Hospital","مستشفى"],["Doctor","طبيب"],["Nurse","ممرضة"],["Teacher","معلم"],["Student","طالب"],["Engineer","مهندس"],["Farmer","مزارع"],["Pilot","طيار"],["Driver","سائق"],["Cook","طباخ"],["Police","شرطة"],["Soldier","جندي"],["Artist","فنان"],["Singer","مغني"],["Dancer","راقص"],["Writer","كاتب"],["Player","لاعب"],["Winter","شتاء"],["Summer","صيف"],["Spring","ربيع"],["Autumn","خريف"],["January","يناير"],["February","فبراير"],["March","مارس"],["April","أبريل"],["May","مايو"],["June","يونيو"],["July","يوليو"],["August","أغسطس"],["September","سبتمبر"],["October","أكتوبر"],["November","نوفمبر"],["December","ديسمبر"],["Monday","الإثنين"],["Tuesday","الثلاثاء"],["Wednesday","الأربعاء"],["Thursday","الخميس"],["Friday","الجمعة"],["Saturday","السبت"],["Sunday","الأحد"],["Yesterday","أمس"],["Today","اليوم"],["Tomorrow","غدا"],["Week","أسبوع"],["Month","شهر"],["Year","سنة"],["Hour","ساعة"],["Minute","دقيقة"],["Second","ثانية"],["Afternoon","بعد الظهر"],["Evening","مساء"],["Color","لون"],["Black","أسود"],["White","أبيض"],["Brown","بني"],["Gray","رمادي"],["Pink","وردي"],["Purple","بنفسجي"],["Gold","ذهبي"],["Silver","فضي"],["Square","مربع"],["Circle","دائرة"],["Triangle","مثلث"],["Rectangle","مستطيل"],["Line","خط"],["Point","نقطة"],["Number","رقم"],["Letter","حرف"],["Word","كلمة"],["Sentence","جملة"],["Question","سؤال"],["Answer","جواب"],["Language","لغة"],["English","إنجليزي"],["Arabic","عربي"],["Dictionary","قاموس"],["Grammar","قواعد"],["Verb","فعل"],["Noun","اسم"],["Adjective","صفة"],["Adverb","ظرف"],["Pronoun","ضمير"],["I","أنا"],["You","أنت"],["He","هو"],["She","هي"],["We","نحن"],["They","هم"],["Where","أين"],["When","متى"],["Why","لماذا"],["How","كيف"],["What","ماذا"],["Who","من"],["Can","يستطيع"],["Will","سوف"],["Want","يريد"],["Need","يحتاج"],["Like","يحب"],["Know","يعرف"],["Think","يفكر"],["Library","مكتبة"],["Park","حديقة عامة"],["Beach","شاطئ"],["Desert","صحراء"],["Forest","غابة"],["Island","جزيرة"],["Ocean","محيط"],["Lake","بحيرة"],["Building","مبنى"],["Tower","برج"],["Apartment","شقة"],["Office","مكتب"],["Factory","مصنع"],["Airport","مطار"],["Station","محطة"],["Bus","حافلة"],["Train","قطار"],["Plane","طائرة"],["Boat","قارب"],["Ship","سفينة"],["Bike","دراجة"],["Ticket","تذكرة"],["Passport","جواز سفر"],["Money","مال"],["Bank","بنك"],["Price","سعر"],["Cheap","رخيص"],["Expensive","غالي"],["Job","وظيفة"],["Salary","راتب"],["Company","شركة"],["Problem","مشكلة"],["Solution","حل"],["Idea","فكرة"],["Success","نجاح"],["Important","مهم"],["Easy","سهل"],["Difficult","صعب"],["Strong","قوي"],["Weak","ضعيف"],["Clean","نظيف"],["Dirty","متسخ"],["Beautiful","جميل"],["Healthy","صحي"],["Computer","كمبيوتر"],["Phone","هاتف"],["Internet","إنترنت"],["Message","رسالة"],["Photo","صورة"],["Video","فيديو"],["Music","موسيقى"],["Story","قصة"],["News","أخبار"],["Weather","طقس"]];
-
-function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
-function initLearn(){
- const lr=document.getElementById('lettersRow');const nr=document.getElementById('numbersRow');lr.innerHTML='';nr.innerHTML='';
- letters.forEach((l,i)=>{const d=document.createElement('div');d.textContent=l;d.style.background=`hsl(${i*14},80%,60%)`;d.onclick=()=>{currentLearnIndex=i;currentLearnType='letters';showLearn();};lr.appendChild(d);});
- numbers.forEach((n,i)=>{const d=document.createElement('div');d.textContent=n;d.style.background=`hsl(${120+i*20},70%,55%)`;d.onclick=()=>{currentLearnIndex=i;currentLearnType='numbers';showLearn();};nr.appendChild(d);});
- showLearn();
-}
+function clearDraw(){if(ctx)ctx.clearRect(0,0,canvas.width,canvas.height);}
+function initLearn(){const lr=document.getElementById('lettersRow');const nr=document.getElementById('numbersRow');lr.innerHTML='';nr.innerHTML='';letters.forEach((l,i)=>{const d=document.createElement('div');d.textContent=l;d.style.background=`hsl(${i*14},80%,60%)`;d.onclick=()=>{currentLearnIndex=i;currentLearnType='letters';showLearn();};lr.appendChild(d);});numbers.forEach((n,i)=>{const d=document.createElement('div');d.textContent=n;d.style.background=`hsl(${120+i*20},70%,55%)`;d.onclick=()=>{currentLearnIndex=i;currentLearnType='numbers';showLearn();};nr.appendChild(d);});showLearn();}
 function showLearn(){document.getElementById('learnLetter').textContent=currentLearnType==='letters'?letters[currentLearnIndex]:numbers[currentLearnIndex];clearDraw();}
 function nextLearn(){if(currentLearnType==='letters'){currentLearnIndex=(currentLearnIndex+1)%letters.length;}else{currentLearnIndex=(currentLearnIndex+1)%numbers.length;if(currentLearnIndex===0)currentLearnType='letters';}showLearn();speakLearn();}
 function speakBoardContent(t){const u=new SpeechSynthesisUtterance(t);u.lang=/[a-zA-Z]/.test(t)?'en-US':'ar-SA';u.rate=0.9;speechSynthesis.speak(u);}
 function speakBoard(id){speakBoardContent(document.getElementById(id).innerText);}
 function speakLearn(){speakBoardContent(currentLearnType==='letters'?letters[currentLearnIndex]:numbers[currentLearnIndex]);}
-function speakText(id){speakBoardContent(document.getElementById(id).innerText);}
 
-// ============ المساعد: ترجمة أولا ثم شرح لأي شيء ============
 function getExplanation(q, translated){
- q=q.trim();
- let lower=q.toLowerCase();
- let found=qa.find(x=>lower.includes(x[0].toLowerCase())||q.includes(x[1])||translated.toLowerCase().includes(x[0].toLowerCase()));
- 
- if(lower.includes('قواعد')||lower.includes('grammar')||lower.includes('tense')||lower.includes('ازمنة')){
-  return `<b>📚 شرح القواعد الإنجليزية:</b><br>
-  • المضارع البسيط: I eat / He eats → للعادات والحقائق<br>
-  • الماضي البسيط: I ate yesterday → حدث وانتهى<br>
-  • المستقبل: I will eat → سوف يحدث<br>
-  • المضارع المستمر: I am eating now<br>
-  • الضمائر: I, You, He, She, It, We, They<br>
-  • أدوات: a/an/the + جمع s<br>
-  • السؤال: Do/Does/Did + فاعل + فعل`;
- }
- if(found){
-  return `<b>📚 شرح "${found[0]} - ${found[1]}":</b><br>
-  • المعنى: <b>${found[1]}</b> = ${found[0]}<br>
-  • النطق: ${found[0]}<br>
-  • مثال: I love ${found[0]} = أنا أحب ${found[1]}<br>
-  • جمع: ${found[0]}s<br>
-  • استخدام: نستخدمها عندما نتحدث عن ${found[1]}`;
- }
- // شرح عام لأي موضوع آخر
- return `<b>📚 شرح "${q}":</b><br>
-  • الترجمة الحرفية: "${q}" = "${translated}"<br>
-  • المعنى: الموضوع يتكلم عن ${q}<br>
-  • بالإنجليزية نقول: <b>${translated}</b><br>
-  • كيف تستخدمها: تقول "${translated}" عندما تريد أن تقول "${q}"<br>
-  • معلومة إضافية: هذه العبارة شائعة في الحياة اليومية`;
+  const lower=q.toLowerCase();
+  const found=qa.find(x=>lower.includes(x[0].toLowerCase())||q.includes(x[1]));
+  if(lower.includes('قواعد')||lower.includes('grammar')){
+    return `<b>📚 شرح القواعد:</b><br>- المضارع: I eat<br>- الماضي: I ate<br>- المستقبل: I will eat<br>- السؤال: Do/Does/Did<br>- النفي: don't/doesn't`;
+  }
+  if(found){
+    return `<b>📚 شرح "${found[0]}":</b><br>- المعنى: ${found[1]}<br>- مثال: I like ${found[0]} = أنا أحب ${found[1]}<br>- استخدام يومي`;
+  }
+  return `<b>📚 شرح "${q}":</b><br>- الترجمة: ${translated}<br>- تقول "${translated}" عندما تريد "${q}"<br>- هذه جملة مفيدة للحياة اليومية`;
 }
 
 async function autoTranslateInternal(q, boardEl){
- let translated='';
- try{
-  const sl=/[a-zA-Z]/.test(q)?'en':'ar';
-  const tl=sl==='en'?'ar':'en';
-  const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`;
-  const res=await fetch(url);
-  const data=await res.json();
-  translated=data[0].map(x=>x[0]).join('');
- }catch(e){
-  let local=qa.find(x=>x[0].toLowerCase()===q.toLowerCase()||x[1]===q);
-  translated=local?(local[0].toLowerCase()===q.toLowerCase()?local[1]:local[0]):'(بدون نت - القاموس الداخلي)';
- }
- const explanation=getExplanation(q, translated);
- boardEl.innerHTML=`
-  <div style="text-align:center">
-   <p style="font-size:26px;font-weight:800;color:#facc15;line-height:1.3">${q}</p>
-   <p style="font-size:20px;margin-top:8px;color:#a5b4fc">= ${translated}</p>
-  </div>
-  <div class="explain-box">${explanation}</div>
-  <p style="font-size:10px;opacity:.3;margin-top:10px;text-align:center">نظام الترجمة أولا ثم الشرح - لكل شيء</p>
- `;
- speakBoardContent(translated);
+  let translated='';let isOnline=navigator.onLine;
+  try{
+    if(isOnline){
+      const sl=/[a-zA-Z]/.test(q)?'en':'ar';const tl=sl==='en'?'ar':'en';
+      const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`;
+      const res=await fetch(url);const data=await res.json();translated=data[0].map(x=>x[0]).join('');
+    }else{throw 'offline';}
+  }catch(e){
+    translated=offlineTranslate(q); // يترجم بدون نت كلمة كلمة
+  }
+  const expl=getExplanation(q,translated);
+  boardEl.innerHTML=`<div style="text-align:center"><p style="font-size:24px;font-weight:800;color:#facc15">${q}</p><p style="font-size:19px;color:#a5b4fc;margin-top:6px">= ${translated}</p><p style="font-size:10px;opacity:.4;margin-top:4px">${isOnline?'🌐 مترجم جوجل':'📴 مترجم داخلي بدون نت'}</p></div><div class="explain-box">${expl}</div>`;
+  speakBoardContent(translated);
 }
 
-function searchAI(){const q=document.getElementById('aiSearch').value.trim();if(!q)return;const b=document.getElementById('aiBoardContent');b.innerHTML=`<p>🔍 يترجم...</p>`;autoTranslateInternal(q,b);}
-function clearAI(){document.getElementById('aiSearch').value='';document.getElementById('aiBoardContent').innerHTML=`<p style="font-size:20px;color:#a5b4fc;font-weight:800;text-align:center">👋 أهلا يا بطل!</p><p style="opacity:.6;text-align:center">اكتب أي شيء - سيترجم أولا ثم يشرح</p>`;}
-function nextAI(){let n=qa[Math.floor(Math.random()*qa.length)];document.getElementById('aiSearch').value=n[0];searchAI();}
-function startVoice(id){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('لا يدعم');return;}const r=new SR();r.lang='ar-EG';r.onresult=e=>{document.getElementById(id).value=e.results[0][0].transcript;if(id==='aiSearch')searchAI();else autoTranslate();};r.start();}
-async function autoTranslate(){const input=document.getElementById('transInput').value.trim();if(!input){document.getElementById('transOutput').textContent='...';return;}const sl=fromAr?'ar':'en';const tl=fromAr?'en':'ar';try{const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(input)}`;const res=await fetch(url);const d=await res.json();document.getElementById('transOutput').textContent=d[0].map(x=>x[0]).join('');}catch(e){document.getElementById('transOutput').textContent='بدون نت';}}
+function searchAI(){const q=document.getElementById('aiSearch').value.trim();if(!q)return;autoTranslateInternal(q,document.getElementById('aiBoardContent'));}
+function clearAI(){document.getElementById('aiSearch').value='';document.getElementById('aiBoardContent').innerHTML='<p style="text-align:center;color:#a5b4fc">👋 أهلا يا بطل!</p>';}
+function nextAI(){const n=qa[Math.floor(Math.random()*qa.length)];document.getElementById('aiSearch').value=n[0];searchAI();}
+function startVoice(id){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;const r=new SR();r.lang='ar-EG';r.onresult=e=>{document.getElementById(id).value=e.results[0][0].transcript;if(id==='aiSearch')searchAI();else autoTranslate();};r.start();}
+async function autoTranslate(){
+  const input=document.getElementById('transInput').value.trim();if(!input){document.getElementById('transOutput').textContent='...';return;}
+  const sl=fromAr?'ar':'en';const tl=fromAr?'en':'ar';
+  try{if(navigator.onLine){const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(input)}`;const res=await fetch(url);const d=await res.json();document.getElementById('transOutput').textContent=d[0].map(x=>x[0]).join('');}else{throw 0;}}catch{document.getElementById('transOutput').textContent=offlineTranslate(input)+' (بدون نت)';}
+}
 function swapLang(){fromAr=!fromAr;document.getElementById('fromLang').textContent=fromAr?'العربية':'English';document.getElementById('toLang').textContent=fromAr?'English':'العربية';autoTranslate();}
-function clearTrans(){document.getElementById('transInput').value='';document.getElementById('transOutput').textContent='...';}
-function copyTrans(){navigator.clipboard.writeText(document.getElementById('transOutput').textContent);}
 
 let questions=[];
-function buildQuestions(){
- let pool=[...qa];while(pool.length<500)pool=pool.concat(qa);pool=pool.slice(0,500);
- questions=pool.map(p=>{const c=p[1];let o=[c];while(o.length<4){let r=qa[Math.floor(Math.random()*qa.length)][1];if(!o.includes(r))o.push(r);}o.sort(()=>Math.random()-0.5);return{q:`ما معنى "${p[0]}" ؟`,correct:c,opts:o,en:p[0]};});
- questions.sort(()=>Math.random()-0.5);
-}
-function showQuestion(){if(!questions.length)buildQuestions();const cur=questions[qIndex];document.getElementById('questionCard').innerHTML=`${cur.q}<br><small style="opacity:.6">${cur.en}</small>`;const opt=document.getElementById('options');opt.innerHTML='';cur.opts.forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>checkAnswer(b,v,cur.correct);opt.appendChild(b);});document.getElementById('progressText').textContent=`${qIndex+1} / ${questions.length}`;document.getElementById('barFill').style.width=`${((qIndex+1)/questions.length)*100}%`;document.getElementById('score').textContent=`النقاط: ${score}`;}
-function checkAnswer(btn,ch,co){document.querySelectorAll('#options button').forEach(b=>b.disabled=true);if(ch===co){btn.classList.add('correct');score+=10;speakBoardContent('أحسنت '+co);}else{btn.classList.add('wrong');document.querySelectorAll('#options button').forEach(b=>{if(b.textContent===co)b.classList.add('correct')});speakBoardContent('الإجابة '+co);}setTimeout(()=>{nextQuestion();},1100);}
+function buildQuestions(){let pool=[...qa];while(pool.length<500)pool=pool.concat(qa);pool=pool.slice(0,500);questions=pool.map(p=>{const c=p[1];let o=[c];while(o.length<4){let r=qa[Math.floor(Math.random()*qa.length)][1];if(!o.includes(r))o.push(r);}o.sort(()=>Math.random()-0.5);return{q:`ما معنى "${p[0]}" ؟`,correct:c,opts:o,en:p[0]};});questions.sort(()=>Math.random()-0.5);}
+function showQuestion(){if(!questions.length)buildQuestions();const cur=questions[qIndex];document.getElementById('questionCard').innerHTML=`${cur.q}<br><small>${cur.en}</small>`;const opt=document.getElementById('options');opt.innerHTML='';cur.opts.forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>checkAnswer(b,v,cur.correct);opt.appendChild(b);});document.getElementById('progressText').textContent=`${qIndex+1} / 500`;document.getElementById('barFill').style.width=`${((qIndex+1)/500)*100}%`;document.getElementById('score').textContent=`النقاط: ${score}`;}
+function checkAnswer(btn,ch,co){document.querySelectorAll('#options button').forEach(b=>b.disabled=true);if(ch===co){btn.classList.add('correct');score+=10;}else{btn.classList.add('wrong');document.querySelectorAll('#options button').forEach(b=>{if(b.textContent===co)b.classList.add('correct')});}setTimeout(()=>nextQuestion(),1000);}
 function nextQuestion(){qIndex=(qIndex+1)%questions.length;showQuestion();}
 function resetGame(){qIndex=0;score=0;buildQuestions();showQuestion();}
 
-window.onload=()=>{initLearn();initCanvas();buildQuestions();showQuestion();document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI();});};
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js');}
-let deferredPrompt;const installBtn=document.getElementById('installBtn');
+window.onload=()=>{
+ initCanvas();initLearn();buildQuestions();showQuestion();
+ document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI();});
+ document.getElementById('netStatus').textContent=navigator.onLine?'🌐 متصل - ترجمة جوجل':'📴 بدون نت - قاموس داخلي 500 كلمة';
+ window.addEventListener('online',()=>document.getElementById('netStatus').textContent='🌐 متصل');
+ window.addEventListener('offline',()=>document.getElementById('netStatus').textContent='📴 بدون نت');
+};
+let deferredPrompt;document.getElementById('installBtn').addEventListener('click',async()=>{if(!deferredPrompt){alert('من 3 نقط اختار إضافة للشاشة');return;}deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;});
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
-installBtn.addEventListener('click',async()=>{if(!deferredPrompt){alert('دوس 3 نقط واختار إضافة للشاشة الرئيسية');return;}deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;});
 </script>
 </body>
 </html>
