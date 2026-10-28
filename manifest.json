@@ -1,8 +1,9 @@
 {
   "name": "English Pro - Smart Academy",
   "short_name": "English Pro",
-  "description": "تعلم الإنجليزية للأطفال - لوحة تعلم ومترجم وألعاب",
-  "start_url": "/",
+  "description": "تعلم الإنجليزية - لوحة تعلم ومترجم وألعاب",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#1a1848",
   "theme_color": "#1e1b4b",
