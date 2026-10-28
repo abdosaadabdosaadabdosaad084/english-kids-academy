@@ -1,14 +1,15 @@
 {
-  "name": "English Pro Academy - أكاديمية الإنجليزية الاحترافية",
-  "short_name": "EnglishPro",
-  "description": "تعلم الإنجليزية للصغار والكبار - 500 كلمة، ألعاب، ذكاء اصطناعي",
-  "start_url": "/",
+  "name": "English Pro Academy",
+  "short_name": "English Pro",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#6366f1",
-  "icons": [{
-    "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }]
+  "background_color": "#1e1b4b",
+  "theme_color": "#1e1b4b",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2232/2232688.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
