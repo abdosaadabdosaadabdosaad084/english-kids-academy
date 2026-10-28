@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>English Pro - Smart Academy</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e1b4b">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
@@ -74,7 +76,7 @@ body{background:#0f0e2e;color:#fff}
 <div class="app">
 <header class="top-header">
 <div class="logo-area"><div>🎓</div><div><h1>English Pro</h1><p>Smart Academy</p></div></div>
-<button class="install-btn">📱 ثبّت التطبيق</button>
+<button class="install-btn" id="installBtn">📱 ثبّت التطبيق</button>
 </header>
 <div id="homeScreen" class="screen active">
 <div class="welcome"><h2>اختر الخدمة</h2><p>ماذا تريد أن تتعلّم اليوم؟</p></div>
@@ -88,13 +90,13 @@ body{background:#0f0e2e;color:#fff}
 <div class="card trans-card" onclick="openScreen('translatorScreen')"><div style="font-size:28px;text-align:center">🌐 ↔️ 💬</div><p>عربي ↔ إنجليزي</p><h3>المترجم</h3></div>
 <div class="card games-card" onclick="openScreen('gamesScreen')"><div style="font-size:28px;text-align:center">🎮 🏆</div><p>تحديات • كلمات • نقاط</p><h3>الألعاب</h3></div>
 </div>
-<div class="footer">English Pro • Smart Academy</div>
+<div class="footer">English Pro • يعمل بدون نت</div>
 </div>
 <div id="assistantScreen" class="screen">
 <div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹ رجوع</button><h2>📚 المساعد الذكي</h2></div>
 <div class="assistant-box">
 <div class="search-row"><div class="search-input-wrap"><input id="aiSearch" type="text" placeholder="اسأل السبورة... النمر، تعالي، cat"></div><button class="icon-btn" onclick="searchAI()">🔍</button><button class="icon-btn" onclick="startVoice('aiSearch')">🎤</button></div>
-<div class="status-line"><span class="dot"></span> السبورة جاهزة</div>
+<div class="status-line"><span class="dot"></span> السبورة جاهزة - يعمل بدون نت</div>
 <div id="aiBoard" class="blackboard"><div class="board-content" id="aiBoardContent"><p class="welcome-text">👋 أهلا يا بطل!</p><p class="hint-text">اكتب أي كلمة فوق</p></div></div>
 <div class="controls"><button onclick="clearAI()">🧹 مسح</button><button onclick="translateOnly()">🔊 ترجمة فقط</button><button onclick="speakBoard('aiBoardContent')">🔊 نطق</button><button onclick="nextAI()">➜ التالي</button></div>
 </div>
@@ -112,9 +114,9 @@ body{background:#0f0e2e;color:#fff}
 <div class="lang-switch"><span id="fromLang">العربية</span><button onclick="swapLang()">⇄</button><span id="toLang">English</span></div>
 <textarea id="transInput" placeholder="اكتب نص للترجمة..." oninput="autoTranslate()"></textarea>
 <div class="trans-actions"><button onclick="startVoice('transInput')">🎤 صوت</button><button onclick="autoTranslate()">🔍 ترجم</button><button onclick="clearTrans()">🧹 مسح</button></div>
-<div id="transOutput" class="trans-output">الترجمة ستظهر هنا...</div>
+<div id="transOutput" class="trans-output">الترجمة ستظهر هنا... (يعمل بدون نت بـ 100 كلمة داخلية)</div>
 <div class="trans-actions"><button onclick="speakText('transOutput')">🔊 نطق</button><button onclick="copyTrans()">📋 نسخ</button></div>
-<p class="powered">مُدار بواسطة Google Translate داخلياً - بدون فتح تبويب</p>
+<p class="powered">بدون نت: قاموس داخلي • بإنترنت: Google Translate داخلياً</p>
 </div>
 </div>
 <div id="gamesScreen" class="screen">
@@ -139,12 +141,12 @@ function speakBoard(id){speakBoardContent(document.getElementById(id).innerText)
 function speakText(id){speakBoardContent(document.getElementById(id).innerText);}
 let aiHistory=[];
 function searchAI(){const q=document.getElementById('aiSearch').value.trim();if(!q)return;const board=document.getElementById('aiBoardContent');board.innerHTML=`<p>🔍 تبحث عن: <b>${q}</b></p><p class="hint-text">جاري الترجمة...</p>`;autoTranslateInternal(q,board);aiHistory.push(q);}
-async function autoTranslateInternal(q,boardEl){try{const sl=/[a-zA-Z]/.test(q)?'en':'ar';const tl=sl==='en'?'ar':'en';const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');boardEl.innerHTML=`<p style="font-size:28px;font-weight:800;color:#facc15">${q}</p><p style="font-size:22px;margin-top:10px;color:#a5b4fc">= ${trans}</p><p class="hint-text" style="margin-top:12px">ترجمة فقط</p>`;speakBoardContent(trans);}catch(e){boardEl.innerHTML=`<p>${q}</p><p>= ${dictionary[q.toUpperCase()]||'ترجمة غير متاحة حاليا'}</p>`;}}
+async function autoTranslateInternal(q,boardEl){try{const sl=/[a-zA-Z]/.test(q)?'en':'ar';const tl=sl==='en'?'ar':'en';const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');boardEl.innerHTML=`<p style="font-size:28px;font-weight:800;color:#facc15">${q}</p><p style="font-size:22px;margin-top:10px;color:#a5b4fc">= ${trans}</p><p class="hint-text" style="margin-top:12px">ترجمة فقط</p>`;speakBoardContent(trans);}catch(e){let local=qa.find(x=>x[0].toLowerCase()===q.toLowerCase()||x[1]===q);if(local){let t=local[0].toLowerCase()===q.toLowerCase()?local[1]:local[0];boardEl.innerHTML=`<p style="font-size:28px;font-weight:800;color:#facc15">${q}</p><p style="font-size:22px;margin-top:10px;color:#a5b4fc">= ${t} (بدون نت)</p>`;speakBoardContent(t);}else{boardEl.innerHTML=`<p>${q}</p><p>= ${dictionary[q.toUpperCase()]||'غير متصل - جرب كلمة من القاموس' }</p><p class="hint-text">يعمل بدون نت بـ 100 كلمة</p>`;}}}
 function clearAI(){document.getElementById('aiSearch').value='';document.getElementById('aiBoardContent').innerHTML=`<p class="welcome-text">👋 أهلا يا بطل!</p><p class="hint-text">اكتب أي كلمة فوق</p>`;}
 function translateOnly(){const q=document.getElementById('aiSearch').value;if(q)autoTranslateInternal(q,document.getElementById('aiBoardContent'));}
 function nextAI(){let next=qa[Math.floor(Math.random()*qa.length)];document.getElementById('aiSearch').value=next[0];searchAI();}
 function startVoice(inputId){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('المتصفح لا يدعم المايك');return;}const rec=new SR();rec.lang='ar-EG';rec.onresult=e=>{document.getElementById(inputId).value=e.results[0][0].transcript;if(inputId==='aiSearch')searchAI();else autoTranslate();};rec.start();}
-async function autoTranslate(){const input=document.getElementById('transInput').value.trim();if(!input){document.getElementById('transOutput').textContent='الترجمة ستظهر هنا...';return;}const sl=fromAr?'ar':'en';const tl=fromAr?'en':'ar';try{const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(input)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');document.getElementById('transOutput').textContent=trans;}catch(e){document.getElementById('transOutput').textContent='خطأ في الاتصال';}}
+async function autoTranslate(){const input=document.getElementById('transInput').value.trim();if(!input){document.getElementById('transOutput').textContent='الترجمة ستظهر هنا...';return;}const sl=fromAr?'ar':'en';const tl=fromAr?'en':'ar';try{const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(input)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');document.getElementById('transOutput').textContent=trans;}catch(e){let local=qa.find(x=>input.toLowerCase().includes(x[0].toLowerCase())||input.includes(x[1]));if(local){document.getElementById('transOutput').textContent=local[1]+' (بدون نت)';}else{document.getElementById('transOutput').textContent='بدون نت - جرب كلمات بسيطة مثل cat, dog';}}}
 function swapLang(){fromAr=!fromAr;document.getElementById('fromLang').textContent=fromAr?'العربية':'English';document.getElementById('toLang').textContent=fromAr?'English':'العربية';autoTranslate();}
 function clearTrans(){document.getElementById('transInput').value='';document.getElementById('transOutput').textContent='الترجمة ستظهر هنا...';}
 function copyTrans(){navigator.clipboard.writeText(document.getElementById('transOutput').textContent);alert('تم النسخ');}
@@ -155,6 +157,20 @@ function checkAnswer(btn,chosen,correct){const buttons=document.querySelectorAll
 function nextQuestion(){qIndex=(qIndex+1)%questions.length;showQuestion();}
 function resetGame(){qIndex=0;score=0;buildQuestions();showQuestion();}
 window.onload=()=>{initLearn();buildQuestions();showQuestion();document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI()});};
+// PWA - تثبيت على الشاشة + بدون نت
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(()=>console.log('SW ready')).catch(()=>console.log('SW fail'));}
+let deferredPrompt;const installBtn=document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;installBtn.style.display='block';});
+installBtn.addEventListener('click',async()=>{
+  if(!deferredPrompt){
+    alert('للتثبيت: دوس 3 نقط فوق في المتصفح واختار "إضافة إلى الشاشة الرئيسية" أو Add to Home screen');
+    return;
+  }
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt=null;
+  installBtn.style.display='none';
+});
 </script>
 </body>
 </html>
