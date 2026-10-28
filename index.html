@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Pro Academy - Smart Board</title>
+<title>English Pro Academy</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1e1b4b">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
@@ -14,63 +14,48 @@
   <div class="logo"><span>🎓</span><div><b>English Pro</b><small>Smart Academy</small></div></div>
   <button id="installBtn" class="install-btn">📲 ثبّت التطبيق</button>
 </header>
-<nav class="main-nav">
-  <button class="nav-btn active" data-tab="board">📚 السبورة</button>
-  <button class="nav-btn" data-tab="translator">🌐 المترجم</button>
-  <button class="nav-btn" data-tab="games">🎮 الألعاب</button>
-  <button class="nav-btn" data-tab="letters">🔤 الحروف</button>
-</nav>
-<main>
-<section id="tab-board" class="tab active">
+
+<main class="one-page">
+<!-- السبورة -->
+<section class="section-card">
+  <h2>📚 السبورة الذكية</h2>
   <div class="search-box">
-    <input id="searchInput" type="text" placeholder="اسأل السبورة... تعالى، مكان، What is cat?" />
-    <button id="searchBtn">🔍 ابحث</button>
+    <input id="searchInput" type="text" placeholder="اسأل السبورة... النمر، تعالى، cat" />
+    <button id="searchBtn">🔍</button>
     <button id="voiceBtn">🎤</button>
   </div>
   <div class="smart-board">
     <div class="board-header">
-      <span>👨‍🏫</span>
-      <span id="teacherStatus">السبورة الذكية جاهزة</span>
+      <span>👨‍🏫</span><span id="teacherStatus">السبورة جاهزة</span>
       <span class="online-dot" id="onlineDot"></span>
     </div>
     <div id="boardContent" class="board-content">
-      <div class="welcome-msg">
-        <h2>أهلا يا بطل! 👋</h2>
-        <p>أنا السبورة الذكية</p>
-        <div class="quick-asks">
-          <span onclick="askBoard('تعالى')">تعالى</span>
-          <span onclick="askBoard('مكان')">مكان</span>
-        </div>
-      </div>
+      <div class="welcome-msg"><h3>أهلا يا بطل! 👋</h3><p>اكتب أي كلمة فوق</p></div>
     </div>
     <div class="board-tools">
-      <button onclick="speakBoard()">🔊 استماع</button>
+      <button onclick="speakBoard()">🔊 ترجمة فقط</button>
       <button onclick="clearBoard()">🧹 مسح</button>
-      <button onclick="saveBoard()">💾 حفظ</button>
     </div>
   </div>
-  <div class="history-box">
-    <h4>📚 محفوظ بدون نت <span id="savedCount">0</span></h4>
-    <div id="historyList" class="history-list"></div>
-  </div>
 </section>
-<section id="tab-translator" class="tab">
+
+<!-- المترجم -->
+<section class="section-card">
+  <h2>🌐 المترجم الفوري</h2>
   <div class="translator-card">
     <div class="trans-header">
       <select id="fromLang"><option value="ar">عربي</option><option value="en">English</option></select>
       <button id="swapBtn">🔄</button>
       <select id="toLang"><option value="en">English</option><option value="ar">عربي</option></select>
     </div>
-    <textarea id="transInput" placeholder="اكتب للترجمة الفورية..."></textarea>
+    <textarea id="transInput" placeholder="اكتب للترجمة..."></textarea>
     <div id="transOutput" class="trans-output">الترجمة ستظهر هنا...</div>
-    <div class="trans-actions">
-      <button onclick="speakTrans('input')">🔊 استماع</button>
-      <button onclick="speakTrans('output')">🔊 الترجمة</button>
-      <button onclick="copyTrans()">📋 نسخ</button>
-    </div>
   </div>
 </section>
-<section id="tab-games" class="tab">
+
+<!-- الألعاب -->
+<section class="section-card">
+  <h2>🎮 الألعاب</h2>
   <div class="game-stats">
     <span>✅ <b id="correctCount">0</b></span>
     <span>❌ <b id="wrongCount">0</b></span>
@@ -82,12 +67,15 @@
   </div>
   <button class="next-btn" onclick="nextGame()">التالي ⏭️</button>
 </section>
-<section id="tab-letters" class="tab">
-  <h3>🔤 الحروف - اضغط لتسمع</h3>
+
+<!-- الحروف والأرقام - نفس المقاس -->
+<section class="section-card">
+  <h2>🔤 الحروف - اضغط لتسمع</h2>
   <div id="lettersGrid" class="letters-grid"></div>
-  <h3 style="margin-top:20px">🔢 الأرقام حتى 10</h3>
-  <div id="numbersGrid" class="numbers-grid"></div>
+  <h3 style="margin:16px 0 8px">🔢 الأرقام حتى 10</h3>
+  <div id="numbersGrid" class="letters-grid"></div>
 </section>
+
 </main>
 <div id="toast" class="toast"></div>
 <script src="app.js"></script>
