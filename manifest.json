@@ -1,27 +1,12 @@
 {
-  "name": "English Pro - Smart Academy",
+  "name": "English Pro V12.1",
   "short_name": "English Pro",
-  "description": "تعلم الإنجليزية - لوحة تعلم ومترجم وألعاب",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "#1a1848",
-  "theme_color": "#1e1b4b",
-  "orientation": "portrait",
-  "lang": "ar",
-  "dir": "rtl",
+  "background_color": "#0f0e2e",
+  "theme_color": "#0f0e2e",
   "icons": [
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }
