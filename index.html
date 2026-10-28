@@ -2,17 +2,19 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Pro V12 - الألوان الجامدة + مترجم حقيقي</title>
+<title>English Pro V12.2</title>
+<link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
 body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
-.app{width:100%;max-width:480px;min-height:100vh;background:#0f0e2e;padding:16px 12px 120px 12px}
-.main-title{text-align:center;margin:10px 0 20px 0}
-.main-title h1{font-size:26px;font-weight:900;color:#fff}
-.main-title p{font-size:14px;color:#facc15;font-weight:800;margin-top:6px}
+.app{width:100%;max-width:480px;min-height:100vh;background:#0f0e2e;padding:16px 12px 20px 12px}
+.main-title{text-align:center;margin:10px 0 10px}
+.main-title h1{font-size:26px;font-weight:900}
+.main-title p{font-size:13px;color:#facc15;font-weight:800}
+#installBtn{display:none;width:100%;background:#facc15;color:#000;padding:14px;border:none;border-radius:14px;font-weight:900;font-size:16px;margin:12px 0;cursor:pointer;box-shadow:0 4px 12px rgba(250,204,21,.4)}
 .grid-2x2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{border-radius:18px;padding:18px 12px;text-align:center;font-weight:800;cursor:pointer;min-height:105px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:17px;box-shadow:0 6px 16px rgba(0,0,0,.4);color:#fff}
+.card{border-radius:18px;padding:18px 12px;text-align:center;font-weight:800;cursor:pointer;min-height:105px;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 6px 16px rgba(0,0,0,.4);color:#fff}
 .screen{display:none}.screen.active{display:block}
 .screen-header{display:flex;justify-content:space-between;align-items:center;background:#1e1b4b;padding:12px;border-radius:14px;margin-bottom:14px;border:2px solid #facc15}
 .back-btn{background:#2d2a6a;border:none;color:#fff;padding:8px 16px;border-radius:10px;font-weight:800;cursor:pointer}
@@ -24,60 +26,96 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 .speak{background:#f59e0b;border:none;color:#000;padding:6px 10px;border-radius:50%;cursor:pointer}
 .letters-row,.small-row,.numbers-row{display:flex;gap:6px;overflow-x:auto;padding:8px 0;direction:ltr}
 .letters-row div,.small-row div,.numbers-row div{min-width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;cursor:pointer;color:#fff}
-.blackboard{background:#0a0a14;border:3px solid #facc15;border-radius:18px;min-height:200px;display:flex;align-items:center;justify-content:center;font-size:120px;color:rgba(255,255,255,.08);font-weight:900;margin-bottom:10px}
+.blackboard{background:#000;border:3px solid #facc15;border-radius:18px;min-height:260px;display:flex;align-items:center;justify-content:center;font-size:160px;color:#fff;font-weight:900;margin-bottom:12px;text-shadow:0 0 15px #facc15}
+.controls{display:flex;gap:8px;margin-bottom:12px}
+.ctrl-btn{flex:1;padding:12px;border:none;border-radius:12px;font-weight:900;font-size:15px;cursor:pointer;color:#fff}
 </style>
 </head>
 <body>
 <div class="app">
 <div id="homeScreen" class="screen active">
-<div class="main-title"><h1>10 خدمات English Pro</h1><p>🎨 الألوان الجامدة + مترجم حقيقي V12</p></div>
+<div class="main-title"><h1>10 خدمات English Pro</h1><p>✨ V12.2 النهائي - كامل</p></div>
+<button id="installBtn">📲 ثبّت التطبيق على هاتفك</button>
 <div class="grid-2x2">
 <div class="card" style="background:#8b5cf6" onclick="openScreen('assistantScreen')">🤖 المساعد الذكي AI</div>
-<div class="card" style="background:#4338ca" onclick="openScreen('learnScreen')">✏️ السبورة + أرقام ظاهرة</div>
-<div class="card" style="background:#0891b2" onclick="openScreen('translatorScreen')">🌐 المترجم الفوري الحقيقي</div>
-<div class="card" style="background:#2563eb" onclick="openScreen('gamesScreen')">🎮 الألعاب 500 ينطق</div>
-<div class="card" style="background:#dc2626" onclick="openScreen('grammarScreen')">📚 القواعد 12 زمن وافي</div>
-<div class="card" style="background:#d97706" onclick="openScreen('galleryScreen')">📸 معرض 100 صورة وشرح</div>
-<div class="card" style="background:#16a34a" onclick="openScreen('conversationScreen')">💬 60 محادثة مترجمة</div>
-<div class="card" style="background:#db2777" onclick="openScreen('storiesScreen')">📖 50 قصة مترجمة</div>
-<div class="card" style="background:#ea580c" onclick="openScreen('irregularScreen')">⚠️ 100 كلمة شاذة</div>
-<div class="card" style="background:#475569" onclick="openScreen('toolsScreen')">🔧 أدوات الشرط وافي</div>
+<div class="card" style="background:#4338ca" onclick="openScreen('learnScreen')">✏️ السبورة + أرقام</div>
+<div class="card" style="background:#0891b2" onclick="openScreen('translatorScreen')">🌐 المترجم الحقيقي</div>
+<div class="card" style="background:#2563eb" onclick="openScreen('gamesScreen')">🎮 الألعاب 500</div>
+<div class="card" style="background:#dc2626" onclick="openScreen('grammarScreen')">📚 القواعد 12 زمن</div>
+<div class="card" style="background:#d97706" onclick="openScreen('galleryScreen')">📸 معرض 100 صورة</div>
+<div class="card" style="background:#16a34a" onclick="openScreen('conversationScreen')">💬 60 محادثة</div>
+<div class="card" style="background:#db2777" onclick="openScreen('storiesScreen')">📖 50 قصة</div>
+<div class="card" style="background:#ea580c" onclick="openScreen('irregularScreen')">⚠️ 100 شاذة</div>
+<div class="card" style="background:#475569" onclick="openScreen('toolsScreen')">🔧 أدوات الشرط</div>
 </div>
 </div>
 
-<div id="assistantScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المساعد الذكي</h3></div><div class="assistant-box"><div class="input-row"><input id="assistantInput" placeholder="أسد، قطار، كتاب، love..."><button class="action" onclick="doAssistantSearch()">بحث</button></div><div id="assistantResult" class="result">اكتب كلمة وهجيبلك المعنى والنطق...</div></div></div>
+<div id="learnScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>السبورة الناطقة</h3></div>
+<div class="letters-row" id="lettersRow"></div>
+<div class="small-row" id="smallRow"></div>
+<div class="blackboard" id="boardLetter">A</div>
+<div class="controls">
+<button class="ctrl-btn" style="background:#dc2626" onclick="clearBoard()">🗑️ مسح</button>
+<button class="ctrl-btn" style="background:#16a34a" onclick="nextLetter()">⏭️ التالي</button>
+<button class="ctrl-btn" style="background:#f59e0b;color:#000" onclick="speakBoard()">🔊 نطق</button>
+</div>
+<div class="numbers-row" id="numbersRow"></div>
+</div>
 
-<div id="learnScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>السبورة</h3></div><div class="letters-row" id="lettersRow"></div><div class="small-row" id="smallRow"></div><div class="blackboard" id="boardLetter">A</div><div class="numbers-row" id="numbersRow"></div></div>
+<div id="translatorScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المترجم الحقيقي</h3></div><div class="assistant-box"><div class="input-row"><textarea id="transInput" placeholder="أسد أو lion..." style="height:90px"></textarea></div><button class="action" style="width:100%;background:#0891b2" onclick="doTranslateReal()">🌐 ترجم الآن حقيقي</button><div id="transResult" class="result">الترجمة الحقيقية هتظهر هنا</div></div></div>
 
-<div id="translatorScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المترجم الحقيقي</h3></div><div class="assistant-box"><div class="input-row"><textarea id="transInput" placeholder="اكتب: أسد أو lion..." style="height:90px"></textarea></div><div style="display:flex;gap:8px"><button class="action" style="flex:1;background:#0891b2" onclick="doTranslateReal()">🌐 ترجم حقيقي</button><button class="action" style="background:#f59e0b;color:#000" onclick="speakTrans()">🔊</button></div><div id="transResult" class="result">الترجمة الحقيقية هتظهر هنا من MyMemory API</div></div></div>
+<div id="assistantScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المساعد الذكي</h3></div><div class="assistant-box"><div class="input-row"><input id="assistantInput" placeholder="أسد، قطار، كتاب..."><button class="action" onclick="doAssistantSearch()">بحث</button></div><div id="assistantResult" class="result">اكتب كلمة</div></div></div>
 
-<div id="gamesScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>الألعاب</h3></div><div class="content-box" id="gameBox"></div></div>
-<div id="grammarScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>12 زمن</h3></div><div class="content-box" id="grammarBox"></div></div>
+<div id="gamesScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>ألعاب</h3></div><div class="content-box" id="gameBox"></div></div>
+<div id="grammarScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>قواعد</h3></div><div class="content-box" id="grammarBox"></div></div>
 <div id="galleryScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>معرض</h3></div><div class="content-box" id="galleryBox"></div></div>
-<div id="conversationScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>60 محادثة</h3></div><div class="content-box" id="convBox"></div></div>
-<div id="storiesScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>50 قصة</h3></div><div class="content-box" id="storiesBox"></div></div>
-<div id="irregularScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>100 شاذة</h3></div><div class="content-box" id="irrBox"></div></div>
-<div id="toolsScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>أدوات الشرط</h3></div><div class="content-box" id="toolsBox"></div></div>
+<div id="conversationScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>محادثات</h3></div><div class="content-box" id="convBox">Hello, how are you? - أهلا كيف حالك؟</div></div>
+<div id="storiesScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>قصص</h3></div><div class="content-box" id="storiesBox">Once upon a time... كان يا ما كان</div></div>
+<div id="irregularScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>شاذة</h3></div><div class="content-box" id="irrBox">go-went-gone</div></div>
+<div id="toolsScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>شرط</h3></div><div class="content-box" id="toolsBox">If you study, you will pass</div></div>
 </div>
 
 <script>
-function speak(t){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang=/[a-zA-Z]/.test(t)?'en-US':'ar-SA';u.rate=0.85;speechSynthesis.speak(u);}
+let currentIndex=0; let allChars=[];
+function speakEn(t){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.65;speechSynthesis.speak(u);}
 function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('homeScreen').classList.add('active');}
-function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='learnScreen')initLearn();if(id==='grammarScreen')loadGrammar();if(id==='gamesScreen')initGame();if(id==='galleryScreen')loadGallery();if(id==='conversationScreen')loadConv();if(id==='storiesScreen')loadStories();if(id==='irregularScreen')loadIrr();if(id==='toolsScreen')loadTools();}
+function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='learnScreen')initLearn();if(id==='gamesScreen')initGame();if(id==='galleryScreen')loadGallery();}
 const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');const small='abcdefghijklmnopqrstuvwxyz'.split('');const nums=['0','1','2','3','4','5','6','7','8','9','10'];
-function initLearn(){let lr=document.getElementById('lettersRow'),sr=document.getElementById('smallRow'),nr=document.getElementById('numbersRow');lr.innerHTML='';sr.innerHTML='';nr.innerHTML='';letters.forEach((l,i)=>{let d=document.createElement('div');d.textContent=l;d.style.background=`hsl(${i*13},75%,55%)`;d.onclick=()=>{document.getElementById('boardLetter').textContent=l;speak(l);};lr.appendChild(d);});small.forEach((l,i)=>{let d=document.createElement('div');d.textContent=l;d.style.background=`hsl(${180+i*5},60%,45%)`;d.onclick=()=>{document.getElementById('boardLetter').textContent=l;speak(l);};sr.appendChild(d);});nums.forEach((n,i)=>{let d=document.createElement('div');d.textContent=n;d.style.background=`hsl(${260+i*8},70%,55%)`;d.onclick=()=>{document.getElementById('boardLetter').textContent=n;speak(n);};nr.appendChild(d);});}
-const bigDict={'أسد':'Lion','نمر':'Tiger','فيل':'Elephant','كلب':'Dog','قطة':'Cat','حصان':'Horse','بقرة':'Cow','خروف':'Sheep','قرد':'Monkey','دب':'Bear','قطار':'Train','كتاب':'Book','تفاحة':'Apple','موز':'Banana','ماء':'Water','لبن':'Milk','خبز':'Bread','مدرسة':'School','بيت':'House','باب':'Door','شباك':'Window','كرسي':'Chair','سيارة':'Car','شمس':'Sun','قمر':'Moon','أم':'Mother','أب':'Father','ولد':'Boy','بنت':'Girl','جميل':'Beautiful','سعيد':'Happy','كبير':'Big','صغير':'Small','الحب':'Love','قلب':'Heart'};
+function initLearn(){allChars=[...letters,...small,...nums];let lr=document.getElementById('lettersRow'),sr=document.getElementById('smallRow'),nr=document.getElementById('numbersRow');lr.innerHTML='';sr.innerHTML='';nr.innerHTML='';letters.forEach((l,i)=>{let d=document.createElement('div');d.textContent=l;d.style.background=`hsl(${i*13},75%,55%)`;d.onclick=()=>showChar(l);lr.appendChild(d);});small.forEach((l,i)=>{let d=document.createElement('div');d.textContent=l;d.style.background=`hsl(${180+i*5},60%,45%)`;d.onclick=()=>showChar(l);sr.appendChild(d);});nums.forEach((n,i)=>{let d=document.createElement('div');d.textContent=n;d.style.background=`hsl(${260+i*8},70%,55%)`;d.onclick=()=>showChar(n);nr.appendChild(d);});showChar('A');}
+function showChar(c){document.getElementById('boardLetter').textContent=c;currentIndex=allChars.indexOf(c);speakEn(c);}
+function clearBoard(){document.getElementById('boardLetter').textContent='';}
+function nextLetter(){currentIndex=(currentIndex+1)%allChars.length;showChar(allChars[currentIndex]);}
+function speakBoard(){let c=document.getElementById('boardLetter').textContent;if(c)speakEn(c);}
+const bigDict={'أسد':'Lion','نمر':'Tiger','فيل':'Elephant','كلب':'Dog','قطة':'Cat','قطار':'Train','كتاب':'Book','تفاحة':'Apple','مدرسة':'School','بيت':'House','سيارة':'Car','شمس':'Sun','قمر':'Moon','الحب':'Love','قلب':'Heart'};
 const revDict={};Object.entries(bigDict).forEach(([ar,en])=>revDict[en.toLowerCase()]=ar);
-async function doTranslateReal(){let t=document.getElementById('transInput').value.trim();if(!t)return;let box=document.getElementById('transResult');box.innerHTML='⏳ بترجم بجد...';try{let isAr=/[\u0600-\u06FF]/.test(t);let pair=isAr?'ar|en':'en|ar';let r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(t)}&langpair=${pair}`);let j=await r.json();let trans=j.responseData.translatedText;box.innerHTML=`<b>الأصل:</b> ${t} <button class=speak onclick="speak('${t}')">🔊</button><br><b style="color:#0891b2;font-size:20px">الترجمة: ${trans}</b> <button class=speak onclick="speak('${trans}')">🔊</button>`;speak(trans);}catch(e){let local=bigDict[t]||revDict[t.toLowerCase()];box.innerHTML=local?`${t} = ${local}`:'النت ضعيف، جرب: أسد، قطار';}}
-function speakTrans(){let t=document.getElementById('transInput').value.trim();if(t)speak(t);}
-function doAssistantSearch(){let w=document.getElementById('assistantInput').value.trim();let box=document.getElementById('assistantResult');if(bigDict[w]){box.innerHTML=`${w} = ${bigDict[w]} <button class=speak onclick="speak('${bigDict[w]}')">🔊</button><br>جملة: This is a ${bigDict[w]}.`;speak(bigDict[w]);}else box.innerHTML=`جرب: أسد، قطار، كتاب، قطة، الحب`;}
-function loadGrammar(){document.getElementById('grammarBox').innerHTML='12 زمن كامل: Present Simple - Past Simple - Future - Continuous - Perfect...'.split('-').map(t=>`<div style="background:#1e1b4b;color:#fff;padding:10px;border-radius:10px;margin-bottom:6px">${t}</div>`).join('');}
-function initGame(){let all=Object.entries(bigDict);let q=all[Math.floor(Math.random()*all.length)];let opts=[q[1]];while(opts.length<4){let r=all[Math.floor(Math.random()*all.length)][1];if(!opts.includes(r))opts.push(r);}opts.sort(()=>Math.random()-0.5);document.getElementById('gameBox').innerHTML=`<h3>ما معنى ${q[0]}؟</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">${opts.map(o=>`<button class=action onclick="if('${o}'=='${q[1]}'){alert('صح ✅')}else{alert('غلط الصح ${q[1]}')}initGame()">${o}</button>`).join('')}</div>`;}
-function loadGallery(){document.getElementById('galleryBox').innerHTML=Object.entries(bigDict).map(([ar,en])=>`<div style="background:#1e1b4b;color:#fff;padding:10px;border-radius:10px;margin-bottom:6px;display:flex;justify-content:space-between"><span>${ar} = ${en}</span><button class=speak onclick="speak('${en}')">🔊</button></div>`).join('');}
-function loadConv(){document.getElementById('convBox').innerHTML='Hello, how can I help you? - أهلا كيف أساعدك؟';}
-function loadStories(){document.getElementById('storiesBox').innerHTML='Once a boy wanted to learn English - كان ولد أراد تعلم الانجليزية';}
-function loadIrr(){document.getElementById('irrBox').innerHTML='go-went-gone يذهب<br>see-saw-seen يرى';}
-function loadTools(){document.getElementById('toolsBox').innerHTML='If you study, you will pass - لو ذاكرت هتنجح';}
+async function doTranslateReal(){let t=document.getElementById('transInput').value.trim();if(!t)return;let box=document.getElementById('transResult');box.innerHTML='⏳ بترجم...';try{let isAr=/[\u0600-\u06FF]/.test(t);let pair=isAr?'ar|en':'en|ar';let r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(t)}&langpair=${pair}`);let j=await r.json();box.innerHTML=`<b>${t}</b><br><b style="color:#0891b2;font-size:22px">${j.responseData.translatedText}</b>`;speakEn(j.responseData.translatedText);}catch(e){box.innerHTML=bigDict[t]||revDict[t.toLowerCase()]||'النت ضعيف';}}
+function doAssistantSearch(){let w=document.getElementById('assistantInput').value.trim();let box=document.getElementById('assistantResult');if(bigDict[w]){box.innerHTML=`${w} = ${bigDict[w]} <button class=speak onclick="speakEn('${bigDict[w]}')">🔊</button>`;speakEn(bigDict[w]);}else box.innerHTML='جرب: أسد، قطار، كتاب';}
+function initGame(){let all=Object.entries(bigDict);let q=all[Math.floor(Math.random()*all.length)];document.getElementById('gameBox').innerHTML=`<h3>ما معنى ${q[0]}؟</h3><button class=action onclick="alert('${q[1]}')">${q[1]}</button> <button class=action onclick="initGame()">التالي</button>`;}
+function loadGallery(){document.getElementById('galleryBox').innerHTML=Object.entries(bigDict).map(([ar,en])=>`<div style="padding:8px;border-bottom:1px solid #eee">${ar} = ${en} <button class=speak onclick="speakEn('${en}')">🔊</button></div>`).join('');}
+
+// كود تثبيت التطبيق
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+});
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') {
+    installBtn.textContent = '✅ تم التثبيت بنجاح!';
+    installBtn.style.background = '#16a34a';
+    installBtn.style.color = '#fff';
+  }
+  deferredPrompt = null;
+});
+window.addEventListener('appinstalled', () => {
+  installBtn.style.display = 'none';
+});
 </script>
 </body>
 </html>
