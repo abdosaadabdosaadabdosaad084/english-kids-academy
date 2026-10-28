@@ -3,82 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Pro Academy</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1e1b4b">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<title>English Pro - Smart Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+body{background:#0f0e2e;color:#fff}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:#1a1848}
+.top-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#1e1b4b;border-bottom:1px solid #2d2a6a}
+.logo-area{display:flex;gap:10px;align-items:center}
+.logo-area h1{font-size:18px;font-weight:800}
+.logo-area p{font-size:12px;opacity:.7}
+.install-btn{background:#facc15;color:#000;border:none;padding:8px 14px;border-radius:20px;font-weight:700;cursor:pointer}
+.screen{display:none;padding:16px}
+.screen.active{display:block}
+.welcome{text-align:center;margin:16px 0}
+.welcome h2{font-size:26px}
+.welcome p{opacity:.7}
+.grid-2x2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:#2a2870;border-radius:20px;padding:14px;cursor:pointer;position:relative;min-height:160px;border:1px solid #3a3890}
+.card h3{margin-top:10px;font-size:18px;font-weight:800}
+.card-preview{background:#0f0e2e;border-radius:12px;padding:8px;font-size:10px;margin-bottom:6px}
+.mini-blackboard{font-size:28px;text-align:center;color:#555;border:1px dashed #333;margin:4px 0;padding:8px 0;background:#111;border-radius:6px}
+.mini-letters,.mini-numbers{font-size:8px;opacity:.7;text-align:center}
+.ai-card{background:linear-gradient(135deg,#3b38a0,#5b4ee0)}
+.learn-card{background:linear-gradient(135deg,#2e2a8a,#4a46c0)}
+.trans-card{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
+.games-card{background:linear-gradient(135deg,#9333ea,#7e22ce)}
+.screen-header{display:flex;align-items:center;justify-content:space-between;background:#1e1b4b;padding:10px 12px;border-radius:12px;margin-bottom:14px}
+.back-btn{background:#2d2a6a;border:none;color:#fff;padding:6px 12px;border-radius:10px;cursor:pointer}
+.blackboard{background:#0a0a14;border:2px solid #2d2a6a;border-radius:18px;min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer}
+.blackboard.large{min-height:280px}
+.faint-letter{font-size:140px;color:rgba(255,255,255,.12);font-weight:800;-webkit-text-stroke:2px rgba(255,255,255,.08)}
+.tap-hint{position:absolute;bottom:10px;font-size:11px;opacity:.4}
+.letters-row,.numbers-row{display:flex;gap:6px;overflow-x:auto;padding:8px 0}
+.letters-row div,.numbers-row div{min-width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;cursor:pointer;flex-shrink:0;color:#fff}
+.controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.controls button{flex:1;background:#2d2a6a;border:none;color:#fff;padding:10px;border-radius:12px;font-weight:700;cursor:pointer}
+.assistant-box .search-row{display:flex;gap:8px;margin-bottom:10px}
+.search-input-wrap{flex:1}
+.search-input-wrap input{width:100%;padding:12px;border-radius:12px;border:1px solid #3a3890;background:#0f0e2e;color:#fff}
+.icon-btn{width:48px;background:#6366f1;border:none;border-radius:12px;font-size:18px;cursor:pointer}
+.status-line{font-size:12px;opacity:.7;margin-bottom:8px;display:flex;gap:6px;align-items:center}
+.dot{width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block}
+.board-content{text-align:center;padding:20px}
+.welcome-text{font-size:22px;color:#a5b4fc;font-weight:800}
+.hint-text{opacity:.6;margin-top:6px}
+.translator-box{background:#1e1b4b;padding:14px;border-radius:16px}
+.lang-switch{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;background:#2a2870;padding:8px 12px;border-radius:10px}
+.lang-switch button{background:#4f46e5;border:none;color:#fff;padding:6px 12px;border-radius:8px;cursor:pointer}
+.translator-box textarea{width:100%;min-height:90px;background:#0f0e2e;border:1px solid #3a3890;border-radius:12px;padding:12px;color:#fff;resize:none}
+.trans-actions{display:flex;gap:8px;margin:8px 0}
+.trans-actions button{flex:1;background:#2d2a6a;border:none;color:#fff;padding:8px;border-radius:10px;cursor:pointer}
+.trans-output{background:#0f0e2e;border:1px solid #3a3890;border-radius:12px;padding:14px;min-height:80px;margin-top:4px}
+.powered{font-size:10px;opacity:.5;text-align:center;margin-top:8px}
+.games-box{background:#1e1b4b;padding:14px;border-radius:16px}
+.question-card{background:#0f0e2e;padding:18px;border-radius:12px;text-align:center;font-size:20px;font-weight:800;min-height:90px;display:flex;align-items:center;justify-content:center}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.options button{background:#2a2870;border:1px solid #3a3890;color:#fff;padding:14px;border-radius:12px;font-weight:700;cursor:pointer}
+.options button.correct{background:#16a34a}
+.options button.wrong{background:#dc2626}
+.game-controls{display:flex;gap:8px}
+.game-controls button{flex:1;background:#4f46e5;border:none;color:#fff;padding:10px;border-radius:12px;cursor:pointer}
+.progress{margin-top:12px;display:flex;align-items:center;gap:10px}
+.progress .bar{flex:1;height:8px;background:#0f0e2e;border-radius:4px;overflow:hidden}
+#barFill{height:100%;background:#facc15;width:0%;transition:.3s}
+.footer{text-align:center;opacity:.4;font-size:11px;margin:20px 0}
+</style>
 </head>
 <body>
-<header class="top-bar">
-  <div class="logo"><span>🎓</span><div><b>English Pro</b><small>Smart Academy</small></div></div>
-  <button id="installBtn" class="install-btn">📲 ثبّت التطبيق</button>
+<div class="app">
+<header class="top-header">
+<div class="logo-area"><div>🎓</div><div><h1>English Pro</h1><p>Smart Academy</p></div></div>
+<button class="install-btn">📱 ثبّت التطبيق</button>
 </header>
-
-<main class="one-page">
-<!-- السبورة -->
-<section class="section-card">
-  <h2>📚 السبورة الذكية</h2>
-  <div class="search-box">
-    <input id="searchInput" type="text" placeholder="اسأل السبورة... النمر، تعالى، cat" />
-    <button id="searchBtn">🔍</button>
-    <button id="voiceBtn">🎤</button>
-  </div>
-  <div class="smart-board">
-    <div class="board-header">
-      <span>👨‍🏫</span><span id="teacherStatus">السبورة جاهزة</span>
-      <span class="online-dot" id="onlineDot"></span>
-    </div>
-    <div id="boardContent" class="board-content">
-      <div class="welcome-msg"><h3>أهلا يا بطل! 👋</h3><p>اكتب أي كلمة فوق</p></div>
-    </div>
-    <div class="board-tools">
-      <button onclick="speakBoard()">🔊 ترجمة فقط</button>
-      <button onclick="clearBoard()">🧹 مسح</button>
-    </div>
-  </div>
-</section>
-
-<!-- المترجم -->
-<section class="section-card">
-  <h2>🌐 المترجم الفوري</h2>
-  <div class="translator-card">
-    <div class="trans-header">
-      <select id="fromLang"><option value="ar">عربي</option><option value="en">English</option></select>
-      <button id="swapBtn">🔄</button>
-      <select id="toLang"><option value="en">English</option><option value="ar">عربي</option></select>
-    </div>
-    <textarea id="transInput" placeholder="اكتب للترجمة..."></textarea>
-    <div id="transOutput" class="trans-output">الترجمة ستظهر هنا...</div>
-  </div>
-</section>
-
-<!-- الألعاب -->
-<section class="section-card">
-  <h2>🎮 الألعاب</h2>
-  <div class="game-stats">
-    <span>✅ <b id="correctCount">0</b></span>
-    <span>❌ <b id="wrongCount">0</b></span>
-    <span>⭐ <b id="gameScore">0</b></span>
-  </div>
-  <div id="gameBox" class="game-box">
-    <h3 id="gameQuestion">...</h3>
-    <div id="gameOptions" class="game-options"></div>
-  </div>
-  <button class="next-btn" onclick="nextGame()">التالي ⏭️</button>
-</section>
-
-<!-- الحروف والأرقام - نفس المقاس -->
-<section class="section-card">
-  <h2>🔤 الحروف - اضغط لتسمع</h2>
-  <div id="lettersGrid" class="letters-grid"></div>
-  <h3 style="margin:16px 0 8px">🔢 الأرقام حتى 10</h3>
-  <div id="numbersGrid" class="letters-grid"></div>
-</section>
-
-</main>
-<div id="toast" class="toast"></div>
-<script src="app.js"></script>
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}</script>
+<div id="homeScreen" class="screen active">
+<div class="welcome"><h2>اختر الخدمة</h2><p>ماذا تريد أن تتعلّم اليوم؟</p></div>
+<div class="grid-2x2">
+<div class="card ai-card" onclick="openScreen('assistantScreen')">
+<div class="card-preview"><div>اسأل... cat</div><div>🔍 🎤</div><div class="mini-blackboard">👋 أهلا يا بطل!</div></div>
+<h3>المساعد الذكي</h3></div>
+<div class="card learn-card" onclick="openScreen('learnScreen')">
+<div class="card-preview"><div class="mini-letters">A B C ... Z</div><div class="mini-blackboard">A</div><div class="mini-numbers">0 1 2 ...10</div></div>
+<h3>لوحة التعلم</h3></div>
+<div class="card trans-card" onclick="openScreen('translatorScreen')"><div style="font-size:28px;text-align:center">🌐 ↔️ 💬</div><p>عربي ↔ إنجليزي</p><h3>المترجم</h3></div>
+<div class="card games-card" onclick="openScreen('gamesScreen')"><div style="font-size:28px;text-align:center">🎮 🏆</div><p>تحديات • كلمات • نقاط</p><h3>الألعاب</h3></div>
+</div>
+<div class="footer">English Pro • Smart Academy</div>
+</div>
+<div id="assistantScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹ رجوع</button><h2>📚 المساعد الذكي</h2></div>
+<div class="assistant-box">
+<div class="search-row"><div class="search-input-wrap"><input id="aiSearch" type="text" placeholder="اسأل السبورة... النمر، تعالي، cat"></div><button class="icon-btn" onclick="searchAI()">🔍</button><button class="icon-btn" onclick="startVoice('aiSearch')">🎤</button></div>
+<div class="status-line"><span class="dot"></span> السبورة جاهزة</div>
+<div id="aiBoard" class="blackboard"><div class="board-content" id="aiBoardContent"><p class="welcome-text">👋 أهلا يا بطل!</p><p class="hint-text">اكتب أي كلمة فوق</p></div></div>
+<div class="controls"><button onclick="clearAI()">🧹 مسح</button><button onclick="translateOnly()">🔊 ترجمة فقط</button><button onclick="speakBoard('aiBoardContent')">🔊 نطق</button><button onclick="nextAI()">➜ التالي</button></div>
+</div>
+</div>
+<div id="learnScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹ رجوع</button><h2>لوحة التعلم</h2></div>
+<div class="letters-row" id="lettersRow"></div>
+<div id="learnBoard" class="blackboard large" onclick="nextLearn()"><div id="learnLetter" class="faint-letter">A</div><div class="tap-hint">اضغط للانتقال للتالي - الحرف الباهت فقط</div></div>
+<div class="numbers-row" id="numbersRow"></div>
+<div class="controls"><button onclick="openScreen('homeScreen')">‹ رجوع</button><button onclick="clearLearn()">🧹 مسح</button><button onclick="nextLearn()">➜ التالي</button><button onclick="speakLearn()">🔊 نطق</button></div>
+</div>
+<div id="translatorScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹ رجوع</button><h2>المترجم - Google داخلي</h2></div>
+<div class="translator-box">
+<div class="lang-switch"><span id="fromLang">العربية</span><button onclick="swapLang()">⇄</button><span id="toLang">English</span></div>
+<textarea id="transInput" placeholder="اكتب نص للترجمة..." oninput="autoTranslate()"></textarea>
+<div class="trans-actions"><button onclick="startVoice('transInput')">🎤 صوت</button><button onclick="autoTranslate()">🔍 ترجم</button><button onclick="clearTrans()">🧹 مسح</button></div>
+<div id="transOutput" class="trans-output">الترجمة ستظهر هنا...</div>
+<div class="trans-actions"><button onclick="speakText('transOutput')">🔊 نطق</button><button onclick="copyTrans()">📋 نسخ</button></div>
+<p class="powered">مُدار بواسطة Google Translate داخلياً - بدون فتح تبويب</p>
+</div>
+</div>
+<div id="gamesScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="openScreen('homeScreen')">‹ رجوع</button><h2>الألعاب</h2><span id="score">النقاط: 0</span></div>
+<div class="games-box"><div id="questionCard" class="question-card"></div><div id="options" class="options"></div><div class="game-controls"><button onclick="nextQuestion()">➜ التالي</button><button onclick="resetGame()">🔄 إعادة</button></div><div class="progress"><span id="progressText">1 / 100</span><div class="bar"><div id="barFill"></div></div></div></div>
+</div>
+</div>
+<script>
+let currentLearnIndex=0,currentLearnType='letters',score=0,qIndex=0,fromAr=true;
+const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const numbers=['0','1','2','3','4','5','6','7','8','9','10'];
+const dictionary={'A':'أ - حرف الألف','B':'ب - باء','C':'ج - كات','D':'د - دوج كلب','E':'هـ - إي','F':'ف - فيش سمكة','G':'ج - جو','H':'هـ - هاوس بيت','I':'آي - أنا','J':'ج - جوس عصير','K':'ك - كايت طائرة','L':'ل - لايون أسد','M':'م - مانجو','N':'ن - نمر','O':'أو - أورنج برتقالة','P':'ب - بن قلم','Q':'ك - كوين ملكة','R':'ر - ريد أحمر','S':'س - صن شمس','T':'ت - تايجر نمر','U':'يو - أمبريلا مظلة','V':'في - فان سيارة','W':'دبليو - ووتر ماء','X':'إكس - بوكس صندوق','Y':'واي - يلو أصفر','Z':'زد - زيبرا حمار وحشي','0':'صفر - Zero','1':'واحد - One','2':'اثنان - Two','3':'ثلاثة - Three','4':'أربعة - Four','5':'خمسة - Five','6':'ستة - Six','7':'سبعة - Seven','8':'ثمانية - Eight','9':'تسعة - Nine','10':'عشرة - Ten'};
+const qa=[['Apple','تفاحة'],['Cat','قطة'],['Dog','كلب'],['Sun','شمس'],['Water','ماء'],['Book','كتاب'],['House','بيت'],['Tiger','نمر'],['Red','أحمر'],['Blue','أزرق'],['Yellow','أصفر'],['Green','أخضر'],['One','واحد'],['Two','اثنان'],['Three','ثلاثة'],['Four','أربعة'],['Five','خمسة'],['Mother','أم'],['Father','أب'],['Friend','صديق'],['School','مدرسة'],['Car','سيارة'],['Tree','شجرة'],['Fish','سمكة'],['Bird','طائر'],['Lion','أسد'],['Elephant','فيل'],['Moon','قمر'],['Star','نجمة'],['Boy','ولد'],['Girl','بنت'],['Hand','يد'],['Eye','عين'],['Milk','حليب'],['Bread','خبز'],['Banana','موز'],['Orange','برتقالة'],['Door','باب'],['Window','نافذة'],['Chair','كرسي'],['Table','طاولة'],['Pen','قلم'],['Ball','كرة'],['Game','لعبة'],['Happy','سعيد'],['Sad','حزين'],['Big','كبير'],['Small','صغير'],['Hot','حار'],['Cold','بارد'],['Fast','سريع'],['Slow','بطيء'],['Good','جيد'],['Bad','سيء'],['New','جديد'],['Old','قديم'],['Man','رجل'],['Woman','امرأة'],['Child','طفل'],['Day','يوم'],['Night','ليل'],['Morning','صباح'],['Food','طعام'],['Name','اسم'],['Love','حب'],['Time','وقت'],['Work','عمل'],['City','مدينة'],['Sea','بحر'],['River','نهر'],['Mountain','جبل'],['Flower','زهرة'],['Garden','حديقة'],['Light','ضوء'],['Dark','ظلام'],['Fire','نار'],['Air','هواء'],['Earth','أرض'],['Sky','سماء'],['Rain','مطر'],['Snow','ثلج'],['Wind','رياح'],['Cloud','سحابة'],['Sunset','غروب'],['Sunrise','شروق'],['King','ملك'],['Queen','ملكة'],['Prince','أمير'],['Princess','أميرة'],['Castle','قلعة'],['Magic','سحر'],['Dream','حلم'],['Smile','ابتسامة'],['Heart','قلب'],['Hope','أمل'],['Help','مساعدة'],['Thank you','شكرا'],['Please','من فضلك'],['Yes','نعم'],['No','لا'],['Hello','مرحبا'],['Goodbye','وداعا'],['Come','تعال'],['Go','اذهب']];
+function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function initLearn(){const lr=document.getElementById('lettersRow');const nr=document.getElementById('numbersRow');lr.innerHTML='';nr.innerHTML='';letters.forEach((l,i)=>{const d=document.createElement('div');d.textContent=l;d.style.background=`hsl(${i*14},80%,60%)`;d.onclick=()=>{currentLearnIndex=i;currentLearnType='letters';showLearn();};lr.appendChild(d);});numbers.forEach((n,i)=>{const d=document.createElement('div');d.textContent=n;d.style.background=`hsl(${120+i*20},70%,55%)`;d.onclick=()=>{currentLearnIndex=i;currentLearnType='numbers';showLearn();};nr.appendChild(d);});showLearn();}
+function showLearn(){const el=document.getElementById('learnLetter');const val=currentLearnType==='letters'?letters[currentLearnIndex]:numbers[currentLearnIndex];el.textContent=val;}
+function nextLearn(){if(currentLearnType==='letters'){currentLearnIndex=(currentLearnIndex+1)%letters.length;}else{currentLearnIndex=(currentLearnIndex+1)%numbers.length;if(currentLearnIndex===0)currentLearnType='letters';}showLearn();speakLearn();}
+function clearLearn(){document.getElementById('learnLetter').textContent='';}
+function speakLearn(){const val=currentLearnType==='letters'?letters[currentLearnIndex]:numbers[currentLearnIndex];const trans=dictionary[val]||val;speakBoardContent(val+' . '+trans);}
+function speakBoardContent(text){const u=new SpeechSynthesisUtterance(text);u.lang=/[a-zA-Z]/.test(text)?'en-US':'ar-SA';u.rate=0.9;speechSynthesis.speak(u);}
+function speakBoard(id){speakBoardContent(document.getElementById(id).innerText);}
+function speakText(id){speakBoardContent(document.getElementById(id).innerText);}
+let aiHistory=[];
+function searchAI(){const q=document.getElementById('aiSearch').value.trim();if(!q)return;const board=document.getElementById('aiBoardContent');board.innerHTML=`<p>🔍 تبحث عن: <b>${q}</b></p><p class="hint-text">جاري الترجمة...</p>`;autoTranslateInternal(q,board);aiHistory.push(q);}
+async function autoTranslateInternal(q,boardEl){try{const sl=/[a-zA-Z]/.test(q)?'en':'ar';const tl=sl==='en'?'ar':'en';const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(q)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');boardEl.innerHTML=`<p style="font-size:28px;font-weight:800;color:#facc15">${q}</p><p style="font-size:22px;margin-top:10px;color:#a5b4fc">= ${trans}</p><p class="hint-text" style="margin-top:12px">ترجمة فقط</p>`;speakBoardContent(trans);}catch(e){boardEl.innerHTML=`<p>${q}</p><p>= ${dictionary[q.toUpperCase()]||'ترجمة غير متاحة حاليا'}</p>`;}}
+function clearAI(){document.getElementById('aiSearch').value='';document.getElementById('aiBoardContent').innerHTML=`<p class="welcome-text">👋 أهلا يا بطل!</p><p class="hint-text">اكتب أي كلمة فوق</p>`;}
+function translateOnly(){const q=document.getElementById('aiSearch').value;if(q)autoTranslateInternal(q,document.getElementById('aiBoardContent'));}
+function nextAI(){let next=qa[Math.floor(Math.random()*qa.length)];document.getElementById('aiSearch').value=next[0];searchAI();}
+function startVoice(inputId){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('المتصفح لا يدعم المايك');return;}const rec=new SR();rec.lang='ar-EG';rec.onresult=e=>{document.getElementById(inputId).value=e.results[0][0].transcript;if(inputId==='aiSearch')searchAI();else autoTranslate();};rec.start();}
+async function autoTranslate(){const input=document.getElementById('transInput').value.trim();if(!input){document.getElementById('transOutput').textContent='الترجمة ستظهر هنا...';return;}const sl=fromAr?'ar':'en';const tl=fromAr?'en':'ar';try{const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(input)}`;const res=await fetch(url);const data=await res.json();const trans=data[0].map(x=>x[0]).join('');document.getElementById('transOutput').textContent=trans;}catch(e){document.getElementById('transOutput').textContent='خطأ في الاتصال';}}
+function swapLang(){fromAr=!fromAr;document.getElementById('fromLang').textContent=fromAr?'العربية':'English';document.getElementById('toLang').textContent=fromAr?'English':'العربية';autoTranslate();}
+function clearTrans(){document.getElementById('transInput').value='';document.getElementById('transOutput').textContent='الترجمة ستظهر هنا...';}
+function copyTrans(){navigator.clipboard.writeText(document.getElementById('transOutput').textContent);alert('تم النسخ');}
+let questions=[];
+function buildQuestions(){questions=qa.map(pair=>{const correct=pair[1];let opts=[correct];while(opts.length<4){let r=qa[Math.floor(Math.random()*qa.length)][1];if(!opts.includes(r))opts.push(r);}opts.sort(()=>Math.random()-0.5);return{q:`ما معنى كلمة "${pair[0]}" ؟`,correct,opts,en:pair[0]};});questions.sort(()=>Math.random()-0.5);questions=questions.slice(0,100);}
+function showQuestion(){if(questions.length===0)buildQuestions();const cur=questions[qIndex];document.getElementById('questionCard').innerHTML=`${cur.q}<br><small style="opacity:.6">${cur.en}</small>`;const optDiv=document.getElementById('options');optDiv.innerHTML='';cur.opts.forEach(o=>{const b=document.createElement('button');b.textContent=o;b.onclick=()=>checkAnswer(b,o,cur.correct);optDiv.appendChild(b);});document.getElementById('progressText').textContent=`${qIndex+1} / ${questions.length}`;document.getElementById('barFill').style.width=`${((qIndex+1)/questions.length)*100}%`;document.getElementById('score').textContent=`النقاط: ${score}`;}
+function checkAnswer(btn,chosen,correct){const buttons=document.querySelectorAll('#options button');buttons.forEach(b=>b.disabled=true);if(chosen===correct){btn.classList.add('correct');score+=10;speakBoardContent('أحسنت! '+correct);}else{btn.classList.add('wrong');buttons.forEach(b=>{if(b.textContent===correct)b.classList.add('correct')});speakBoardContent('الإجابة الصحيحة '+correct);}setTimeout(()=>{nextQuestion();},1200);}
+function nextQuestion(){qIndex=(qIndex+1)%questions.length;showQuestion();}
+function resetGame(){qIndex=0;score=0;buildQuestions();showQuestion();}
+window.onload=()=>{initLearn();buildQuestions();showQuestion();document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI()});};
+</script>
 </body>
 </html>
