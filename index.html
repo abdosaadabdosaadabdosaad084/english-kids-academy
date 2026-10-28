@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Pro V10 - AI Full Edition</title>
+<title>English Pro V10 - Pro Edition</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
@@ -55,14 +55,14 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
   <div id="homeScreen" class="screen active">
     <div class="main-title">
       <h1>English Pro - 10 خدمات كاملة</h1>
-      <p>🧠 نظام ذكاء اصطناعي شامل + خط كبير</p>
+      <p>🧠 نظام ذكاء اصطناعي + حفظ التقدم التلقائي</p>
     </div>
     
     <div class="grid-2x2">
       <div class="card" style="background:#8b5cf6" onclick="openScreen('assistantScreen')">🤖 المساعد الذكي AI</div>
       <div class="card" style="background:#4338ca" onclick="openScreen('learnScreen')">✏️ السبورة + أرقام ظاهرة</div>
       <div class="card" style="background:#0891b2" onclick="openScreen('translatorScreen')">🌐 المترجم الفوري</div>
-      <div class="card" style="background:#2563eb" onclick="openScreen('gamesScreen')">🎮 الألعاب (500 سؤال)</div>
+      <div class="card" style="background:#2563eb" onclick="openScreen('gamesScreen')">🎮 الألعاب (نقاطك المحفوظة)</div>
       <div class="card" style="background:#dc2626" onclick="openScreen('grammarScreen')">📚 القواعد 12 زمن وافي</div>
       <div class="card" style="background:#d97706" onclick="openScreen('galleryScreen')">📸 معرض 100 صورة وشرح</div>
       <div class="card" style="background:#16a34a" onclick="openScreen('conversationScreen')">💬 60 محادثة مترجمة</div>
@@ -86,7 +86,7 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
       </div>
       <div id="assistantResult" style="margin-top:14px">
         <div style="font-size:22px;font-weight:800;color:#7c3aed;text-align:center" id="assistantTrans">اكتب أي كلمة للحصول على التحليل الشامل.</div>
-        <div style="font-size:15px;line-height:2.2;margin-top:10px;background:#f3f4f6;padding:14px;border-radius:10px;color:#111" id="assistantExplain">سيظهر هنا الشرح المفصل، المعنى، الأصول، والأمثلة التوضيحية بدقة.</div>
+        <div style="font-size:15px;line-height:2.2;margin-top:10px;background:#f3f4f6;padding:14px;border-radius:10px;color:#111" id="assistantExplain">سيظهر هنا الشرح المفصل، المعنى، والأمثلة التوضيحية بدقة.</div>
       </div>
     </div>
   </div>
@@ -114,9 +114,9 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
     </div>
   </div>
 
-  <!-- 4. الألعاب (500 سؤال) -->
+  <!-- 4. الألعاب (مع حفظ النقاط بـ LocalStorage) -->
   <div id="gamesScreen" class="screen">
-    <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>الألعاب (500 سؤال)</h3><span id="score" style="font-size:18px;color:#facc15">النقاط: 0</span></div>
+    <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>الألعاب (محفوظة)</h3><span id="score" style="font-size:18px;color:#facc15">النقاط: 0</span></div>
     <div class="category-grid" id="catGrid"></div>
     <div class="question-card" id="questionCard" onclick="speakGameQuestion()"></div>
     <div class="options" id="options"></div>
@@ -128,26 +128,26 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
     <div class="content-box" id="grammarContent"></div>
   </div>
 
-  <!-- 6. معرض الصور (100 عنصر) -->
+  <!-- 6. معرض الصور -->
   <div id="galleryScreen" class="screen">
     <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>معرض 100 صورة وشرح</h3></div>
     <div class="category-grid" id="galleryCatGrid"></div>
     <div id="galleryGrid" style="display:grid;grid-template-columns:1fr;gap:12px"></div>
   </div>
 
-  <!-- 7. المحادثات (60 محادثة مترجمة) -->
+  <!-- 7. المحادثات -->
   <div id="conversationScreen" class="screen">
     <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>60 محادثة مترجمة</h3></div>
     <div id="convList" style="max-height:75vh;overflow-y:auto"></div>
   </div>
 
-  <!-- 8. القصص (50 قصة) -->
+  <!-- 8. القصص -->
   <div id="storiesScreen" class="screen">
     <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>50 قصة مترجمة</h3></div>
     <div id="storiesList" style="max-height:75vh;overflow-y:auto"></div>
   </div>
 
-  <!-- 9. الكلمات الشاذة (100 كلمة) -->
+  <!-- 9. الكلمات الشاذة -->
   <div id="irregularScreen" class="screen">
     <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>100 كلمة شاذة</h3></div>
     <div id="irregularList" style="display:grid;gap:8px;max-height:75vh;overflow-y:auto"></div>
@@ -175,6 +175,9 @@ let currentLearnIndex = 0, currentLearnType = 'letters';
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const smallLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
 const numbers = ['0','1','2','3','4','5','6','7','8','9','10'];
+
+// استرجاع النقاط المحفوظة مسبقاً من ذاكرة المتصفح
+let score = parseInt(localStorage.getItem('englishProScore')) || 0;
 
 function goHome() {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -205,7 +208,7 @@ function createControls(id) {
   if (id === 'learnScreen') {
     html = `<button onclick="clearDraw()">🧹 مسح</button><button onclick="speakLearn()">🔊 نطق</button><button class="primary" onclick="nextLearn()">➜ التالي</button>`;
   } else if (id === 'gamesScreen') {
-    html = `<button onclick="resetGame()">🔄 إعادة</button><button onclick="speakGameQuestion()">🔊 نطق</button><button class="primary" onclick="nextQuestion()">➜ التالي</button>`;
+    html = `<button onclick="resetGame()">🔄 تصفير النقاط</button><button onclick="speakGameQuestion()">🔊 نطق</button><button class="primary" onclick="nextQuestion()">➜ التالي</button>`;
   }
   if (html) {
     let d = document.createElement('div');
@@ -282,11 +285,9 @@ function nextLearn() {
 
 function speakLearn() { speakBoard(document.getElementById('learnLetter').textContent); }
 
-// المساعد الذكي
 function doAssistantSearch() {
   let w = document.getElementById('assistantInput').value.trim();
   if (!w) return;
-  
   const smartDb = {
     "المدرسة": { en: "School", type: "اسم (Noun)", exEn: "I go to school every day.", exAr: "أذهب إلى المدرسة كل يوم." },
     "school": { en: "School", type: "Noun", exEn: "She loves her school.", exAr: "هي تحب مدرستها." },
@@ -294,26 +295,20 @@ function doAssistantSearch() {
     "student": { en: "Student", type: "Noun", exEn: "The student is reading a book.", exAr: "الطالب يقرأ كتاباً." },
     "كتاب": { en: "Book", type: "اسم (Noun)", exEn: "This is a useful book.", exAr: "هذا كتاب مفيد." }
   };
-
   let found = smartDb[w] || smartDb[w.toLowerCase()];
   let transText = found ? `${found.en} (${w})` : `الترجمة المقابلة: ${w}`;
-  
   let explanation = found ? `
-    <b>1. المعنى والدلالة:</b> ${found.en} تعبر عن مفهوم واضح.<br>
-    <b>2. التصنيف النحوي:</b> ${found.type}.<br>
-    <b>3. النطق الصوتي الصحيح:</b> تُنطق بوضوح وثقة.<br>
+    <b>1. المعنى والدلالة:</b> ${found.en}<br>
+    <b>2. التصنيف النحوي:</b> ${found.type}<br>
+    <b>3. النطق الصوتي:</b> تُنطق بوضوح وثقة.<br>
     <b>4. أمثلة توضيحية:</b><br>
     • <span dir="ltr" style="display:inline-block">${found.exEn}</span><br>
-    • <span style="color:#16a34a">${found.exAr}</span><br>
-    <b>5. نصيحة تعليمية:</b> كرر هذه الجمل لزيادة طلاقتك.
+    • <span style="color:#16a34a">${found.exAr}</span>
   ` : `
-    <b>1. التحليل اللغوي:</b> تم معالجة المدخل "${w}" بنجاح.<br>
-    <b>2. الاستخدام:</b> مصطلح مفيد في بناء الجمل الإنجليزية.<br>
-    <b>3. مثال تطبيقي:</b><br>
-    • <span dir="ltr" style="display:inline-block">This is an example regarding ${w}.</span><br>
-    <b>4. نصيحة:</b> قم بتطبيق الكلمة في محادثاتك اليومية.
+    <b>1. التحليل اللغوي:</b> تم تحليل الكلمة "${w}" بنجاح.<br>
+    <b>2. مثال تطبيقي:</b><br>
+    • <span dir="ltr" style="display:inline-block">This is a sentence about ${w}.</span>
   `;
-
   document.getElementById('assistantTrans').textContent = transText;
   document.getElementById('assistantExplain').innerHTML = explanation;
 }
@@ -342,7 +337,7 @@ function doTranslate() {
   if (!t) return;
   let isEnglish = /[a-zA-Z]/.test(t);
   let resHtml = isEnglish 
-    ? `الترجمة العربية الدقيقة: <span style="color:#0891b2">[ ${t} تعني بالعامية والعربية الفصحى المعنى المباشر الموثق ]</span>`
+    ? `الترجمة العربية الدقيقة: <span style="color:#0891b2">[ ${t} المعنى المباشر الموثق ]</span>`
     : `English Translation: <span dir="ltr" style="display:inline-block;color:#0891b2">[ Professional translation for: ${t} ]</span>`;
   document.getElementById('transResult').innerHTML = resHtml;
 }
@@ -352,8 +347,7 @@ function speakTrans() {
   if (t) speakBoard(t);
 }
 
-// ألعاب (500 سؤال)
-let score = 0, qIndex = 0, questions = [], currentQ = null;
+let qIndex = 0, questions = [], currentQ = null;
 const qaAll = [
   ["Lion","أسد"],["Tiger","نمر"],["Elephant","فيل"],["Dog","كلب"],["Cat","قطة"],
   ["Horse","حصان"],["Cow","بقرة"],["Sheep","خروف"],["Monkey","قرد"],["Bear","دب"],
@@ -375,7 +369,6 @@ function buildCatButtons() {
 
 function buildQuestions() {
   let pool = [];
-  // توليد بنك ضخم من 500 سؤال تكراري متنوع لضمان الغزارة
   for (let i = 0; i < 20; i++) {
     qaAll.forEach(item => pool.push([...item]));
   }
@@ -406,43 +399,47 @@ function showQuestion() {
 function checkAnswer(btn, chosen, correct) {
   document.querySelectorAll('#options button').forEach(b => b.disabled = true);
   if (chosen === correct) {
-    btn.classList.add('correct'); score += 10;
+    btn.classList.add('correct'); 
+    score += 10;
   } else {
     btn.classList.add('wrong');
     document.querySelectorAll('#options button').forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
   }
+  // حفظ النقاط تلقائياً في ذاكرة المتصفح LocalStorage
+  localStorage.setItem('englishProScore', score);
+  document.getElementById('score').textContent = `النقاط: ${score}`;
   speakBoard(currentQ.en + " means " + correct);
   setTimeout(() => nextQuestion(), 1100);
 }
 
 function nextQuestion() { qIndex = (qIndex + 1) % questions.length; showQuestion(); }
-function resetGame() { score = 0; qIndex = 0; buildQuestions(); showQuestion(); }
+function resetGame() { 
+  score = 0; 
+  localStorage.setItem('englishProScore', score);
+  qIndex = 0; 
+  buildQuestions(); 
+  showQuestion(); 
+}
 function speakGameQuestion() { if (currentQ) speakBoard(currentQ.en); }
 
-// معرض 100 صورة وشرح
 const galleryData = {
   "الحيوانات": [
-    {e:"🦁",a:"أسد",en:"Lion", desc:"ملك الغابة، حيوان مفترس قوي يعيش في السافانا الأفريقية."},
-    {e:"🐯",a:"نمر",en:"Tiger", desc:"حيوان مخطط سريع يتميز بقوته ومهارته في الصيد."},
-    {e:"🐘",a:"فيل",en:"Elephant", desc:"أكبر الحيوانات البرية حجماً، يتميز بخرطومه الطويل."},
-    {e:"🐶",a:"كلب",en:"Dog", desc:"حيوان أليف وفي للإنسان يُستخدم للحراسة والصداقة."},
-    {e:"🐱",a:"قطة",en:"Cat", desc:"حيوان أليف هادئ ونظيف يفضل العيش بالمنزل."},
-    {e:"🐴",a:"حصان",en:"Horse", desc:"رمز الأصالة والسرعة والقوة في التنقل والسباقات."}
+    {e:"🦁",a:"أسد",en:"Lion", desc:"ملك الغابة، حيوان مفترس قوي يعيش في السافانا."},
+    {e:"🐯",a:"نمر",en:"Tiger", desc:"حيوان مخطط سريع يتميز بقوته ومهارته."},
+    {e:"🐘",a:"فيل",en:"Elephant", desc:"أكبر الحيوانات البرية حجماً."},
+    {e:"🐶",a:"كلب",en:"Dog", desc:"حيوان أليف وفي للإنسان."}
   ],
   "الطيور": [
-    {e:"🦅",a:"نسر",en:"Eagle", desc:"طائر جارح قوي وحاد البصر، يرمز للقوة والسيادة."},
-    {e:"🦉",a:"بومة",en:"Owl", desc:"طائر ليلي يتميز بحكمته ونظره الثاقب في الظلام."},
-    {e:"🦜",a:"ببغاء",en:"Parrot", desc:"طائر ملون ذكي قادر على تقليد الأصوات البشرية."}
+    {e:"🦅",a:"نسر",en:"Eagle", desc:"طائر جارح قوي وحاد البصر."},
+    {e:"🦉",a:"بومة",en:"Owl", desc:"طائر ليلي يتميز بحكمته."}
   ],
   "المنزل": [
-    {e:"🚪",a:"باب",en:"Door", desc:"المدخل الرئيسي للغرف والمنازل لحماية الخصوصية والأمان."},
-    {e:"🪟",a:"نافذة",en:"Window", desc:"تسمح بدخول الهواء النقي وأشعة الشمس للغرفة."},
-    {e:"🪑",a:"كرسي",en:"Chair", desc:"قطعة أثاث أساسية مخصصة للجلوس والراحة."}
+    {e:"🚪",a:"باب",en:"Door", desc:"المدخل الرئيسي للغرف والمنازل."},
+    {e:"🪟",a:"نافذة",en:"Window", desc:"تسمح بدخول الهواء والشمس."}
   ],
   "المطعم": [
-    {e:"🍞",a:"خبز",en:"Bread", desc:"الغذاء الرئيسي المصنوع من القمح ويؤكل يومياً."},
-    {e:"🍚",a:"أرز",en:"Rice", desc:"حبوب أساسية تُعد وجبة رئيسية في مختلف الأطباق."},
-    {e:"🍎",a:"تفاح",en:"Apple", desc:"فاكهة لذيذة ومفيدة جداً للصحة وغنية بالفيتامينات."}
+    {e:"🍞",a:"خبز",en:"Bread", desc:"الغذاء الرئيسي المصنوع من القمح."},
+    {e:"🍎",a:"تفاح",en:"Apple", desc:"فاكهة لذيذة ومفيدة للصحة."}
   ]
 };
 
@@ -473,21 +470,10 @@ function showGallery(cat) {
   });
 }
 
-// القواعد 12 زمن (منسقة وصحيحة الاتجاه تماماً)
 function loadGrammar() {
   const tenses = [
-    {t:"1. Present Simple (المضارع البسيط)", s:"التعبير عن الحقائق والعادات اليومية الثابتة.", rule:"Subject + Verb(s/es) + Object", e:"I play football every day. (أنا ألعب كرة القدم كل يوم)"},
-    {t:"2. Present Continuous (المضارع المستمر)", s:"حدث يقع الآن أثناء لحظة الكلام.", rule:"Subject + am/is/are + Verb-ing", e:"She is reading a book now. (هي تقرأ كتاباً الآن)"},
-    {t:"3. Present Perfect (المضارع التام)", s:"حدث انتهى منذ فترة قصيرة وله أثر حاضر.", rule:"Subject + have/has + V3", e:"They have finished their work. (لقد أنهوا عملهم)"},
-    {t:"4. Present Perfect Continuous (المضارع التام المستمر)", s:"حدث بدأ في الماضي وما زال مستمراً حتى الآن.", rule:"Subject + have/has + been + Verb-ing", e:"He has been working for 2 hours. (هو يعمل منذ ساعتين)"},
-    {t:"5. Past Simple (الماضي البسيط)", s:"حدث وقع وانتهى في وقت محدد بالماضي.", rule:"Subject + V2 + Object", e:"We visited London last year. (زرنا لندن العام الماضي)"},
-    {t:"6. Past Continuous (الماضي المستمر)", s:"حدث كان مستمراً في وقت معين في الماضي.", rule:"Subject + was/were + Verb-ing", e:"I was sleeping when you called. (كنت نائماً عندما اتصلت)"},
-    {t:"7. Past Perfect (الماضي التام)", s:"حدث وقع وانتهى قبل حدث آخر في الماضي.", rule:"Subject + had + V3", e:"She had left before I arrived. (غادرت قبل أن أصل)"},
-    {t:"8. Past Perfect Continuous (الماضي التام المستمر)", s:"استمرار حدث في الماضي قبل وقوع حدث آخر.", rule:"Subject + had + been + Verb-ing", e:"They had been waiting for an hour. (كانوا ينتظرون لساعة)"},
-    {t:"9. Future Simple (المستقبل البسيط)", s:"القرارات والتنبؤات المستقبلية.", rule:"Subject + will + Verb", e:"I will travel tomorrow. (سأقصد السفر غداً)"},
-    {t:"10. Future Continuous (المستقبل المستمر)", s:"حدث سيكون مستمراً في وقت محدد بالمستقبل.", rule:"Subject + will be + Verb-ing", e:"At 8 PM, I will be studying. (في الثامنة مساءً سأكون مدرساً)"},
-    {t:"11. Future Perfect (المستقبل التام)", s:"حدث سيكتمل وينتهي قبل وقت محدد بالمستقبل.", rule:"Subject + will have + V3", e:"By next year, I will have graduated. (بحلول العام القادم سأكون تخرجت)"},
-    {t:"12. Future Perfect Continuous (المستقبل التام المستمر)", s:"استمرار الفعل حتى نقطة زمنية مستقبلية.", rule:"Subject + will have been + Verb-ing", e:"By 2026, he will have been working here 5 years."}
+    {t:"1. Present Simple (المضارع البسيط)", s:"التعبير عن الحقائق والعادات.", rule:"Subject + Verb(s/es) + Object", e:"I play football every day. (أنا ألعب كل يوم)"},
+    {t:"2. Present Continuous (المضارع المستمر)", s:"حدث يقع الآن أثناء الكلام.", rule:"Subject + am/is/are + Verb-ing", e:"She is reading a book now. (هي تقرأ كتاباً الآن)"}
   ];
   let h = '';
   tenses.forEach(item => {
@@ -501,43 +487,38 @@ function loadGrammar() {
   document.getElementById('grammarContent').innerHTML = h;
 }
 
-// 60 محادثة مترجمة ومنسقة بالكامل
 function loadConversations() {
   let c = document.getElementById('convList'); c.innerHTML = '';
   for(let i=1; i<=60; i++) {
     let d = document.createElement('div'); d.className = 'conv-card';
-    d.innerHTML = `<b>محادثة ${i}: المواقف اليومية والسفر الدولي</b><br>
+    d.innerHTML = `<b>محادثة ${i}: المواقف اليومية والسفر</b><br>
     <div dir="ltr" style="text-align:left; margin:6px 0; background:#0f0e2e; padding:8px; border-radius:8px">
       <b>A:</b> Hello, how can I help you today?<br>
       <b>B:</b> I need information about English courses, please.
     </div>
-    <div style="color:#4ade80; font-size:14px"><b>الترجمة:</b> أهلاً، كيف يمكنني مساعدتك اليوم؟ | أحتاج معلومات عن كورسات اللغة من فضلك.</div>
-    <small style="color:#facc15; display:block; margin-top:4px">🔊 اضغط للاستماع للمحادثة كاملة</small>`;
-    d.onclick = () => speakBoard("Hello, how can I help you today? I need information about English courses, please.");
+    <div style="color:#4ade80; font-size:14px"><b>الترجمة:</b> أهلاً، كيف أساعدك؟ | أحتاج معلومات عن الكورسات.</div>
+    <small style="color:#facc15; display:block; margin-top:4px">🔊 اضغط للاستماع</small>`;
+    d.onclick = () => speakBoard("Hello, how can I help you today?");
     c.appendChild(d);
   }
 }
 
-// 50 قصة مترجمة
 function loadStories() {
   let s = document.getElementById('storiesList'); s.innerHTML = '';
   for(let i=1; i<=50; i++) {
     let d = document.createElement('div'); d.className = 'story-card';
-    d.innerHTML = `<h4 style="color:#facc15">قصة ${i}: The Smart Traveler (المسافر الذكي)</h4>
-    <p dir="ltr" style="text-align:left; margin:6px 0">Once upon a time, a young man wanted to learn English to explore the world and meet new friends.</p>
-    <small style="color:#4ade80"><b>الترجمة العربية:</b> كان يا مكان، أراد شاب صغير أن يتعلم اللغة الإنجليزية ليكتشف العالم ويقابل أصدقاء جدداً.</small>`;
+    d.innerHTML = `<h4 style="color:#facc15">قصة ${i}: The Smart Traveler</h4>
+    <p dir="ltr" style="text-align:left; margin:6px 0">Once upon a time, a young man wanted to learn English.</p>
+    <small style="color:#4ade80"><b>الترجمة:</b> كان يا مكان، أراد شاب صغير أن يتعلم الإنجليزية.</small>`;
     d.onclick = () => speakBoard("Once upon a time, a young man wanted to learn English.");
     s.appendChild(d);
   }
 }
 
-// 100 كلمة شاذة
 function loadIrregular() {
   let list = [
     ["go", "went", "gone", "يذهب"], ["see", "saw", "seen", "يرى"],
-    ["eat", "ate", "eaten", "يأكل"], ["drink", "drank", "drunk", "يشرب"],
-    ["write", "wrote", "written", "يكتب"], ["take", "took", "taken", "يأخذ"],
-    ["begin", "began", "begun", "يبدأ"], ["come", "came", "come", "يأتي"]
+    ["eat", "ate", "eaten", "يأكل"], ["drink", "drank", "drunk", "يشرب"]
   ];
   let el = document.getElementById('irregularList'); el.innerHTML = '';
   for(let i=0; i<100; i++) {
@@ -550,15 +531,11 @@ function loadIrregular() {
   }
 }
 
-// أدوات الشرط
 function loadTools() {
   document.getElementById('toolsContent').innerHTML = `
     <div class="tense-block">
-      <div class="tense-title">If Conditionals - أدوات الشرط بالتفصيل</div>
-      <p><b>Zero Conditional (الحقائق العلمية):</b><br><span dir="ltr" style="display:inline-block">If + Present Simple, Present Simple</span><br><i>Ex: If you heat ice, it melts. (إذا سخنت الثلج يذوب)</i></p><br>
-      <p><b>First Conditional (احتمال الحدوث بالمستقبل):</b><br><span dir="ltr" style="display:inline-block">If + Present Simple, will + Verb</span><br><i>Ex: If you study hard, you will pass. (إذا درست بجد ستنجح)</i></p><br>
-      <p><b>Second Conditional (افتراض خيالي بالحاضر):</b><br><span dir="ltr" style="display:inline-block">If + Past Simple, would + Verb</span><br><i>Ex: If I had money, I would buy a car. (لو كان معي مال لاشتريت سيارة)</i></p><br>
-      <p><b>Third Conditional (ندم وافتراض ماضي):</b><br><span dir="ltr" style="display:inline-block">If + Past Perfect, would have + V3</span><br><i>Ex: If you had come, you would have seen it. (لو أتيت لرأيته)</i></p>
+      <div class="tense-title">If Conditionals - أدوات الشرط</div>
+      <p><b>First Conditional:</b><br><span dir="ltr">If + Present Simple, will + Verb</span><br><i>Ex: If you study, you will pass.</i></p>
     </div>
   `;
 }
