@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Pro V17 - Offline</title>
+<title>English Pro V18 - Offline</title>
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -25,21 +25,49 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 .badge2{background:#dbeafe;color:#1e40af;padding:3px 8px;border-radius:6px;font-size:11px}
 .google-box{background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:12px;margin:8px 0}
 .game-opt{display:block;width:100%;text-align:right;background:#fff;border:2px solid #ddd;padding:12px;border-radius:10px;margin:6px 0;font-family:'Cairo';font-weight:800;cursor:pointer;font-size:16px}
+.conv-card{background:#fff;color:#111;border-radius:14px;padding:16px;text-align:center}
+.conv-en{font-size:24px;font-weight:900;color:#1e1b4b;direction:ltr;line-height:1.4}
+.conv-pron{font-size:20px;font-weight:800;color:#d97706;margin:10px 0}
+.conv-ar{font-size:18px;color:#333}
 </style>
 </head>
 <body>
 <div class="app">
 <div id="homeScreen" class="screen active">
-<h1 style="text-align:center">5 خدمات English Pro</h1><p style="text-align:center;color:#facc15;font-size:12px">V17 - بيشتغل من غير نت + المساعد زي جوجل</p>
+<h1 style="text-align:center">6 خدمات English Pro</h1><p style="text-align:center;color:#facc15;font-size:12px">V18 - محادثات متجددة + تخزين تلقائي من غير نت</p>
 <button id="installBtn" style="display:none;width:100%;background:#facc15;color:#000;padding:12px;border:none;border-radius:12px;font-weight:900;margin:8px 0">📲 ثبّت التطبيق</button>
 <div class="grid-2x2">
 <div class="card" style="background:#8b5cf6" onclick="openScreen('assistantScreen')">🤖 مساعد جوجل</div>
 <div class="card" style="background:#4338ca" onclick="openScreen('learnScreen')">✏️ السبورة الحرة</div>
 <div class="card" style="background:#2563eb" onclick="openScreen('gamesScreen')">🎮 40 لعبة<br>تعلم كتير</div>
 <div class="card" style="background:#dc2626" onclick="openScreen('grammarScreen')">📚 قواعد جوجل</div>
+<div class="card" style="background:#059669;grid-column:span 2" onclick="openScreen('convScreen')">💬 محادثات متجددة - زي Loecsen<br><span style="font-size:12px">تحديث تلقائي + شغال من غير نت</span></div>
 <div class="card" style="background:#d97706;grid-column:span 2" onclick="openScreen('galleryScreen')">📸 معرض صور - 40 كلمة بالصور</div>
 </div>
 </div>
+
+<!-- شاشة المحادثات الجديدة -->
+<div id="convScreen" class="screen">
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المحادثات المتجددة</h3></div>
+<div class="content-box">
+<div style="display:flex;gap:6px;margin-bottom:8px">
+<button class="action" style="flex:1;background:#059669" onclick="prevConv()">⏮ المحادثة اللي فاتت</button>
+<button class="action" style="flex:1;background:#2563eb" onclick="nextConv()">المحادثة اللي بعدها ⏭</button>
+</div>
+<div id="convList" style="display:flex;gap:6px;overflow-x:auto;padding:4px 0"></div>
+<div id="convBox"></div>
+<div style="display:flex;gap:6px;margin-top:10px">
+<button class="action" style="flex:1;background:#6b7280" onclick="prevLine()">◀ اللي قبلها</button>
+<button class="action" style="flex:2;background:#facc15;color:#000;font-size:18px" onclick="nextLine()">التالي ▶</button>
+</div>
+<div style="display:flex;gap:6px;margin-top:6px">
+<button class="action" style="flex:1;background:#16a34a" onclick="togglePron()">👁 إخفاء / إظهار النطق</button>
+<button class="action" style="flex:1;background:#8b5cf6" onclick="speakCurrentEn()">🔊 نطق EN</button>
+</div>
+<p id="convStatus" style="text-align:center;font-size:12px;color:#666;margin-top:8px"></p>
+</div>
+</div>
+
 <div id="learnScreen" class="screen">
 <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>السبورة الحرة</h3></div>
 <div class="row" id="lettersRow"></div><div class="row" id="smallRow"></div><div class="row" id="arabicRow"></div>
@@ -58,13 +86,72 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 <div id="galleryScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المعرض بالصور - 40 كلمة</h3></div><div class="content-box" id="galleryBox"></div></div>
 </div>
 <script>
-// === تشغيل من غير نت ===
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
-
-function speakEn(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.75;u.pitch=1;speechSynthesis.speak(u);}
+function speakEn(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u);}
 function speakAr(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=0.85;speechSynthesis.speak(u);}
 function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('homeScreen').classList.add('active');}
-function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='learnScreen')initLearn();if(id==='gamesScreen')initGame();if(id==='galleryScreen')loadGallery();}
+function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='learnScreen')initLearn();if(id==='gamesScreen')initGame();if(id==='galleryScreen')loadGallery();if(id==='convScreen')initConv();}
+
+// ===== نظام المحادثات المتجددة + تخزين تلقائي =====
+let convData = [
+ {id:1,title:"التعارف",lines:[{en:"Hello, how are you?",pron:"هيلو، هاو آر يو؟",ar:"أهلاً، كيف حالك؟"},{en:"I'm fine, thank you. And you?",pron:"آيم فاين، ثانك يو. أند يو؟",ar:"أنا بخير، شكراً لك. وأنت؟"},{en:"What is your name?",pron:"وات إز يور نيم؟",ar:"ما اسمك؟"},{en:"My name is Ahmed.",pron:"ماي نيم إز أحمد.",ar:"اسمي أحمد."},{en:"Nice to meet you.",pron:"نايس تو ميت يو.",ar:"سعيد بلقائك."}]},
+ {id:2,title:"في الشارع",lines:[{en:"Excuse me, where is the street?",pron:"إكسيوز مي، وير إز ذا ستريت؟",ar:"عذراً، أين الشارع؟"},{en:"Go straight ahead.",pron:"جو ستريت أهيد.",ar:"امشِ على طول."},{en:"Thank you very much.",pron:"ثانك يو فيري ماتش.",ar:"شكراً جزيلاً لك."}]}
+];
+let curConv = 0, curLine = 0, hidePron = false;
+
+function saveConvProgress(){
+  try{
+    localStorage.setItem('ep_conversations', JSON.stringify(convData));
+    localStorage.setItem('ep_conv_progress', JSON.stringify({conv:curConv, line:curLine}));
+  }catch(e){}
+}
+function loadConvProgress(){
+  try{
+    let saved = localStorage.getItem('ep_conversations');
+    if(saved){ let p = JSON.parse(saved); if(p && p.length) convData = p; }
+    let prog = JSON.parse(localStorage.getItem('ep_conv_progress')||'{}');
+    if(prog.conv != null) curConv = Math.min(prog.conv, convData.length-1);
+    if(prog.line != null) curLine = prog.line;
+  }catch(e){}
+}
+// تحديث تلقائي من lessons.json لو النت موجود
+async function syncConversations(){
+  try{
+    let r = await fetch('lessons.json?t=' + Date.now());
+    if(r.ok){
+      let fresh = await r.json();
+      if(fresh && fresh.length && JSON.stringify(fresh) !== JSON.stringify(convData)){
+        convData = fresh;
+        saveConvProgress();
+        renderConv();
+        document.getElementById('convStatus').textContent = '✅ تم تحديث المحادثات تلقائياً - عدد المحادثات: ' + convData.length;
+      }
+    }
+  }catch(e){ /* من غير نت - يكمل من التخزين */ }
+}
+function initConv(){ loadConvProgress(); syncConversations(); renderConv(); }
+function renderConv(){
+  let list = document.getElementById('convList');
+  list.innerHTML = convData.map((c,i)=>`<button class="action" style="white-space:nowrap;background:${i===curConv?'#059669':'#e5e7eb'};color:${i===curConv?'#fff':'#111'}" onclick="goToConv(${i})">${c.title}</button>`).join('');
+  let conv = convData[curConv];
+  if(!conv) return;
+  if(curLine >= conv.lines.length) curLine = 0;
+  let l = conv.lines[curLine];
+  document.getElementById('convBox').innerHTML = `<div class="conv-card"><span class="badge">محادثة: ${conv.title} - جملة ${curLine+1} / ${conv.lines.length}</span><br><br><div class="conv-en">${l.en}</div><div class="conv-pron" id="pronLine" style="display:${hidePron?'none':'block'}">${l.pron}</div><div class="conv-ar">${l.ar}</div><br><div style="background:#f3f4f6;height:8px;border-radius:10px;overflow:hidden"><div style="width:${Math.round(((curLine+1)/conv.lines.length)*100)}%;height:100%;background:#059669"></div></div></div>`;
+  document.getElementById('convStatus').textContent = navigator.onLine ? '🌐 متصل - التحديث التلقائي شغال | محفوظ في جهازك' : '📴 من غير نت - شغال من التخزين التلقائي | مكانك محفوظ';
+  saveConvProgress();
+}
+function nextLine(){ let conv = convData[curConv]; if(curLine < conv.lines.length-1){ curLine++; } else { // متواصل - يدخل اللي بعدها على طول
+  if(curConv < convData.length-1){ curConv++; curLine=0; } else { curLine=0; alert('خلصت كل المحادثات! 🎉 هتبدأ من الأول تاني، وأي محادثة جديدة هتظهر هنا لوحدها'); } } renderConv(); }
+function prevLine(){ if(curLine>0){curLine--;} else if(curConv>0){curConv--; curLine=convData[curConv].lines.length-1;} renderConv(); }
+function nextConv(){ if(curConv < convData.length-1){curConv++; curLine=0; renderConv();} }
+function prevConv(){ if(curConv>0){curConv--; curLine=0; renderConv();} }
+function goToConv(i){ curConv=i; curLine=0; renderConv(); }
+function togglePron(){ hidePron=!hidePron; renderConv(); }
+function speakCurrentEn(){ let l = convData[curConv].lines[curLine]; speakEn(l.en); }
+// تحديث في الخلفية كل 30 ثانية لو النت رجع
+setInterval(()=>{ if(navigator.onLine) syncConversations(); }, 30000);
+window.addEventListener('online', syncConversations);
 
 const fullDict={
 'أسد':{en:'Lion',img:'🦁',ex:'The lion is king of jungle',type:'اسم - حيوان مفترس'},
@@ -82,7 +169,7 @@ const fullDict={
 'سيارة':{en:'Car',img:'🚗',ex:'Fast car',type:'مواصلات'},
 'شمس':{en:'Sun',img:'☀️',ex:'The sun is hot',type:'طبيعة'},
 'قمر':{en:'Moon',img:'🌙',ex:'The moon is bright',type:'طبيعة'},
-'سماء':{en:'Sky',img:'[STRIPPED 3 bytes] sky',ex:'Blue sky',type:'طبيعة'},
+'سماء':{en:'Sky',img:'🌤️',ex:'Blue sky',type:'طبيعة'},
 'بحر':{en:'Sea',img:'🌊',ex:'Blue sea',type:'طبيعة'},
 'موز':{en:'Banana',img:'🍌',ex:'I like banana',type:'فاكهة'},
 'برتقال':{en:'Orange',img:'🍊',ex:'Sweet orange',type:'فاكهة'},
@@ -110,7 +197,6 @@ const fullDict={
 'تعالى':{en:'Come here',img:'👋',ex:'Come here please',type:'فعل أمر'},
 'تعال':{en:'Come',img:'👋',ex:'Come here',type:'فعل أمر'}
 };
-
 function initLearn(){
  let lr=document.getElementById('lettersRow'),sr=document.getElementById('smallRow'),ar=document.getElementById('arabicRow'),nr=document.getElementById('numbersRow'),an=document.getElementById('arabicNumRow');
  lr.innerHTML='';sr.innerHTML='';ar.innerHTML='';nr.innerHTML='';an.innerHTML='';
@@ -125,8 +211,6 @@ function clearBoard(){document.getElementById('board').textContent='';}
 function backspace(){let b=document.getElementById('board');b.textContent=b.textContent.slice(0,-1);}
 function speakBoardAr(){let t=document.getElementById('board').textContent.trim();if(t)speakAr(t);}
 function speakBoardEn(){let t=document.getElementById('board').textContent.trim();if(t)speakEn(t);}
-
-// ==== المساعد الذكي - زي جوجل ====
 function doAssistantSearch(){
  let w=document.getElementById('assistantInput').value.trim();let box=document.getElementById('assistantResult');
  if(!w)return;
@@ -150,7 +234,6 @@ async function doTranslateReal(manualText=null, manualBox=null){
   if(isAr)speakEn(tr);else speakAr(tr);
  }catch(e){box.innerHTML=`<b>${t}</b><br>الترجمة: (غير متاح حالياً - النت ضعيف)<br>جرب كلمات: ${Object.keys(fullDict).join('، ')}`;}
 }
-
 function loadGallery(){
  document.getElementById('galleryBox').innerHTML=`<p style="text-align:center"><b>عدد الكلمات: ${Object.keys(fullDict).length} كلمة</b> - دوس على أي كلمة تسمع نطقها</p>`+Object.entries(fullDict).map(([ar,d])=>`<div class=item style="display:flex;gap:10px;align-items:center"><div style="font-size:50px;width:70px;height:70px;background:#f3f4f6;border-radius:12px;display:flex;align-items:center;justify-content:center">${d.img}</div><div style="flex:1"><b>${ar} = ${d.en}</b><br><span class=badge>${d.type}</span><br><small>${d.ex}</small><br><button class=action style="background:#16a34a" onclick="speakAr('${ar}')">🔊 عربي</button> <button class=action onclick="speakEn('${d.en}')">🔊 EN</button></div></div>`).join('');
 }
