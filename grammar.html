@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مرجع القواعد بالتفصيل الممل</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
+.app{width:100%;max-width:480px;min-height:100vh;background:#0f0e2e;padding:10px}
+h1{text-align:center;font-size:28px;font-weight:900}
+h2{text-align:center;font-size:16px;color:#facc15;margin:4px 0 10px}
+.top{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:10px 0}
+.top button{background:#1e1b4b;color:#fff;border:2px solid #facc15;padding:10px 4px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13px}
+.top button.active{background:#facc15;color:#000}
+.card{background:#fff;color:#111;border-radius:14px;padding:14px;margin-bottom:14px;line-height:1.95}
+.card h3{font-size:19px;margin-bottom:8px}
+.badge{display:inline-block;background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:800;margin:2px}
+.badge2{display:inline-block;background:#dbeafe;color:#1e40af;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:800;margin:2px}
+.form{background:#0f0e2e;color:#facc15;border-radius:10px;padding:12px;margin:8px 0;font-weight:900;text-align:center;direction:ltr;font-size:16px}
+.step{background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;padding:10px;margin:8px 0}
+.step b{color:#4338ca}
+.ex{background:#f1f5f9;border-radius:8px;padding:10px;margin:6px 0}
+.break{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:8px;margin:6px 0;font-size:13px}
+.warn{background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0}
+.vs{background:#fff7ed;border:2px solid #fdba74;border-radius:10px;padding:10px;margin:8px 0}
+.action{background:#6366f1;border:none;color:#fff;padding:8px 12px;border-radius:8px;font-weight:800;cursor:pointer;margin:3px}
+.quiz{background:#eef2ff;border:2px dashed #6366f1;border-radius:10px;padding:10px;margin-top:10px}
+.quiz button{display:block;width:100%;text-align:right;background:#fff;border:2px solid #ddd;padding:9px;border-radius:8px;margin:5px 0;font-family:'Cairo';font-weight:800;cursor:pointer}
+.map{background:#1e1b4b;border:2px solid #facc15;border-radius:12px;padding:10px;margin:10px 0}
+.map table{width:100%;border-collapse:collapse;text-align:center;font-size:12px}
+.map td,.map th{border:1px solid #444;padding:8px;cursor:pointer}
+.map th{background:#facc15;color:#000}
+.map td:hover{background:#6366f1}
+</style>
+</head>
+<body>
+<div class="app">
+<h1>📚 مرجع القواعد</h1>
+<h2>شرح بالتفصيل الممل - ازاي وليه وامتى</h2>
+<div class="map">
+<h3 style="text-align:center;margin-bottom:8px">🗺️ خريطة الأزمنة - دوس على أي زمن</h3>
+<table>
+<tr><th></th><th>بسيط</th><th>مستمر</th><th>تام</th><th>تام مستمر</th></tr>
+<tr><th>حاضر</th><td onclick="goTo('t1')">Present Simple</td><td onclick="goTo('t2')">Present Cont.</td><td onclick="goTo('t3')">Present Perfect</td><td onclick="goTo('t4')">Perf. Cont.</td></tr>
+<tr><th>ماضي</th><td onclick="goTo('t5')">Past Simple</td><td onclick="goTo('t6')">Past Cont.</td><td onclick="goTo('t7')">Past Perfect</td><td onclick="goTo('t8')">Past Perf. Cont.</td></tr>
+<tr><th>مستقبل</th><td onclick="goTo('t9')">Future Simple</td><td onclick="goTo('t10')">Future Cont.</td><td onclick="goTo('t11')">Future Perfect</td><td onclick="goTo('t12')">Future Perf. Cont.</td></tr>
+</table>
+</div>
+<div class="top">
+<button class="active" onclick="showCat('tenses',this)">⏰ الـ 12 زمن</button>
+<button onclick="showCat('basics',this)">🔤 أساسيات</button>
+<button onclick="showCat('advanced',this)">🚀 احتراف</button>
+</div>
+<div id="box"></div>
+</div>
+<script>
+function speakEn(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u);}
+function speakAr(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=0.85;speechSynthesis.speak(u);}
+function goTo(id){showCat('tenses',document.querySelectorAll('.top button')[0]);setTimeout(()=>{document.getElementById(id)?.scrollIntoView({behavior:'smooth'});},100);}
+const data=[
+{id:'t1',cat:'tenses',title:'1 - Present Simple | المضارع البسيط',icon:'📌',
+mean:'يعني ايه؟ يعني حاجة بتحصل على طول، عادة انت متعود عليها، أو حقيقة علمية مش بتتغير. زي: أنا بصحى بدري كل يوم، الشمس بتشرق من الشرق.',
+how:'<b>ازاي نكونه؟ خطوة خطوة:</b><br>1- هات الفاعل: I / You / We / They / He / She / It<br>2- هات الفعل في صورته الأصلية V1: play - go - eat<br>3- لو الفاعل He / She / It بس، زود s على الفعل: plays - goes - eats<br>4- لو الفاعل I / You / We / They، سيب الفعل زي ما هو من غير s',
+form:'I / You / We / They + V1  |  He / She / It + V + s',
+neg:'النفي: I do not (don\'t) + V1 | He does not (doesn\'t) + V1<br>ليه رجعنا الفعل V1؟ لأن does شالت الـ s بداله.',
+ques:'السؤال: Do + S + V1 ? | Does + He/She/It + V1 ?<br>مثال: Do you speak English? = بتتكلم انجليزي؟',
+keys:'always - usually - every day - often - never - sometimes - on Fridays',
+ex:[['I go to school every day','I = أنا | go = أذهب | to school = للمدرسة | every day = كل يوم','أنا بذهب للمدرسة كل يوم، دي عادة ثابتة'],['She plays football on Fridays','She = هي | plays = تلعب + s عشان She | football = كرة قدم | on Fridays = أيام الجمعة','هي بتلعب كورة كل جمعة'],['The sun rises in the east','The sun = الشمس | rises = تشرق + s | in the east = من الشرق','حقيقة علمية ثابتة']],
+when:'<b>امتى نستخدمه؟</b> للعادات والحقائق والمواعيد الثابتة.<br><b>امتى منستخدموش؟</b> لو الحاجة بتحصل دلوقتي حالا، منقولش I go now، نقول I am going now.',
+mistake:'❌ He play football ❌ ✅ الصح: He plays - لازم s مع He/She/It<br>❌ I am go to school every day ❌ ✅ الصح: I go',
+quiz:{q:'She ___ to school every day.',opts:['go','goes','going'],a:1,why:'مع She لازم s'}},
+{id:'t2',cat:'tenses',title:'2 - Present Continuous | المضارع المستمر',icon:'🔄',
+mean:'يعني ايه؟ يعني حاجة بتحصل دلوقتي حالا وانت بتتكلم، ولسه مخلصتش. زي: أنا بكتب دلوقتي، هي نايمة دلوقتي. أو خطة قريبة متأكد منها.',
+how:'<b>ازاي نكونه؟</b><br>1- الفاعل: I / He / She / They<br>2- فعل to be حسب الفاعل: I + am | He/She/It + is | You/We/They + are<br>3- الفعل + ing: writing - playing - sleeping<br>يعني: I + am + writing = أنا بكتب',
+form:'am / is / are + V + ing',
+neg:'النفي: am/is/are + not + Ving<br>مثال: I am not playing = أنا مش بلعب دلوقتي',
+ques:'السؤال: Am/Is/Are + S + Ving ?<br>مثال: Are you studying? = انت بتذاكر دلوقتي؟',
+keys:'now - at the moment - Look! - Listen! - today',
+ex:[['I am writing now','I = أنا | am = فعل مساعد | writing = بكتب + ing','أنا بكتب دلوقتي حالا'],['She is sleeping','She = هي | is = فعل مساعد | sleeping = نايمة + ing','هي نايمة دلوقتي'],['Look! He is running','Look! = بص! | He = هو | is running = بيجري','كلمة Look! دليل ان الحدث بيحصل قدامك']],
+when:'<b>امتى نستخدمه؟</b> لما الحدث بيحصل الآن.<br><b>امتى لأ؟</b> مينفعش مع أفعال الحب والكره: مش بنقول I am loving you، بنقول I love you.',
+mistake:'❌ I am write ❌ ✅ I am writing - لازم ing بعد am/is/are',
+quiz:{q:'Look! The baby ___.',opts:['cry','is crying','cries'],a:1,why:'Look! يعني الآن = مستمر'}},
+{id:'t3',cat:'tenses',title:'3 - Present Perfect | المضارع التام',icon:'✅',
+mean:'يعني ايه؟ يعني حاجة حصلت وخلصت، بس لسه أثرها موجود دلوقتي، أو حاجة حصلت من شوية صغيرين. زي: أنا لسه واكل، يعني شبعان دلوقتي.',
+how:'<b>ازاي نكونه؟</b><br>1- الفاعل<br>2- have مع I/You/We/They، و has مع He/She/It<br>3- الفعل في التصريف الثالث V3: eaten - gone - seen - finished<br>يعني: I + have + eaten = أنا أكلت (ولسه شبعان)',
+form:'have / has + V3',
+neg:'النفي: have/has + not + V3<br>مثال: I have not eaten = أنا لسه مأكلتش',
+ques:'السؤال: Have/Has + S + V3 ?<br>مثال: Have you eaten? = انت أكلت؟',
+keys:'just - already - yet - ever - never - recently - since - for',
+ex:[['I have just eaten','I = أنا | have = مساعد | just = للتو | eaten = أكلت V3','أنا لسه واكل حالا'],['She has gone to Cairo','She = هي | has = مساعد | gone = ذهبت V3 | to Cairo = للقاهرة','هي راحت القاهرة ولسه هناك'],['I have never seen snow','I = أنا | have never = عمري ما | seen = شفت V3 | snow = تلج','خبرة حياتية: عمري ما شفت تلج']],
+when:'<b>امتى نستخدمه؟</b> لما الحدث له أثر الآن، أو خبرة.<br><b>امتى لأ؟</b> لو حددت وقت في الماضي زي yesterday، استخدم ماضي بسيط: I went yesterday',
+mistake:'❌ I have went ❌ ✅ I have gone - التام بياخد V3 مش V2',
+quiz:{q:'I have ___ finished.',opts:['just','yesterday','ago'],a:0,why:'just من كلمات التام'}},
+{id:'t4',cat:'tenses',title:'4 - Present Perfect Continuous',icon:'⏳',
+mean:'يعني ايه؟ يعني حاجة بدأت من زمان ولسه شغالة لحد دلوقتي، واحنا بنركز على المدة اللي عدت. زي: أنا بذاكر من 3 ساعات ولسه بذاكر.',
+how:'<b>ازاي نكونه؟</b><br>1- الفاعل 2- have / has 3- been 4- الفعل + ing<br>يعني: I + have + been + studying',
+form:'have / has + been + Ving',
+neg:'have/has + not + been + Ving',
+ques:'Have/Has + S + been + Ving ?<br>مثال: How long have you been waiting? = بقالك قد ايه مستني؟',
+keys:'since - for - all day - how long',
+ex:[['I have been studying for 3 hours','I = أنا | have been = مساعد | studying = بذاكر + ing | for 3 hours = من 3 ساعات','بدأت من 3 ساعات ولسه بذاكر'],['It has been raining all day','It = هي (للمطر) | has been raining = بتمطر مستمرة | all day = طول اليوم','المطر بدأ من الصبح ولسه شغال']],
+when:'<b>امتى نستخدمه؟</b> لما نركز على المدة والاستمرار.<br><b>الفرق عن التام العادي؟</b> التام بيقول خلصت، التام المستمر بيقول لسه شغال.',
+mistake:'❌ I have been loving ❌ ✅ I have loved - أفعال الحب مش بتاخد ing',
+quiz:{q:'I have been ___ for 2 years.',opts:['learn','learning','learned'],a:1,why:'بعد been لازم Ving'}},
+{id:'t5',cat:'tenses',title:'5 - Past Simple | الماضي البسيط',icon:'⏪',
+mean:'يعني ايه؟ يعني حاجة حصلت وخلصت في وقت معين في الماضي، وانتهت خالص. زي: رحت القاهرة امبارح.',
+how:'<b>ازاي نكونه؟</b><br>1- الفاعل 2- الفعل في التصريف التاني V2<br>لو فعل منتظم زود ed: played - watched<br>لو شاذ احفظه: go - went | eat - ate | see - saw',
+form:'S + V2',
+neg:'النفي: S + did not (didn\'t) + V1<br>ليه V1؟ لأن didn\'t خدت الماضي بدال الفعل.',
+ques:'السؤال: Did + S + V1 ?<br>مثال: Did you go? = انت رحت؟',
+keys:'yesterday - ago - last week - last year - in 2020',
+ex:[['I went to Cairo yesterday','I = أنا | went = رحت V2 من go | to Cairo = للقاهرة | yesterday = امبارح','حدث حصل امبارح وخلص'],['He ate an apple','He = هو | ate = أكل V2 من eat | an apple = تفاحة','حدث انتهى'],['She studied English last year','She = هي | studied = درست V2 | last year = السنة اللي فاتت','حدث في الماضي']],
+when:'<b>امتى نستخدمه؟</b> لما تحدد وقت في الماضي.',
+mistake:'❌ I didn\'t went ❌ ✅ I didn\'t go - بعد didn\'t الفعل V1',
+quiz:{q:'I ___ to school yesterday.',opts:['go','went','gone'],a:1,why:'yesterday = ماضي بسيط V2'}},
+{id:'t6',cat:'tenses',title:'6 - Past Continuous | الماضي المستمر',icon:'🕰️',
+mean:'يعني ايه؟ يعني حاجة كانت شغالة ومستمرة في وقت معين في الماضي، وقطعها حدث تاني، أو حدثين كانوا شغالين مع بعض.',
+how:'<b>ازاي نكونه؟</b><br>1- الفاعل 2- was مع I/He/She/It، و were مع You/We/They 3- الفعل + ing<br>يعني: I + was + sleeping = كنت نايم',
+form:'was / were + Ving',
+neg:'was/were + not + Ving',
+ques:'Was/Were + S + Ving ?',
+keys:'while - when - at 8pm yesterday - all day yesterday',
+ex:[['I was sleeping when he came','I was sleeping = كنت نايم مستمر | when he came = لما جه ماضي بسيط','الحدث المستمر قطعه حدث مفاجئ'],['While I was cooking, she was cleaning','While = بينما | I was cooking = كنت بطبخ | she was cleaning = هي كانت بتنضف','حدثين مستمرين مع بعض']],
+when:'قاعدة ذهبية: while + ماضي مستمر، when + ماضي بسيط.',
+mistake:'❌ I was sleep ❌ ✅ I was sleeping - لازم ing',
+quiz:{q:'While I ___, he called.',opts:['was sleeping','slept','sleep'],a:0,why:'بعد while ماضي مستمر'}},
+{id:'t7',cat:'tenses',title:'7 - Past Perfect | الماضي التام',icon:'🏁',
+mean:'يعني ايه؟ يعني حدثين حصلوا في الماضي، واحد أقدم من التاني. الأقدم بنحطه في الماضي التام، والجديد في الماضي البسيط.',
+how:'<b>ازاي نكونه؟</b><br>1- الفاعل 2- had 3- الفعل V3<br>يعني: I + had + finished = كنت خلصت',
+form:'had + V3',
+neg:'had + not + V3',
+ques:'Had + S + V3 ?',
+keys:'before - after - by the time - already',
+ex:[['I had finished before he came','I had finished = كنت خلصت (الأقدم) | before he came = قبل ما ييجي (الأحدث)','اللي حصل الأول هو التام'],['She had left when I arrived','She had left = كانت مشيت | when I arrived = لما وصلت','مشيت قبل ما أوصل']],
+when:'<b>امتى نستخدمه؟</b> لما يكون عندك حدثين في الماضي وعايز تقول مين حصل الأول.',
+mistake:'الحدث الأول = had + V3، الحدث التاني = V2',
+quiz:{q:'I had eaten before he ___.',opts:['came','had come','comes'],a:0,why:'التاني ماضي بسيط'}},
+{id:'t8',cat:'tenses',title:'8 - Past Perfect Continuous',icon:'📈',
+mean:'يعني ايه؟ يعني حدث كان مستمر لمدة قبل حدث تاني في الماضي. زي: كنت مستني ساعتين قبل ما الأتوبيس ييجي.',
+how:'1- الفاعل 2- had 3- been 4- الفعل + ing<br>يعني: I + had + been + waiting',
+form:'had + been + Ving',
+neg:'had + not + been + Ving',
+ques:'Had + S + been + Ving ?',
+keys:'for - since - before - how long',
+ex:[['I had been waiting for 2 hours before he came','I had been waiting = كنت مستني مستمر | for 2 hours = لمدة ساعتين | before he came = قبل ما ييجي','الانتظار استمر مدة قبل الحدث التاني']],
+when:'بنركز على المدة اللي استمر فيها الحدث الأول.',
+mistake:'متستخدموش لو الحدث مش مستمر، استخدم الماضي التام العادي.',
+quiz:{q:'He had been ___ for 3 hours.',opts:['wait','waiting','waited'],a:1,why:'بعد been لازم Ving'}},
+{id:'t9',cat:'tenses',title:'9 - Future Simple | المستقبل البسيط',icon:'🚀',
+mean:'يعني ايه؟ يعني حاجة هتحصل في المستقبل. ممكن تكون قرار سريع لسه واخده دلوقتي، أو وعد، أو تنبؤ، أو خطة.',
+how:'<b>ازاي نكونه؟ طريقتين:</b><br>1- will + V1: للقرار السريع والوعد والتنبؤ<br>2- am/is/are + going to + V1: للخطة اللي مرتبها من بدري<br>مثال: I will help you = هساعدك (قرار سريع) | I am going to study tonight = هنذاكر النهاردة (خطة)',
+form:'S + will + V1  |  S + am/is/are + going to + V1',
+neg:'will not (won\'t) + V1',
+ques:'Will + S + V1 ?',
+keys:'tomorrow - next week - soon - I think - I promise',
+ex:[['I will travel tomorrow','I = أنا | will = سوف | travel = أسافر V1','قرار مستقبلي'],['I am going to study tonight','I am going to = هنوي | study = أذاكر','خطة مرتبة']],
+when:'will = قرار سريع، going to = خطة مرتبة من قبل. دي أهم فرق.',
+mistake:'❌ I will travels ❌ ✅ I will travel - بعد will الفعل V1 من غير s',
+quiz:{q:'Watch out! You ___ fall!',opts:['will','are','were'],a:0,why:'تحذير سريع = will'}},
+{id:'t10',cat:'tenses',title:'10 - Future Continuous',icon:'🔮',
+mean:'يعني ايه؟ يعني في وقت معين في المستقبل، هتكون بتعمل حاجة ومستمرة فيها. زي: بكرة في نفس الوقت هكون طاير في الطيارة.',
+how:'1- الفاعل 2- will 3- be 4- الفعل + ing<br>يعني: I + will + be + flying',
+form:'will + be + Ving',
+neg:'will + not + be + Ving',
+ques:'Will + S + be + Ving ?',
+keys:'at this time tomorrow - at 8pm tomorrow - this time next week',
+ex:[['At this time tomorrow, I will be flying','At this time tomorrow = بكرة نفس الوقت | I will be flying = هكون طاير','حدث هيكون مستمر في وقت محدد']],
+when:'لازم تحدد وقت معين في المستقبل.',
+mistake:'متنساش be: I will flying ❌ ✅ I will be flying',
+quiz:{q:'At 8pm tomorrow, I ___ driving.',opts:['will be','am','was'],a:0,why:'وقت محدد + استمرار = Future Continuous'}},
+{id:'t11',cat:'tenses',title:'11 - Future Perfect',icon:'🎯',
+mean:'يعني ايه؟ يعني حاجة هتكون خلصت قبل وقت معين في المستقبل. زي: بحلول بكرة هكون خلصت الواجب.',
+how:'1- الفاعل 2- will 3- have 4- الفعل V3<br>يعني: I + will + have + finished',
+form:'will + have + V3',
+neg:'will + not + have + V3',
+ques:'Will + S + have + V3 ?',
+keys:'by tomorrow - by next year - by 2030 - by the time',
+ex:[['By tomorrow, I will have finished','By tomorrow = بحلول بكرة | I will have finished = هكون خلصت','الحدث هيكون خلص قبل بكرة']],
+when:'كلمة by + وقت مستقبلي هي علامته.',
+mistake:'❌ I will have finish ❌ ✅ I will have finished - بعد have لازم V3',
+quiz:{q:'By next year, I will have ___ English.',opts:['learn','learned','learning'],a:1,why:'بعد have لازم V3'}},
+{id:'t12',cat:'tenses',title:'12 - Future Perfect Continuous',icon:'🏆',
+mean:'يعني ايه؟ يعني حاجة هتكون مستمرة لمدة معينة لحد وقت في المستقبل. زي: بحلول السنة الجاية هكون بذاكر من 5 سنين.',
+how:'1- الفاعل 2- will 3- have 4- been 5- الفعل + ing<br>يعني: I + will + have + been + studying',
+form:'will + have + been + Ving',
+neg:'will + not + have + been + Ving',
+ques:'Will + S + have + been + Ving ?',
+keys:'for - by - since',
+ex:[['By next year, I will have been studying for 5 years','By next year = بحلول السنة الجاية | I will have been studying = هكون بذاكر مستمر | for 5 years = من 5 سنين','مدة مستمرة لحد وقت في المستقبل']],
+when:'أصعب زمن، بس فكرته: مدة + هتكون مستمرة لحد وقت مستقبلي.',
+mistake:'متنساش الترتيب: will + have + been + Ving',
+quiz:{q:'By 2030, I will have been ___ here for 10 years.',opts:['live','living','lived'],a:1,why:'بعد been لازم Ving'}},
+{id:'b1',cat:'basics',title:'أدوات التعريف a / an / the',icon:'🔤',
+mean:'يعني ايه؟ a و an يعني واحد نكرة مش محدد، the يعني الشيء المحدد المعروف.',
+how:'<b>ازاي نختار؟</b><br>1- لو الاسم مفرد وبيبدأ بحرف ساكن: a book - a car<br>2- لو بيبدأ بحرف متحرك a e i o u: an apple - an egg<br>3- لو الشيء معروف ومحدد: the sun - the Nile - the teacher',
+form:'a + اسم مفرد ساكن | an + اسم مفرد متحرك | the + اسم محدد',
+neg:'',ques:'',keys:'a - an - the',
+ex:[['I have a book','I have = عندي | a book = كتاب (أي كتاب)','نكرة'],['I eat an apple','an apple = تفاحة (بدأت بحرف متحرك)','عشان apple بتبدأ بـ a'],['The sun is hot','The sun = الشمس (واحدة معروفة)','الشمس واحدة بس، عشان كده the']],
+when:'a/an للنكرة، the للمعرفة. و the مع الأنهار والبحار والشمس والقمر.',
+mistake:'❌ a apple ❌ ✅ an apple - قبل المتحرك an',
+quiz:{q:'I saw ___ elephant.',opts:['a','an','the'],a:1,why:'elephant متحرك = an'}},
+{id:'b2',cat:'basics',title:'الضمائر كلها بالتفصيل',icon:'👤',
+mean:'يعني ايه؟ الضمير بيحل محل الاسم عشان منكررش الاسم كل شوية. فيه ضمير فاعل، وضمير مفعول، وضمير ملكية.',
+how:'<b>ازاي نستخدمهم؟</b><br>1- في أول الجملة كفاعل: I - He - She - We - They<br>2- بعد الفعل أو حرف الجر كمفعول: me - him - her - us - them<br>3- للملكية: my - his - her - our - their + اسم<br>مثال: I gave him my book = أنا اديته كتابي',
+form:'I-me-my | He-him-his | She-her-her | We-us-our | They-them-their',
+neg:'',ques:'',keys:'I - you - he - she - it - we - they',
+ex:[['I love you','I = أنا فاعل | love = بحب | you = انت مفعول','أنا فاعل وانت مفعول'],['This is my book','This = ده | is = يكون | my book = كتابي','my للملكية'],['He gave me his pen','He = هو فاعل | gave me = اداني | his pen = قلمه','3 ضمائر في جملة واحدة']],
+when:'الفاعل في الأول، المفعول بعد الفعل، الملكية قبل الاسم.',
+mistake:'❌ Me love you ❌ ✅ I love you - في الأول ضمير فاعل',
+quiz:{q:'___ is my friend.',opts:['He','Him','His'],a:0,why:'أول الجملة فاعل'}},
+{id:'b3',cat:'basics',title:'الجمع Plural بالتفصيل',icon:'👥',
+mean:'يعني ايه؟ ازاي نحول الاسم المفرد لجمع. فيه قاعدة عامة وفيه استثناءات لازم تتحفظ.',
+how:'<b>ازاي نجمع؟</b><br>1- أغلب الكلمات + s: book - books<br>2- لو بتنتهي بـ s - x - ch - sh: + es: box - boxes<br>3- لو بتنتهي بـ y قبلها حرف ساكن: شيل y وحط ies: baby - babies<br>4- كلمات شاذة احفظها: man - men | woman - women | child - children | foot - feet',
+form:'book+s | box+es | baby-ies | man=men',
+neg:'',ques:'',keys:'s - es - ies - irregular',
+ex:[['One book - Two books','book + s = books','القاعدة العامة'],['One child - Two children','child = طفل | children = أطفال','شاذة لازم تتحفظ'],['One man - Two men','man = رجل | men = رجال','شاذة']],
+when:'لو الكلمة بتنتهي بـ y وقبلها حرف متحرك زي boy، زود s بس: boys مش boies.',
+mistake:'❌ childs ❌ ✅ children<br>❌ mans ❌ ✅ men',
+quiz:{q:'Plural of child is ___.',opts:['childs','children','childes'],a:1,why:'child جمعها children'}},
+{id:'b4',cat:'basics',title:'المعدود وغير المعدود',icon:'🥛',
+mean:'يعني ايه؟ معدود يعني تقدر تعده: كتاب، قلم. غير معدود يعني مش بتعد، زي: مية، رز، فلوس، سكر.',
+how:'<b>ازاي نفرق؟</b><br>1- معدود: many - a few - a / an - عدد: many books - two books<br>2- غير معدود: much - a little - some: much water - a little sugar<br>3- لو عايز تعد غير معدود، حط وحدة: a bottle of water - a bag of rice',
+form:'Countable: many - a few | Uncountable: much - a little',
+neg:'',ques:'',keys:'much - many - some - any - a few - a little',
+ex:[['I have many books','many = كتير | books = كتب معدودة','many مع المعدود'],['I drink much water','much = كتير | water = مية غير معدودة','much مع غير المعدود'],['I have a little money','a little = شوية | money = فلوس غير معدودة','money مش بتتعد']],
+when:'many = معدود، much = غير معدود. some في المثبت، any في النفي والسؤال.',
+mistake:'❌ much books ❌ ✅ many books<br>❌ many water ❌ ✅ much water',
+quiz:{q:'I have ___ water.',opts:['many','much','a'],a:1,why:'water غير معدود'}},
+{id:'b5',cat:'basics',title:'حروف الجر in - on - at بالتفصيل',icon:'📍',
+mean:'يعني ايه؟ حروف الجر بتقول فين وامتى. أصعب 3 حروف هما in و on و at، لأن كل واحد ليه استخدام للزمان والمكان.',
+how:'<b>للمكان:</b><br>in = جوة حاجة كبيرة: in Cairo - in Egypt - in the room<br>on = على سطح: on the table - on the wall<br>at = مكان صغير محدد: at school - at home<br><b>للزمان:</b><br>in = سنين وشهور وفترات: in 2020 - in the morning<br>on = أيام وتواريخ: on Monday - on 1st January<br>at = ساعات وأوقات محددة: at 8pm - at night',
+form:'in: مدن/سنين | on: أيام/أسطح | at: ساعات/أماكن صغيرة',
+neg:'',ques:'',keys:'in - on - at',
+ex:[['I live in Cairo','in Cairo = في القاهرة (مدينة كبيرة)','in للمدن'],['The book is on the table','on the table = على الترابيزة (سطح)','on للأسطح'],['I wake up at 7am','at 7am = الساعة 7 (وقت محدد)','at للساعات']],
+when:'لو بتتكلم عن مدينة كبيرة in، لو مكان صغير at، لو سطح on.',
+mistake:'❌ on 2020 ❌ ✅ in 2020<br>❌ in Monday ❌ ✅ on Monday<br>❌ in 7am ❌ ✅ at 7am',
+quiz:{q:'I was born ___ 2010.',opts:['on','in','at'],a:1,why:'السنين مع in'}},
+{id:'b6',cat:'basics',title:'الصفات والمقارنة بالتفصيل',icon:'📏',
+mean:'يعني ايه؟ الصفة بتوصف الاسم: طويل، جميل، كبير. والمقارنة بتقارن بين اتنين أو أكتر: أطول، الأطول.',
+how:'<b>ازاي نقارن؟</b><br>1- صفة قصيرة (مقطع واحد): زود er للمقارنة و est للتفضيل: tall - taller - tallest<br>2- صفة طويلة (مقطعين أو أكتر): حط more و most: beautiful - more beautiful - most beautiful<br>3- صفات شاذة: good - better - best | bad - worse - worst',
+form:'tall-taller-tallest | beautiful-more-most | good-better-best',
+neg:'',ques:'',keys:'er - est - more - most - than',
+ex:[['Ali is taller than Ahmed','taller than = أطول من','مقارنة بين اتنين + than'],['She is the tallest in class','the tallest = الأطول','تفضيل + the'],['This is more beautiful than that','more beautiful = أجمل','صفة طويلة + more']],
+when:'مقارنة بين اتنين = er + than، تفضيل واحد من الكل = the + est',
+mistake:'❌ more taller ❌ ✅ taller - يا er يا more مش الاتنين',
+quiz:{q:'Ahmed is ___ than Ali.',opts:['tall','taller','tallest'],a:1,why:'مقارنة بين اتنين = er'}},
+{id:'a1',cat:'advanced',title:'الأفعال الناقصة Modal Verbs بالتفصيل',icon:'💪',
+mean:'يعني ايه؟ أفعال مساعدة بتعبر عن القدرة والضرورة والاحتمال والأدب. زي: أقدر، لازم، المفروض، ممكن.',
+how:'<b>ازاي نستخدمها؟</b><br>القاعدة الذهبية: Modal + V1 من غير أي إضافة، لا s ولا ed ولا ing<br>can = أقدر (قدرة) | could = كنت أقدر / ممكن بأدب<br>must = لازم (ضرورة قوية) | should = المفروض (نصيحة)<br>may = ممكن (احتمال / إذن) | might = ممكن بس احتمال أقل',
+form:'Modal + V1',
+neg:'Modal + not + V1 | مثال: You must not smoke = ممنوع تدخن',
+ques:'Modal + S + V1 ? | مثال: Can you help me? = ممكن تساعدني؟',
+keys:'can - could - must - should - may - might - will - would',
+ex:[['I can swim','can = أقدر | swim = أعوم V1','قدرة'],['You must study','must = لازم | study = تذاكر','ضرورة'],['You should sleep early','should = المفروض | sleep = تنام','نصيحة']],
+when:'can للقدرة، must للضرورة، should للنصيحة، could/may للأدب والاحتمال.',
+mistake:'❌ He can plays ❌ ✅ He can play - بعد Modal الفعل V1 من غير s',
+quiz:{q:'You ___ study to pass.',opts:['must','musts','musted'],a:0,why:'بعد must الفعل V1'}},
+{id:'a2',cat:'advanced',title:'الجمل الشرطية If بالتفصيل الممل',icon:'🔀',
+mean:'يعني ايه؟ لو حصل كذا، هيحصل كذا. فيه 4 أنواع، كل نوع بيعبر عن درجة احتمال مختلفة: حقيقة، ممكن، خيال، فات خلاص.',
+how:'<b>الـ 4 حالات خطوة بخطوة:</b><br><b>Zero:</b> حقيقة علمية: If + مضارع بسيط، مضارع بسيط<br>مثال: If you heat water, it boils = لو سخنت المية بتغلي<br><b>First:</b> ممكن يحصل فعلا: If + مضارع بسيط، will + V1<br>مثال: If you study, you will pass = لو ذاكرت هتنجح<br><b>Second:</b> خيال مستحيل دلوقتي: If + ماضي بسيط، would + V1<br>مثال: If I were rich, I would travel = لو كنت غني كنت هسافر<br><b>Third:</b> ندم على الماضي: If + ماضي تام، would have + V3<br>مثال: If I had studied, I would have passed = لو كنت ذاكرت كنت نجحت',
+form:'Zero: If+Present, Present | First: If+Present, will+V1 | Second: If+Past, would+V1 | Third: If+Past Perfect, would have+V3',
+neg:'',ques:'',keys:'if - unless - when',
+ex:[['If you heat water, it boils','حقيقة - Zero','بتغلي على طول'],['If you study, you will pass','ممكن - First','ممكن تنجح لو ذاكرت'],['If I were rich, I would travel','خيال - Second','مش غني دلوقتي'],['If I had studied, I would have passed','ندم - Third','فات خلاص']],
+when:'Zero = حقيقة، First = ممكن، Second = خيال، Third = ندم على الماضي.',
+mistake:'في Second مع I بنقول If I were مش If I was',
+quiz:{q:'If you study, you ___ pass.',opts:['will','would','would have'],a:0,why:'First = will'}},
+{id:'a3',cat:'advanced',title:'المبني للمجهول Passive بالتفصيل',icon:'🔄',
+mean:'يعني ايه؟ بدل ما نقول مين عمل الحاجة، بنقول الحاجة اتعملت. بنهتم بالفعل مش بالفاعل. زي: الجواب اتكتب، البيت اتبنى.',
+how:'<b>ازاي نحول من معلوم لمجهول؟</b><br>1- هات المفعول وحطه في الأول<br>2- حط فعل to be حسب الزمن: is/are - was/were - will be<br>3- حط الفعل في التصريف الثالث V3<br>4- لو عايز تقول مين عمله، حط by + الفاعل<br>مثال معلوم: Ahmed writes a letter<br>مجهول: A letter is written by Ahmed',
+form:'be + V3 | am/is/are + V3 | was/were + V3 | will be + V3',
+neg:'',ques:'',keys:'by',
+ex:[['A letter is written by Ahmed','A letter = الجواب (المفعول بقى فاعل) | is written = اتكتب | by Ahmed = بواسطة أحمد','مضارع مجهول'],['The house was built in 2020','The house = البيت | was built = اتبنى | in 2020 = 2020','ماضي مجهول'],['English is spoken everywhere','English = الانجليزي | is spoken = بيتكلم','حقيقة عامة']],
+when:'بنستخدمه لما الفاعل مش مهم أو مش معروف. زي: The thief was arrested = الحرامي اتقبض عليه.',
+mistake:'❌ A letter is wrote ❌ ✅ is written - لازم V3',
+quiz:{q:'The cake ___ by my mother.',opts:['was made','made','makes'],a:0,why:'مجهول ماضي = was + V3'}},
+{id:'a4',cat:'advanced',title:'الكلام المنقول Reported Speech بالتفصيل',icon:'💬',
+mean:'يعني ايه؟ لما حد يقول كلام، وانت تنقله لحد تاني. زي: هو قال: أنا سعيد، انت تقول: هو قال إنه كان سعيد. بنرجع الزمن خطوة لورا.',
+how:'<b>ازاي ننقل؟</b><br>1- شيل علامات التنصيص<br>2- رجع الزمن خطوة: Present -> Past | Past -> Past Perfect | will -> would | can -> could | am -> was<br>3- غير الضمائر والكلمات: I -> he | here -> there | today -> that day<br>مثال: He said: "I am happy" -> He said that he was happy',
+form:'said + that + جملة بزمن أقدم',
+neg:'',ques:'',keys:'said - told - asked',
+ex:[['He said that he was happy','He said: "I am happy" -> He said he was happy','am -> was'],['She said that she would come','She said: "I will come" -> She said she would come','will -> would']],
+when:'لو الفعل said في الماضي، بنرجع الزمن. لو said في المضارع (He says)، الزمن مش بيتغير.',
+mistake:'❌ He said he is happy ❌ ✅ He said he was happy - لازم نرجع الزمن',
+quiz:{q:'He said he ___ happy.',opts:['is','was','will'],a:1,why:'am -> was'}},
+{id:'a5',cat:'advanced',title:'الأسئلة Wh Questions بالتفصيل',icon:'❓',
+mean:'يعني ايه؟ السؤال اللي بيبدأ بأداة استفهام، والإجابة عليه مش Yes/No، الإجابة معلومة. زي: اسمك ايه؟ ساكن فين؟',
+how:'<b>ازاي نكون السؤال؟</b><br>1- أداة الاستفهام: What - Where - When - Why - Who - How<br>2- فعل مساعد: Do/Does/Did - am/is/are - will<br>3- الفاعل 4- الفعل V1<br>مثال: Where + do + you + live? = ساكن فين؟',
+form:'Wh + Aux + S + V1 ?',
+neg:'',ques:'',keys:'What - Where - When - Why - Who - How',
+ex:[['What is your name?','What = ايه | is = يكون | your name = اسمك','بتسأل عن اسم'],['Where do you live?','Where = فين | do you live = بتسكن','بتسأل عن مكان'],['Why are you sad?','Why = ليه | are you sad = انت زعلان','بتسأل عن سبب']],
+when:'What = ايه، Where = فين، When = امتى، Why = ليه، Who = مين، How = ازاي، How much = بكام، How old = عندك كام سنة',
+mistake:'❌ Where you live? ❌ ✅ Where do you live? - لازم فعل مساعد في السؤال',
+quiz:{q:'___ do you live? - In Cairo.',opts:['Where','What','When'],a:0,why:'الإجابة مكان = Where'}},
+{id:'a6',cat:'advanced',title:'used to - be used to - get used to بالتفصيل',icon:'🔁',
+mean:'يعني ايه؟ 3 قواعد شكلهم شبه بعض بس معناهم مختلف خالص، وده اللي بيلخبط الطلبة.',
+how:'<b>الفرق بالتفصيل:</b><br>1- used to + V1 = كنت بعمل حاجة زمان وبطلت: I used to play football = كنت بلعب كورة زمان وبطلت<br>2- be used to + Ving = متعود على حاجة دلوقتي: I am used to waking up early = أنا متعود أصحى بدري<br>3- get used to + Ving = بدأت أتعود: I am getting used to the new job = بدأت أتعود على الشغل الجديد',
+form:'used to + V1 | be used to + Ving | get used to + Ving',
+neg:'',ques:'',keys:'used to',
+ex:[['I used to play football','used to + play V1','عادة في الماضي وانتهت'],['I am used to waking up early','am used to + waking Ving','متعود دلوقتي'],['I am getting used to the job','getting used to + Ving','بدأت أتعود']],
+when:'used to = ماضي وانتهى، be used to = متعود دلوقتي، get used to = عملية التعود لسه شغالة.',
+mistake:'❌ I used to waking ❌ ✅ I used to wake - used to + V1 من غير ing',
+quiz:{q:'I ___ to play when I was young.',opts:['used','am used','get used'],a:0,why:'عادة ماضي وانتهت'}},
+{id:'a7',cat:'advanced',title:'Gerund و Infinitive بالتفصيل',icon:'⚡',
+mean:'يعني ايه؟ امتى نقول الفعل + ing وامتى نقول to + الفعل. فيه أفعال بتحب ing وأفعال بتحب to.',
+how:'<b>القاعدة:</b><br>1- أفعال بتحب Ving: enjoy - love - like - hate - finish - avoid<br>مثال: I enjoy reading = بحب القراءة<br>2- أفعال بتحب to + V1: want - decide - need - hope - plan<br>مثال: I want to read = عايز أقرأ',
+form:'Gerund: Ving | Infinitive: to + V1',
+neg:'',ques:'',keys:'enjoy - want - decide - love - need',
+ex:[['I enjoy reading','enjoy + reading Ving','enjoy بتحب Ving'],['I want to read','want + to read','want بتحب to + V1'],['She decided to travel','decided + to travel','decide بتحب to + V1']],
+when:'احفظ قائمة الأفعال: enjoy/love/like + Ving، want/decide/need + to + V1.',
+mistake:'❌ I enjoy to read ❌ ✅ I enjoy reading',
+quiz:{q:'I enjoy ___ books.',opts:['read','to read','reading'],a:2,why:'enjoy + Ving'}},
+];
+function render(cat){
+ let list=data.filter(d=>d.cat===cat);
+ document.getElementById('box').innerHTML=list.map(d=>`
+ <div class="card" id="${d.id}">
+ <h3>${d.icon} ${d.title}</h3>
+ <div class="step"><b>📖 يعني ايه؟</b><br>${d.mean}</div>
+ <div class="step"><b>🛠️ ازاي نكونه؟ شرح خطوة بخطوة</b><br>${d.how}</div>
+ <div class="form">${d.form}</div>
+ ${d.neg?`<div><b>❌ النفي:</b> ${d.neg}</div>`:''}
+ ${d.ques?`<div><b>❓ السؤال:</b> ${d.ques}</div>`:''}
+ <div><b>🔑 الكلمات الدالة:</b> <span class="badge2">${d.keys}</span></div><br>
+ <b>📝 أمثلة متفككة كلمة كلمة:</b>${d.ex.map(e=>`<div class="ex"><b>${e[0]}</b><div class="break">🔍 تفكيك: ${e[1]}</div><div>💡 المعنى: ${e[2]}</div></div>`).join('')}
+ <div class="vs">${d.when}</div>
+ <div class="warn"><b>⚠️ أخطاء المصريين:</b><br>${d.mistake}</div>
+ <button class="action" onclick="speakEn('${d.title}')">🔊 نطق EN</button>
+ <button class="action" style="background:#16a34a" onclick="speakAr('${d.title}')">🔊 شرح عربي</button>
+ <div class="quiz"><b>✍️ اختبر نفسك:</b><br>${d.quiz.q}<br>${d.quiz.opts.map((o,i)=>`<button onclick="checkQuiz(this,${i===d.quiz.a},'${d.quiz.why}')">${o}</button>`).join('')}<div class="quizRes"></div></div>
+ </div>`).join('');
+}
+function checkQuiz(btn,ok,why){let res=btn.parentElement.querySelector('.quizRes');if(ok){btn.style.background='#dcfce7';btn.style.borderColor='#16a34a';res.innerHTML=`<b style="color:#16a34a">✅ صح! ${why}</b>`;speakEn('Correct');}else{btn.style.background='#fee2e2';res.innerHTML=`<b style="color:#dc2626">❌ غلط - ${why}</b>`;}}
+function showCat(cat,btn){document.querySelectorAll('.top button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render(cat);}
+render('tenses');
+</script>
+</body>
+</html>
