@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحدي النهاردة</title>
+<style>
+body{font-family:sans-serif;background:#f0f2f5;padding:15px;text-align:center}
+.card{background:#fff;padding:20px;border-radius:15px;margin:10px 0;box-shadow:0 2px 8px #ddd}
+.word{background:#eef6ff;padding:10px;margin:5px;border-radius:10px}
+button{background:#ff9800;color:#fff;border:none;padding:12px 25px;border-radius:10px;font-size:18px;cursor:pointer}
+.opt{display:block;width:100%;background:#fff;color:#000;border:1px solid #ccc;margin:5px 0}
+.stars{font-size:30px}
+</style>
+</head>
+<body>
+<h2>🏆 تحدي النهاردة</h2>
+<div class="stars" id="stars">⭐ 0</div>
+<div id="content">جاري التحميل...</div>
+<br>
+<button onclick="location.href='index.html'">رجوع للرئيسية</button>
+
+<script>
+let data;
+let day = new Date().getDate();
+if(day > 30) day = 30;
+
+fetch('daily_challenge.json')
+.then(r=>r.json())
+.then(j=>{
+  data = j.challenges.find(c=>c.day===day) || j.challenges[0];
+  showChallenge();
+});
+
+function showChallenge(){
+  let stars = localStorage.getItem('myStars') || 0;
+  document.getElementById('stars').innerText = '⭐ ' + stars;
+  let html = `<div class="card"><h3>${data.title}</h3></div>`;
+  html += `<div class="card"><h3>📝 5 كلمات</h3>`;
+  data.words.forEach(w=>{
+    html += `<div class="word"><b>${w.en}</b> - ${w.pron} - ${w.ar}</div>`;
+  });
+  html += `</div>`;
+  html += `<div class="card"><h3>💬 محادثة</h3><p>${data.conversation.en}</p><p>${data.conversation.ar}</p></div>`;
+  html += `<div class="card"><h3>❓ ${data.quiz.question}</h3>`;
+  data.quiz.options.forEach((op,i)=>{
+    html += `<button class="opt" onclick="check(${i})">${op}</button>`;
+  });
+  html += `</div>`;
+  document.getElementById('content').innerHTML = html;
+}
+
+function check(i){
+  if(i === data.quiz.answer){
+    let s = parseInt(localStorage.getItem('myStars')||0) + 1;
+    localStorage.setItem('myStars', s);
+    alert('صح! 🎉 كسبت نجمة');
+    showChallenge();
+  } else {
+    alert('غلط، حاول تاني');
+  }
+}
+</script>
+</body>
+</html>
