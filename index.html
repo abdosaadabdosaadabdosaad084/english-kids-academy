@@ -43,11 +43,9 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 <div class="card" style="background:#dc2626" onclick="openScreen('grammarScreen')">📚 قواعد جوجل</div>
 <div class="card" style="background:#059669;grid-column:span 2" onclick="openScreen('convScreen')">💬 محادثات متجددة - زي Loecsen<br><span style="font-size:12px">تحديث تلقائي + شغال من غير نت</span></div>
 <div class="card" style="background:#d97706;grid-column:span 2" onclick="openScreen('galleryScreen')">📸 معرض صور - 40 كلمة بالصور</div>
-<a href="challenge.html" style="grid-column:span 2;display:block;background:#FF9800;color:#fff;padding:18px;border-radius:14px;text-align:center;text-decoration:none;font-size:22px;font-weight:900;">تعليم الانجليزية</a>
+<a href="challenge.html" style="grid-column:span 2;display:block;background:#FF9800;color:#fff;padding:18px;border-radius:14px;text-align:center;text-decoration:none;font-size:22px;font-weight:900;">اسئلة التحدي</a>
 </div>
 </div>
-
-<!-- شاشة المحادثات الجديدة -->
 <div id="convScreen" class="screen">
 <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المحادثات المتجددة</h3></div>
 <div class="content-box">
@@ -68,7 +66,6 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 <p id="convStatus" style="text-align:center;font-size:12px;color:#666;margin-top:8px"></p>
 </div>
 </div>
-
 <div id="learnScreen" class="screen">
 <div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>السبورة الحرة</h3></div>
 <div class="row" id="lettersRow"></div><div class="row" id="smallRow"></div><div class="row" id="arabicRow"></div>
@@ -92,68 +89,25 @@ function speakEn(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthe
 function speakAr(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=0.85;speechSynthesis.speak(u);}
 function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('homeScreen').classList.add('active');}
 function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='learnScreen')initLearn();if(id==='gamesScreen')initGame();if(id==='galleryScreen')loadGallery();if(id==='convScreen')initConv();}
-
-// ===== نظام المحادثات المتجددة + تخزين تلقائي =====
 let convData = [
  {id:1,title:"التعارف",lines:[{en:"Hello, how are you?",pron:"هيلو، هاو آر يو؟",ar:"أهلاً، كيف حالك؟"},{en:"I'm fine, thank you. And you?",pron:"آيم فاين، ثانك يو. أند يو؟",ar:"أنا بخير، شكراً لك. وأنت؟"},{en:"What is your name?",pron:"وات إز يور نيم؟",ar:"ما اسمك؟"},{en:"My name is Ahmed.",pron:"ماي نيم إز أحمد.",ar:"اسمي أحمد."},{en:"Nice to meet you.",pron:"نايس تو ميت يو.",ar:"سعيد بلقائك."}]},
  {id:2,title:"في الشارع",lines:[{en:"Excuse me, where is the street?",pron:"إكسيوز مي، وير إز ذا ستريت؟",ar:"عذراً، أين الشارع؟"},{en:"Go straight ahead.",pron:"جو ستريت أهيد.",ar:"امشِ على طول."},{en:"Thank you very much.",pron:"ثانك يو فيري ماتش.",ar:"شكراً جزيلاً لك."}]}
 ];
 let curConv = 0, curLine = 0, hidePron = false;
-
-function saveConvProgress(){
-  try{
-    localStorage.setItem('ep_conversations', JSON.stringify(convData));
-    localStorage.setItem('ep_conv_progress', JSON.stringify({conv:curConv, line:curLine}));
-  }catch(e){}
-}
-function loadConvProgress(){
-  try{
-    let saved = localStorage.getItem('ep_conversations');
-    if(saved){ let p = JSON.parse(saved); if(p && p.length) convData = p; }
-    let prog = JSON.parse(localStorage.getItem('ep_conv_progress')||'{}');
-    if(prog.conv != null) curConv = Math.min(prog.conv, convData.length-1);
-    if(prog.line != null) curLine = prog.line;
-  }catch(e){}
-}
-// تحديث تلقائي من lessons.json لو النت موجود
-async function syncConversations(){
-  try{
-    let r = await fetch('lessons.json?t=' + Date.now());
-    if(r.ok){
-      let fresh = await r.json();
-      if(fresh && fresh.length && JSON.stringify(fresh) !== JSON.stringify(convData)){
-        convData = fresh;
-        saveConvProgress();
-        renderConv();
-        document.getElementById('convStatus').textContent = '✅ تم تحديث المحادثات تلقائياً - عدد المحادثات: ' + convData.length;
-      }
-    }
-  }catch(e){ /* من غير نت - يكمل من التخزين */ }
-}
+function saveConvProgress(){ try{ localStorage.setItem('ep_conversations', JSON.stringify(convData)); localStorage.setItem('ep_conv_progress', JSON.stringify({conv:curConv, line:curLine})); }catch(e){} }
+function loadConvProgress(){ try{ let saved = localStorage.getItem('ep_conversations'); if(saved){ let p = JSON.parse(saved); if(p && p.length) convData = p; } let prog = JSON.parse(localStorage.getItem('ep_conv_progress')||'{}'); if(prog.conv != null) curConv = Math.min(prog.conv, convData.length-1); if(prog.line != null) curLine = prog.line; }catch(e){} }
+async function syncConversations(){ try{ let r = await fetch('lessons.json?t=' + Date.now()); if(r.ok){ let fresh = await r.json(); if(fresh && fresh.length && JSON.stringify(fresh) !== JSON.stringify(convData)){ convData = fresh; saveConvProgress(); renderConv(); document.getElementById('convStatus').textContent = '✅ تم تحديث المحادثات تلقائياً - عدد المحادثات: ' + convData.length; } } }catch(e){} }
 function initConv(){ loadConvProgress(); syncConversations(); renderConv(); }
-function renderConv(){
-  let list = document.getElementById('convList');
-  list.innerHTML = convData.map((c,i)=>`<button class="action" style="white-space:nowrap;background:${i===curConv?'#059669':'#e5e7eb'};color:${i===curConv?'#fff':'#111'}" onclick="goToConv(${i})">${c.title}</button>`).join('');
-  let conv = convData[curConv];
-  if(!conv) return;
-  if(curLine >= conv.lines.length) curLine = 0;
-  let l = conv.lines[curLine];
-  document.getElementById('convBox').innerHTML = `<div class="conv-card"><span class="badge">محادثة: ${conv.title} - جملة ${curLine+1} / ${conv.lines.length}</span><br><br><div class="conv-en">${l.en}</div><div class="conv-pron" id="pronLine" style="display:${hidePron?'none':'block'}">${l.pron}</div><div class="conv-ar">${l.ar}</div><br><div style="background:#f3f4f6;height:8px;border-radius:10px;overflow:hidden"><div style="width:${Math.round(((curLine+1)/conv.lines.length)*100)}%;height:100%;background:#059669"></div></div></div>`;
-  document.getElementById('convStatus').textContent = navigator.onLine ? '🌐 متصل - التحديث التلقائي شغال | محفوظ في جهازك' : '📴 من غير نت - شغال من التخزين التلقائي | مكانك محفوظ';
-  saveConvProgress();
-}
-function nextLine(){ let conv = convData[curConv]; if(curLine < conv.lines.length-1){ curLine++; } else { // متواصل - يدخل اللي بعدها على طول
-  if(curConv < convData.length-1){ curConv++; curLine=0; } else { curLine=0; alert('خلصت كل المحادثات! 🎉 هتبدأ من الأول تاني، وأي محادثة جديدة هتظهر هنا لوحدها'); } } renderConv(); }
+function renderConv(){ let list = document.getElementById('convList'); list.innerHTML = convData.map((c,i)=>`<button class="action" style="white-space:nowrap;background:${i===curConv?'#059669':'#e5e7eb'};color:${i===curConv?'#fff':'#111'}" onclick="goToConv(${i})">${c.title}</button>`).join(''); let conv = convData[curConv]; if(!conv) return; if(curLine >= conv.lines.length) curLine = 0; let l = conv.lines[curLine]; document.getElementById('convBox').innerHTML = `<div class="conv-card"><span class="badge">محادثة: ${conv.title} - جملة ${curLine+1} / ${conv.lines.length}</span><br><br><div class="conv-en">${l.en}</div><div class="conv-pron" id="pronLine" style="display:${hidePron?'none':'block'}">${l.pron}</div><div class="conv-ar">${l.ar}</div><br><div style="background:#f3f4f6;height:8px;border-radius:10px;overflow:hidden"><div style="width:${Math.round(((curLine+1)/conv.lines.length)*100)}%;height:100%;background:#059669"></div></div></div>`; document.getElementById('convStatus').textContent = navigator.onLine ? '🌐 متصل - التحديث التلقائي شغال | محفوظ في جهازك' : '📴 من غير نت - شغال من التخزين التلقائي | مكانك محفوظ'; saveConvProgress(); }
+function nextLine(){ let conv = convData[curConv]; if(curLine < conv.lines.length-1){ curLine++; } else { if(curConv < convData.length-1){ curConv++; curLine=0; } else { curLine=0; alert('خلصت كل المحادثات! 🎉 هتبدأ من الأول تاني'); } } renderConv(); }
 function prevLine(){ if(curLine>0){curLine--;} else if(curConv>0){curConv--; curLine=convData[curConv].lines.length-1;} renderConv(); }
 function nextConv(){ if(curConv < convData.length-1){curConv++; curLine=0; renderConv();} }
 function prevConv(){ if(curConv>0){curConv--; curLine=0; renderConv();} }
 function goToConv(i){ curConv=i; curLine=0; renderConv(); }
 function togglePron(){ hidePron=!hidePron; renderConv(); }
 function speakCurrentEn(){ let l = convData[curConv].lines[curLine]; speakEn(l.en); }
-// تحديث في الخلفية كل 30 ثانية لو النت رجع
 setInterval(()=>{ if(navigator.onLine) syncConversations(); }, 30000);
 window.addEventListener('online', syncConversations);
-
 const fullDict={
 'أسد':{en:'Lion',img:'🦁',ex:'The lion is king of jungle',type:'اسم - حيوان مفترس'},
 'كتاب':{en:'Book',img:'📚',ex:'I read an interesting book',type:'اسم - للقراءة'},
