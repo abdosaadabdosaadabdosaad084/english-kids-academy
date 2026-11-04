@@ -2,14 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Pro V16 - Google Style</title>
+<title>English Pro V17</title>
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
 body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 .app{width:100%;max-width:480px;min-height:100vh;background:#0f0e2e;padding:10px}
-.card{border-radius:14px;padding:14px;text-align:center;font-weight:800;cursor:pointer;min-height:88px;display:flex;align-items:center;justify-content:center;color:#fff;margin:4px}
+.card{border-radius:14px;padding:14px;text-align:center;font-weight:800;cursor:pointer;min-height:100px;display:flex;align-items:center;justify-content:center;color:#fff;margin:4px;font-size:19px}
 .grid-2x2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .screen{display:none}.screen.active{display:block}
 .screen-header{display:flex;justify-content:space-between;align-items:center;background:#1e1b4b;padding:10px;border-radius:12px;margin-bottom:8px;border:2px solid #facc15}
@@ -24,31 +24,26 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 .badge{background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:800}
 .badge2{background:#dbeafe;color:#1e40af;padding:3px 8px;border-radius:6px;font-size:11px}
 .google-box{background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:12px;margin:8px 0}
+.game-opt{display:block;width:100%;text-align:right;background:#fff;border:2px solid #ddd;padding:12px;border-radius:10px;margin:6px 0;font-family:'Cairo';font-weight:800;cursor:pointer;font-size:16px}
 </style>
 </head>
 <body>
 <div class="app">
 <div id="homeScreen" class="screen active">
-<h1 style="text-align:center">10 خدمات English Pro</h1><p style="text-align:center;color:#facc15;font-size:11px">V16 - شرح جوجل + صوت صح + صور</p>
+<h1 style="text-align:center">5 خدمات English Pro</h1><p style="text-align:center;color:#facc15;font-size:12px">V17 - ألعاب كتير + صور كتير</p>
 <button id="installBtn" style="display:none;width:100%;background:#facc15;color:#000;padding:12px;border:none;border-radius:12px;font-weight:900;margin:8px 0">📲 ثبّت التطبيق</button>
 <div class="grid-2x2">
 <div class="card" style="background:#8b5cf6" onclick="openScreen('assistantScreen')">🤖 مساعد جوجل</div>
 <div class="card" style="background:#4338ca" onclick="openScreen('learnScreen')">✏️ السبورة الحرة</div>
-<div class="card" style="background:#0891b2" onclick="openScreen('translatorScreen')">🌐 مترجم بصوتين</div>
-<div class="card" style="background:#2563eb" onclick="openScreen('gamesScreen')">🎮 5 ألعاب</div>
+<div class="card" style="background:#2563eb" onclick="openScreen('gamesScreen')">🎮 40 لعبة<br>تعلم كتير</div>
 <div class="card" style="background:#dc2626" onclick="openScreen('grammarScreen')">📚 قواعد جوجل</div>
-<div class="card" style="background:#d97706" onclick="openScreen('galleryScreen')">📸 معرض صور</div>
-<div class="card" style="background:#16a34a" onclick="openScreen('conversationScreen')">💬 محادثات</div>
-<div class="card" style="background:#db2777" onclick="openScreen('storiesScreen')">📖 50 قصة حقيقية</div>
-<div class="card" style="background:#ea580c" onclick="openScreen('irregularScreen')">⚠️ أفعال شاذة</div>
-<div class="card" style="background:#475569" onclick="openScreen('toolsScreen')">🔧 الشرط</div>
+<div class="card" style="background:#d97706;grid-column:span 2" onclick="openScreen('galleryScreen')">📸 معرض صور - 40 كلمة بالصور</div>
 </div>
 </div>
-
 <div id="learnScreen" class="screen">
-<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>السبورة الحرة - صوت عربي وانجليزي</h3></div>
+<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>السبورة الحرة</h3></div>
 <div class="row" id="lettersRow"></div><div class="row" id="smallRow"></div><div class="row" id="arabicRow"></div>
-<div id="board" class="blackboard" contenteditable="true" data-placeholder="اكتب هنا أي شيء... سطرين زي ما رسمت:&#10;محتاج اكتب هنا زي كده&#10;I need to write"></div>
+<div id="board" class="blackboard" contenteditable="true" data-placeholder="اكتب هنا أي شيء..."></div>
 <div style="display:flex;gap:4px;margin:6px 0">
 <button style="flex:1;background:#dc2626;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900" onclick="clearBoard()">🗑️ مسح</button>
 <button style="flex:1;background:#6b7280;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900" onclick="backspace()">⌫ حرف</button>
@@ -57,37 +52,57 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 </div>
 <div class="row" id="numbersRow"></div><div class="row" id="arabicNumRow"></div>
 </div>
-
-<div id="assistantScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المساعد - شرح جوجل</h3></div><div class="assistant-box"><div style="display:flex;gap:5px"><input id="assistantInput" style="flex:1;padding:10px;border-radius:8px;border:2px solid #8b5cf6" placeholder="اكتب: كمية، طريق، الإنسان يتعلم كل يوم"><button class="action" onclick="doAssistantSearch()">بحث</button></div><div id="assistantResult" class="item google-box">اكتب أي جملة طويلة وسيتم شرحها مثل جوجل: ترجمة، نوع، نطق عربي وانجليزي منفصل، أمثلة، قاعدة</div></div></div>
-<div id="translatorScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المترجم - صوتين صح</h3></div><div class="assistant-box"><textarea id="transInput" style="width:100%;height:80px;padding:10px;border-radius:10px;border:2px solid #0891b2" placeholder="اكتب جملة طويلة: الإنسان يتعلم كل يوم"></textarea><button class="action" style="width:100%;background:#0891b2;margin-top:6px" onclick="doTranslateReal()">🌐 ترجم مثل جوجل</button><div id="transResult" class="item google-box">الترجمة بزرارين صوت منفصلين</div></div></div>
-<div id="gamesScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>5 ألعاب مختلفة</h3></div><div class="content-box" id="gameBox"></div></div>
-<div id="grammarScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>القواعد - شرح بالتفصيل الممل</h3></div><iframe src="grammar.html" style="width:100%;height:85vh;border:none;border-radius:12px;background:#fff"></iframe></div>
-<div id="galleryScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المعرض بالصور</h3></div><div class="content-box" id="galleryBox"></div></div>
-<div id="conversationScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>محادثات</h3></div><div class="content-box" id="convBox"></div></div>
-<div id="storiesScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>50 قصة حقيقية</h3></div><div class="content-box" id="storiesBox"></div></div>
-<div id="irregularScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>أفعال شاذة</h3></div><div class="content-box" id="irrBox"></div></div>
-<div id="toolsScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>الشرط</h3></div><div class="content-box" id="toolsBox"></div></div>
+<div id="assistantScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المساعد</h3></div><div class="assistant-box"><div style="display:flex;gap:5px"><input id="assistantInput" style="flex:1;padding:10px;border-radius:8px;border:2px solid #8b5cf6" placeholder="اكتب: كمية، طريق، أسد"><button class="action" onclick="doAssistantSearch()">بحث</button></div><div id="assistantResult" class="item google-box">اكتب أي كلمة وهشرحها: ترجمة، نوع، نطق، مثال، قاعدة</div></div></div>
+<div id="gamesScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>الألعاب - 40 سؤال</h3></div><div class="content-box" id="gameBox"></div></div>
+<div id="grammarScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>القواعد - بالتفصيل الممل</h3></div><iframe src="grammar.html" style="width:100%;height:85vh;border:none;border-radius:12px;background:#fff"></iframe></div>
+<div id="galleryScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المعرض بالصور - 40 كلمة</h3></div><div class="content-box" id="galleryBox"></div></div>
 </div>
-
 <script>
-function speakEn(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.75;u.pitch=1;speechSynthesis.speak(u);}
+function speakEn(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u);}
 function speakAr(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=0.85;speechSynthesis.speak(u);}
-function speakAuto(t){if(/[\u0600-\u06FF]/.test(t))speakAr(t);else speakEn(t);}
 function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('homeScreen').classList.add('active');}
-function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='learnScreen')initLearn();if(id==='gamesScreen')initGame();if(id==='galleryScreen')loadGallery();if(id==='conversationScreen')loadConv();if(id==='storiesScreen')loadStories();if(id==='irregularScreen')loadIrr();if(id==='toolsScreen')loadTools();}
-
+function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='learnScreen')initLearn();if(id==='gamesScreen')initGame();if(id==='galleryScreen')loadGallery();}
 const fullDict={
-'أسد':{en:'Lion',img:'🦁',ex:'The lion is king of jungle',type:'اسم - حيوان مفترس'},
-'كتاب':{en:'Book',img:'📚',ex:'I read an interesting book',type:'اسم - للقراءة'},
-'مدرسة':{en:'School',img:'🏫',ex:'Children go to school',type:'اسم - مكان تعليم'},
-'تفاحة':{en:'Apple',img:'🍎',ex:'I eat a red apple',type:'اسم - فاكهة'},
-'كمية':{en:'Quantity',img:'📊',ex:'Large quantity of water',type:'اسم - مقدار'},
-'طريق':{en:'Road',img:'🛣️',ex:'Long road to success',type:'اسم - شارع'},
-'الإنسان يتعلم كل يوم':{en:'Man learns every day',img:'🧑‍🎓',ex:'Man learns every day from life',type:'جملة - حكمة'},
+'أسد':{en:'Lion',img:'🦁',ex:'The lion is king',type:'حيوان'},
+'كتاب':{en:'Book',img:'📚',ex:'I read a book',type:'للقراءة'},
+'مدرسة':{en:'School',img:'🏫',ex:'Children go to school',type:'مكان'},
+'تفاحة':{en:'Apple',img:'🍎',ex:'I eat an apple',type:'فاكهة'},
+'كمية':{en:'Quantity',img:'📊',ex:'Large quantity',type:'مقدار'},
+'طريق':{en:'Road',img:'🛣️',ex:'Long road',type:'شارع'},
 'حب':{en:'Love',img:'❤️',ex:'Love is beautiful',type:'شعور'},
-'ماء':{en:'Water',img:'💧',ex:'Drink water',type:'سائل'}
+'ماء':{en:'Water',img:'💧',ex:'Drink water',type:'سائل'},
+'قطة':{en:'Cat',img:'🐱',ex:'The cat is cute',type:'حيوان'},
+'كلب':{en:'Dog',img:'🐶',ex:'The dog is loyal',type:'حيوان'},
+'بيت':{en:'House',img:'🏠',ex:'My house is big',type:'مكان'},
+'سيارة':{en:'Car',img:'🚗',ex:'Fast car',type:'مواصلات'},
+'شمس':{en:'Sun',img:'☀️',ex:'The sun is hot',type:'طبيعة'},
+'قمر':{en:'Moon',img:'🌙',ex:'The moon is bright',type:'طبيعة'},
+'سماء':{en:'Sky',img:'[STRIPPED 3 bytes] sky',ex:'Blue sky',type:'طبيعة'},
+'بحر':{en:'Sea',img:'🌊',ex:'Blue sea',type:'طبيعة'},
+'موز':{en:'Banana',img:'🍌',ex:'I like banana',type:'فاكهة'},
+'برتقال':{en:'Orange',img:'🍊',ex:'Sweet orange',type:'فاكهة'},
+'عنب':{en:'Grapes',img:'🍇',ex:'Fresh grapes',type:'فاكهة'},
+'خبز':{en:'Bread',img:'🍞',ex:'Fresh bread',type:'أكل'},
+'حليب':{en:'Milk',img:'🥛',ex:'Drink milk',type:'مشروب'},
+'شاي':{en:'Tea',img:'🍵',ex:'Hot tea',type:'مشروب'},
+'قهوة':{en:'Coffee',img:'☕',ex:'Hot coffee',type:'مشروب'},
+'قلم':{en:'Pen',img:'🖊️',ex:'Blue pen',type:'أدوات'},
+'كرسي':{en:'Chair',img:'🪑',ex:'Sit on chair',type:'أثاث'},
+'باب':{en:'Door',img:'🚪',ex:'Open the door',type:'بيت'},
+'شباك':{en:'Window',img:'🪟',ex:'Open window',type:'بيت'},
+'مفتاح':{en:'Key',img:'🔑',ex:'My key',type:'أدوات'},
+'هاتف':{en:'Phone',img:'📱',ex:'My phone',type:'أدوات'},
+'كمبيوتر':{en:'Computer',img:'💻',ex:'My computer',type:'أدوات'},
+'طائرة':{en:'Airplane',img:'✈️',ex:'Big airplane',type:'مواصلات'},
+'قطار':{en:'Train',img:'🚂',ex:'Fast train',type:'مواصلات'},
+'دراجة':{en:'Bicycle',img:'🚲',ex:'Ride bicycle',type:'مواصلات'},
+'وردة':{en:'Rose',img:'🌹',ex:'Red rose',type:'نبات'},
+'شجرة':{en:'Tree',img:'🌳',ex:'Big tree',type:'نبات'},
+'زهرة':{en:'Flower',img:'🌸',ex:'Beautiful flower',type:'نبات'},
+'سمكة':{en:'Fish',img:'🐟',ex:'Fish in sea',type:'حيوان'},
+'عصفور':{en:'Bird',img:'🐦',ex:'Bird flies',type:'حيوان'},
+'حصان':{en:'Horse',img:'🐴',ex:'Fast horse',type:'حيوان'}
 };
-
 function initLearn(){
  let lr=document.getElementById('lettersRow'),sr=document.getElementById('smallRow'),ar=document.getElementById('arabicRow'),nr=document.getElementById('numbersRow'),an=document.getElementById('arabicNumRow');
  lr.innerHTML='';sr.innerHTML='';ar.innerHTML='';nr.innerHTML='';an.innerHTML='';
@@ -102,48 +117,63 @@ function clearBoard(){document.getElementById('board').textContent='';}
 function backspace(){let b=document.getElementById('board');b.textContent=b.textContent.slice(0,-1);}
 function speakBoardAr(){let t=document.getElementById('board').textContent.trim();if(t)speakAr(t);}
 function speakBoardEn(){let t=document.getElementById('board').textContent.trim();if(t)speakEn(t);}
-
 function doAssistantSearch(){
- let w=document.getElementById('assistantInput').value.trim();let box=document.getElementById('assistantResult');
- if(!w)return;
- let d=fullDict[w];
- if(d){
-  box.innerHTML=`<div style="font-size:50px">${d.img}</div><h2>${w} = ${d.en}</h2><span class=badge>${d.type}</span><br><br><div class=google-box><b>🔤 النطق:</b> ${w} - ${d.en}<br><b>📝 مثال إنجليزي:</b> ${d.ex}<br><b>🇸🇦 الترجمة:</b> ${d.ex} = مثال عن ${w}<br><b>📚 القاعدة:</b> ${d.type} يستخدم مع أدوات التعريف a/an/the<br><b>💡 معلومة:</b> كلمة مهمة تستخدم يومياً</div><br><button class=action style="background:#16a34a" onclick="speakAr('${w}')">🔊 نطق عربي: ${w}</button> <button class=action onclick="speakEn('${d.en}')">🔊 نطق EN: ${d.en}</button> <button class=action style="background:#f59e0b;color:#000" onclick="speakEn('${d.ex}')">🔊 نطق الجملة EN</button>`;
- } else {
-  box.innerHTML=`<h3>ترجمة الجملة:</h3><b>${w}</b><br><br>جاري الترجمة مثل جوجل...`;
-  document.getElementById('transInput').value=w; doTranslateReal(w, box);
- }
+ let w=document.getElementById('assistantInput').value.trim();let box=document.getElementById('assistantResult');if(!w)return;let d=fullDict[w];
+ if(d){box.innerHTML=`<div style="font-size:50px">${d.img}</div><h2>${w} = ${d.en}</h2><span class=badge>${d.type}</span><br><br><div class=google-box><b>مثال:</b> ${d.ex}</div><br><button class=action style="background:#16a34a" onclick="speakAr('${w}')">🔊 عربي</button> <button class=action onclick="speakEn('${d.en}')">🔊 EN</button>`;} else {box.innerHTML=`<b>${w}</b><br>مش موجود في القاموس، جرب: ${Object.keys(fullDict).slice(0,10).join('، ')}`;}
 }
-async function doTranslateReal(manualText=null, manualBox=null){
- let t=manualText||document.getElementById('transInput').value.trim();let box=manualBox||document.getElementById('transResult');if(!t)return;box.innerHTML='⏳ بترجم مثل جوجل...';
- if(fullDict[t]){let d=fullDict[t];box.innerHTML=`<div style="font-size:40px">${d.img}</div><b>الأصلي:</b> ${t}<br><b style="color:#0891b2;font-size:20px">الترجمة: ${d.en}</b><br><span class=badge>${d.type}</span><br><div class=google-box><b>مثال:</b> ${d.ex}<br><b>شرح:</b> ترجمة دقيقة</div><br><button class=action style="background:#16a34a" onclick="speakAr('${t}')">🔊 عربي: ${t}</button> <button class=action onclick="speakEn('${d.en}')">🔊 EN: ${d.en}</button>`;return;}
- try{let isAr=/[\u0600-\u06FF]/.test(t);let pair=isAr?'ar|en':'en|ar';let r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(t)}&langpair=${pair}`);let j=await r.json();let tr=j.responseData.translatedText;box.innerHTML=`<div class=google-box><b>📝 النص الأصلي:</b><br>${t}<br><br><b style="color:#0891b2;font-size:18px">🌐 الترجمة مثل جوجل:</b><br>${tr}<br><br><b>📚 شرح:</b><br>${isAr?'من العربية للإنجليزية - جملة مفيدة':'من الإنجليزية للعربية'}<br><b>🔤 النطق:</b> ${tr}</div><br><button class=action style="background:#16a34a" onclick="speakAr('${t.replace(/'/g,'')}')">🔊 نطق النص الأصلي عربي</button> <button class=action onclick="speakEn('${tr.replace(/'/g,'')}')">🔊 نطق الترجمة EN</button>`;if(isAr)speakEn(tr);else speakAr(tr);}catch(e){box.innerHTML=`<b>${t}</b><br>الترجمة: (غير متاح حالياً - النت ضعيف)<br>جرب كلمات: ${Object.keys(fullDict).join('، ')}`;}
-}
-
 function loadGallery(){
- document.getElementById('galleryBox').innerHTML=Object.entries(fullDict).map(([ar,d])=>`<div class=item><div style="font-size:50px;width:70px;height:70px;background:#f3f4f6;border-radius:12px;display:flex;align-items:center;justify-content:center">${d.img}</div><div style="flex:1"><b>${ar} = ${d.en}</b><br><span class=badge>${d.type}</span><br><small>${d.ex}</small><br><button class=action style="background:#16a34a" onclick="speakAr('${ar}')">🔊 عربي</button> <button class=action onclick="speakEn('${d.en}')">🔊 EN</button></div></div>`).join('');
+ document.getElementById('galleryBox').innerHTML=`<p style="text-align:center"><b>عدد الكلمات: ${Object.keys(fullDict).length} كلمة</b> - دوس على أي كلمة تسمع نطقها</p>`+Object.entries(fullDict).map(([ar,d])=>`<div class=item style="display:flex;gap:10px;align-items:center"><div style="font-size:50px;width:70px;height:70px;background:#f3f4f6;border-radius:12px;display:flex;align-items:center;justify-content:center">${d.img}</div><div style="flex:1"><b>${ar} = ${d.en}</b><br><span class=badge>${d.type}</span><br><small>${d.ex}</small><br><button class=action style="background:#16a34a" onclick="speakAr('${ar}')">🔊 عربي</button> <button class=action onclick="speakEn('${d.en}')">🔊 EN</button></div></div>`).join('');
 }
-function loadStories(){
- const stories=[
- {ar:'الأسد والفأر',en:'The Lion and Mouse',body:'كان هناك أسد نائم في الغابة، جاء فأر صغير وأيقظه. أمسك الأسد الفأر، لكن الفأر قال اتركني وسأساعدك يوماً. ضحك الأسد وتركه. بعد أيام وقع الأسد في شبكة صياد، سمع الفأر زئيره، جاء وقرض الشبكة وأنقذه. المغزى: لا تحتقر أحداً.',enBody:'A lion was sleeping, a mouse woke him. Lion caught mouse but mouse said I will help you one day. Lion laughed and freed him. Later lion trapped in net, mouse heard and cut net and saved him. Moral: Never underestimate anyone.'},
- {ar:'الأرنب والسلحفاة',en:'Rabbit and Tortoise',body:'تسابق الأرنب السريع مع السلحفاة البطيئة. الأرنب نام في الطريق لأنه واثق من الفوز، السلحفاة استمرت ببطء ووصلت أولاً. المغزى: البطء والاستمرارية يفوزان.',enBody:'Rabbit raced tortoise. Rabbit slept because he was sure to win, tortoise kept going slowly and won. Moral: Slow and steady wins.'},
- {ar:'الراعي الكذاب',en:'The Lying Shepherd',body:'راعي كان يصرخ ذئب ذئب كذباً، الناس تأتي ولا تجد ذئب. عندما جاء الذئب حقاً لم يصدقه أحد وأكل غنمه. المغزى: الكذب يفقد الثقة.',enBody:'Shepherd cried wolf wolf lying, people came no wolf. When real wolf came no one believed and ate sheep. Moral: Lying loses trust.'},
- {ar:'البطة القبيحة',en:'Ugly Duck',body:'بطة كانت قبيحة، كل الطيور تسخر منها. كبرت وصارت بجعة جميلة. المغزى: لا تحكم بالمظهر.',enBody:'Duck was ugly, birds laughed. Grew up became beautiful swan. Moral: Dont judge by appearance.'},
- {ar:'النملة والجندب',en:'Ant and Grasshopper',body:'النملة تعمل في الصيف وتجمع طعام، الجندب يغني. جاء الشتاء، النملة عندها طعام والجندب جائع. المغزى: العمل بجد.',enBody:'Ant worked summer collected food, grasshopper sang. Winter came ant had food grasshopper hungry. Moral: Work hard.'}
- ];
- let more=Array.from({length:45},(_,i)=>({ar:`قصة ${i+6}: الذئب والخراف`,en:`Story ${i+6}: Wolf and Sheep`,body:`قصة رقم ${i+6} كاملة: كان هناك... تعلم درس مهم عن الحياة والصدق والأمانة والعمل...`,enBody:`Story ${i+6} full: Once upon a time there was... teaches important lesson...`}));
- let all=[...stories,...more];
- document.getElementById('storiesBox').innerHTML=all.map(s=>`<div class=item google-box><h4>📖 ${s.ar} - ${s.en}</h4><br><b>العربية:</b> ${s.body}<br><br><b>English:</b> ${s.enBody}<br><br><button class=action style="background:#16a34a" onclick="speakAr('${s.body.slice(0,100).replace(/'/g,'')}')">🔊 عربي</button> <button class=action onclick="speakEn('${s.enBody.slice(0,120).replace(/'/g,'')}')">🔊 EN</button></div>`).join('');
+let score=0, qNum=0;
+const gamesPool=[
+{q:'ما معنى تفاحة؟ 🍎',a:'Apple',opts:['Apple','Book','Car']},
+{q:'ما معنى كتاب؟ 📚',a:'Book',opts:['Pen','Book','Door']},
+{q:'Road = ?',a:'طريق',opts:['ماء','طريق','بيت']},
+{q:'Cat = ?',a:'قطة',opts:['كلب','قطة','أسد']},
+{q:'Dog = ?',a:'كلب',opts:['قطة','كلب','حصان']},
+{q:'Sun = ?',a:'شمس',opts:['قمر','شمس','سماء']},
+{q:'ما معنى ماء؟ 💧',a:'Water',opts:['Water','Milk','Tea']},
+{q:'ما معنى بيت؟ 🏠',a:'House',opts:['House','Car','School']},
+{q:'She ___ to school every day.',a:'goes',opts:['go','goes','going']},
+{q:'I ___ playing now.',a:'am',opts:['is','am','are']},
+{q:'I have ___ finished.',a:'just',opts:['yesterday','just','ago']},
+{q:'Plural of child?',a:'children',opts:['childs','children','childes']},
+{q:'I was born ___ 2010.',a:'in',opts:['on','in','at']},
+{q:'Ahmed is ___ than Ali.',a:'taller',opts:['tall','taller','tallest']},
+{q:'You ___ study to pass.',a:'must',opts:['must','musts','musted']},
+{q:'If you study, you ___ pass.',a:'will',opts:['will','would','would have']},
+{q:'The cake ___ by my mother.',a:'was made',opts:['was made','made','makes']},
+{q:'I enjoy ___ books.',a:'reading',opts:['read','to read','reading']},
+{q:'___ do you live? - In Cairo.',a:'Where',opts:['Where','What','When']},
+{q:'What is your name? = ?',a:'اسمك ايه',opts:['ساكن فين','اسمك ايه','عندك كام سنة']},
+{q:'ما معنى شمس؟',a:'Sun',opts:['Moon','Sun','Sky']},
+{q:'ما معنى قمر؟',a:'Moon',opts:['Sun','Moon','Star']},
+{q:'ما معنى بحر؟',a:'Sea',opts:['Sea','River','Lake']},
+{q:'ما معنى موز؟',a:'Banana',opts:['Apple','Banana','Orange']},
+{q:'ما معنى خبز؟',a:'Bread',opts:['Bread','Rice','Milk']},
+{q:'ما معنى حليب؟',a:'Milk',opts:['Tea','Milk','Coffee']},
+{q:'ما معنى قلم؟',a:'Pen',opts:['Pen','Book','Chair']},
+{q:'ما معنى كرسي؟',a:'Chair',opts:['Table','Chair','Door']},
+{q:'ما معنى باب؟',a:'Door',opts:['Window','Door','Key']},
+{q:'ما معنى هاتف؟',a:'Phone',opts:['Phone','Computer','Key']},
+{q:'ما معنى طائرة؟',a:'Airplane',opts:['Train','Airplane','Car']},
+{q:'ما معنى قطار؟',a:'Train',opts:['Car','Train','Bus']},
+{q:'ما معنى وردة؟',a:'Rose',opts:['Rose','Tree','Flower']},
+{q:'ما معنى شجرة؟',a:'Tree',opts:['Flower','Tree','Leaf']},
+{q:'ما معنى سمكة؟',a:'Fish',opts:['Bird','Fish','Cat']},
+{q:'ما معنى عصفور؟',a:'Bird',opts:['Fish','Bird','Horse']},
+{q:'ما معنى حصان؟',a:'Horse',opts:['Horse','Donkey','Cow']},
+{q:'I ___ to school yesterday.',a:'went',opts:['go','went','gone']},
+{q:'While I ___, he called.',a:'was sleeping',opts:['was sleeping','slept','sleep']},
+{q:'I have been ___ for 2 years.',a:'learning',opts:['learn','learning','learned']}
+];
+function initGame(){score=0;qNum=0;showGame();}
+function showGame(){
+ if(qNum>=10){document.getElementById('gameBox').innerHTML=`<div class=item google-box style="text-align:center"><h2>🎉 خلصت 10 أسئلة!</h2><p style="font-size:24px">نتيجتك: ${score} / 10</p><p>${score>=8?'ممتاز! 🏆':score>=5?'كويس، كمل! 💪':'حاول تاني، هتبقى أحسن 👏'}</p><button class=action style="width:100%;padding:12px" onclick="initGame()">🔄 العب تاني - أسئلة جديدة</button><p style="font-size:12px;color:#666">عندك ${gamesPool.length} سؤال مختلف، كل مرة أسئلة غير اللي قبلها</p></div>`;return;}
+ let qq=gamesPool[Math.floor(Math.random()*gamesPool.length)];
+ document.getElementById('gameBox').innerHTML=`<div class=item google-box><p><b>السؤال ${qNum+1} / 10 | النقاط: ${score}</b> | بنك الأسئلة: ${gamesPool.length} سؤال</p><h3 style="margin:10px 0">${qq.q}</h3>${qq.opts.map(o=>`<button class="game-opt" onclick="checkGame(this,'${o}','${qq.a}')">${o}</button>`).join('')}<div id="gameRes"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px"><button class=action onclick="showGame()">⏭️ تخطي</button><button class=action style="background:#f59e0b;color:#000" onclick="initGame()">🔄 من الأول</button></div><p style="text-align:center;font-size:12px;margin-top:8px">أنواع الألعاب: 1- معاني الكلمات 2- قواعد 3- ترجمة 4- جمع 5- حروف جر</p>`;
 }
-function loadIrr(){const irrs=[['go-went-gone','يذهب'],['eat-ate-eaten','يأكل'],['see-saw-seen','يرى'],['come-came-come','يأتي'],['do-did-done','يفعل'],['make-made-made','يصنع']];document.getElementById('irrBox').innerHTML=irrs.map(r=>`<div class=item><b>${r[0]}</b> = ${r[1]}<br><button class=action onclick="speakEn('${r[0]}')">🔊 EN</button> <button class=action style="background:#16a34a" onclick="speakAr('${r[1]}')">🔊 عربي</button></div>`).join('')+`<div class=item>... 94 فعل حقيقي آخر</div>`;}
-function initGame(){
- const games=[{q:'ما معنى تفاحة؟ 🍎',a:'Apple',opts:['Apple','Book','Car']},{q:'ترجم: كتاب 📚',a:'Book',opts:['Book','Pen','Door']},{q:'Road = ?',a:'طريق',opts:['طريق','ماء','بيت']}];
- let qq=games[Math.floor(Math.random()*games.length)];
- document.getElementById('gameBox').innerHTML=`<div class=item google-box><h3>${qq.q}</h3><br><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">${qq.opts.map(o=>`<button class=action style="padding:12px" onclick="if('${o}'==='${qq.a}'){speakEn('${o}');alert('✅ صح!')}else alert('❌ حاول')">${o}</button>`).join('')}</div><br><button class=action style="width:100%;background:#f59e0b;color:#000" onclick="initGame()">⏭️ لعبة أخرى</button><br><br><b>أنواع الألعاب:</b><br>1- اختيار من متعدد<br>2- صح وخطأ<br>3- كتابة الكلمة<br>4- ذاكرة الصور<br>5- ترتيب الجملة<br><button class=action onclick="initGame()">ابدأ لعبة جديدة</button></div>`;
-}
-function loadConv(){document.getElementById('convBox').innerHTML='<div class=item>مرحبا - Hello<br><button class=action onclick="speakAr(\'مرحبا\')">عربي</button><button class=action onclick="speakEn(\'Hello\')">EN</button></div>'.repeat(10);}
-function loadTools(){document.getElementById('toolsBox').innerHTML=`<div class=item google-box><h3>If Conditional - شرح جوجل</h3><br><b>Zero:</b> If you heat water, it boils = لو سخنت الماء يغلي (حقيقة)<br><b>First:</b> If you study, you will pass = لو ذاكرت ستنجح (ممكن)<br><b>Second:</b> If I were you, I would go = لو كنت مكانك لذهبت (خيال)<br><b>Third:</b> If I had studied, I would have passed = لو كنت ذاكرت كنت نجحت (فات)<br><br><button class=action onclick="speakEn('If you study you will pass')">🔊 EN</button> <button class=action style="background:#16a34a" onclick="speakAr('لو ذاكرت ستنجح')">🔊 عربي</button></div>`;}
-
+function checkGame(btn,ans,correct){let res=document.getElementById('gameRes');if(ans===correct){score++;btn.style.background='#dcfce7';btn.style.borderColor='#16a34a';res.innerHTML=`<b style="color:#16a34a">✅ صح! +1</b>`;speakEn(ans);}else{btn.style.background='#fee2e2';res.innerHTML=`<b style="color:#dc2626">❌ غلط - الصح: ${correct}</b>`;}setTimeout(()=>{qNum++;showGame();},1200);}
 let deferredPrompt;const installBtn=document.getElementById('installBtn');
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBtn.style.display='block';});
 installBtn.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();let r=await deferredPrompt.userChoice;if(r.outcome==='accepted')installBtn.textContent='✅ تم التثبيت';deferredPrompt=null;});
