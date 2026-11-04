@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تحدي النهاردة</title>
+<title>اسئلة التحدي</title>
 <style>
 body{font-family:sans-serif;background:#f0f2f5;text-align:center;padding:15px;margin:0}
 .box{background:#fff;padding:20px;border-radius:14px;max-width:480px;margin:auto}
@@ -14,47 +14,68 @@ button{width:100%;padding:14px;border:none;border-radius:12px;font-size:19px;fon
 .green{background:#16a34a;color:#fff}
 .blue{background:#2563eb;color:#fff}
 .orange{background:#FF9800;color:#fff}
+.opt{background:#fff;border:2px solid #ddd;color:#111}
 </style>
 </head>
 <body>
 <div class="box">
-<h1>🏆 تحدي النهاردة</h1>
-<div style="font-size:24px;font-weight:900">⭐ <span id="stars">0</span></div>
-<div id="content"><p>جاري التحميل...</p></div>
+<h1>🏆 اسئلة التحدي</h1>
+<div style="font-size:24px;font-weight:900">⭐ <span id="stars">0</span> | سؤال <span id="qNum">1</span> من <span id="qTotal">10</span></div>
+<div style="background:#eee;height:10px;border-radius:10px;margin:10px 0;overflow:hidden"><div id="bar" style="height:100%;background:#16a34a;width:10%"></div></div>
+<div id="content"></div>
 <button class="orange" onclick="location.href='index.html'">رجوع للرئيسية</button>
 </div>
 <script>
 let challenges=[
-{word:"Hello",pron:"هيلو",ar:"أهلاً",ex:"Hello, how are you?",exAr:"أهلاً، كيف حالك؟"},
-{word:"Thank you",pron:"ثانك يو",ar:"شكراً لك",ex:"Thank you very much",exAr:"شكراً جزيلاً لك"},
-{word:"Water",pron:"ووتر",ar:"ماء",ex:"I drink water",exAr:"أنا أشرب الماء"},
-{word:"Book",pron:"بوك",ar:"كتاب",ex:"I read a book",exAr:"أنا أقرأ كتاب"},
-{word:"School",pron:"سكول",ar:"مدرسة",ex:"I go to school",exAr:"أنا أذهب للمدرسة"}
+{word:"Hello",pron:"هيلو",ar:"أهلاً",q:"ما معنى Hello ؟",opts:["أهلاً","شكراً","ماء"],a:"أهلاً"},
+{word:"Thank you",pron:"ثانك يو",ar:"شكراً لك",q:"ما معنى Thank you ؟",opts:["أهلاً","شكراً لك","كتاب"],a:"شكراً لك"},
+{word:"Water",pron:"ووتر",ar:"ماء",q:"ما معنى Water ؟",opts:["ماء","مدرسة","بيت"],a:"ماء"},
+{word:"Book",pron:"بوك",ar:"كتاب",q:"ما معنى Book ؟",opts:["قلم","كتاب","شمس"],a:"كتاب"},
+{word:"School",pron:"سكول",ar:"مدرسة",q:"ما معنى School ؟",opts:["مدرسة","بحر","قطة"],a:"مدرسة"},
+{word:"Cat",pron:"كات",ar:"قطة",q:"ما معنى Cat ؟",opts:["كلب","قطة","حصان"],a:"قطة"},
+{word:"Dog",pron:"دوج",ar:"كلب",q:"ما معنى Dog ؟",opts:["كلب","سمكة","وردة"],a:"كلب"},
+{word:"Sun",pron:"صن",ar:"شمس",q:"ما معنى Sun ؟",opts:["قمر","شمس","سماء"],a:"شمس"},
+{word:"House",pron:"هاوس",ar:"بيت",q:"ما معنى House ؟",opts:["بيت","باب","شارع"],a:"بيت"},
+{word:"Car",pron:"كار",ar:"سيارة",q:"ما معنى Car ؟",opts:["قطار","طائرة","سيارة"],a:"سيارة"}
 ];
-let day = new Date().getDate() % challenges.length;
-let c = challenges[day];
-let stars = localStorage.getItem('myStars') || 0;
+let idx = parseInt(localStorage.getItem('challengeIdx')||0);
+let stars = parseInt(localStorage.getItem('myStars')||0);
 document.getElementById('stars').innerText = stars;
-document.getElementById('content').innerHTML = `
-<p>كلمة النهاردة:</p>
-<div class="word">${c.word}</div>
-<div class="pron">${c.pron}</div>
-<div class="ar">${c.ar}</div>
-<hr>
-<p><b>جملة:</b></p>
-<div class="word" style="font-size:22px">${c.ex}</div>
-<div class="ar">${c.exAr}</div>
-<button class="blue" onclick="speakEn('${c.word}')">🔊 نطق الكلمة</button>
-<button class="blue" onclick="speakEn('${c.ex}')">🔊 نطق الجملة</button>
-<button class="green" onclick="winStar()">✅ خلصت التحدي - خد نجمة</button>
-`;
-function speakEn(t){ speechSynthesis.cancel(); let u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.75; speechSynthesis.speak(u); }
-function winStar(){
-  let s = parseInt(localStorage.getItem('myStars')||0)+1;
-  localStorage.setItem('myStars', s);
-  document.getElementById('stars').innerText = s;
-  alert('مبروك! 🎉 خدت نجمة، بقى معاك ' + s + ' نجمة');
+document.getElementById('qTotal').innerText = challenges.length;
+function show(){
+  if(idx >= challenges.length){
+    document.getElementById('content').innerHTML = `<h2>خلصت كل الأسئلة! 🎉</h2><p>جمعت ${stars} نجمة</p><button class="green" onclick="restart()">العب من الأول تاني</button>`;
+    document.getElementById('qNum').innerText = challenges.length;
+    document.getElementById('bar').style.width = '100%';
+    return;
+  }
+  let c = challenges[idx];
+  document.getElementById('qNum').innerText = idx+1;
+  document.getElementById('bar').style.width = ((idx+1)/challenges.length*100) + '%';
+  document.getElementById('content').innerHTML = `
+    <div class="word">${c.word}</div>
+    <div class="pron">${c.pron}</div>
+    <div class="ar">${c.ar}</div>
+    <hr><h3>${c.q}</h3>
+    ${c.opts.map(o=>`<button class="opt" onclick="answer('${o}')"> ${o}</button>`).join('')}
+    <button class="blue" onclick="speakEn('${c.word}')">🔊 نطق الكلمة</button>
+  `;
 }
+function speakEn(t){ speechSynthesis.cancel(); let u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.75; speechSynthesis.speak(u); }
+function answer(o){
+  let c = challenges[idx];
+  if(o === c.a){
+    stars++; localStorage.setItem('myStars', stars);
+    document.getElementById('stars').innerText = stars;
+    alert('صح! ✅ خدت نجمة');
+  } else {
+    alert('غلط، الصح هو: ' + c.a);
+  }
+  idx++; localStorage.setItem('challengeIdx', idx);
+  show();
+}
+function restart(){ idx=0; localStorage.setItem('challengeIdx',0); show(); }
+show();
 </script>
 </body>
 </html>
