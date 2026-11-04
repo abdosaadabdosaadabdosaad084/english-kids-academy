@@ -75,5 +75,334 @@
       {"en": "Have a nice trip!", "pron": "هاف أ نايس تريب!", "ar": "رحلة سعيدة!"},
       {"en": "Thank you, see you soon.", "pron": "ثانك يو، سي يو سون.", "ar": "شكراً، أراك قريباً."}
     ]
+  },
+  {
+    "id": 6,
+    "title": "في المدرسة",
+    "lines": [
+      {"en": "Good morning, teacher.", "pron": "جود مورنينج، تيتشر.", "ar": "صباح الخير، يا معلم."},
+      {"en": "Good morning, students.", "pron": "جود مورنينج، ستيودنتس.", "ar": "صباح الخير، أيها الطلاب."},
+      {"en": "Open your books, please.", "pron": "أوبن يور بوكس، بليز.", "ar": "افتحوا كتبكم، من فضلكم."},
+      {"en": "What is today's lesson?", "pron": "وات إز تودايز ليسون؟", "ar": "ما درس اليوم؟"},
+      {"en": "Today we learn English.", "pron": "توداي وي ليرن إنجليش.", "ar": "اليوم نتعلم الإنجليزية."},
+      {"en": "Can you repeat, please?", "pron": "كان يو ريبيت، بليز؟", "ar": "هل يمكنك أن تعيد، من فضلك؟"},
+      {"en": "Yes, listen again.", "pron": "يس، ليسن أجين.", "ar": "نعم، استمع مرة أخرى."},
+      {"en": "I understand now.", "pron": "آي أندرستاند ناو.", "ar": "أنا فهمت الآن."},
+      {"en": "Excellent! Very good.", "pron": "إكسلنت! فيري جود.", "ar": "ممتاز! جيد جداً."},
+      {"en": "See you tomorrow, teacher.", "pron": "سي يو تومورو، تيتشر.", "ar": "أراك غداً، يا معلم."}
+    ]
+  },
+  {
+    "id": 7,
+    "title": "في البيت",
+    "lines": [
+      {"en": "Welcome home, dad.", "pron": "ويلكم هوم، داد.", "ar": "أهلاً بعودتك للبيت، يا أبي."},
+      {"en": "Thank you, my son.", "pron": "ثانك يو، ماي صن.", "ar": "شكراً لك، يا ابني."},
+      {"en": "How was your day?", "pron": "هاو واز يور داي؟", "ar": "كيف كان يومك؟"},
+      {"en": "My day was great.", "pron": "ماي داي واز جريت.", "ar": "كان يومي رائعاً."},
+      {"en": "Are you hungry?", "pron": "آر يو هانجري؟", "ar": "هل أنت جائع؟"},
+      {"en": "Yes, I'm very hungry.", "pron": "يس، آيم فيري هانجري.", "ar": "نعم، أنا جائع جداً."},
+      {"en": "Let's eat together.", "pron": "ليتس إيت توجيذر.", "ar": "هيا نأكل معاً."},
+      {"en": "The food is ready.", "pron": "ذا فود إز ريدي.", "ar": "الطعام جاهز."},
+      {"en": "I want to sleep now.", "pron": "آي وانت تو سليب ناو.", "ar": "أريد أن أنام الآن."},
+      {"en": "Good night, sweet dreams.", "pron": "جود نايت، سويت دريمز.", "ar": "تصبح على خير، أحلام سعيدة."}
+    ]
+  },
+  {
+    "id": 8,
+    "title": "في السوق",
+    "lines": [
+      {"en": "Hello, how much is this?", "pron": "هيلو، هاو ماتش إز ذيس؟", "ar": "أهلاً، بكم هذا؟"},
+      {"en": "It is fifty pounds.", "pron": "إت إز فيفتي باوندز.", "ar": "إنه بخمسين جنيهاً."},
+      {"en": "That's too expensive.", "pron": "ذاتس تو إكسبينسيف.", "ar": "هذا غالٍ جداً."},
+      {"en": "Can you make it cheaper?", "pron": "كان يو ميك إت تشيبر؟", "ar": "هل يمكنك أن تجعله أرخص؟"},
+      {"en": "Okay, forty pounds for you.", "pron": "أوكي، فورتي باوندز فور يو.", "ar": "حسناً، أربعون جنيهاً لك."},
+      {"en": "Do you have a bigger size?", "pron": "دو يو هاف أ بيجر سايز؟", "ar": "هل لديك مقاس أكبر؟"},
+      {"en": "Yes, here it is.", "pron": "يس، هير إت إز.", "ar": "نعم، ها هو."},
+      {"en": "I like it, I will take it.", "pron": "آي لايك إت، آي ويل تيك إت.", "ar": "أعجبني، سآخذه."},
+      {"en": "Thank you, come again.", "pron": "ثانك يو، كام أجين.", "ar": "شكراً لك، تعال مرة أخرى."}
+    ]
+  },
+  {
+    "id": 9,
+    "title": "عند الدكتور",
+    "lines": [
+      {"en": "Good morning, doctor.", "pron": "جود مورنينج، دكتور.", "ar": "صباح الخير، يا دكتور."},
+      {"en": "Good morning, what is wrong?", "pron": "جود مورنينج، وات إز رونج؟", "ar": "صباح الخير، ما المشكلة؟"},
+      {"en": "I have a headache.", "pron": "آي هاف أ هيديك.", "ar": "عندي صداع."},
+      {"en": "Do you have a fever?", "pron": "دو يو هاف أ فيفر؟", "ar": "هل عندك حرارة؟"},
+      {"en": "Yes, a little bit.", "pron": "يس، أ ليتل بيت.", "ar": "نعم، قليلاً."},
+      {"en": "Take this medicine.", "pron": "تيك ذيس ميديسين.", "ar": "خذ هذا الدواء."},
+      {"en": "How many times a day?", "pron": "هاو ميني تايمز أ داي؟", "ar": "كم مرة في اليوم؟"},
+      {"en": "Three times a day.", "pron": "ثري تايمز أ داي.", "ar": "ثلاث مرات في اليوم."},
+      {"en": "Get well soon.", "pron": "جيت ويل سون.", "ar": "شفاك الله، أتمنى لك الشفاء قريباً."},
+      {"en": "Thank you, doctor.", "pron": "ثانك يو، دكتور.", "ar": "شكراً لك، يا دكتور."}
+    ]
+  },
+  {
+    "id": 10,
+    "title": "في المطار",
+    "lines": [
+      {"en": "Where is the airport?", "pron": "وير إز ذا إيربورت؟", "ar": "أين المطار؟"},
+      {"en": "The airport is far from here.", "pron": "ذا إيربورت إز فار فروم هير.", "ar": "المطار بعيد من هنا."},
+      {"en": "I want to go to the airport.", "pron": "آي وانت تو جو تو ذا إيربورت.", "ar": "أريد الذهاب إلى المطار."},
+      {"en": "Your ticket, please.", "pron": "يور تيكيت، بليز.", "ar": "تذكرتك، من فضلك."},
+      {"en": "Here is my ticket.", "pron": "هير إز ماي تيكيت.", "ar": "هذه تذكرتي."},
+      {"en": "Have a safe flight.", "pron": "هاف أ سيف فلايت.", "ar": "رحلة آمنة."},
+      {"en": "Thank you very much.", "pron": "ثانك يو فيري ماتش.", "ar": "شكراً جزيلاً لك."}
+    ]
+  },
+  {
+    "id": 11,
+    "title": "في الفندق",
+    "lines": [
+      {"en": "Hello, I want a room.", "pron": "هيلو، آي وانت أ روم.", "ar": "أهلاً، أريد غرفة."},
+      {"en": "For how many nights?", "pron": "فور هاو ميني نايتس؟", "ar": "لعدد كم ليلة؟"},
+      {"en": "For two nights.", "pron": "فور تو نايتس.", "ar": "ليلتين."},
+      {"en": "Here is your key.", "pron": "هير إز يور كي.", "ar": "هذا هو مفتاحك."},
+      {"en": "What time is breakfast?", "pron": "وات تايم إز بريكفاست؟", "ar": "متى وقت الإفطار؟"},
+      {"en": "Breakfast is at eight.", "pron": "بريكفاست إز آت إيت.", "ar": "الإفطار الساعة الثامنة."},
+      {"en": "Thank you, this room is nice.", "pron": "ثانك يو، ذيس روم إز نايس.", "ar": "شكراً لك، هذه الغرفة جميلة."}
+    ]
+  },
+  {
+    "id": 12,
+    "title": "مع الأصدقاء",
+    "lines": [
+      {"en": "Hi, long time no see!", "pron": "هاي، لونج تايم نو سي!", "ar": "أهلاً، مضى وقت طويل لم أرك!"},
+      {"en": "Yes, I missed you!", "pron": "يس، آي ميست يو!", "ar": "نعم، اشتقت إليك!"},
+      {"en": "Let's go out today.", "pron": "ليتس جو آوت توداي.", "ar": "هيا نخرج اليوم."},
+      {"en": "Where do you want to go?", "pron": "وير دو يو وانت تو جو؟", "ar": "إلى أين تريد أن تذهب؟"},
+      {"en": "Let's go to the park.", "pron": "ليتس جو تو ذا بارك.", "ar": "هيا نذهب إلى الحديقة."},
+      {"en": "Good idea, let's go.", "pron": "جود آيديا، ليتس جو.", "ar": "فكرة جيدة، هيا بنا."},
+      {"en": "I had a great time.", "pron": "آي هاد أ جريت تايم.", "ar": "قضيت وقتاً رائعاً."},
+      {"en": "Me too, see you soon.", "pron": "مي تو، سي يو سون.", "ar": "وأنا أيضاً، أراك قريباً."}
+    ]
+  },
+  {
+    "id": 13,
+    "title": "في التليفون",
+    "lines": [
+      {"en": "Hello, who is speaking?", "pron": "هيلو، هو إز سبيكينج؟", "ar": "أهلاً، من يتحدث؟"},
+      {"en": "It's me, Ali.", "pron": "إتس مي، علي.", "ar": "إنه أنا، علي."},
+      {"en": "Hi Ali, how are you?", "pron": "هاي علي، هاو آر يو؟", "ar": "أهلاً علي، كيف حالك؟"},
+      {"en": "Can I talk to Sara?", "pron": "كان آي توك تو سارة؟", "ar": "هل يمكنني التحدث إلى سارة؟"},
+      {"en": "She is not here now.", "pron": "شي إز نوت هير ناو.", "ar": "هي ليست هنا الآن."},
+      {"en": "Please tell her I called.", "pron": "بليز تيل هير آي كولد.", "ar": "من فضلك أخبرها أنني اتصلت."},
+      {"en": "Okay, I will tell her.", "pron": "أوكي، آي ويل تيل هير.", "ar": "حسناً، سأخبرها."},
+      {"en": "Thank you, bye.", "pron": "ثانك يو، باي.", "ar": "شكراً لك، وداعاً."}
+    ]
+  },
+  {
+    "id": 14,
+    "title": "في البنك",
+    "lines": [
+      {"en": "Hello, I want to open an account.", "pron": "هيلو، آي وانت تو أوبن أن أكاونت.", "ar": "أهلاً، أريد فتح حساب."},
+      {"en": "Do you have your ID?", "pron": "دو يو هاف يور آي دي؟", "ar": "هل معك بطاقتك؟"},
+      {"en": "Yes, here it is.", "pron": "يس، هير إت إز.", "ar": "نعم، ها هي."},
+      {"en": "I want to save money.", "pron": "آي وانت تو سيف ماني.", "ar": "أريد أن أدخر مالاً."},
+      {"en": "How much money?", "pron": "هاو ماتش ماني؟", "ar": "كم من المال؟"},
+      {"en": "One thousand pounds.", "pron": "وان ثاوزند باوندز.", "ar": "ألف جنيه."},
+      {"en": "Done, thank you.", "pron": "دان، ثانك يو.", "ar": "تم، شكراً لك."}
+    ]
+  },
+  {
+    "id": 15,
+    "title": "في المكتبة",
+    "lines": [
+      {"en": "Excuse me, where are the English books?", "pron": "إكسيوز مي، وير آر ذا إنجليش بوكس؟", "ar": "عذراً، أين كتب الإنجليزية؟"},
+      {"en": "They are on the second floor.", "pron": "ذاي آر أون ذا سيكند فلور.", "ar": "إنها في الدور الثاني."},
+      {"en": "Can I borrow this book?", "pron": "كان آي بورو ذيس بوك؟", "ar": "هل يمكنني استعارة هذا الكتاب؟"},
+      {"en": "Yes, for one week.", "pron": "يس، فور وان ويك.", "ar": "نعم، لمدة أسبوع."},
+      {"en": "I love reading.", "pron": "آي لوف ريدينج.", "ar": "أنا أحب القراءة."},
+      {"en": "Reading is very useful.", "pron": "ريدينج إز فيري يوزفول.", "ar": "القراءة مفيدة جداً."},
+      {"en": "Thank you for your help.", "pron": "ثانك يو فور يور هيلب.", "ar": "شكراً لك على مساعدتك."}
+    ]
+  },
+  {
+    "id": 16,
+    "title": "في الصيدلية",
+    "lines": [
+      {"en": "Hello, I need medicine.", "pron": "هيلو، آي نيد ميديسين.", "ar": "أهلاً، أحتاج دواء."},
+      {"en": "What do you need?", "pron": "وات دو يو نيد؟", "ar": "ماذا تحتاج؟"},
+      {"en": "Medicine for headache.", "pron": "ميديسين فور هيديك.", "ar": "دواء للصداع."},
+      {"en": "Here you are.", "pron": "هير يو آر.", "ar": "تفضل، ها هو."},
+      {"en": "How much is it?", "pron": "هاو ماتش إز إت؟", "ar": "بكم هو؟"},
+      {"en": "It is thirty pounds.", "pron": "إت إز ثيرتي باوندز.", "ar": "إنه بثلاثين جنيهاً."},
+      {"en": "Thank you.", "pron": "ثانك يو.", "ar": "شكراً لك."}
+    ]
+  },
+  {
+    "id": 17,
+    "title": "في الجيم",
+    "lines": [
+      {"en": "Hello, I want to join the gym.", "pron": "هيلو، آي وانت تو جوين ذا جيم.", "ar": "أهلاً، أريد الاشتراك في الجيم."},
+      {"en": "Welcome! How old are you?", "pron": "ويلكم! هاو أولد آر يو؟", "ar": "أهلاً بك! كم عمرك؟"},
+      {"en": "I'm twenty years old.", "pron": "آيم توينتي ييرز أولد.", "ar": "عمري عشرون سنة."},
+      {"en": "Do you exercise every day?", "pron": "دو يو إكسرسايز إفري داي؟", "ar": "هل تتمرن كل يوم؟"},
+      {"en": "Yes, I try.", "pron": "يس، آي تراي.", "ar": "نعم، أحاول."},
+      {"en": "Let's start now.", "pron": "ليتس ستارت ناو.", "ar": "هيا نبدأ الآن."},
+      {"en": "This is hard but good.", "pron": "ذيس إز هارد بات جود.", "ar": "هذا صعب لكنه جيد."},
+      {"en": "You are strong!", "pron": "يو آر سترونج!", "ar": "أنت قوي!"}
+    ]
+  },
+  {
+    "id": 18,
+    "title": "في السوبر ماركت",
+    "lines": [
+      {"en": "Where is the milk?", "pron": "وير إز ذا ميلك؟", "ar": "أين اللبن؟"},
+      {"en": "It is in the fridge.", "pron": "إت إز إن ذا فريج.", "ar": "إنه في الثلاجة."},
+      {"en": "I need bread and eggs.", "pron": "آي نيد بريد أند إجز.", "ar": "أحتاج خبز وبيض."},
+      {"en": "Anything else?", "pron": "إني ثينج إلس؟", "ar": "أي شيء آخر؟"},
+      {"en": "No, that's all.", "pron": "نو، ذاتس أول.", "ar": "لا، هذا كل شيء."},
+      {"en": "How much is everything?", "pron": "هاو ماتش إز إفري ثينج؟", "ar": "كم ثمن كل شيء؟"},
+      {"en": "One hundred pounds.", "pron": "وان هاندرد باوندز.", "ar": "مائة جنيه."}
+    ]
+  },
+  {
+    "id": 19,
+    "title": "في الحديقة",
+    "lines": [
+      {"en": "What a beautiful day!", "pron": "وات أ بيوتيفول داي!", "ar": "يا له من يوم جميل!"},
+      {"en": "Yes, the weather is nice.", "pron": "يس، ذا ويذر إز نايس.", "ar": "نعم، الطقس جميل."},
+      {"en": "Let's sit here.", "pron": "ليتس سيت هير.", "ar": "هيا نجلس هنا."},
+      {"en": "Look at the flowers.", "pron": "لوك آت ذا فلاورز.", "ar": "انظر إلى الورود."},
+      {"en": "They are beautiful.", "pron": "ذاي آر بيوتيفول.", "ar": "إنها جميلة."},
+      {"en": "I love this place.", "pron": "آي لوف ذيس بليس.", "ar": "أنا أحب هذا المكان."}
+    ]
+  },
+  {
+    "id": 20,
+    "title": "في السينما",
+    "lines": [
+      {"en": "Let's watch a movie.", "pron": "ليتس واتش أ موفي.", "ar": "هيا نشاهد فيلماً."},
+      {"en": "What movie do you want?", "pron": "وات موفي دو يو وانت؟", "ar": "ما الفيلم الذي تريده؟"},
+      {"en": "A funny movie.", "pron": "أ فاني موفي.", "ar": "فيلم مضحك."},
+      {"en": "Two tickets, please.", "pron": "تو تيكيتس، بليز.", "ar": "تذكرتين، من فضلك."},
+      {"en": "The movie is very good.", "pron": "ذا موفي إز فيري جود.", "ar": "الفيلم جيد جداً."},
+      {"en": "Yes, I liked it.", "pron": "يس، آي لايكت إت.", "ar": "نعم، أعجبني."}
+    ]
+  },
+  {
+    "id": 21,
+    "title": "في الحلاق",
+    "lines": [
+      {"en": "Hello, I want a haircut.", "pron": "هيلو، آي وانت أ هيركات.", "ar": "أهلاً، أريد قص شعري."},
+      {"en": "Please sit down.", "pron": "بليز سيت داون.", "ar": "من فضلك اجلس."},
+      {"en": "Short or long?", "pron": "شورت أور لونج؟", "ar": "قصير أم طويل؟"},
+      {"en": "Short, please.", "pron": "شورت، بليز.", "ar": "قصير، من فضلك."},
+      {"en": "How is it?", "pron": "هاو إز إت؟", "ar": "كيف هو؟"},
+      {"en": "It looks great!", "pron": "إت لوكس جريت!", "ar": "يبدو رائعاً!"},
+      {"en": "Thank you very much.", "pron": "ثانك يو فيري ماتش.", "ar": "شكراً جزيلاً لك."}
+    ]
+  },
+  {
+    "id": 22,
+    "title": "في عيد الميلاد",
+    "lines": [
+      {"en": "Happy birthday!", "pron": "هابي بيرثداي!", "ar": "عيد ميلاد سعيد!"},
+      {"en": "Thank you so much!", "pron": "ثانك يو سو ماتش!", "ar": "شكراً جزيلاً لك!"},
+      {"en": "This is for you.", "pron": "ذيس إز فور يو.", "ar": "هذا لك."},
+      {"en": "Wow, a gift! Thank you.", "pron": "واو، أ جيفت! ثانك يو.", "ar": "واو، هدية! شكراً لك."},
+      {"en": "Let's eat cake.", "pron": "ليتس إيت كيك.", "ar": "هيا نأكل الكعكة."},
+      {"en": "The cake is delicious.", "pron": "ذا كيك إز ديليشس.", "ar": "الكعكة لذيذة."},
+      {"en": "I am so happy today.", "pron": "آي آم سو هابي توداي.", "ar": "أنا سعيد جداً اليوم."}
+    ]
+  },
+  {
+    "id": 23,
+    "title": "في الطقس",
+    "lines": [
+      {"en": "How is the weather today?", "pron": "هاو إز ذا ويذر توداي؟", "ar": "كيف الطقس اليوم؟"},
+      {"en": "It is hot today.", "pron": "إت إز هوت توداي.", "ar": "الجو حار اليوم."},
+      {"en": "Is it going to rain?", "pron": "إز إت جوينج تو رين؟", "ar": "هل ستمطر؟"},
+      {"en": "No, it is sunny.", "pron": "نو، إت إز ساني.", "ar": "لا، الجو مشمس."},
+      {"en": "I like winter.", "pron": "آي لايك وينتر.", "ar": "أنا أحب الشتاء."},
+      {"en": "I like summer more.", "pron": "آي لايك سامر مور.", "ar": "أنا أحب الصيف أكثر."}
+    ]
+  },
+  {
+    "id": 24,
+    "title": "في العائلة",
+    "lines": [
+      {"en": "This is my family.", "pron": "ذيس إز ماي فاميلي.", "ar": "هذه عائلتي."},
+      {"en": "This is my father.", "pron": "ذيس إز ماي فاذر.", "ar": "هذا أبي."},
+      {"en": "This is my mother.", "pron": "ذيس إز ماي ماذر.", "ar": "هذه أمي."},
+      {"en": "Do you have brothers?", "pron": "دو يو هاف براذرز؟", "ar": "هل لديك إخوة؟"},
+      {"en": "Yes, I have one brother.", "pron": "يس، آي هاف وان براذر.", "ar": "نعم، لدي أخ واحد."},
+      {"en": "I love my family.", "pron": "آي لوف ماي فاميلي.", "ar": "أنا أحب عائلتي."}
+    ]
+  },
+  {
+    "id": 25,
+    "title": "في المطبخ",
+    "lines": [
+      {"en": "What are you cooking?", "pron": "وات آر يو كوكينج؟", "ar": "ماذا تطبخين؟"},
+      {"en": "I'm cooking rice.", "pron": "آيم كوكينج رايس.", "ar": "أنا أطبخ أرز."},
+      {"en": "Can I help you?", "pron": "كان آي هيلب يو؟", "ar": "هل يمكنني مساعدتك؟"},
+      {"en": "Yes, cut the tomatoes.", "pron": "يس، كات ذا تومايتوز.", "ar": "نعم، قطع الطماطم."},
+      {"en": "The food smells good.", "pron": "ذا فود سميلز جود.", "ar": "رائحة الطعام جميلة."},
+      {"en": "Let's eat now.", "pron": "ليتس إيت ناو.", "ar": "هيا نأكل الآن."}
+    ]
+  },
+  {
+    "id": 26,
+    "title": "في المواصلات",
+    "lines": [
+      {"en": "Which bus goes to Cairo?", "pron": "ويتش باص جوز تو كايرو؟", "ar": "أي أتوبيس يذهب إلى القاهرة؟"},
+      {"en": "Bus number five.", "pron": "باص نمبر فايف.", "ar": "أتوبيس رقم خمسة."},
+      {"en": "How much is the ticket?", "pron": "هاو ماتش إز ذا تيكيت؟", "ar": "بكم التذكرة؟"},
+      {"en": "Ten pounds.", "pron": "تين باوندز.", "ar": "عشرة جنيهات."},
+      {"en": "Is this seat free?", "pron": "إز ذيس سيت فري؟", "ar": "هل هذا المقعد فارغ؟"},
+      {"en": "Yes, please sit.", "pron": "يس، بليز سيت.", "ar": "نعم، تفضل اجلس."}
+    ]
+  },
+  {
+    "id": 27,
+    "title": "في المستشفى",
+    "lines": [
+      {"en": "I feel sick.", "pron": "آي فيل سيك.", "ar": "أشعر بالتعب."},
+      {"en": "What hurts you?", "pron": "وات هيرتس يو؟", "ar": "ما الذي يؤلمك؟"},
+      {"en": "My stomach hurts.", "pron": "ماي ستوماك هيرتس.", "ar": "معدتي تؤلمني."},
+      {"en": "Don't worry, you will be fine.", "pron": "دونت ووري، يو ويل بي فاين.", "ar": "لا تقلق، ستكون بخير."},
+      {"en": "You need to rest.", "pron": "يو نيد تو ريست.", "ar": "أنت تحتاج إلى الراحة."},
+      {"en": "Thank you, nurse.", "pron": "ثانك يو، نيرس.", "ar": "شكراً لك، يا ممرضة."}
+    ]
+  },
+  {
+    "id": 28,
+    "title": "في الملابس",
+    "lines": [
+      {"en": "I want a new shirt.", "pron": "آي وانت أ نيو شيرت.", "ar": "أريد قميصاً جديداً."},
+      {"en": "What color do you like?", "pron": "وات كولور دو يو لايك؟", "ar": "ما اللون الذي تحبه؟"},
+      {"en": "I like blue.", "pron": "آي لايك بلو.", "ar": "أنا أحب الأزرق."},
+      {"en": "Try this one.", "pron": "تراي ذيس وان.", "ar": "جرب هذا."},
+      {"en": "It fits me well.", "pron": "إت فيتس مي ويل.", "ar": "إنه يناسبني جيداً."},
+      {"en": "I will buy it.", "pron": "آي ويل باي إت.", "ar": "سأشتريه."}
+    ]
+  },
+  {
+    "id": 29,
+    "title": "في النادي",
+    "lines": [
+      {"en": "Do you like football?", "pron": "دو يو لايك فوتبول؟", "ar": "هل تحب كرة القدم؟"},
+      {"en": "Yes, I love football.", "pron": "يس، آي لوف فوتبول.", "ar": "نعم، أنا أحب كرة القدم."},
+      {"en": "Who is your favorite team?", "pron": "هو إز يور فيفوريت تيم؟", "ar": "ما فريقك المفضل؟"},
+      {"en": "My favorite team is Al Ahly.", "pron": "ماي فيفوريت تيم إز الأهلي.", "ar": "فريقي المفضل هو الأهلي."},
+      {"en": "Let's play together.", "pron": "ليتس بلاي توجيذر.", "ar": "هيا نلعب معاً."},
+      {"en": "That was a great game!", "pron": "ذات واز أ جريت جيم!", "ar": "كانت مباراة رائعة!"}
+    ]
+  },
+  {
+    "id": 30,
+    "title": "في المدرسة 2",
+    "lines": [
+      {"en": "Did you do your homework?", "pron": "ديد يو دو يور هوم وورك؟", "ar": "هل عملت واجبك؟"},
+      {"en": "Yes, I did it.", "pron": "يس، آي ديد إت.", "ar": "نعم، عملته."},
+      {"en": "Can I see it?", "pron": "كان آي سي إت؟", "ar": "هل يمكنني رؤيته؟"},
+      {"en": "Sure, here it is.", "pron": "شور، هير إت إز.", "ar": "بالطبع، ها هو."},
+      {"en": "Your work is excellent.", "pron": "يور وورك إز إكسلنت.", "ar": "عملك ممتاز."},
+      {"en": "Thank you, teacher.", "pron": "ثانك يو، تيتشر.", "ar": "شكراً لك، يا معلم."}
+    ]
   }
 ]
