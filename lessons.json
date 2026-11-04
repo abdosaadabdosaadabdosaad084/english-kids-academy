@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "title": "التعارف",
+    "lines": [
+      {"en": "Hello, how are you?", "pron": "هيلو، هاو آر يو؟", "ar": "أهلاً، كيف حالك؟"},
+      {"en": "I'm fine, thank you. And you?", "pron": "آيم فاين، ثانك يو. أند يو؟", "ar": "أنا بخير، شكراً لك. وأنت؟"},
+      {"en": "I'm good too.", "pron": "آيم جود تو.", "ar": "أنا بخير أيضاً."},
+      {"en": "What is your name?", "pron": "وات إز يور نيم؟", "ar": "ما اسمك؟"},
+      {"en": "My name is Ahmed.", "pron": "ماي نيم إز أحمد.", "ar": "اسمي أحمد."},
+      {"en": "Nice to meet you, Ahmed.", "pron": "نايس تو ميت يو، أحمد.", "ar": "سعيد بلقائك يا أحمد."},
+      {"en": "Nice to meet you too.", "pron": "نايس تو ميت يو تو.", "ar": "سعيد بلقائك أيضاً."},
+      {"en": "Where are you from?", "pron": "وير آر يو فروم؟", "ar": "من أين أنت؟"},
+      {"en": "I'm from Egypt.", "pron": "آيم فروم إيجيبت.", "ar": "أنا من مصر."},
+      {"en": "Welcome to Egypt!", "pron": "ويلكم تو إيجيبت!", "ar": "أهلاً بك في مصر!"}
+    ]
+  },
+  {
+    "id": 2,
+    "title": "في الشارع",
+    "lines": [
+      {"en": "Excuse me, where is the street?", "pron": "إكسيوز مي، وير إز ذا ستريت؟", "ar": "عذراً، أين الشارع؟"},
+      {"en": "Go straight ahead.", "pron": "جو ستريت أهيد.", "ar": "امشِ على طول."},
+      {"en": "Then turn right.", "pron": "ذين تيرن رايت.", "ar": "ثم اتجه يميناً."},
+      {"en": "Is it far from here?", "pron": "إز إت فار فروم هير؟", "ar": "هل هو بعيد من هنا؟"},
+      {"en": "No, it's very near.", "pron": "نو، إتس فيري نير.", "ar": "لا، إنه قريب جداً."},
+      {"en": "How can I go there?", "pron": "هاو كان آي جو ذير؟", "ar": "كيف يمكنني الذهاب إلى هناك؟"},
+      {"en": "You can take a taxi.", "pron": "يو كان تيك أ تاكسي.", "ar": "يمكنك أن تأخذ تاكسي."},
+      {"en": "Thank you very much.", "pron": "ثانك يو فيري ماتش.", "ar": "شكراً جزيلاً لك."},
+      {"en": "You're welcome.", "pron": "يور ويلكم.", "ar": "على الرحب والسعة."}
+    ]
+  },
+  {
+    "id": 3,
+    "title": "في المطعم",
+    "lines": [
+      {"en": "Hello, I want a table for two.", "pron": "هيلو، آي وانت أ تيبل فور تو.", "ar": "أهلاً، أريد طاولة لشخصين."},
+      {"en": "Please sit here.", "pron": "بليز سيت هير.", "ar": "من فضلك اجلس هنا."},
+      {"en": "Can I see the menu?", "pron": "كان آي سي ذا مينيو؟", "ar": "هل يمكنني رؤية قائمة الطعام؟"},
+      {"en": "Here you are.", "pron": "هير يو آر.", "ar": "تفضل، ها هي."},
+      {"en": "What do you want to eat?", "pron": "وات دو يو وانت تو إيت؟", "ar": "ماذا تريد أن تأكل؟"},
+      {"en": "I want chicken and rice.", "pron": "آي وانت تشيكن أند رايس.", "ar": "أريد دجاج وأرز."},
+      {"en": "What do you want to drink?", "pron": "وات دو يو وانت تو درينك؟", "ar": "ماذا تريد أن تشرب؟"},
+      {"en": "I want water, please.", "pron": "آي وانت ووتر، بليز.", "ar": "أريد ماء، من فضلك."},
+      {"en": "The food is very delicious.", "pron": "ذا فود إز فيري ديليشس.", "ar": "الطعام لذيذ جداً."},
+      {"en": "Can I have the bill, please?", "pron": "كان آي هاف ذا بيل، بليز؟", "ar": "هل يمكنني الحصول على الفاتورة، من فضلك؟"}
+    ]
+  },
+  {
+    "id": 4,
+    "title": "في الشغل",
+    "lines": [
+      {"en": "Good morning, everyone.", "pron": "جود مورنينج، إفري وان.", "ar": "صباح الخير، جميعاً."},
+      {"en": "Good morning, boss.", "pron": "جود مورنينج، بوس.", "ar": "صباح الخير، يا مدير."},
+      {"en": "What are you doing now?", "pron": "وات آر يو دوينج ناو؟", "ar": "ماذا تفعل الآن؟"},
+      {"en": "I'm working on a new project.", "pron": "آيم ووركينج أون أ نيو بروجيكت.", "ar": "أنا أعمل على مشروع جديد."},
+      {"en": "Can you help me, please?", "pron": "كان يو هيلب مي، بليز؟", "ar": "هل يمكنك مساعدتي، من فضلك؟"},
+      {"en": "Yes, of course.", "pron": "يس، أوف كورس.", "ar": "نعم، بالطبع."},
+      {"en": "When is the meeting?", "pron": "وين إز ذا ميتينج؟", "ar": "متى الاجتماع؟"},
+      {"en": "The meeting is at ten.", "pron": "ذا ميتينج إز آت تين.", "ar": "الاجتماع الساعة العاشرة."},
+      {"en": "I finished my work.", "pron": "آي فينيشد ماي وورك.", "ar": "أنهيت عملي."},
+      {"en": "Great job! See you tomorrow.", "pron": "جريت جوب! سي يو تومورو.", "ar": "عمل رائع! أراك غداً."}
+    ]
+  },
+  {
+    "id": 5,
+    "title": "في السفر",
+    "lines": [
+      {"en": "Where are you traveling to?", "pron": "وير آر يو ترافلينج تو؟", "ar": "إلى أين تسافر؟"},
+      {"en": "I'm traveling to London.", "pron": "آيم ترافلينج تو لندن.", "ar": "أنا مسافر إلى لندن."},
+      {"en": "When is your flight?", "pron": "وين إز يور فلايت؟", "ar": "متى رحلتك؟"},
+      {"en": "My flight is tomorrow.", "pron": "ماي فلايت إز تومورو.", "ar": "رحلتي غداً."},
+      {"en": "Can I see your passport?", "pron": "كان آي سي يور باسبورت؟", "ar": "هل يمكنني رؤية جواز سفرك؟"},
+      {"en": "Here is my passport.", "pron": "هير إز ماي باسبورت.", "ar": "هذا هو جواز سفري."},
+      {"en": "Have a nice trip!", "pron": "هاف أ نايس تريب!", "ar": "رحلة سعيدة!"},
+      {"en": "Thank you, see you soon.", "pron": "ثانك يو، سي يو سون.", "ar": "شكراً، أراك قريباً."}
+    ]
+  }
+]
