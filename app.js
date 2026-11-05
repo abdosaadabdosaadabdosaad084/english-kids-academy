@@ -30,4 +30,23 @@ function showQuestion(){if(questions.length===0)buildQuestions();const cur=quest
 function checkAnswer(btn,chosen,correct){const buttons=document.querySelectorAll('#options button');buttons.forEach(b=>b.disabled=true);if(chosen===correct){btn.classList.add('correct');score+=10;speakBoardContent('أحسنت! '+correct);}else{btn.classList.add('wrong');buttons.forEach(b=>{if(b.textContent===correct)b.classList.add('correct')});speakBoardContent('الإجابة الصحيحة '+correct);}setTimeout(()=>{nextQuestion();},1200);}
 function nextQuestion(){qIndex=(qIndex+1)%questions.length;showQuestion();}
 function resetGame(){qIndex=0;score=0;buildQuestions();showQuestion();}
-window.onload=()=>{initLearn();buildQuestions();showQuestion();document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI()});};
+
+// === VIDEOS ===
+async function loadVideos(){
+  try{
+    const res = await fetch('videos.json');
+    const videos = await res.json();
+    const box = document.getElementById('videosList');
+    if(!box) return;
+    box.innerHTML = '';
+    if(videos.length===0){ box.innerHTML='<p>لا توجد فيديوهات بعد</p>'; return; }
+    videos.forEach(v=>{
+      const div=document.createElement('div');
+      div.style.cssText='background:white;border-radius:16px;padding:12px;margin-bottom:16px;color:#111';
+      div.innerHTML=`<h3 style="margin:0 0 8px">${v.title||''}</h3><video controls playsinline style="width:100%;border-radius:12px;background:#000" src="${v.src}"></video>`;
+      box.appendChild(div);
+    });
+  }catch(e){ console.log('videos error',e); }
+}
+
+window.onload=()=>{initLearn();buildQuestions();showQuestion();loadVideos();document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI()});};
