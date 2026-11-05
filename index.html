@@ -12,7 +12,7 @@
 body{background:#0f0f2a;color:white;font-family:Arial;text-align:center;margin:0;padding:14px}
 h1{font-size:30px;margin:8px 0 4px}
 .sub{color:#facc15;font-size:13px;margin-bottom:14px}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:white;border-radius:16px;font-size:20px;font-weight:bold;margin-bottom:12px;min-height:78px;padding:14px;line-height:1.3}
+.btn{display:flex;align-items:center;justify-content:center;text-decoration:none;color:white;border-radius:16px;font-size:20px;font-weight:bold;margin-bottom:12px;min-height:78px;padding:14px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 .grid .btn{min-height:78px}
 .yellow{background:#facc15;color:#111}
@@ -20,39 +20,49 @@ h1{font-size:30px;margin:8px 0 4px}
 .red{background:#e23b3b}.blue{background:#1e7bff}
 .green{background:#0f9d6e}.orange{background:#f08c00}
 .videos{background:#ff9800}
-.box{display:none;background:white;color:#111;border-radius:16px;padding:16px;margin-bottom:14px;text-align:right}
-.box h3{margin:0 0 10px;text-align:center}
-.box button{background:#0f0f2a;color:white;border:0;padding:12px 16px;border-radius:12px;font-size:18px;font-weight:bold;width:100%;margin-top:10px}
-.box input{width:100%;padding:12px;border:2px solid #ddd;border-radius:12px;font-size:18px}
-canvas{width:100%;height:220px;background:#fff;border:2px solid #ddd;border-radius:12px;touch-action:none}
-.word{font-size:28px;font-weight:bold;text-align:center}
-.opt{background:#eee;padding:12px;border-radius:12px;margin:6px 0;cursor:pointer;text-align:center;font-size:19px}
+/* صفحة كاملة */
+.page{display:none;position:fixed;inset:0;background:#0f0f2a;z-index:99;overflow-y:auto;padding:16px;text-align:right}
+.page h2{text-align:center;margin:10px 0 16px}
+.back{background:#facc15;color:#111;border:0;width:100%;padding:14px;border-radius:14px;font-size:20px;font-weight:bold;margin-bottom:14px}
+.whitebox{background:white;color:#111;border-radius:16px;padding:16px}
+.whitebox input{width:100%;padding:14px;border:2px solid #ddd;border-radius:12px;font-size:18px;margin-bottom:10px}
+.whitebox button{background:#0f0f2a;color:white;border:0;padding:14px;border-radius:12px;font-size:18px;font-weight:bold;width:100%;margin-top:10px}
+canvas{width:100%;height:320px;background:#fff;border:2px solid #ddd;border-radius:12px;touch-action:none}
+.word{font-size:30px;font-weight:bold;text-align:center;color:#111}
+.opt{background:#eee;padding:14px;border-radius:12px;margin:8px 0;cursor:pointer;text-align:center;font-size:19px;color:#111}
 </style>
 </head>
 <body>
 
 <h1>تعليم اللغة الانجليزية</h1>
-<div class="sub">V21 - مربوط بالملفات الأصلية + حجم واحد + تثبيت</div>
+<div class="sub">V22 - كل خانة صفحة لوحدها + مساعد جوجل صح</div>
 
 <a class="btn yellow" href="#" onclick="installApp();return false">📱 ثبت التطبيق</a>
-
 <div class="grid">
-<a class="btn purple1" href="#" onclick="show('b1');return false">✏️ السبورة الحرة</a>
-<a class="btn purple2" href="#" onclick="show('b2');return false">🤖 مساعد جوجل</a>
+<a class="btn purple1" href="#" onclick="openPage('p1');return false">✏️ السبورة الحرة</a>
+<a class="btn purple2" href="#" onclick="openPage('p2');return false">🤖 مساعد جوجل</a>
 <a class="btn red" href="grammar.html">📚 قواعد جوجل</a>
-<a class="btn blue" href="#" onclick="show('b4');return false">🎮 40 لعبة تعلم كتير</a>
+<a class="btn blue" href="#" onclick="openPage('p4');return false">🎮 40 لعبة تعلم كتير</a>
 </div>
-
-<a class="btn green" href="#" onclick="show('b5');return false">💬 محادثات متجددة - زي Loecsen</a>
-<a class="btn orange" href="#" onclick="show('b6');return false">📷 معرض صور - 40 كلمة بالصور</a>
+<a class="btn green" href="#" onclick="openPage('p5');return false">💬 محادثات متجددة - زي Loecsen</a>
+<a class="btn orange" href="#" onclick="openPage('p6');return false">📷 معرض صور - 40 كلمة بالصور</a>
 <a class="btn orange" href="challenge.html">❓ اسئلة التحدي</a>
 <a class="btn videos" href="videos.html">🎬 الفيديوهات</a>
 
-<div id="b1" class="box"><h3>✏️ السبورة الحرة</h3><canvas id="cv"></canvas><button onclick="document.getElementById('cv').getContext('2d').clearRect(0,0,1000,1000)">مسح السبورة</button></div>
-<div id="b2" class="box"><h3>🤖 مساعد جوجل</h3><input id="q" placeholder="مثال: ما معنى apple ؟"><button onclick="window.open('https://www.google.com/search?q='+encodeURIComponent(document.getElementById('q').value||'learn english for kids'),'_blank')">اسأل جوجل</button><button onclick="window.open('https://gemini.google.com','_blank')">افتح Gemini</button></div>
-<div id="b4" class="box"><h3>🎮 لعبة الكلمات</h3><div class="word" id="qw">Apple</div><div id="opts"></div><p id="res" style="text-align:center;font-weight:bold"></p></div>
-<div id="b5" class="box"><h3>💬 محادثات</h3><p><b>Hello!</b> = أهلاً</p><p><b>How are you?</b> = كيف حالك؟</p><p><b>Thank you!</b> = شكراً لك</p><p><b>Goodbye!</b> = مع السلامة</p></div>
-<div id="b6" class="box"><h3>📷 40 كلمة بالصور</h3><p style="font-size:30px;text-align:center">🍎 Apple - تفاحة<br>🐱 Cat - قطة<br>🐶 Dog - كلب<br>🍌 Banana - موز<br>☀️ Sun - شمس<br>🌙 Moon - قمر</p></div>
+<!-- السبورة صفحة كاملة -->
+<div id="p1" class="page"><button class="back" onclick="closePage()">⬅ رجوع للرئيسية</button><h2>✏️ السبورة الحرة</h2><div class="whitebox"><canvas id="cv"></canvas><button onclick="document.getElementById('cv').getContext('2d').clearRect(0,0,2000,2000)">مسح السبورة</button><p style="text-align:center;color:#555">ارسم بصباعك</p></div></div>
+
+<!-- مساعد جوجل - مش Gemini -->
+<div id="p2" class="page"><button class="back" onclick="closePage()">⬅ رجوع للرئيسية</button><h2>🤖 مساعد جوجل</h2><div class="whitebox"><p>اكتب سؤالك وسيفتح في بحث جوجل:</p><input id="q" placeholder="مثال: ما معنى apple ؟"><button onclick="window.open('https://www.google.com/search?q='+encodeURIComponent(document.getElementById('q').value||'learn english for kids'),'_blank')">🔍 ابحث في جوجل</button><button onclick="window.open('https://assistant.google.com','_blank')">🤖 افتح مساعد جوجل</button><button onclick="window.open('https://translate.google.com/?sl=en&tl=ar','_blank')">🌐 ترجمة جوجل</button></div></div>
+
+<!-- لعبة -->
+<div id="p4" class="page"><button class="back" onclick="closePage()">⬅ رجوع للرئيسية</button><h2>🎮 لعبة الكلمات</h2><div class="whitebox"><p style="text-align:center">ما معنى هذه الكلمة؟</p><div class="word" id="qw">Apple</div><div id="opts"></div><p id="res" style="text-align:center;font-weight:bold"></p></div></div>
+
+<!-- محادثات -->
+<div id="p5" class="page"><button class="back" onclick="closePage()">⬅ رجوع للرئيسية</button><h2>💬 محادثات متجددة</h2><div class="whitebox"><p><b>Hello!</b> = أهلاً</p><p><b>How are you?</b> = كيف حالك؟</p><p><b>Thank you!</b> = شكراً لك</p><p><b>Goodbye!</b> = مع السلامة</p><p><b>What is your name?</b> = ما اسمك؟</p></div></div>
+
+<!-- معرض -->
+<div id="p6" class="page"><button class="back" onclick="closePage()">⬅ رجوع للرئيسية</button><h2>📷 معرض صور - 40 كلمة</h2><div class="whitebox"><p style="font-size:28px;text-align:center">🍎 Apple - تفاحة<br>🐱 Cat - قطة<br>🐶 Dog - كلب<br>🍌 Banana - موز<br>☀️ Sun - شمس<br>🌙 Moon - قمر</p></div></div>
 
 <script src="app.js"></script>
 <script>
@@ -60,16 +70,20 @@ let deferred=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;});
 function installApp(){
   if(deferred){deferred.prompt();deferred.userChoice.then(()=>{deferred=null});}
-  else{alert('للتثبيت على الشاشة:\n1- دوس على الـ 3 نقط فوق في المتصفح\n2- اختار Add to Home screen\n3- دوس Add');}
+  else{alert('للتثبيت:\n1- دوس على الـ 3 نقط فوق\n2- اختار Add to Home screen\n3- دوس Add');}
 }
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
-function show(id){
-  document.querySelectorAll('.box').forEach(b=>b.style.display='none');
-  let el=document.getElementById(id);
-  el.style.display='block';
-  el.scrollIntoView({behavior:'smooth'});
-  if(id=='b4') startGame();
+function openPage(id){
+  document.getElementById(id).style.display='block';
+  window.scrollTo(0,0);
+  if(id=='p4') startGame();
+  history.pushState({page:id},'');
 }
+function closePage(){
+  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+  history.back();
+}
+window.addEventListener('popstate',()=>{document.querySelectorAll('.page').forEach(p=>p.style.display='none');});
 let words=[['Apple','تفاحة','موز','قطة'],['Cat','قطة','كلب','شمس'],['Sun','شمس','قمر','تفاحة'],['Dog','كلب','قطة','موز']];
 let qi=0;
 function startGame(){
