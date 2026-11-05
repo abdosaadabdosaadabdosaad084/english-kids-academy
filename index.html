@@ -4,44 +4,94 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>تعليم اللغة الانجليزية</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f0f2a">
 <style>
+*{box-sizing:border-box}
 body{background:#0f0f2a;color:white;font-family:Arial;text-align:center;margin:0;padding:14px}
-h1{font-size:32px;margin:8px 0 4px}
-.sub{color:#facc15;font-size:14px;margin-bottom:14px}
-.btn{display:block;text-decoration:none;color:white;padding:18px;border-radius:16px;font-size:22px;font-weight:bold;margin-bottom:12px}
-.yellow{background:#facc15;color:#111}
+h1{font-size:30px;margin:8px 0 4px}
+.sub{color:#facc15;font-size:13px;margin-bottom:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:white;border-radius:16px;font-size:20px;font-weight:bold;margin-bottom:12px;min-height:78px;padding:14px;line-height:1.3}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.grid a{padding:20px 10px;font-size:21px}
-.purple1{background:#6d5cff}
-.purple2{background:#9b6cff}
-.red{background:#e23b3b}
-.blue{background:#1e7bff}
-.green{background:#0f9d6e;font-size:19px;text-align:right;padding:16px}
-.orange{background:#f08c00}
+.grid .btn{min-height:78px}
+.yellow{background:#facc15;color:#111}
+.purple1{background:#6d5cff}.purple2{background:#9b6cff}
+.red{background:#e23b3b}.blue{background:#1e7bff}
+.green{background:#0f9d6e}.orange{background:#f08c00}
 .videos{background:#ff9800}
+.box{display:none;background:white;color:#111;border-radius:16px;padding:16px;margin-bottom:14px;text-align:right}
+.box h3{margin:0 0 10px;text-align:center}
+.box button{background:#0f0f2a;color:white;border:0;padding:12px 16px;border-radius:12px;font-size:18px;font-weight:bold;width:100%;margin-top:10px}
+.box input{width:100%;padding:12px;border:2px solid #ddd;border-radius:12px;font-size:18px}
+canvas{width:100%;height:220px;background:#fff;border:2px solid #ddd;border-radius:12px;touch-action:none}
+.word{font-size:28px;font-weight:bold;text-align:center}
+.opt{background:#eee;padding:12px;border-radius:12px;margin:6px 0;cursor:pointer;text-align:center;font-size:19px}
+.opt:active{background:#facc15}
+.small{font-size:14px;color:#555;text-align:center}
 </style>
 </head>
 <body>
 
 <h1>تعليم اللغة الانجليزية</h1>
-<div class="sub">V18 - محادثات متجددة + تخزين تلقائي من غير نت</div>
+<div class="sub">V20 - كل الخانات شغالة + حجم واحد + تثبيت</div>
 
-<a class="btn yellow" href="#">📱 ثبت التطبيق</a>
+<a class="btn yellow" href="#" onclick="installApp();return false">📱 ثبت التطبيق</a>
 
 <div class="grid">
-<a class="btn purple1" href="#">✏️ السبورة<br>الحرة</a>
-<a class="btn purple2" href="#">🤖 مساعد<br>جوجل</a>
-<a class="btn red" href="#">📚 قواعد<br>جوجل</a>
-<a class="btn blue" href="#">🎮 40 لعبة<br>تعلم كتير</a>
+<a class="btn purple1" href="#" onclick="show('b1');return false">✏️ السبورة الحرة</a>
+<a class="btn purple2" href="#" onclick="show('b2');return false">🤖 مساعد جوجل</a>
+<a class="btn red" href="#" onclick="show('b3');return false">📚 قواعد جوجل</a>
+<a class="btn blue" href="#" onclick="show('b4');return false">🎮 40 لعبة تعلم كتير</a>
 </div>
 
-<a class="btn green" href="#">💬 محادثات متجددة - <br>زي Loecsen<br><span style="font-size:14px;font-weight:normal">+ تحديث تلقائي<br>شغال من غير نت</span></a>
-
-<a class="btn orange" href="#">📷 معرض صور - 40 كلمة بالصور</a>
-
-<a class="btn orange" href="#">اسئلة التحدي</a>
-
+<a class="btn green" href="#" onclick="show('b5');return false">💬 محادثات متجددة - زي Loecsen</a>
+<a class="btn orange" href="#" onclick="show('b6');return false">📷 معرض صور - 40 كلمة بالصور</a>
+<a class="btn orange" href="#" onclick="show('b7');return false">❓ اسئلة التحدي</a>
 <a class="btn videos" href="videos.html">🎬 الفيديوهات</a>
 
+<div id="b1" class="box"><h3>✏️ السبورة الحرة</h3><canvas id="cv"></canvas><button onclick="document.getElementById('cv').getContext('2d').clearRect(0,0,1000,1000)">مسح السبورة</button><p class="small">ارسم بصباعك</p></div>
+<div id="b2" class="box"><h3>🤖 مساعد جوجل</h3><p>اكتب سؤالك:</p><input id="q" placeholder="مثال: ما معنى apple ؟"><button onclick="window.open('https://www.google.com/search?q='+encodeURIComponent(document.getElementById('q').value||'learn english for kids'),'_blank')">اسأل جوجل</button><button onclick="window.open('https://gemini.google.com','_blank')">افتح Gemini</button></div>
+<div id="b3" class="box"><h3>📚 قواعد جوجل</h3><div class="opt" onclick="window.open('https://www.google.com/search?q=English+grammar+for+kids+present+simple','_blank')">📖 المضارع البسيط</div><div class="opt" onclick="window.open('https://www.google.com/search?q=English+grammar+for+kids+plural','_blank')">📖 الجمع Plural</div><div class="opt" onclick="window.open('https://www.google.com/search?q=English+grammar+for+kids+pronouns','_blank')">📖 الضمائر Pronouns</div></div>
+<div id="b4" class="box"><h3>🎮 لعبة الكلمات</h3><p class="small">ما معنى هذه الكلمة؟</p><div class="word" id="qw">Apple</div><div id="opts"></div><p id="res" style="text-align:center;font-weight:bold"></p></div>
+<div id="b5" class="box"><h3>💬 محادثات</h3><p><b>Hello!</b> = أهلاً</p><p><b>How are you?</b> = كيف حالك؟</p><p><b>Thank you!</b> = شكراً لك</p><p><b>Goodbye!</b> = مع السلامة</p><p><b>What is your name?</b> = ما اسمك؟</p></div>
+<div id="b6" class="box"><h3>📷 40 كلمة بالصور</h3><p style="font-size:30px;text-align:center">🍎 Apple - تفاحة<br>🐱 Cat - قطة<br>🐶 Dog - كلب<br>🍌 Banana - موز<br>☀️ Sun - شمس<br>🌙 Moon - قمر</p></div>
+<div id="b7" class="box"><h3>❓ اسئلة التحدي</h3><p style="text-align:center;font-size:20px;font-weight:bold">ما لون الشمس؟</p><div class="opt" onclick="alert('❌ غلط، حاول تاني')">أزرق Blue</div><div class="opt" onclick="alert('✅ صح! برافو')">أصفر Yellow</div><div class="opt" onclick="alert('❌ غلط، حاول تاني')">أخضر Green</div></div>
+
+<script>
+let deferred=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;});
+function installApp(){
+  if(deferred){deferred.prompt();deferred.userChoice.then(()=>{deferred=null});}
+  else{alert('للتثبيت على الشاشة:\n1- دوس على الـ 3 نقط فوق في المتصفح\n2- اختار Add to Home screen\n3- دوس Add');}
+}
+function show(id){
+  document.querySelectorAll('.box').forEach(b=>b.style.display='none');
+  let el=document.getElementById(id);
+  el.style.display='block';
+  el.scrollIntoView({behavior:'smooth'});
+  if(id=='b4') startGame();
+}
+let words=[['Apple','تفاحة','موز','قطة'],['Cat','قطة','كلب','شمس'],['Sun','شمس','قمر','تفاحة'],['Dog','كلب','قطة','موز']];
+let qi=0;
+function startGame(){
+  let w=words[qi%words.length]; qi++;
+  document.getElementById('qw').innerText=w[0];
+  document.getElementById('res').innerText='';
+  let opts=[w[1],w[2],w[3]].sort(()=>Math.random()-0.5);
+  document.getElementById('opts').innerHTML=opts.map(o=>`<div class="opt" onclick="checkGame('${o}','${w[1]}')">${o}</div>`).join('');
+}
+function checkGame(a,b){
+  if(a==b){document.getElementById('res').innerText='✅ صح! برافو'; setTimeout(startGame,800);}
+  else{document.getElementById('res').innerText='❌ غلط، حاول تاني';}
+}
+let c=document.getElementById('cv'),ctx=c.getContext('2d'),draw=false;
+function pos(e){let r=c.getBoundingClientRect();let t=e.touches?e.touches[0]:e;return{x:(t.clientX-r.left)*c.width/r.width,y:(t.clientY-r.top)*c.height/r.height}}
+c.addEventListener('mousedown',e=>{draw=true;let p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y)});
+c.addEventListener('mousemove',e=>{if(!draw)return;let p=pos(e);ctx.lineWidth=4;ctx.lineCap='round';ctx.lineTo(p.x,p.y);ctx.stroke()});
+window.addEventListener('mouseup',()=>draw=false);
+c.addEventListener('touchstart',e=>{e.preventDefault();draw=true;let p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y)},{passive:false});
+c.addEventListener('touchmove',e=>{e.preventDefault();if(!draw)return;let p=pos(e);ctx.lineWidth=4;ctx.lineCap='round';ctx.lineTo(p.x,p.y);ctx.stroke()},{passive:false});
+c.addEventListener('touchend',()=>draw=false);
+</script>
 </body>
 </html>
