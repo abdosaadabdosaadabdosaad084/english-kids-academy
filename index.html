@@ -64,21 +64,16 @@ body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 <button class="action" style="flex:1;background:#16a34a" onclick="togglePron()">👁 إخفاء / إظهار النطق</button>
 <button class="action" style="flex:1;background:#8b5cf6" onclick="speakCurrentEn()">🔊 نطق EN</button>
 </div>
-<p id="convStatus" style="text-align:center;font-size:12px;color:#666;margin-top:8px"></p>
+<p id="convStatus" style="text-align:center;margin-top:8px;font-size:13px;color:#666"></p>
 </div>
 </div>
-<div id="learnScreen" class="screen">
-<div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>السبورة الحرة</h3></div>
-<div class="row" id="lettersRow"></div><div class="row" id="smallRow"></div><div class="row" id="arabicRow"></div>
-<div id="board" class="blackboard" contenteditable="true" data-placeholder="اكتب هنا أي شيء..."></div>
-<div style="display:flex;gap:4px;margin:6px 0">
-<button style="flex:1;background:#dc2626;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900" onclick="clearBoard()">🗑️ مسح</button>
-<button style="flex:1;background:#6b7280;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900" onclick="backspace()">⌫ حرف</button>
+<div id="learnScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>السبورة الحرة</h3></div><div class="content-box"><div id="board" class="blackboard" contenteditable="true" data-placeholder="اكتب هنا..."></div><br><div style="display:flex;gap:6px"><button style="flex:1;background:#ef4444;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900" onclick="clearBoard()">🗑 مسح</button><button style="flex:1;background:#6b7280;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900" onclick="backspace()">⌫ مسح حرف</button></div><br><div style="display:flex;gap:6px">
 <button style="flex:1;background:#16a34a;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900" onclick="speakBoardAr()">🔊 عربي</button>
 <button style="flex:1;background:#2563eb;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900" onclick="speakBoardEn()">🔊 EN</button>
 </div>
 <div class="row" id="numbersRow"></div><div class="row" id="arabicNumRow"></div>
-</div>
+<div class="row" id="lettersRow"></div><div class="row" id="smallRow"></div><div class="row" id="arabicRow"></div>
+</div></div>
 <div id="assistantScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>المساعد - شرح جوجل</h3></div><div class="assistant-box"><div style="display:flex;gap:5px"><input id="assistantInput" style="flex:1;padding:10px;border-radius:8px;border:2px solid #8b5cf6" placeholder="اكتب: كمية، طريق، الإنسان يتعلم كل يوم، تعالى"><button class="action" onclick="doAssistantSearch()">بحث</button></div><div id="assistantResult" class="item google-box">اكتب أي جملة طويلة وسيتم شرحها مثل جوجل: ترجمة، نوع، نطق عربي وانجليزي منفصل، أمثلة، قاعدة</div></div></div>
 <div id="gamesScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>الألعاب - 40 سؤال</h3></div><div class="content-box" id="gameBox"></div></div>
 <div id="grammarScreen" class="screen"><div class="screen-header"><button class="back-btn" onclick="goHome()">› رجوع</button><h3>القواعد - بالتفصيل الممل</h3></div><iframe src="grammar.html" style="width:100%;height:85vh;border:none;border-radius:12px;background:#fff"></iframe></div>
@@ -91,8 +86,20 @@ function speakEn(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthe
 function speakAr(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=0.85;speechSynthesis.speak(u);}
 function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('homeScreen').classList.add('active');}
 function openScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='learnScreen')initLearn();if(id==='gamesScreen')initGame();if(id==='galleryScreen')loadGallery();if(id==='convScreen')initConv();if(id==='booksScreen')loadBooks();}
-async function loadBooks(){try{let r=await fetch('books.json');let books=await r.json();window.allBooks=books;let box=document.getElementById('books-list');box.innerHTML=books.map(b=>`<div style="background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:10px;text-align:right"><h3>📚 ${b.title}</h3><button class="action" style="background:#22c55e" onclick="showBook(${b.id})">افتح الكتاب</button></div>`).join('');}catch(e){document.getElementById('books-list').innerHTML='مش قادر أحمل الكتب، اتأكد إن ملف books.json موجود';}}
-function showBook(id){let book=window.allBooks.find(b=>b.id===id);let box=document.getElementById('books-list');let h=`<h2 style="text-align:right">${book.title}</h2>`;if(book.words){h+=`<h3 style="text-align:right">الكلمات</h3>`;book.words.forEach(w=>{h+=`<p style="text-align:right"><b>${w.en}</b> - ${w.ar} - ${w.pron}</p>`});}if(book.verbs){h+=`<h3 style="text-align:right">الأفعال</h3>`;book.verbs.forEach(v=>{h+=`<p style="text-align:right"><b>${v.en}</b> - ${v.ar} - ${v.pron}</p>`});}if(book.stories){h+=`<h3 style="text-align:right">القصص</h3>`;book.stories.forEach(s=>{h+=`<p style="text-align:right"><b>${s.title}</b><br>${s.text}</p>`});}if(book.tenses){h+=`<h3 style="text-align:right">الأزمنة</h3>`;book.tenses.forEach(t=>{h+=`<p style="text-align:right"><b>${t.name}</b> : ${t.rule} - ${t.ex}</p>`});}if(book.situations){h+=`<h3 style="text-align:right">المواقف</h3>`;book.situations.forEach(s=>{h+=`<p style="text-align:right"><b>${s.place}</b> : ${s.en} - ${s.ar}</p>`});}if(book.questions){h+=`<h3 style="text-align:right">الأسئلة</h3>`;book.questions.forEach(q=>{h+=`<p style="text-align:right"><b>${q.q}</b> - ${q.ar}</p>`});}if(book.pronunciation){h+=`<h3 style="text-align:right">النطق</h3>`;book.pronunciation.forEach(p=>{h+=`<p style="text-align:right"><b>${p.en}</b> : الصح ${p.correct} - الغلط ${p.wrong}</p>`});}h+=`<br><button class="action" onclick="loadBooks()">⬅ ارجع للكتب</button>`;box.innerHTML=h;}
+// === إصلاح الكتب ===
+function renderBooksList(){
+  let box=document.getElementById('books-list');
+  if(window.allBooks && window.allBooks.length){
+    box.innerHTML=window.allBooks.map(b=>`<div style="background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:10px;text-align:right"><h3>📚 ${b.title}</h3><button class="action" style="background:#22c55e" onclick="showBook(${b.id})">افتح الكتاب</button></div>`).join('');
+  } else {
+    loadBooks();
+  }
+}
+async function loadBooks(){
+  if(window.allBooks && window.allBooks.length){ renderBooksList(); return; }
+  try{let r=await fetch('books.json');let books=await r.json();window.allBooks=books;renderBooksList();}catch(e){document.getElementById('books-list').innerHTML='مش قادر أحمل الكتب، اتأكد إن ملف books.json موجود';}
+}
+function showBook(id){let book=window.allBooks.find(b=>b.id===id);let box=document.getElementById('books-list');let h=`<h2 style="text-align:right">${book.title}</h2>`;if(book.words){h+=`<h3 style="text-align:right">الكلمات</h3>`;book.words.forEach(w=>{h+=`<p style="text-align:right"><b>${w.en}</b> - ${w.ar} - ${w.pron}</p>`});}if(book.verbs){h+=`<h3 style="text-align:right">الأفعال</h3>`;book.verbs.forEach(v=>{h+=`<p style="text-align:right"><b>${v.en}</b> - ${v.ar} - ${v.pron}</p>`});}if(book.stories){h+=`<h3 style="text-align:right">القصص</h3>`;book.stories.forEach(s=>{h+=`<p style="text-align:right"><b>${s.title}</b><br>${s.text}</p>`});}if(book.tenses){h+=`<h3 style="text-align:right">الأزمنة</h3>`;book.tenses.forEach(t=>{h+=`<p style="text-align:right"><b>${t.name}</b> : ${t.rule} - ${t.ex}</p>`});}if(book.situations){h+=`<h3 style="text-align:right">المواقف</h3>`;book.situations.forEach(s=>{h+=`<p style="text-align:right"><b>${s.place}</b> : ${s.en} - ${s.ar}</p>`});}if(book.questions){h+=`<h3 style="text-align:right">الأسئلة</h3>`;book.questions.forEach(q=>{h+=`<p style="text-align:right"><b>${q.q}</b> - ${q.ar}</p>`});}if(book.pronunciation){h+=`<h3 style="text-align:right">النطق</h3>`;book.pronunciation.forEach(p=>{h+=`<p style="text-align:right"><b>${p.en}</b> : الصح ${p.correct} - الغلط ${p.wrong}</p>`});}h+=`<br><button class="action" style="background:#6366f1;width:100%;padding:12px;font-size:18px" onclick="renderBooksList()">⬅ ارجع للكتب</button>`;box.innerHTML=h;window.scrollTo(0,0);}
 let convData = [
  {id:1,title:"التعارف",lines:[{en:"Hello, how are you?",pron:"هيلو، هاو آر يو؟",ar:"أهلاً، كيف حالك؟"},{en:"I'm fine, thank you. And you?",pron:"آيم فاين، ثانك يو. أند يو؟",ar:"أنا بخير، شكراً لك. وأنت؟"},{en:"What is your name?",pron:"وات إز يور نيم؟",ar:"ما اسمك؟"},{en:"My name is Ahmed.",pron:"ماي نيم إز أحمد.",ar:"اسمي أحمد."},{en:"Nice to meet you.",pron:"نايس تو ميت يو.",ar:"سعيد بلقائك."}]},
  {id:2,title:"في الشارع",lines:[{en:"Excuse me, where is the street?",pron:"إكسيوز مي، وير إز ذا ستريت؟",ar:"عذراً، أين الشارع؟"},{en:"Go straight ahead.",pron:"جو ستريت أهيد.",ar:"امشِ على طول."},{en:"Thank you very much.",pron:"ثانك يو فيري ماتش.",ar:"شكراً جزيلاً لك."}]}
