@@ -1,0 +1,120 @@
+[
+  {
+    "id": 1,
+    "title": "الكتاب الأول - مفردات وأفعال ومحادثات",
+    "words": [
+      {"en": "Book", "ar": "كتاب", "pron": "بوك"},
+      {"en": "Pen", "ar": "قلم", "pron": "بن"},
+      {"en": "School", "ar": "مدرسة", "pron": "سكول"},
+      {"en": "Teacher", "ar": "معلم", "pron": "تيتشر"},
+      {"en": "Student", "ar": "طالب", "pron": "ستيودنت"},
+      {"en": "Mother", "ar": "أم", "pron": "ماذر"},
+      {"en": "Father", "ar": "أب", "pron": "فاذر"},
+      {"en": "House", "ar": "بيت", "pron": "هاوس"},
+      {"en": "Water", "ar": "مياه", "pron": "ووتر"},
+      {"en": "Apple", "ar": "تفاحة", "pron": "أبل"}
+    ],
+    "verbs": [
+      {"en": "Go", "ar": "يذهب", "pron": "جو"},
+      {"en": "Come", "ar": "يأتي", "pron": "كوم"},
+      {"en": "Eat", "ar": "يأكل", "pron": "إيت"},
+      {"en": "Drink", "ar": "يشرب", "pron": "درينك"},
+      {"en": "Sleep", "ar": "ينام", "pron": "سليب"},
+      {"en": "Read", "ar": "يقرأ", "pron": "ريد"},
+      {"en": "Write", "ar": "يكتب", "pron": "رايت"},
+      {"en": "Play", "ar": "يلعب", "pron": "بلاي"}
+    ],
+    "conversations": [
+      {"q": "How are you?", "a": "I am fine", "ar": "عامل إيه؟ - أنا كويس"},
+      {"q": "How much is this?", "a": "It is 50 pounds", "ar": "ده بكام؟ - بـ 50 جنيه"}
+    ]
+  },
+  {
+    "id": 2,
+    "title": "الكتاب الثاني - مفردات جديدة",
+    "words": [
+      {"en": "Head", "ar": "رأس", "pron": "هيد"},
+      {"en": "Eye", "ar": "عين", "pron": "آي"},
+      {"en": "Shirt", "ar": "قميص", "pron": "شيرت"},
+      {"en": "Dog", "ar": "كلب", "pron": "دوج"},
+      {"en": "Cat", "ar": "قطة", "pron": "كات"}
+    ],
+    "verbs": [
+      {"en": "Cook", "ar": "يطبخ", "pron": "كوك"},
+      {"en": "Swim", "ar": "يعوم", "pron": "سويم"},
+      {"en": "Sing", "ar": "يغني", "pron": "سينج"},
+      {"en": "Dance", "ar": "يرقص", "pron": "دانس"}
+    ]
+  },
+  {
+    "id": 3,
+    "title": "الكتاب الثالث - قصص قصيرة",
+    "stories": [
+      {"title": "Abdo Goes to School", "text": "Abdo wakes up at 7 o'clock. He goes to school. He learns English."},
+      {"title": "The Cat and The Dog", "text": "Mimi is a cat. Bingo is a dog. They are friends."},
+      {"title": "Ali Goes to The Market", "text": "Ali goes to the market. He buys apples and bread."}
+    ]
+  },
+  {
+    "id": 4,
+    "title": "الكتاب الرابع - امتحانات",
+    "exams": [
+      {"q": "What is the meaning of Book?", "options": ["كتاب", "قلم", "مدرسة"], "answer": "كتاب"},
+      {"q": "I ___ to school every day.", "options": ["go", "goes", "going"], "answer": "go"}
+    ]
+  },
+  {
+    "id": 5,
+    "title": "الكتاب الخامس - كتاب الأطفال",
+    "words": [
+      {"en": "Red", "ar": "أحمر", "pron": "ريد"},
+      {"en": "Blue", "ar": "أزرق", "pron": "بلو"},
+      {"en": "Lion", "ar": "أسد", "pron": "لايون"},
+      {"en": "Banana", "ar": "موز", "pron": "بانانا"},
+      {"en": "Eye", "ar": "عين", "pron": "آي"}
+    ]
+  },
+  {
+    "id": 6,
+    "title": "الكتاب السادس - النطق الصح",
+    "pronunciation": [
+      {"en": "Teacher", "correct": "تيتشر", "wrong": "تيتشير"},
+      {"en": "School", "correct": "سكول", "wrong": "إسكول"},
+      {"en": "Chocolate", "correct": "تشوكلت", "wrong": "تشوكوليت"},
+      {"en": "This", "correct": "ذيس", "wrong": "سيس"}
+    ]
+  },
+  {
+    "id": 7,
+    "title": "الكتاب السابع - كل الأزمنة",
+    "tenses": [
+      {"name": "Present Simple", "rule": "فعل + s", "ex": "I play every day"},
+      {"name": "Present Continuous", "rule": "am/is/are + ing", "ex": "I am playing now"},
+      {"name": "Present Perfect", "rule": "have/has + تصريف تالت", "ex": "I have finished"},
+      {"name": "Past Simple", "rule": "فعل + ed", "ex": "I played yesterday"},
+      {"name": "Past Continuous", "rule": "was/were + ing", "ex": "I was playing"},
+      {"name": "Future Simple", "rule": "will + فعل", "ex": "I will play tomorrow"}
+    ]
+  },
+  {
+    "id": 8,
+    "title": "الكتاب الثامن - الأسئلة الشائعة",
+    "questions": [
+      {"q": "What is your name?", "ar": "اسمك إيه؟"},
+      {"q": "Where are you from?", "ar": "انت منين؟"},
+      {"q": "How old are you?", "ar": "عندك كام سنة؟"},
+      {"q": "Do you like English?", "ar": "بتحب الإنجليزي؟"}
+    ]
+  },
+  {
+    "id": 9,
+    "title": "الكتاب التاسع - المواقف اليومية",
+    "situations": [
+      {"place": "في المستشفى", "en": "I feel sick", "ar": "أنا تعبان"},
+      {"place": "في البنك", "en": "I want to open an account", "ar": "عايز أفتح حساب"},
+      {"place": "في المطار", "en": "I want to book a ticket", "ar": "عايز أحجز تذكرة"},
+      {"place": "في المطعم", "en": "The bill, please", "ar": "الحساب من فضلك"},
+      {"place": "طوارئ", "en": "Help! Call the police!", "ar": "الحقوني! اتصل بالبوليس!"}
+    ]
+  }
+]
