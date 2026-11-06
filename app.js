@@ -50,3 +50,61 @@ async function loadVideos(){
 }
 
 window.onload=()=>{initLearn();buildQuestions();showQuestion();loadVideos();document.getElementById('aiSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchAI()});};
+
+// === BOOKS - إضافة جديدة ===
+async function loadBooks(){
+  try{
+    const res = await fetch('books.json');
+    const books = await res.json();
+    const box = document.getElementById('books-list');
+    if(!box) return;
+    box.innerHTML = '';
+    window.allBooks = books;
+    books.forEach(book=>{
+      const div = document.createElement('div');
+      div.style.cssText='background:white;border-radius:16px;padding:15px;margin-bottom:12px;color:#111;text-align:right';
+      div.innerHTML = `<h3 style="margin:0 0 8px">📚 ${book.title}</h3><button onclick="showBook(${book.id})" style="background:#22c55e;color:white;border:none;padding:10px 20px;border-radius:10px;font-weight:700">افتح الكتاب</button>`;
+      box.appendChild(div);
+    });
+  }catch(e){ console.log('books error', e); }
+}
+
+function showBook(id){
+  const book = window.allBooks.find(b=>b.id===id);
+  const box = document.getElementById('books-list');
+  if(!book || !box) return;
+  let html = `<h2 style="text-align:right">${book.title}</h2>`;
+  if(book.words){
+    html += `<h3 style="text-align:right">الكلمات</h3>`;
+    book.words.forEach(w=>{ html += `<p style="text-align:right"><b>${w.en}</b> - ${w.ar} - ${w.pron}</p>`; });
+  }
+  if(book.verbs){
+    html += `<h3 style="text-align:right">الأفعال</h3>`;
+    book.verbs.forEach(v=>{ html += `<p style="text-align:right"><b>${v.en}</b> - ${v.ar} - ${v.pron}</p>`; });
+  }
+  if(book.stories){
+    html += `<h3 style="text-align:right">القصص</h3>`;
+    book.stories.forEach(s=>{ html += `<p style="text-align:right"><b>${s.title}</b><br>${s.text}</p>`; });
+  }
+  if(book.tenses){
+    html += `<h3 style="text-align:right">الأزمنة</h3>`;
+    book.tenses.forEach(t=>{ html += `<p style="text-align:right"><b>${t.name}</b> : ${t.rule} - ${t.ex}</p>`; });
+  }
+  if(book.situations){
+    html += `<h3 style="text-align:right">المواقف</h3>`;
+    book.situations.forEach(s=>{ html += `<p style="text-align:right"><b>${s.place}</b> : ${s.en} - ${s.ar}</p>`; });
+  }
+  if(book.questions){
+    html += `<h3 style="text-align:right">الأسئلة</h3>`;
+    book.questions.forEach(q=>{ html += `<p style="text-align:right"><b>${q.q}</b> - ${q.ar}</p>`; });
+  }
+  if(book.pronunciation){
+    html += `<h3 style="text-align:right">النطق</h3>`;
+    book.pronunciation.forEach(p=>{ html += `<p style="text-align:right"><b>${p.en}</b> : الصح ${p.correct} - الغلط ${p.wrong}</p>`; });
+  }
+  html += `<br><button onclick="loadBooks()" style="background:#111;color:white;border:none;padding:10px 20px;border-radius:10px">⬅ ارجع للكتب</button>`;
+  box.innerHTML = html;
+}
+
+// شغل الكتب مع الكود القديم
+window.addEventListener('load', loadBooks);
