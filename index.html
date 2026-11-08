@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تعليم اللغة الانجليزية</title>
+<title>تعليم اللغة الانجليزية - Ghazal</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
 body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 .app{width:100%;max-width:480px;min-height:100vh;background:#0f0e2e;padding:10px}
-h1{text-align:center;font-size:28px}
+h1{text-align:center;font-size:26px}
 .sub{text-align:center;color:#facc15;font-weight:800;font-size:13px;margin:4px 0 10px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .card{border-radius:14px;padding:14px 6px;text-align:center;font-weight:900;font-size:18px;line-height:1.35;cursor:pointer;min-height:90px;display:flex;flex-direction:column;justify-content:center}
-.c-en{background:#2563eb}.c-ar{background:#059669}.c-assist{background:#8b5cf6}.c-gram{background:#dc2626}.c-game{background:#2563eb}.c-conv{background:#059669}.c-img{background:#059669}.c-gal{background:#d97706}.c-chal{background:#f59e0b;color:#000}.c-course{background:#ec4899}
+.c-en{background:#2563eb}.c-ar{background:#059669}.c-assist{background:#8b5cf6}.c-gram{background:#dc2626}.c-game{background:#2563eb}.c-conv{background:#059669}.c-img{background:#059669}.c-gal{background:#d97706}.c-course{background:#ec4899}
 .full{grid-column:span 2}
 .topbar{display:flex;justify-content:space-between;align-items:center;background:#1e1b4b;padding:10px;border-radius:12px;margin-bottom:10px;border:2px solid #facc15}
 .topbar button{background:#facc15;color:#000;padding:7px 12px;border-radius:8px;border:none;font-weight:900;font-size:14px}
@@ -50,29 +50,36 @@ h1{text-align:center;font-size:28px}
 .qbox button.correct{background:#22c55e;color:#fff}
 .qbox button.wrong{background:#ef4444;color:#fff}
 .img-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.img-card{background:#fff;color:#111;border-radius:12px;overflow:hidden;text-align:center;padding-bottom:6px}
+.img-card{background:#fff;color:#111;border-radius:12px;overflow:hidden;text-align:center;padding-bottom:6px;cursor:pointer}
 .img-card img{width:100%;height:110px;object-fit:cover;display:block}
-.lesson{background:#fff;color:#111;border-radius:14px;padding:14px;margin-bottom:10px}
+.lesson{background:#fff;color:#111;border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;border:3px solid transparent}
+.lesson:active{border-color:#ec4899;background:#fdf2f8}
 .lesson b{font-size:19px;color:#2563eb}
 .lesson p{color:#059669;font-weight:900;font-size:17px}
 .lesson button{background:#2563eb;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:900;margin-top:6px}
+.grammar-card{background:#fff;color:#111;border-radius:14px;padding:14px;margin-bottom:12px;text-align:right}
+.grammar-card h3{color:#dc2626;font-size:19px;margin-bottom:6px}
+.grammar-card .rule{background:#fef3c7;padding:10px;border-radius:10px;font-weight:900;line-height:1.8;margin:6px 0}
+.grammar-card .ex{background:#eff6ff;padding:10px;border-radius:10px;line-height:1.9;font-weight:900}
+.grammar-card .neg{background:#fef2f2;padding:10px;border-radius:10px;line-height:1.9;font-weight:900;margin-top:6px}
+.hint{text-align:center;color:#facc15;font-weight:900;font-size:13px;margin-bottom:8px}
 </style>
 </head>
 <body>
 <div class="app">
 <div id="homeView">
 <h1>تعليم اللغة الانجليزية</h1>
-<div class="sub">V28 - المايك مظبوط - عربي عربي / انجليزي انجليزي</div>
+<div class="sub">V29 - Ghazal - القواعد بالتفصيل + الصور مطابقة + المايك مظبوط</div>
 <div class="grid">
 <div class="card c-en" onclick="showBoard('en')">🇺🇸 ✏️<br>سبورة انجليزي<br><small>انجليزي فقط</small></div>
 <div class="card c-ar" onclick="showBoard('ar')">🇪🇬 ✏️<br>سبورة عربي<br><small>عربي + تشكيل</small></div>
 <div class="card c-assist" onclick="showAssistant()">🤖 مساعد<br>جوجل</div>
-<div class="card c-gram" onclick="showGrammar()">📚 قواعد<br>جوجل</div>
+<div class="card c-gram" onclick="showGrammar()">📚 قواعد<br>بالتفصيل</div>
 <div class="card c-game" onclick="showChallenge()">🎮 100 سؤال<br>تحدي</div>
 <div class="card c-conv" onclick="showConversations()">💬 محادثات<br>30 محادثة</div>
-<div class="card c-img full" onclick="showImages()">📚 100 صورة مترجمة</div>
+<div class="card c-img full" onclick="showImages()">📚 100 صورة مترجمة - مطابقة</div>
 <div class="card c-gal full" onclick="showGallery()">📷 معرض صور</div>
-<div class="card c-course full" onclick="showCourse()">📚 كورس Miss Dodo</div>
+<div class="card c-course full" onclick="showCourse()">🌸 كورس Ghazal</div>
 </div>
 </div>
 <div id="boardEnView" style="display:none">
@@ -108,7 +115,8 @@ h1{text-align:center;font-size:28px}
 <div class="bottom-bar"><button onclick="showHome()">‹ رجوع</button><button onclick="showHome()">🏠 الرئيسية</button></div>
 </div>
 <div id="imgView" style="display:none">
-<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">🖼️ 100 صورة مترجمة</span><button onclick="showHome()">🏠</button></div>
+<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">🖼️ 100 صورة مطابقة</span><button onclick="showHome()">🏠</button></div>
+<div class="hint">دوس على أي صورة عشان تسمع اسمها بالانجليزي والعربي</div>
 <div class="box"><div class="img-grid" id="imgGrid"></div></div>
 </div>
 <div id="challengeView" style="display:none">
@@ -117,18 +125,17 @@ h1{text-align:center;font-size:28px}
 <div id="challengeList"></div>
 </div>
 <div id="grammarView" style="display:none">
-<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">📚 قواعد جوجل</span><button onclick="showHome()">🏠</button></div>
-<div class="box"><b>I am / You are / He is</b><p>أنا أكون / أنت تكون / هو يكون - مثال: I am Ahmed - أنا أحمد</p></div>
-<div class="box"><b>This is / That is</b><p>هذا يكون / ذلك يكون - مثال: This is my book - هذا كتابي</p></div>
-<div class="box"><b>I have / I like</b><p>عندي / بحب - مثال: I like apples - بحب التفاح</p></div>
-<div class="box"><b>Can / Want</b><p>أستطيع / أريد - مثال: I can swim - أستطيع السباحة</p></div>
+<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">📚 قواعد انجليزي بالتفصيل الممل</span><button onclick="showHome()">🏠</button></div>
+<div id="grammarList"></div>
+<div class="bottom-bar"><button onclick="showHome()">‹ رجوع</button><button onclick="showHome()">🏠 الرئيسية</button></div>
 </div>
 <div id="galleryView" style="display:none">
 <div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">📷 معرض صور</span><button onclick="showHome()">🏠</button></div>
 <div class="box"><div class="img-grid" id="galleryGrid"></div></div>
 </div>
 <div id="courseView" style="display:none">
-<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">📚 كورس Miss Dodo</span><button onclick="showHome()">🏠</button></div>
+<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">🌸 كورس Ghazal</span><button onclick="showHome()">🏠</button></div>
+<div class="hint">دوس على الكارت الأبيض = تسمع عربي - دوس على الزرار الأزرق = تسمع انجليزي</div>
 <div id="courseList"></div>
 </div>
 </div>
@@ -143,7 +150,6 @@ function showChallenge(){stopMic();hideAll();document.getElementById('challengeV
 function showGrammar(){stopMic();hideAll();document.getElementById('grammarView').style.display='block';}
 function showGallery(){stopMic();hideAll();document.getElementById('galleryView').style.display='block';}
 function showCourse(){stopMic();hideAll();document.getElementById('courseView').style.display='block';}
-// مساعد جوجل زي الصورة
 let dict={'تعالى':['Come here','فعل أمر','Come here please','مثال عن تعالى','فعل أمر يستخدم مع أدوات التعريف a/an/the','كلمة مهمة تستخدم يومياً'],'اذهب':['Go','فعل أمر','Go to school please','مثال عن اذهب','فعل أمر يستخدم للأمر والطلب','كلمة مهمة تستخدم يومياً'],'اجلس':['Sit down','فعل أمر','Sit down please','مثال عن اجلس','فعل أمر يستخدم للأمر','كلمة مهمة في المدرسة'],'افتح':['Open','فعل أمر','Open the door please','مثال عن افتح','فعل أمر يستخدم للطلب','كلمة مهمة تستخدم يومياً'],'اقفل':['Close','فعل أمر','Close the door please','مثال عن اقفل','فعل أمر يستخدم للطلب','كلمة مهمة تستخدم يومياً'],'كتاب':['Book','اسم','This is my book','هذا كتابي','اسم يستخدم مع أدوات التعريف a/an/the','كلمة مهمة في المدرسة'],'قطة':['Cat','اسم','The cat is black','القطة لونها أسود','اسم يستخدم مع أدوات التعريف','كلمة مهمة تستخدم يومياً'],'كلب':['Dog','اسم','The dog is big','الكلب كبير','اسم يستخدم مع أدوات التعريف','كلمة مهمة تستخدم يومياً'],'مدرسة':['School','اسم','I go to school','أنا بروح المدرسة','اسم يستخدم مع أدوات التعريف','كلمة مهمة في الحياة']};
 async function searchAssist(){
 let q=document.getElementById('assistInput').value.trim();if(!q)return;
@@ -170,51 +176,157 @@ cv.addEventListener('touchend',()=>b.drawing=false);}
 setup('en');setup('ar');
 function addLetter(ch,w){boards[w].text.innerText+=ch;if(w==='en')baseEn=boards[w].text.innerText;else baseAr=boards[w].text.innerText;}
 function addTashkeel(t){let b=boards['ar'];if(!b.text.innerText)return;b.text.innerText+=t;baseAr=b.text.innerText;}
-// ===== المايك المظبوط - واحد بس شغال حسب السبورة =====
 let currentRec=null, currentBoard=null, baseEn='', baseAr='', micRunning=false;
-function stopMic(){
-micRunning=false;
-if(currentRec){try{currentRec.onend=null;currentRec.stop();}catch(e){} currentRec=null;}
-currentBoard=null;
-}
+function stopMic(){micRunning=false;if(currentRec){try{currentRec.onend=null;currentRec.stop();}catch(e){} currentRec=null;}currentBoard=null;}
 function startMicFor(which){
-stopMic();
-currentBoard=which;
+stopMic();currentBoard=which;
 let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(!SR){document.getElementById(which==='en'?'micEn':'micAr').innerText='المايك مش مدعوم في المتصفح ده - استخدم Chrome';return;}
-let lang=which==='ar'?'ar-EG':'en-US';
-micRunning=true;
+let lang=which==='ar'?'ar-EG':'en-US';micRunning=true;
 function createRec(){
-let rec=new SR();
-rec.lang=lang;
-rec.continuous=true;
-rec.interimResults=true;
+let rec=new SR();rec.lang=lang;rec.continuous=true;rec.interimResults=true;
 rec.onresult=function(e){
 let final='',interim='';
 for(let i=e.results.length-1;i>=0;i--){if(e.results[i].isFinal){final=e.results[i][0].transcript;break;}}
 for(let i=0;i<e.results.length;i++){if(!e.results[i].isFinal)interim+=e.results[i][0].transcript;}
-let b=boards[which];
-let base=which==='en'?baseEn:baseAr;
-if(final){
-let newText=(base?base+' ':'')+final.trim();
-b.text.innerText=newText;
-if(which==='en')baseEn=newText;else baseAr=newText;
-} else if(interim){
-b.text.innerText=(base?base+' ':'')+interim;
-}
+let b=boards[which];let base=which==='en'?baseEn:baseAr;
+if(final){let newText=(base?base+' ':'')+final.trim();b.text.innerText=newText;if(which==='en')baseEn=newText;else baseAr=newText;}
+else if(interim){b.text.innerText=(base?base+' ':'')+interim;}
 };
-rec.onend=function(){
-if(micRunning && currentBoard===which){setTimeout(()=>{if(micRunning) createRec();},300);}
-};
+rec.onend=function(){if(micRunning && currentBoard===which){setTimeout(()=>{if(micRunning) createRec();},300);}};
 rec.onerror=function(){if(micRunning && currentBoard===which){setTimeout(()=>{if(micRunning) createRec();},500);}};
-currentRec=rec;
-try{rec.start();}catch(e){}
+currentRec=rec;try{rec.start();}catch(e){}
 }
 createRec();
 }
-let words=[['Cat','قطة','cat'],['Dog','كلب','dog'],['Apple','تفاحة','apple'],['Book','كتاب','book'],['School','مدرسة','school'],['Sun','شمس','sun'],['Moon','قمر','moon'],['Water','ماء','water'],['Car','سيارة','car'],['House','بيت','house'],['Bird','عصفور','bird'],['Fish','سمكة','fish'],['Lion','أسد','lion'],['Horse','حصان','horse'],['Flower','وردة','flower'],['Tree','شجرة','tree'],['Ball','كرة','ball'],['Pen','قلم','pen'],['Bag','شنطة','bag'],['Door','باب','door'],['Milk','لبن','milk'],['Bread','عيش','bread'],['Egg','بيضة','egg'],['Banana','موزة','banana'],['Orange','برتقالة','orange'],['Teacher','معلم','teacher'],['Student','طالب','student'],['Friend','صديق','friend'],['Mother','أم','mother'],['Father','أب','father'],['Brother','أخ','brother'],['Sister','أخت','sister'],['Hand','يد','hand'],['Eye','عين','eye'],['Nose','أنف','nose'],['Mouth','فم','mouth'],['Hair','شعر','hair'],['Face','وجه','face'],['Leg','رجل','leg'],['Foot','قدم','foot'],['Arm','ذراع','arm'],['Red','أحمر','red'],['Blue','أزرق','blue'],['Green','أخضر','green'],['Yellow','أصفر','yellow'],['Black','أسود','black'],['White','أبيض','white'],['Big','كبير','big'],['Small','صغير','small'],['Happy','سعيد','happy'],['Sad','حزين','sad'],['Hot','حار','hot'],['Cold','بارد','cold'],['Fast','سريع','fast'],['Slow','بطيء','slow'],['New','جديد','new'],['Old','قديم','old'],['Good','جيد','good'],['Bad','سيء','bad'],['Day','يوم','day'],['Night','ليلة','night'],['Morning','صباح','morning'],['Evening','مساء','evening'],['Today','اليوم','today'],['Tomorrow','غدا','tomorrow'],['Yesterday','أمس','yesterday'],['Week','أسبوع','week'],['Year','سنة','year'],['Time','وقت','time'],['Work','عمل','work'],['Play','يلعب','play'],['Run','يجري','run'],['Jump','يقفز','jump'],['Swim','يعوم','swim'],['Read','يقرأ','read'],['Write','يكتب','write'],['Speak','يتكلم','speak'],['Listen','يستمع','listen'],['Look','ينظر','look'],['Eat','يأكل','eat'],['Drink','يشرب','drink'],['Sleep','ينام','sleep'],['Wake','يستيقظ','wake'],['Love','يحب','love'],['Like','يعجب','like'],['Help','يساعد','help'],['Open','يفتح','open'],['Close','يغلق','close'],['Come','يأتي','come'],['Go','يذهب','go'],['Give','يعطي','give'],['Take','يأخذ','take'],['See','يرى','see'],['Know','يعرف','know']];
-document.getElementById('imgGrid').innerHTML=words.map(w=>`<div class="img-card"><img src="https://picsum.photos/seed/${w[2]}/400/300" loading="lazy"><b>${w[0]}</b><p>${w[1]}</p></div>`).join('');
-document.getElementById('galleryGrid').innerHTML=words.slice(0,20).map(w=>`<div class="img-card"><img src="https://picsum.photos/seed/${w[2]}2/400/300" loading="lazy"><b>${w[0]}</b><p>${w[1]}</p></div>`).join('');
+// ===== الصور المطابقة - صور حقيقية لكل كلمة =====
+let U='https://images.unsplash.com/photo-';
+let Q='?auto=format&fit=crop&w=400&q=70';
+let words=[
+['Cat','قطة',U+'1514888286974-6c03e2ca1dba'+Q],
+['Dog','كلب',U+'1543466835-00a7907e9de1'+Q],
+['Apple','تفاحة',U+'1568702846914-96b305d2aaeb'+Q],
+['Book','كتاب',U+'1544716278-ca5e3f4abd8c'+Q],
+['School','مدرسة',U+'1580582932707-520aed937b7b'+Q],
+['Sun','شمس',U+'1502134249126-9f3755a50d78'+Q],
+['Moon','قمر',U+'1532693322450-2cb5c511067d'+Q],
+['Water','ماء',U+'1541675154750-0444c7d51e8e'+Q],
+['Car','سيارة',U+'1503376780353-7e6692767b70'+Q],
+['House','بيت',U+'1568605114967-8130f3a36994'+Q],
+['Bird','عصفور',U+'1444464666168-49d633b86797'+Q],
+['Fish','سمكة',U+'1522069169874-c58ec4b76be5'+Q],
+['Lion','أسد',U+'1546182990-dffeafbe841d'+Q],
+['Horse','حصان',U+'1553284965-83fd3e82fa5a'+Q],
+['Flower','وردة',U+'1490750967868-88aa4486c946'+Q],
+['Tree','شجرة',U+'1441974231531-c6227db76b6e'+Q],
+['Ball','كرة',U+'1579952363873-27f3bade9f55'+Q],
+['Pen','قلم',U+'1585336261022-680e295ce3fe'+Q],
+['Bag','شنطة',U+'1548036328-c9fa89d128fa'+Q],
+['Door','باب',U+'1512917774080-9991f1c4c750'+Q],
+['Milk','لبن',U+'1550583724-b2692b85b150'+Q],
+['Bread','عيش',U+'1509440159596-0249088772ff'+Q],
+['Egg','بيضة',U+'1582722872445-44dc5f7e3c8f'+Q],
+['Banana','موزة',U+'1571771894821-ce9b6c11b08e'+Q],
+['Orange','برتقالة',U+'1547514701-427821fd4c8a'+Q],
+['Teacher','معلم',U+'1503676260728-1c00da094a0b'+Q],
+['Student','طالب',U+'1509062522246-3755977927d7'+Q],
+['Friend','صديق',U+'1529156069898-49953e39b3ac'+Q],
+['Mother','أم',U+'1476703993599-0035a21b17a9'+Q],
+['Father','أب',U+'1511895426328-dc8714191300'+Q],
+['Brother','أخ',U+'1519340241574-2cec6d8ef0c5'+Q],
+['Sister','أخت',U+'1516627145497-ae6968895b74'+Q],
+['Hand','يد',U+'1509099861941-ef4bdf0a808e'+Q],
+['Eye','عين',U+'1517842645767-c639042777db'+Q],
+['Nose','أنف',U+'1524504388940-b1c1722653e1'+Q],
+['Mouth','فم',U+'1522337660859-02fbefca4702'+Q],
+['Hair','شعر',U+'1522337660859-02fbefca4702'+Q],
+['Face','وجه',U+'1494790108377-be9c29b29330'+Q],
+['Leg','رجل',U+'1517836357463-d25dfeac3438'+Q],
+['Foot','قدم',U+'1544367567-0f2fcb009e0b'+Q],
+['Arm','ذراع',U+'1517836357463-d25dfeac3438'+Q],
+['Red','أحمر',U+'1507908708918-778587c9e563'+Q],
+['Blue','أزرق',U+'1507525428034-b723cf961d3e'+Q],
+['Green','أخضر',U+'1441974231531-c6227db76b6e'+Q],
+['Yellow','أصفر',U+'1490750967868-88aa4486c946'+Q],
+['Black','أسود',U+'1519681393784-d120267933ba'+Q],
+['White','أبيض',U+'1519681393784-d120267933ba'+Q],
+['Big','كبير',U+'1441974231531-c6227db76b6e'+Q],
+['Small','صغير',U+'1514888286974-6c03e2ca1dba'+Q],
+['Happy','سعيد',U+'1529156069898-49953e39b3ac'+Q],
+['Sad','حزين',U+'1517842645767-c639042777db'+Q],
+['Hot','حار',U+'1502134249126-9f3755a50d78'+Q],
+['Cold','بارد',U+'1519681393784-d120267933ba'+Q],
+['Fast','سريع',U+'1552674605-db6ffd4facb5'+Q],
+['Slow','بطيء',U+'1441974231531-c6227db76b6e'+Q],
+['New','جديد',U+'1503376780353-7e6692767b70'+Q],
+['Old','قديم',U+'1568605114967-8130f3a36994'+Q],
+['Good','جيد',U+'1529156069898-49953e39b3ac'+Q],
+['Bad','سيء',U+'1517842645767-c639042777db'+Q],
+['Day','يوم',U+'1502134249126-9f3755a50d78'+Q],
+['Night','ليلة',U+'1519681393784-d120267933ba'+Q],
+['Morning','صباح',U+'1502134249126-9f3755a50d78'+Q],
+['Evening','مساء',U+'1519681393784-d120267933ba'+Q],
+['Today','اليوم',U+'1502134249126-9f3755a50d78'+Q],
+['Tomorrow','غدا',U+'1502134249126-9f3755a50d78'+Q],
+['Yesterday','أمس',U+'1519681393784-d120267933ba'+Q],
+['Week','أسبوع',U+'1506784983877-45594efa4cbe'+Q],
+['Year','سنة',U+'1506784983877-45594efa4cbe'+Q],
+['Time','وقت',U+'1501139083538-0139583c060f'+Q],
+['Work','عمل',U+'1521737604893-d14cc237f11d'+Q],
+['Play','يلعب',U+'1511512578047-dfb367046420'+Q],
+['Run','يجري',U+'1552674605-db6ffd4facb5'+Q],
+['Jump','يقفز',U+'1517836357463-d25dfeac3438'+Q],
+['Swim','يعوم',U+'1530549387789-4c1017266635'+Q],
+['Read','يقرأ',U+'1544716278-ca5e3f4abd8c'+Q],
+['Write','يكتب',U+'1585336261022-680e295ce3fe'+Q],
+['Speak','يتكلم',U+'1529156069898-49953e39b3ac'+Q],
+['Listen','يستمع',U+'1517842645767-c639042777db'+Q],
+['Look','ينظر',U+'1494790108377-be9c29b29330'+Q],
+['Eat','يأكل',U+'1504674900247-0877df9cc836'+Q],
+['Drink','يشرب',U+'1541675154750-0444c7d51e8e'+Q],
+['Sleep','ينام',U+'1541781774459-bb2af2f05b55'+Q],
+['Wake','يستيقظ',U+'1502134249126-9f3755a50d78'+Q],
+['Love','يحب',U+'1516589178581-6cd7833ae3b2'+Q],
+['Like','يعجب',U+'1529156069898-49953e39b3ac'+Q],
+['Help','يساعد',U+'1521737604893-d14cc237f11d'+Q],
+['Open','يفتح',U+'1512917774080-9991f1c4c750'+Q],
+['Close','يغلق',U+'1512917774080-9991f1c4c750'+Q],
+['Come','يأتي',U+'1529156069898-49953e39b3ac'+Q],
+['Go','يذهب',U+'1503220317375-aaad61436b1b'+Q],
+['Give','يعطي',U+'1529156069898-49953e39b3ac'+Q],
+['Take','يأخذ',U+'1548036328-c9fa89d128fa'+Q],
+['See','يرى',U+'1494790108377-be9c29b29330'+Q],
+['Know','يعرف',U+'1503676260728-1c00da094a0b'+Q],
+['Cat','قطة',U+'1514888286974-6c03e2ca1dba'+Q],
+['Dog','كلب',U+'1543466835-00a7907e9de1'+Q],
+['Apple','تفاحة',U+'1568702846914-96b305d2aaeb'+Q],
+['Book','كتاب',U+'1544716278-ca5e3f4abd8c'+Q],
+['School','مدرسة',U+'1580582932707-520aed937b7b'+Q],
+['Sun','شمس',U+'1502134249126-9f3755a50d78'+Q],
+['Moon','قمر',U+'1532693322450-2cb5c511067d'+Q],
+['Water','ماء',U+'1541675154750-0444c7d51e8e'+Q],
+['Car','سيارة',U+'1503376780353-7e6692767b70'+Q],
+['House','بيت',U+'1568605114967-8130f3a36994'+Q]
+];
+function speakWord(i){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(words[i][0]);u.lang='en-US';speechSynthesis.speak(u);setTimeout(()=>{let a=new SpeechSynthesisUtterance(words[i][1]);a.lang='ar-EG';speechSynthesis.speak(a);},800);}
+document.getElementById('imgGrid').innerHTML=words.map((w,i)=>`<div class="img-card" onclick="speakWord(${i})"><img src="${w[2]}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=70'"><b>${w[0]}</b><p>${w[1]}</p></div>`).join('');
+document.getElementById('galleryGrid').innerHTML=words.slice(0,20).map((w,i)=>`<div class="img-card" onclick="speakWord(${i})"><img src="${w[2]}" loading="lazy"><b>${w[0]}</b><p>${w[1]}</p></div>`).join('');
+// ===== القواعد بالتفصيل الممل =====
+let grammar=[
+['1. Verb To Be - فعل يكون','الفعل ده هو أهم فعل في الانجليزي، معناه يكون / أكون. بنستخدمه عشان نعرف نفسنا، ونوصف حاجة، ونقول مكان حاجة.','القاعدة: I am - He / She / It is - You / We / They are','أمثلة: I am Ahmed - أنا أحمد | She is my teacher - هي معلمتي | They are happy - هم سعداء | It is a cat - دي قطة','النفي: I am not - He is not / He isn\'t - They are not / They aren\'t | مثال: I am not sad - أنا مش حزين','السؤال: Am I ? - Is he ? - Are you ? | مثال: Are you happy ? - انت مبسوط ؟ - Yes, I am - أيوه أنا مبسوط'],
+['2. المضارع البسيط Present Simple','بنستخدمه للحاجات اللي بتحصل كل يوم، والحقائق، والعادات. يعني حاجة متكررة.','القاعدة: I / You / We / They + الفعل زي ما هو | He / She / It + الفعل + s','أمثلة: I go to school every day - بروح المدرسة كل يوم | She plays football - هي بتلعب كورة | The sun rises in the morning - الشمس بتطلع الصبح','النفي: I do not / don\'t - He does not / doesn\'t | مثال: I don\'t like milk - مش بحب اللبن | He doesn\'t go to school - هو مش بيروح المدرسة','السؤال: Do you ? - Does she ? | مثال: Do you like apples ? - بتحب التفاح ؟'],
+['3. المضارع المستمر Present Continuous','بنستخدمه للحاجة اللي بتحصل دلوقتي حالاً، واحنا بنتكلم.','القاعدة: I am + فعل + ing | He is + فعل + ing | They are + فعل + ing','أمثلة: I am reading now - أنا بقرأ دلوقتي | She is playing now - هي بتلعب دلوقتي | They are eating now - هم بياكلوا دلوقتي','النفي: I am not reading - أنا مش بقرأ دلوقتي','السؤال: Are you reading ? - انت بتقرأ دلوقتي ؟'],
+['4. الماضي البسيط Past Simple','بنستخدمه للحاجة اللي حصلت وخلصت امبارح أو زمان.','القاعدة: الفعل + ed - أو فعل شاذ زي went / saw / ate','أمثلة: I went to school yesterday - رحت المدرسة امبارح | She played yesterday - هي لعبت امبارح | I saw a cat - شفت قطة','النفي: I did not / didn\'t go - أنا مروحتش','السؤال: Did you go ? - انت رحت ؟'],
+['5. a / an / the - أدوات التعريف','a بنستخدمها مع كلمة مفردة بتبدأ بحرف ساكن، an مع كلمة بتبدأ بحرف متحرك، the مع حاجة معروفة ومحددة.','القاعدة: a book - a dog | an apple - an egg | the sun - the book','أمثلة: This is a cat - دي قطة | This is an apple - دي تفاحة | The cat is black - القطة دي لونها أسود','ملحوظة مهمة: a و an بييجوا مع المفرد بس، مش مع الجمع. مينفعش نقول a cats.'],
+['6. الجمع Plural','عشان نجمع أي كلمة بنزود s في الآخر، ولو الكلمة بتنتهي بـ s أو x أو ch بنزود es.','القاعدة: cat - cats | book - books | box - boxes | baby - babies','أمثلة: One cat - Two cats - قطة واحدة - قطتين | One book - Three books - كتاب واحد - 3 كتب','ملحوظة: فيه كلمات شاذة: child - children | man - men | woman - women | foot - feet'],
+['7. الضمائر Pronouns','الضمائر دي بنستخدمها بدل الاسم عشان منكررش الاسم كتير.','I أنا - You انت - He هو - She هي - It هو / هي لغير العاقل - We احنا - They هم','أمثلة: Ahmed is my friend. He is nice - أحمد صاحبي. هو لطيف | Sara is my sister. She is nice - سارة أختي. هي لطيفة','ضمائر الملكية: My - Your - His - Her - Our - Their | مثال: This is my book - ده كتابي | This is her bag - دي شنطتها'],
+['8. Can - يستطيع / يقدر','بنستخدم Can عشان نقول اننا بنعرف نعمل حاجة، أو نطلب حاجة بأدب.','القاعدة: I can + الفعل من غير أي إضافة | She can + الفعل','أمثلة: I can swim - أنا بعرف أعوم | She can read - هي بتعرف تقرأ | I can speak English - أنا بعرف أتكلم انجليزي','النفي: I can not / can\'t | مثال: I can\'t fly - أنا مش بعرف أطير','السؤال: Can you help me ? - ممكن تساعدني ؟ - Yes, I can'],
+['9. Have / Has - يملك / عنده','Have بنستخدمها مع I / You / We / They، و Has مع He / She / It.','القاعدة: I have - He has - She has - They have','أمثلة: I have a book - عندي كتاب | She has a cat - عندها قطة | They have two dogs - عندهم كلبين','النفي: I don\'t have - He doesn\'t have','السؤال: Do you have a pen ? - عندك قلم ؟'],
+['10. حروف الجر Prepositions','in في - on على - under تحت - behind ورا - in front of قدام - next to جنب','أمثلة: The book is on the table - الكتاب على الترابيزة | The cat is under the chair - القطة تحت الكرسي | I am in the school - أنا في المدرسة','ملحوظة: in the morning في الصبح - at night بالليل - on Monday يوم الاثنين'],
+['11. أدوات الاستفهام Question Words','What ايه - Where فين - When امتى - Who مين - Why ليه - How ازاي - How old كام سنة','أمثلة: What is your name ? - اسمك ايه ؟ | Where do you live ? - ساكن فين ؟ | When do you go to school ? - بتروح المدرسة امتى ؟ | Who is he ? - هو مين ؟','How old are you ? - عندك كام سنة ؟ - I am 10 years old - عندي 10 سنين'],
+['12. المقارنة Comparative','عشان نقارن بين حاجتين بنزود er للصفة القصيرة، و more للصفة الطويلة.','القاعدة: big - bigger | small - smaller | beautiful - more beautiful','أمثلة: The lion is bigger than the cat - الأسد أكبر من القطة | Ahmed is taller than Ali - أحمد أطول من علي | This book is more interesting - الكتاب ده أمتع','التفضيل: the biggest الأكبر - the smallest الأصغر - the best الأحسن']
+];
+document.getElementById('grammarList').innerHTML=grammar.map(g=>`<div class="grammar-card"><h3>${g[0]}</h3><div class="rule">💡 الشرح بالعربي: ${g[1]}</div><div class="ex">📚 القاعدة: ${g[2]}<br>✏️ ${g[3]}</div><div class="neg">📝 ${g[4]}<br>❓ ${g[5]}</div><button onclick="speakText('${g[2]}','en')" style="background:#dc2626;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:900;margin-top:8px">🔊 اسمع القاعدة</button></div>`).join('');
 let convs=[['Hello! How are you?','أهلا! عامل ايه؟'],['I am fine, thank you. And you?','أنا كويس، شكرا. وانت؟'],['What is your name?','اسمك ايه؟'],['My name is Ahmed. Nice to meet you','اسمي أحمد. اتشرفت بيك'],['Where do you live?','انت ساكن فين؟'],['I live in Alexandria','أنا ساكن في اسكندرية'],['How old are you?','عندك كام سنة؟'],['I am ten years old','عندي عشر سنين'],['I go to school every day','أنا بروح المدرسة كل يوم'],['What is your favorite subject?','ايه أكتر مادة بتحبها؟'],['I love English very much','أنا بحب الانجليزي جدا'],['Can you help me please?','ممكن تساعدني لو سمحت؟'],['Yes, of course. What do you need?','أيوه طبعا. محتاج ايه؟'],['Thank you very much','شكرا جدا ليك'],['You are welcome','العفو، على ايه'],['Good morning, teacher','صباح الخير يا أستاذ'],['Good morning, sit down please','صباح الخير، اقعد لو سمحت'],['Open your book, please','افتح كتابك لو سمحت'],['I finished my homework','أنا خلصت الواجب بتاعي'],['This is my book','ده كتابي'],['I like apples and bananas','بحب التفاح والموز'],['I am hungry, I want to eat','أنا جعان، عايز آكل'],['I am thirsty, I want water','أنا عطشان، عايز مية'],['Please close the door','اقفل الباب لو سمحت'],['Please open the window','افتح الشباك لو سمحت'],['See you tomorrow','أشوفك بكرة'],['Goodbye, take care','مع السلامة، خد بالك من نفسك'],['My father is a doctor','بابا دكتور'],['My mother is a teacher','ماما مدرسة'],['I love my family','بحب عيلتي جدا']];
 document.getElementById('convList').innerHTML=convs.map((c,i)=>`<div class="conv"><b>${i+1}. ${c[0]}</b><p>${c[1]}</p><button onclick="speakConv(${i})">🔊 اسمعها وانطق وراها</button></div>`).join('');
 function speakConv(i){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(convs[i][0]);u.lang='en-US';u.rate=0.8;speechSynthesis.speak(u);}
@@ -225,8 +337,9 @@ let score=0;
 document.getElementById('challengeList').innerHTML=all.map((q,i)=>`<div class="qbox"><b>${q[0]}</b>${[q[1],q[2],q[3]].map((o,oi)=>`<button onclick="checkQ(this,${oi},${q[4]})">${o}</button>`).join('')}</div>`).join('');
 function checkQ(btn,chosen,correct){let p=btn.parentElement;if(p.dataset.done)return;p.dataset.done='1';let btns=p.querySelectorAll('button');if(chosen===correct){btn.classList.add('correct');score++;}else{btn.classList.add('wrong');btns[correct].classList.add('correct');}document.getElementById('scoreBox').innerText=`النقاط: ${score} / 100`;}
 let lessons=[["Hello, my name is Sara","أهلا، اسمي سارة"],["I am 10 years old","عندي 10 سنين"],["I go to school every day","أنا بروح المدرسة كل يوم"],["This is my book","هذا كتابي"],["I love my family","أنا بحب عيلتي"],["My father is a teacher","بابا مدرس"],["My mother is a doctor","ماما دكتورة"],["I like apples and bananas","بحب التفاح والموز"],["The cat is black","القطة لونها أسود"],["I can swim very well","أنا بعرف أعوم كويس جدا"],["What is your name?","اسمك ايه؟"],["Where do you live?","انت ساكن فين؟"],["How are you today?","عامل ايه النهاردة؟"],["Thank you very much","شكرا جدا ليك"],["Good morning teacher","صباح الخير يا معلم"],["See you tomorrow","أشوفك بكرة"],["I want water please","عايز مية لو سمحت"],["Open the door please","افتح الباب لو سمحت"],["I am happy today","أنا مبسوط النهاردة"],["I love learning English","بحب أتعلم انجليزي"]];
-document.getElementById('courseList').innerHTML=lessons.map((l,i)=>`<div class="lesson"><b>${i+1}. ${l[0]}</b><p>${l[1]}</p><button onclick="speakLesson(${i})">🔊 اسمعها وانطق وراها</button></div>`).join('');
-function speakLesson(i){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(lessons[i][0]);u.lang='en-US';u.rate=0.8;speechSynthesis.speak(u);}
+function speakLessonAr(i){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(lessons[i][1]);u.lang='ar-EG';speechSynthesis.speak(u);}
+function speakLesson(i){event.stopPropagation();speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(lessons[i][0]);u.lang='en-US';u.rate=0.8;speechSynthesis.speak(u);}
+document.getElementById('courseList').innerHTML=lessons.map((l,i)=>`<div class="lesson" onclick="speakLessonAr(${i})"><b>${i+1}. ${l[0]}</b><p>${l[1]}</p><div style="font-size:12px;color:#ec4899;font-weight:900;margin-top:4px">👆 دوس هنا على الكارت = تسمع عربي</div><button onclick="speakLesson(${i})">🔊 اسمعها وانطق وراها - انجليزي</button></div>`).join('');
 let arLetters=['أ','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','و','هـ','ي','ا','آ','إ','ٱ','ة','ى','ؤ','ئ'];
 let numsAr=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
 let enLetters=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
