@@ -3,54 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كورس Miss Dodo</title>
-<link rel="stylesheet" href="style.css">
+<title>كورس Miss Dodo الكامل</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-body{padding:15px}
-h1{text-align:center;color:#FF6B6B}
-.top{text-align:center;margin-bottom:15px}
-.top button{padding:10px 15px;border:0;border-radius:10px;background:#FF6B6B;color:white;font-weight:bold}
-.step{background:white;border-radius:15px;padding:15px;margin-bottom:15px;box-shadow:0 2px 8px #0001}
-.step h2{color:#4ECDC4;margin:0}
-.step small{color:#888}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.card{background:#FFF3CD;border-radius:12px;padding:12px;text-align:center;cursor:pointer}
-.card b{font-size:22px;display:block}
-.card span{color:#666;font-size:14px}
-.hide-pron .pron{display:none!important}
-.back{display:block;text-align:center;margin:20px;font-weight:bold}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
+.app{width:100%;max-width:480px;min-height:100vh;padding:12px}
+.topbar{display:flex;justify-content:space-between;align-items:center;background:#1e1b4b;padding:10px;border-radius:12px;border:2px solid #facc15;margin-bottom:12px}
+.topbar button{background:#facc15;border:none;padding:8px 12px;border-radius:8px;font-weight:900}
+h1{text-align:center;color:#f87171;font-size:26px}
+.sub{text-align:center;color:#facc15;font-weight:900;margin:6px 0 12px}
+.lesson{background:#fff;color:#111;border-radius:14px;padding:14px;margin-bottom:10px}
+.lesson b{font-size:19px;color:#2563eb}
+.lesson p{color:#444;font-weight:800;margin:4px 0}
+.lesson .ar{color:#059669;font-size:17px;font-weight:900}
+.lesson button{background:#2563eb;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:900;margin-top:6px}
 </style>
 </head>
 <body>
-<h1>🌟 Miss Dodo - الكورس الكامل</h1>
-<div class="top">
-<button onclick="document.body.classList.toggle('hide-pron')">اخفي / اظهر النطق</button>
+<div class="app">
+<div class="topbar"><button onclick="location.href='index.html'">‹ رجوع</button><span style="font-weight:900">📚 كورس Miss Dodo</span><button onclick="location.href='index.html'">🏠</button></div>
+<h1>⭐ كورس Miss Dodo - الكامل</h1>
+<div class="sub">20 درس - شغال من غير نت - دوس واسمع وانطق</div>
+<div id="lessons"></div>
 </div>
-<div id="app">جاري التحميل...</div>
-<a class="back" href="index.html">⬅ رجوع للرئيسية</a>
-
 <script>
-fetch('course.json').then(r=>r.json()).then(data=>{
-  let html='';
-  data.steps.forEach(step=>{
-    html+=`<div class="step"><h2>${step.title}</h2><small>${step.title_ar}</small><div class="grid">`;
-    step.items.forEach(it=>{
-      let title = it.word || it.letter || it.pronoun || it.sound || it.vowel || it.sentence || it.parts || it.group || it.letters;
-      let sub = it.pron || it.example || it.ex || it.rule || '';
-      let extra = it.ar ? `<br><span>${it.ar}</span>` : '';
-      if(it.parts) title = it.parts + ' = ' + it.word;
-      if(it.letters) sub = it.pron;
-      html+=`<div class="card" onclick="speak(this)"><b>${title}</b><span class="pron">${sub}</span>${extra}</div>`;
-    });
-    html+=`</div></div>`;
-  });
-  document.getElementById('app').innerHTML=html;
-});
-function speak(el){
-  let text = el.querySelector('b').innerText;
-  let u = new SpeechSynthesisUtterance(text);
-  u.lang='en-US'; speechSynthesis.speak(u);
-}
+let lessons=[
+["Hello, my name is Sara","أهلا، اسمي سارة","Hello, my name is Sara"],
+["I am 10 years old","عندي 10 سنين","I am 10 years old"],
+["I go to school every day","أنا بروح المدرسة كل يوم","I go to school every day"],
+["This is my book","هذا كتابي","This is my book"],
+["I love my family","أنا بحب عيلتي","I love my family"],
+["My father is a teacher","بابا مدرس","My father is a teacher"],
+["My mother is a doctor","ماما دكتورة","My mother is a doctor"],
+["I like apples and bananas","بحب التفاح والموز","I like apples and bananas"],
+["The cat is black","القطة لونها أسود","The cat is black"],
+["I can swim very well","أنا بعرف أعوم كويس جدا","I can swim very well"],
+["What is your name?","اسمك ايه؟","What is your name?"],
+["Where do you live?","انت ساكن فين؟","Where do you live?"],
+["How are you today?","عامل ايه النهاردة؟","How are you today?"],
+["Thank you very much","شكرا جدا ليك","Thank you very much"],
+["Good morning teacher","صباح الخير يا معلم","Good morning teacher"],
+["See you tomorrow","أشوفك بكرة","See you tomorrow"],
+["I want water please","عايز مية لو سمحت","I want water please"],
+["Open the door please","افتح الباب لو سمحت","Open the door please"],
+["I am happy today","أنا مبسوط النهاردة","I am happy today"],
+["I love learning English","بحب أتعلم انجليزي","I love learning English"]
+];
+document.getElementById('lessons').innerHTML=lessons.map((l,i)=>`<div class="lesson"><b>${i+1}. ${l[0]}</b><p class="ar">${l[1]}</p><button onclick="speakLesson(${i})">🔊 اسمعها وانطق وراها</button></div>`).join('');
+function speakLesson(i){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(lessons[i][2]);u.lang='en-US';u.rate=0.8;speechSynthesis.speak(u);}
 </script>
 </body>
 </html>
