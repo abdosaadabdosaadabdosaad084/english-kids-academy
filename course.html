@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كورس Miss Dodo</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{padding:15px}
+h1{text-align:center;color:#FF6B6B}
+.top{text-align:center;margin-bottom:15px}
+.top button{padding:10px 15px;border:0;border-radius:10px;background:#FF6B6B;color:white;font-weight:bold}
+.step{background:white;border-radius:15px;padding:15px;margin-bottom:15px;box-shadow:0 2px 8px #0001}
+.step h2{color:#4ECDC4;margin:0}
+.step small{color:#888}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.card{background:#FFF3CD;border-radius:12px;padding:12px;text-align:center;cursor:pointer}
+.card b{font-size:22px;display:block}
+.card span{color:#666;font-size:14px}
+.hide-pron .pron{display:none!important}
+.back{display:block;text-align:center;margin:20px;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>🌟 Miss Dodo - الكورس الكامل</h1>
+<div class="top">
+<button onclick="document.body.classList.toggle('hide-pron')">اخفي / اظهر النطق</button>
+</div>
+<div id="app">جاري التحميل...</div>
+<a class="back" href="index.html">⬅ رجوع للرئيسية</a>
+
+<script>
+fetch('course.json').then(r=>r.json()).then(data=>{
+  let html='';
+  data.steps.forEach(step=>{
+    html+=`<div class="step"><h2>${step.title}</h2><small>${step.title_ar}</small><div class="grid">`;
+    step.items.forEach(it=>{
+      let title = it.word || it.letter || it.pronoun || it.sound || it.vowel || it.sentence || it.parts || it.group || it.letters;
+      let sub = it.pron || it.example || it.ex || it.rule || '';
+      let extra = it.ar ? `<br><span>${it.ar}</span>` : '';
+      if(it.parts) title = it.parts + ' = ' + it.word;
+      if(it.letters) sub = it.pron;
+      html+=`<div class="card" onclick="speak(this)"><b>${title}</b><span class="pron">${sub}</span>${extra}</div>`;
+    });
+    html+=`</div></div>`;
+  });
+  document.getElementById('app').innerHTML=html;
+});
+function speak(el){
+  let text = el.querySelector('b').innerText;
+  let u = new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; speechSynthesis.speak(u);
+}
+</script>
+</body>
+</html>
