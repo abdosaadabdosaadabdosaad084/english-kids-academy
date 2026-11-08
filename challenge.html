@@ -1,111 +1,39 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اسئلة التحدي</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 سؤال تحدي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-body{font-family:sans-serif;background:#f0f2f5;text-align:center;padding:15px;margin:0}
-.box{background:#fff;padding:20px;border-radius:14px;max-width:480px;margin:auto}
-h1{font-size:26px}
-.word{font-size:32px;font-weight:900;color:#1a6cff;direction:ltr;margin:10px}
-.pron{font-size:20px;color:#d97706;font-weight:800}
-.ar{font-size:19px;margin:10px}
-button{width:100%;padding:14px;border:none;border-radius:12px;font-size:19px;font-weight:900;margin:6px 0;cursor:pointer}
-.blue{background:#2563eb;color:#fff}
-.orange{background:#FF9800;color:#fff}
-.green-btn{background:#16a34a;color:#fff}
-.opt{background:#fff;border:2px solid #ddd;color:#111}
-.opt.correct{background:#16a34a !important;color:#fff !important;border-color:#16a34a}
-.opt.wrong{background:#dc2626 !important;color:#fff !important;border-color:#dc2626}
-#msg{font-size:20px;font-weight:900;margin:10px 0;min-height:28px}
-#nextBtn{display:none}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
+.app{width:100%;max-width:480px;min-height:100vh;padding:12px}
+.topbar{display:flex;justify-content:space-between;align-items:center;background:#1e1b4b;padding:10px;border-radius:12px;border:2px solid #facc15;margin-bottom:12px}
+.topbar button{background:#facc15;border:none;padding:8px 12px;border-radius:8px;font-weight:900}
+h1{text-align:center;color:#facc15}
+.score{text-align:center;background:#fff;color:#111;padding:10px;border-radius:12px;font-weight:900;margin:10px 0}
+.qbox{background:#fff;color:#111;border-radius:14px;padding:14px;margin-bottom:10px}
+.qbox b{font-size:18px}
+.qbox button{display:block;width:100%;padding:11px;margin-top:8px;border-radius:10px;border:2px solid #ddd;background:#f8fafc;font-weight:900;font-size:16px}
+.qbox button.correct{background:#22c55e;color:#fff}
+.qbox button.wrong{background:#ef4444;color:#fff}
 </style>
 </head>
 <body>
-<div class="box">
-<h1>🏆 اسئلة التحدي</h1>
-<div style="font-size:24px;font-weight:900">⭐ <span id="stars">0</span> | سؤال رقم <span id="qNum">1</span> ∞</div>
-<div style="background:#eee;height:10px;border-radius:10px;margin:10px 0;overflow:hidden"><div id="bar" style="height:100%;background:#16a34a;width:100%"></div></div>
-<div id="content"></div>
-<div id="msg"></div>
-<button id="nextBtn" class="green-btn" onclick="nextQ()">التالي ▶</button>
-<button class="blue" onclick="speakCurrent()">🔊 نطق الكلمة</button>
-<button class="orange" onclick="location.href='index.html'">رجوع للرئيسية</button>
+<div class="app">
+<div class="topbar"><button onclick="location.href='index.html'">‹ رجوع</button><span style="font-weight:900">🏆 100 سؤال تحدي</span><button onclick="location.href='index.html'">🏠</button></div>
+<h1>🏆 100 سؤال - جاوب واكسب</h1>
+<div class="score" id="score">النقاط: 0 / 100</div>
+<div id="list"></div>
 </div>
 <script>
-let words=[
-["Hello","هيلو","أهلاً"],["Thank you","ثانك يو","شكراً لك"],["Water","ووتر","ماء"],["Book","بوك","كتاب"],
-["School","سكول","مدرسة"],["Cat","كات","قطة"],["Dog","دوج","كلب"],["Sun","صن","شمس"],
-["House","هاوس","بيت"],["Car","كار","سيارة"],["Apple","آبل","تفاحة"],["Banana","بانانا","موز"],
-["Orange","أورانج","برتقال"],["Bread","بريد","خبز"],["Milk","ميلك","حليب"],["Tea","تي","شاي"],
-["Coffee","كوفي","قهوة"],["Pen","بين","قلم"],["Chair","تشير","كرسي"],["Door","دور","باب"],
-["Window","ويندو","شباك"],["Key","كي","مفتاح"],["Phone","فون","هاتف"],["Computer","كمبيوتر","كمبيوتر"],
-["Airplane","إيربلين","طائرة"],["Train","ترين","قطار"],["Bicycle","بايسيكل","دراجة"],["Rose","روز","وردة"],
-["Tree","تري","شجرة"],["Flower","فلاور","زهرة"],["Fish","فيش","سمكة"],["Bird","بيرد","عصفور"],
-["Horse","هورس","حصان"],["Moon","مون","قمر"],["Sky","سكاي","سماء"],["Sea","سي","بحر"],
-["Love","لاف","حب"],["Mother","ماذر","أم"],["Father","فاذر","أب"],["Friend","فريند","صديق"],
-["Teacher","تيتشر","معلم"],["Student","ستيودنت","طالب"],["Doctor","دكتور","طبيب"],["Farmer","فارمر","فلاح"],
-["King","كينج","ملك"],["Queen","كوين","ملكة"],["Baby","بيبي","طفل"],["Boy","بوي","ولد"],
-["Girl","جيرل","بنت"],["Man","مان","رجل"],["Woman","وومان","امرأة"],["Day","داي","يوم"],
-["Night","نايت","ليلة"],["Morning","مورنينج","صباح"],["Happy","هابي","سعيد"],["Big","بيج","كبير"],
-["Small","سمول","صغير"],["Hot","هوت","حار"],["Cold","كولد","بارد"],["Fast","فاست","سريع"],
-["Slow","سلو","بطيء"],["New","نيو","جديد"],["Old","أولد","قديم"],["Good","جود","جيد"]
-];
-let qNum = parseInt(localStorage.getItem('qNum')||1);
-let stars = parseInt(localStorage.getItem('myStars')||0);
-let current = null, answered = false;
-document.getElementById('stars').innerText = stars;
-document.getElementById('qNum').innerText = qNum;
-
-function shuffle(a){ return a.sort(()=>Math.random()-0.5); }
-
-function show(){
-  answered = false;
-  document.getElementById('msg').innerText = '';
-  document.getElementById('nextBtn').style.display = 'none';
-  document.getElementById('qNum').innerText = qNum;
-  // اختار كلمة عشوائية مختلفة عن اللي فاتت
-  let c;
-  do{ c = words[Math.floor(Math.random()*words.length)]; }while(current && c[0]===current[0]);
-  current = c;
-  // اختار 2 غلط عشوائي
-  let wrongs = shuffle(words.filter(w=>w[0]!==c[0])).slice(0,2).map(w=>w[2]);
-  let opts = shuffle([c[2], ...wrongs]);
-  document.getElementById('content').innerHTML = `
-    <div class="word">${c[0]}</div>
-    <div class="pron">${c[1]}</div>
-    <div class="ar">${c[2]}</div>
-    <hr><h3>ما معنى ${c[0]} ؟</h3>
-    ${opts.map(o=>`<button class="opt" onclick="answer(this,'${o}')">${o}</button>`).join('')}
-  `;
-}
-function speakCurrent(){ if(!current) return; speechSynthesis.cancel(); let u=new SpeechSynthesisUtterance(current[0]); u.lang='en-US'; u.rate=0.75; speechSynthesis.speak(u); }
-function answer(btn, o){
-  if(answered) return;
-  answered = true;
-  let all = document.querySelectorAll('.opt');
-  all.forEach(b=>{
-    b.disabled = true;
-    if(b.innerText.trim() === current[2]) b.classList.add('correct');
-  });
-  if(o === current[2]){
-    btn.classList.add('correct');
-    stars++; localStorage.setItem('myStars', stars);
-    document.getElementById('stars').innerText = stars;
-    document.getElementById('msg').innerHTML = '✅ صح! خدت نجمة';
-    document.getElementById('msg').style.color = '#16a34a';
-  } else {
-    btn.classList.add('wrong');
-    document.getElementById('msg').innerHTML = '❌ غلط، الصح هو: ' + current[2];
-    document.getElementById('msg').style.color = '#dc2626';
-  }
-  document.getElementById('nextBtn').style.display = 'block';
-}
-function nextQ(){
-  qNum++; localStorage.setItem('qNum', qNum);
-  show();
-}
-show();
+let vocab=[['Cat','قطة'],['Dog','كلب'],['Apple','تفاحة'],['Book','كتاب'],['Sun','شمس'],['Moon','قمر'],['Water','ماء'],['School','مدرسة'],['House','بيت'],['Bird','عصفور'],['Fish','سمكة'],['Lion','أسد'],['Horse','حصان'],['Flower','وردة'],['Tree','شجرة'],['Ball','كرة'],['Pen','قلم'],['Bag','شنطة'],['Door','باب'],['Car','سيارة'],['Milk','لبن'],['Bread','عيش'],['Egg','بيضة'],['Banana','موزة'],['Orange','برتقالة']];
+let all=[];let wrongs=['كلب','بيت','شمس','كتاب','ماء','قمر','سمكة','أسد','وردة','شجرة'];
+for(let i=0;i<100;i++){let v=vocab[i%vocab.length];let opts=[v[1],wrongs[i%wrongs.length],wrongs[(i+3)%wrongs.length]];if(opts[1]===opts[0])opts[1]='باب';if(opts[2]===opts[0])opts[2]='سيارة';all.push([`السؤال ${i+1}: What is the meaning of ${v[0]} ?`,opts[0],opts[1],opts[2],0]);}
+let score=0;
+document.getElementById('list').innerHTML=all.map((q,i)=>`<div class="qbox"><b>${q[0]}</b>${[q[1],q[2],q[3]].map((o,oi)=>`<button onclick="check(this,${oi},${q[4]})">${o}</button>`).join('')}</div>`).join('');
+function check(btn,chosen,correct){let p=btn.parentElement;if(p.dataset.done)return;p.dataset.done='1';let btns=p.querySelectorAll('button');if(chosen===correct){btn.classList.add('correct');score++;}else{btn.classList.add('wrong');btns[correct].classList.add('correct');}document.getElementById('score').innerText=`النقاط: ${score} / 100`;}
 </script>
 </body>
 </html>
