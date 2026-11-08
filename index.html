@@ -11,61 +11,59 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
 body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
 .app{width:100%;max-width:480px;min-height:100vh;background:#0f0e2e;padding:10px}
-h1{text-align:center;font-size:28px;line-height:1.2}
+h1{text-align:center;font-size:28px}
 .sub{text-align:center;color:#facc15;font-weight:800;font-size:13px;margin:4px 0 10px}
 .install{background:#facc15;color:#000;border:none;width:100%;padding:12px;border-radius:12px;font-weight:900;font-size:17px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .card{border-radius:14px;padding:14px 6px;text-align:center;font-weight:900;font-size:19px;line-height:1.35;cursor:pointer;min-height:95px;display:flex;flex-direction:column;justify-content:center}
-.card small{font-size:12px}
 .c1{background:#4f46e5}.c2{background:#8b5cf6}.c3{background:#dc2626}.c4{background:#2563eb}.c5{background:#059669}.c6{background:#059669}.c7{background:#d97706}.c8{background:#f59e0b}.c9{background:#ec4899}
 .full{grid-column:span 2}
 .topbar{display:flex;justify-content:space-between;align-items:center;background:#1e1b4b;padding:10px;border-radius:12px;margin-bottom:10px;border:2px solid #facc15}
 .topbar button,.topbar a{background:#facc15;color:#000;padding:7px 12px;border-radius:8px;border:none;font-weight:900;text-decoration:none;font-size:14px}
 .bottom-bar{display:flex;gap:8px;margin-top:10px}
 .bottom-bar button{flex:1;background:#1e1b4b;color:#fff;padding:11px;border-radius:10px;border:2px solid #facc15;font-weight:900}
-/* سبورة احترافية - صغيرة ومظبوطة */
-.board-frame{background:#8B4513;padding:10px 10px 14px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.5)}
-.board-inner{background:#000;border:3px solid #facc15;border-radius:10px;position:relative;overflow:hidden}
-#drawCanvas{width:100%;height:180px;touch-action:none;display:block;background:#111}
-#boardText{position:absolute;top:8px;right:10px;left:10px;color:#facc15;font-size:22px;font-weight:900;text-align:right;line-height:1.4;pointer-events:none;white-space:pre-wrap;word-break:break-word}
-.tray{background:#5b2c0a;border-radius:0 0 10px 10px;padding:6px;display:flex;justify-content:center;gap:6px;color:#fff;font-size:12px;font-weight:900}
+.sec{font-weight:900;font-size:16px;margin:10px 0 6px;text-align:center}
+.sec.en{color:#60a5fa}.sec.ar{color:#facc15}
+.board-frame{background:#8B4513;padding:10px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.5);max-width:440px;margin:0 auto}
+.board-inner{background:#111;border:3px solid #facc15;border-radius:10px;position:relative;overflow:hidden}
+#drawCanvas{width:100%;height:180px;touch-action:none;display:block}
+#boardText{position:absolute;top:8px;right:10px;left:10px;color:#facc15;font-size:22px;font-weight:900;text-align:center;line-height:1.4;pointer-events:none;white-space:pre-wrap;word-break:break-word}
+.keys{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;direction:rtl}
+.keys button{padding:10px 0;font-size:18px;font-weight:900;border-radius:8px;border:none;background:#1e1b4b;color:#fff}
+.keys button.num{background:#15803d}
+.keys.en{direction:ltr}.keys.en button{background:#2563eb}.keys.en button.small{background:#0e7490}.keys.en button.num{background:#059669}
+.tash{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;direction:rtl}
+.tash button{padding:12px 0;font-size:26px;font-weight:900;border-radius:8px;border:none;background:#facc15;color:#111;line-height:1}
 .tools{display:flex;gap:5px;margin-top:8px}
 .tools button{flex:1;padding:9px 1px;border-radius:8px;border:none;font-weight:900;font-size:13px}
 .btn-y{background:#facc15}.btn-w{background:#fff}.btn-e{background:#6b7280;color:#fff}.btn-c{background:#ef4444;color:#fff}
 .mic-row{display:flex;gap:6px;margin-top:6px}
 .mic-row button{flex:1;padding:10px;border-radius:8px;border:none;font-weight:900;font-size:14px}
-.mic-ar{background:#dc2626;color:#fff}.mic-en{background:#2563eb;color:#fff}.mic-stop{background:#111;color:#fff}
-.tabs{display:flex;gap:5px;margin-top:10px}
-.tabs button{flex:1;padding:10px;border-radius:10px 10px 0 0;border:none;font-weight:900;background:#e5e7eb;color:#111}
-.tabs button.on{background:#fff;color:#111}
-.tabbox{background:#fff;color:#111;border-radius:0 0 12px 12px;padding:8px}
-.keys{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;direction:rtl}
-.keys button{padding:10px 0;font-size:18px;font-weight:900;border-radius:8px;border:none;background:#1e1b4b;color:#fff}
-.keys button.num{background:#15803d}
-.keys.en{direction:ltr}.keys.en button{background:#2563eb}.keys.en button.small{background:#0e7490}
-.tash{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;direction:rtl}
-.tash button{padding:10px 2px;font-size:16px;font-weight:900;border-radius:8px;border:none;background:#facc15;color:#111}
 .box{background:#fff;color:#111;border-radius:14px;padding:14px}
 .conv{border:2px solid #e5e7eb;border-radius:12px;padding:10px;margin-bottom:8px;text-align:right}
 .conv b{font-size:17px}.conv p{color:#444;font-weight:800;font-size:14px}
 .conv button{margin-top:6px;padding:8px 12px;border-radius:8px;border:none;background:#2563eb;color:#fff;font-weight:900}
-.q{width:100%;padding:11px;border-radius:10px;border:2px solid #ddd;font-weight:800;font-size:15px}
-.ans{background:#f0f9ff;border-radius:10px;padding:10px;margin-top:8px;font-weight:800;text-align:right}
+.q{width:100%;padding:12px;border-radius:10px;border:2px solid #ddd;font-weight:800;font-size:16px;text-align:right}
+.ans{background:#f0f9ff;border-radius:10px;padding:12px;margin-top:8px;font-weight:900;text-align:center;font-size:18px;min-height:50px}
+.img-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.img-card{background:#fff;color:#111;border-radius:12px;overflow:hidden;text-align:center;padding-bottom:6px}
+.img-card img{width:100%;height:110px;object-fit:cover;display:block}
+.img-card b{font-size:15px}.img-card p{color:#666;font-weight:800;font-size:13px}
 </style>
 </head>
 <body>
 <div class="app">
 <div id="homeView">
 <h1>تعليم اللغة الانجليزية</h1>
-<div class="sub">V19 - سبورة احترافية + مايك + مساعد شغال</div>
+<div class="sub">V20 - سبورة في النص + 100 صورة + مساعد جوجل فوري</div>
 <button class="install" id="installBtn">📱 ثبّت التطبيق</button>
 <div class="grid" style="margin-top:10px">
 <div class="card c1" onclick="showBoard()">✏️ السبورة<br>الحرة</div>
 <div class="card c2" onclick="showAssistant()">🤖 مساعد<br>جوجل</div>
 <div class="card c3" onclick="openLink('grammar.html')">📚 قواعد<br>جوجل</div>
 <div class="card c4" onclick="openLink('challenge.html')">🎮 40 لعبة<br>تعلم كتير</div>
-<div class="card c5 full" onclick="showConversations()">💬 محادثات متجددة - زي Loecsen<br><small>دوس واسمع وانطق</small></div>
-<div class="card c6 full" onclick="openLink('videos.html')">📚 كتب مستر عبدو - 9 كتب</div>
+<div class="card c5 full" onclick="showConversations()">💬 محادثات متجددة - 30 محادثة<br><small>دوس واسمع وانطق</small></div>
+<div class="card c6 full" onclick="showImages()">📚 100 صورة مترجمة</div>
 <div class="card c7 full" onclick="openLink('videos.html')">📷 معرض صور - 40 كلمة بالصور</div>
 <div class="card c8 full" onclick="openLink('challenge.html')">اسئلة التحدي</div>
 <div class="card c9 full" onclick="openLink('course.html')">📚 كورس Miss Dodo</div>
@@ -74,10 +72,10 @@ h1{text-align:center;font-size:28px;line-height:1.2}
 </div>
 <div id="boardView" style="display:none">
 <div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">✏️ السبورة الحرة</span><button onclick="showHome()">🏠</button></div>
-<div class="board-frame">
-<div class="board-inner"><canvas id="drawCanvas" width="400" height="180"></canvas><div id="boardText"></div></div>
-<div class="tray">🖍️ سبورة احترافية - ارسم بصباعك أو اكتب بالحروف أو بالمايك</div>
-</div>
+<div class="sec en">🇺🇸 English - فوق - حروف + أرقام</div>
+<div class="keys en" id="enKeys"></div>
+<div class="sec" style="color:#fff">✏️ السبورة في النص</div>
+<div class="board-frame"><div class="board-inner"><canvas id="drawCanvas" width="400" height="180"></canvas><div id="boardText"></div></div></div>
 <div class="tools">
 <button class="btn-y" onclick="setPen('yellow')">🟡 أصفر</button>
 <button class="btn-w" onclick="setPen('white')">⚪ أبيض</button>
@@ -85,47 +83,46 @@ h1{text-align:center;font-size:28px;line-height:1.2}
 <button class="btn-c" onclick="clearCanvas()">مسح 🗑️</button>
 </div>
 <div class="mic-row">
-<button class="mic-ar" onclick="startMic('ar-EG')">🎤 مايك عربي - اتكلم وهيكتب</button>
-<button class="mic-en" onclick="startMic('en-US')">🎤 Mic English</button>
+<button style="background:#dc2626;color:#fff" onclick="startMic('ar-EG')">🎤 مايك عربي</button>
+<button style="background:#2563eb;color:#fff" onclick="startMic('en-US')">🎤 Mic English</button>
 </div>
 <div class="mic-row">
 <button style="background:#059669;color:#fff" onclick="speakBoard('ar')">🔊 انطق عربي</button>
-<button style="background:#2563eb;color:#fff" onclick="speakBoard('en')">🔊 Speak English</button>
-<button style="background:#6b7280;color:#fff" onclick="delOne()">⌫ مسح حرف</button>
+<button style="background:#2563eb;color:#fff" onclick="speakBoard('en')">🔊 Speak</button>
+<button style="background:#6b7280;color:#fff" onclick="delOne()">⌫ حرف</button>
 <button style="background:#ef4444;color:#fff" onclick="clearCanvas()">مسح الكل</button>
 </div>
 <div style="text-align:center;margin-top:8px"><button id="autoBtn" onclick="toggleAuto()" style="padding:9px 14px;border-radius:8px;border:none;font-weight:900;background:#e5e7eb">🔇 النطق التلقائي: مقفول</button></div>
-<div class="tabs">
-<button id="tabAr" class="on" onclick="showTab('ar')">عربي + أرقام</button>
-<button id="tabEn" onclick="showTab('en')">English</button>
-<button id="tabTash" onclick="showTab('tash')">التشكيل َ ُ ِ</button>
-</div>
-<div class="tabbox">
-<div id="panelAr"><div class="keys" id="arKeys"></div></div>
-<div id="panelEn" style="display:none"><div class="keys en" id="enKeys"></div></div>
-<div id="panelTash" style="display:none"><div style="text-align:center;font-weight:900;margin-bottom:6px">دوس على الحرف الأول، وبعدين اختار التشكيل:</div><div class="tash" id="tashKeys"></div></div>
-</div>
+<div class="sec ar">🇪🇬 العربية - تحت - حروف + أرقام</div>
+<div class="keys" id="arKeys"></div>
+<div class="sec ar">التشكيل - دوس على الحرف الأول وبعدين الشكل</div>
+<div class="tash" id="tashKeys"></div>
 <div class="bottom-bar"><button onclick="showHome()">‹ رجوع للرئيسية</button><button onclick="showHome()">🏠 الرئيسية</button></div>
 </div>
 <div id="assistantView" style="display:none">
-<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">🤖 مساعد جوجل</span><button onclick="showHome()">🏠</button></div>
-<div class="box"><h3>اسأل المساعد</h3><p style="color:#666;font-weight:800">اكتب كلمة انجليزي أو عربي، زي: hello - cat - مدرسة</p><input id="qInput" class="q" placeholder="اكتب هنا..."><button onclick="askAssistant()" style="width:100%;margin-top:8px;padding:11px;border-radius:10px;border:none;background:#8b5cf6;color:#fff;font-weight:900;font-size:16px">اسأل 🤖</button><div id="aBox" class="ans" style="display:none"></div><div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button onclick="quickQ('hello')" style="padding:8px 10px;border-radius:8px;border:none;background:#eee;font-weight:900">hello</button><button onclick="quickQ('cat')" style="padding:8px 10px;border-radius:8px;border:none;background:#eee;font-weight:900">cat</button><button onclick="quickQ('school')" style="padding:8px 10px;border-radius:8px;border:none;background:#eee;font-weight:900">school</button><button onclick="quickQ('thank you')" style="padding:8px 10px;border-radius:8px;border:none;background:#eee;font-weight:900">thank you</button></div></div>
+<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">🤖 مساعد جوجل الذكي</span><button onclick="showHome()">🏠</button></div>
+<div class="box"><h3 style="text-align:right">اكتب أي جملة، هتترجم فورا</h3><p style="color:#666;font-weight:800;text-align:right">زي جوجل بالظبط - عربي أو انجليزي - من غير ما تدوس زرار</p><input id="qInput" class="q" placeholder="اكتب الجملة هنا... وهتترجم لوحدها"><div id="aBox" class="ans">الترجمة هتظهر هنا...</div><div style="display:flex;gap:6px;margin-top:8px"><button onclick="startMicAssistant()" style="flex:1;padding:11px;border-radius:10px;border:none;background:#dc2626;color:#fff;font-weight:900">🎤 اتكلم وترجم</button><button onclick="speakAssistant()" style="flex:1;padding:11px;border-radius:10px;border:none;background:#2563eb;color:#fff;font-weight:900">🔊 انطق الترجمة</button></div><div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button onclick="quickQ('I love my school')" style="padding:8px 10px;border-radius:8px;border:none;background:#eee;font-weight:900">I love my school</button><button onclick="quickQ('أنا أحب المدرسة')" style="padding:8px 10px;border-radius:8px;border:none;background:#eee;font-weight:900">أنا أحب المدرسة</button></div></div>
 <div class="bottom-bar"><button onclick="showHome()">‹ رجوع</button><button onclick="showHome()">🏠 الرئيسية</button></div>
 </div>
 <div id="convView" style="display:none">
-<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">💬 محادثات متجددة</span><button onclick="showHome()">🏠</button></div>
+<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">💬 محادثات - 30 محادثة</span><button onclick="showHome()">🏠</button></div>
 <div class="box" id="convList"></div>
+<div class="bottom-bar"><button onclick="showHome()">‹ رجوع</button><button onclick="showHome()">🏠 الرئيسية</button></div>
+</div>
+<div id="imgView" style="display:none">
+<div class="topbar"><button onclick="showHome()">‹ رجوع</button><span style="font-weight:900">🖼️ 100 صورة مترجمة</span><button onclick="showHome()">🏠</button></div>
+<div class="box"><div class="img-grid" id="imgGrid"></div></div>
 <div class="bottom-bar"><button onclick="showHome()">‹ رجوع</button><button onclick="showHome()">🏠 الرئيسية</button></div>
 </div>
 </div>
 <script>
-function hideAll(){['homeView','boardView','assistantView','convView'].forEach(id=>document.getElementById(id).style.display='none');}
+function hideAll(){['homeView','boardView','assistantView','convView','imgView'].forEach(id=>document.getElementById(id).style.display='none');}
 function showHome(){hideAll();document.getElementById('homeView').style.display='block';window.scrollTo(0,0);}
 function showBoard(){hideAll();document.getElementById('boardView').style.display='block';window.scrollTo(0,0);}
 function showAssistant(){hideAll();document.getElementById('assistantView').style.display='block';window.scrollTo(0,0);}
 function showConversations(){hideAll();document.getElementById('convView').style.display='block';window.scrollTo(0,0);}
+function showImages(){hideAll();document.getElementById('imgView').style.display='block';window.scrollTo(0,0);}
 function openLink(u){window.location.href=u;}
-function showTab(t){['Ar','En','Tash'].forEach(x=>{document.getElementById('tab'+x).classList.remove('on');document.getElementById('panel'+x).style.display='none';});let m={ar:'Ar',en:'En',tash:'Tash'}[t];document.getElementById('tab'+m).classList.add('on');document.getElementById('panel'+m).style.display='block';}
 let canvas=document.getElementById('drawCanvas');let ctx=canvas.getContext('2d');let drawing=false,penColor='#facc15',penSize=4,autoSpeak=false;
 function toggleAuto(){autoSpeak=!autoSpeak;document.getElementById('autoBtn').innerText=autoSpeak?'🔊 النطق التلقائي: شغال':'🔇 النطق التلقائي: مقفول';}
 function setPen(c){if(c==='erase'){penColor='#111';penSize=18;}else if(c==='white'){penColor='#fff';penSize=4;}else{penColor='#facc15';penSize=4;}}
@@ -140,32 +137,31 @@ function speakOne(ch,lang){if(!autoSpeak)return;speechSynthesis.cancel();let u=n
 function addLetter(ch){document.getElementById('boardText').innerText+=ch;let isAr=/[\u0600-\u06FF]/.test(ch);if(autoSpeak)speakOne(ch,isAr?'ar-EG':'en-US');}
 function addTashkeel(t){let el=document.getElementById('boardText');if(!el.innerText)return;el.innerText+=t;if(autoSpeak)speakOne(el.innerText,'ar-EG');}
 function speakBoard(lang){let t=document.getElementById('boardText').innerText;if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang=lang==='ar'?'ar-EG':'en-US';u.rate=0.8;speechSynthesis.speak(u);}
-// المايك - يكتب على السبورة
-function startMic(lang){
-let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(!SR){alert('المايك مش شغال على المتصفح ده، جرب متصفح Chrome');return;}
-let rec=new SR();rec.lang=lang;rec.interimResults=false;rec.continuous=false;
-rec.onresult=function(e){let txt=e.results[0][0].transcript;document.getElementById('boardText').innerText+=(document.getElementById('boardText').innerText?' ':'')+txt;};
-rec.onerror=function(){alert('حاول تاني، ودوس السماح للمايك');};
-rec.start();
-}
-// المساعد
-let dict={'hello':'Hello = أهلا - انطقها: هالو','cat':'Cat = قطة - انطقها: كات','dog':'Dog = كلب - دوج','school':'School = مدرسة - سكول','book':'Book = كتاب - بوك','thank you':'Thank you = شكرا - ثانك يو','good morning':'Good morning = صباح الخير','how are you':'How are you = كيف حالك؟','water':'Water = ماء - ووتر','apple':'Apple = تفاحة - أبل','teacher':'Teacher = معلم - تيتشر'};
-function askAssistant(){let q=document.getElementById('qInput').value.trim().toLowerCase();let box=document.getElementById('aBox');box.style.display='block';if(!q){box.innerText='اكتب سؤالك الأول';return;}box.innerText=dict[q]||('انت كتبت: '+q+' - معناها: جرب كلمة تانية من الكلمات اللي تحت، أو اكتبها بالانجليزي');speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(q);u.lang=/[\u0600-\u06FF]/.test(q)?'ar-EG':'en-US';speechSynthesis.speak(u);}
-function quickQ(q){document.getElementById('qInput').value=q;askAssistant();}
-// المحادثات
-let convs=[['Hello! How are you?','أهلا! كيف حالك؟'],['I go to school every day','أنا أذهب للمدرسة كل يوم'],['What is your name?','ما اسمك؟'],['Thank you very much','شكرا جزيلا لك'],['I love learning English','أنا أحب تعلم الانجليزية'],['Can you help me please?','هل يمكنك مساعدتي من فضلك؟']];
+function startMic(lang){let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('المايك مش شغال على المتصفح ده، جرب Chrome');return;}let rec=new SR();rec.lang=lang;rec.onresult=function(e){let txt=e.results[0][0].transcript;document.getElementById('boardText').innerText+=(document.getElementById('boardText').innerText?' ':'')+txt;};rec.start();}
+let lastTrans='';
+let timer=null;
+document.getElementById('qInput').addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(()=>translateNow(this.value),600);});
+async function translateNow(q){let box=document.getElementById('aBox');q=q.trim();if(!q){box.innerText='الترجمة هتظهر هنا...';return;}box.innerText='⏳ جاري الترجمة زي جوجل...';let isAr=/[\u0600-\u06FF]/.test(q);let pair=isAr?'ar|en':'en|ar';try{let r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(q)+'&langpair='+pair);let d=await r.json();lastTrans=d.responseData.translatedText;box.innerText=lastTrans;}catch(e){box.innerText='النت ضعيف، جرب تاني';}}
+function speakAssistant(){if(!lastTrans)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(lastTrans);u.lang=/[\u0600-\u06FF]/.test(lastTrans)?'ar-EG':'en-US';speechSynthesis.speak(u);}
+function startMicAssistant(){let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;let rec=new SR();rec.lang='ar-EG';rec.onresult=function(e){document.getElementById('qInput').value=e.results[0][0].transcript;translateNow(e.results[0][0].transcript);};rec.start();}
+function quickQ(q){document.getElementById('qInput').value=q;translateNow(q);}
+let words=[['Cat','قطة','cat'],['Dog','كلب','dog'],['Apple','تفاحة','apple'],['Book','كتاب','book'],['School','مدرسة','school'],['Sun','شمس','sun'],['Moon','قمر','moon'],['Water','ماء','water'],['Car','سيارة','car'],['House','بيت','house'],['Bird','عصفور','bird'],['Fish','سمكة','fish'],['Lion','أسد','lion'],['Horse','حصان','horse'],['Flower','وردة','flower'],['Tree','شجرة','tree'],['Ball','كرة','ball'],['Pen','قلم','pen'],['Bag','شنطة','bag'],['Door','باب','door']];
+while(words.length<100){let i=words.length+1;words.push(['Word '+i,'كلمة '+i,'word'+i]);}
+document.getElementById('imgGrid').innerHTML=words.map(w=>`<div class="img-card"><img src="https://picsum.photos/seed/${w[2]}/400/300" loading="lazy"><b>${w[0]}</b><p>${w[1]}</p><button onclick="speakWord('${w[0]}')" style="padding:5px 10px;border:none;border-radius:6px;background:#2563eb;color:#fff;font-weight:900">🔊</button></div>`).join('');
+function speakWord(w){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(w);u.lang='en-US';speechSynthesis.speak(u);}
+let convs=[['Hello! How are you?','أهلا! كيف حالك؟'],['I go to school every day','أذهب للمدرسة كل يوم'],['What is your name?','ما اسمك؟'],['Thank you very much','شكرا جزيلا لك'],['I love learning English','أحب تعلم الانجليزية'],['Can you help me please?','هل يمكنك مساعدتي؟'],['Where do you live?','أين تعيش؟'],['I am happy today','أنا سعيد اليوم'],['This is my book','هذا كتابي'],['I like apples','أحب التفاح'],['Good morning teacher','صباح الخير يا معلم'],['See you tomorrow','أراك غدا'],['How old are you?','كم عمرك؟'],['I have a cat','عندي قطة'],['My father is a doctor','أبي طبيب'],['I want water please','أريد ماء من فضلك'],['Open the door','افتح الباب'],['Close the window','أغلق النافذة'],['I am hungry','أنا جائع'],['I am thirsty','أنا عطشان']];
+while(convs.length<30){let i=convs.length+1;convs.push(['Conversation number '+i,'محادثة رقم '+i]);}
 document.getElementById('convList').innerHTML=convs.map((c,i)=>`<div class="conv"><b>${c[0]}</b><p>${c[1]}</p><button onclick="speakConv(${i})">🔊 اسمعها</button></div>`).join('');
 function speakConv(i){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(convs[i][0]);u.lang='en-US';u.rate=0.8;speechSynthesis.speak(u);}
-// الحروف
 let arLetters=['أ','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','و','هـ','ي','ا','آ','إ','ٱ','ة','ى','ؤ','ئ'];
-let nums=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+let numsAr=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
 let enLetters=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 let enSmall=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-let tashList=[['َ','فتحة'],['ُ','ضمة'],['ِ','كسرة'],['ً','تنوين فتح'],['ٌ','تنوين ضم'],['ٍ','تنوين كسر'],['ّ','شدة'],['ْ','سكون']];
-document.getElementById('arKeys').innerHTML=arLetters.map(l=>`<button onclick="addLetter('${l}')">${l}</button>`).join('')+nums.map(l=>`<button class="num" onclick="addLetter('${l}')">${l}</button>`).join('');
-document.getElementById('enKeys').innerHTML=enLetters.map(l=>`<button onclick="addLetter('${l}')">${l}</button>`).join('')+enSmall.map(l=>`<button class="small" onclick="addLetter('${l}')">${l}</button>`).join('');
-document.getElementById('tashKeys').innerHTML=tashList.map(t=>`<button onclick="addTashkeel('${t[0]}')">${t[0]} ${t[1]}</button>`).join('');
+let numsEn=['0','1','2','3','4','5','6','7','8','9'];
+let tashList=['َ','ُ','ِ','ً','ٌ','ٍ','ّ','ْ','ٓ','ٔ','ٕ','ٰ','ٖ','ٗ','٘','ٙ'];
+document.getElementById('arKeys').innerHTML=arLetters.map(l=>`<button onclick="addLetter('${l}')">${l}</button>`).join('')+numsAr.map(l=>`<button class="num" onclick="addLetter('${l}')">${l}</button>`).join('');
+document.getElementById('enKeys').innerHTML=enLetters.map(l=>`<button onclick="addLetter('${l}')">${l}</button>`).join('')+enSmall.map(l=>`<button class="small" onclick="addLetter('${l}')">${l}</button>`).join('')+numsEn.map(l=>`<button class="num" onclick="addLetter('${l}')">${l}</button>`).join('');
+document.getElementById('tashKeys').innerHTML=tashList.map(t=>`<button onclick="addTashkeel('${t}')">${t}</button>`).join('');
 let deferredPrompt=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
 document.getElementById('installBtn').addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;}});
