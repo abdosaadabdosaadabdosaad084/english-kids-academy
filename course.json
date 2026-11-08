@@ -1,167 +1,57 @@
-{
-  "course_title": "Miss Dodo - Let's Learn English",
-  "steps": [
-    {
-      "id": 1,
-      "title": "Step 1 - Capital & Small Letters",
-      "title_ar": "الحروف الكبيرة والصغيرة",
-      "items": [
-        {"letter": "Aa", "sound": "آ", "example": "Apple"},
-        {"letter": "Bb", "sound": "ب", "example": "Ball"},
-        {"letter": "Cc", "sound": "ك", "example": "Cat"},
-        {"letter": "Dd", "sound": "د", "example": "Dog"},
-        {"letter": "Ee", "sound": "إ", "example": "Egg"},
-        {"letter": "Ff", "sound": "ف", "example": "Fish"},
-        {"letter": "Gg", "sound": "ج", "example": "Goat"},
-        {"letter": "Hh", "sound": "هـ", "example": "Hen"},
-        {"letter": "Ii", "sound": "إ", "example": "Ink"},
-        {"letter": "Jj", "sound": "ج", "example": "Jug"},
-        {"letter": "Kk", "sound": "ك", "example": "Kite"},
-        {"letter": "Ll", "sound": "ل", "example": "Lion"},
-        {"letter": "Mm", "sound": "م", "example": "Moon"},
-        {"letter": "Nn", "sound": "ن", "example": "Nose"},
-        {"letter": "Oo", "sound": "أو", "example": "Orange"},
-        {"letter": "Pp", "sound": "ب", "example": "Pen"},
-        {"letter": "Qq", "sound": "ك", "example": "Queen"},
-        {"letter": "Rr", "sound": "ر", "example": "Rabbit"},
-        {"letter": "Ss", "sound": "س", "example": "Sun"},
-        {"letter": "Tt", "sound": "ت", "example": "Tiger"},
-        {"letter": "Uu", "sound": "أ", "example": "Umbrella"},
-        {"letter": "Vv", "sound": "ڤ", "example": "Van"},
-        {"letter": "Ww", "sound": "و", "example": "Watch"},
-        {"letter": "Xx", "sound": "كس", "example": "Box"},
-        {"letter": "Yy", "sound": "ي", "example": "Yo-yo"},
-        {"letter": "Zz", "sound": "ز", "example": "Zebra"}
-      ]
-    },
-    {
-      "id": 2,
-      "title": "Step 2 - Letter Sounds",
-      "title_ar": "أصوات الحروف",
-      "items": [
-        {"letters": "s a t i p n", "pron": "س - أ - ت - إ - ب - ن"},
-        {"letters": "c k e h r m d", "pron": "ك - ك - إ - هـ - ر - م - د"},
-        {"letters": "g o u l f b", "pron": "ج - أو - أ - ل - ف - ب"},
-        {"letters": "ai j oa ie ee or", "pron": "آي - ج - أو - آي - إي - أور"},
-        {"letters": "z w ng v oo", "pron": "ز - و - نج - ڤ - أوو"},
-        {"letters": "y x ch sh th", "pron": "ي - كس - تش - ش - ث"},
-        {"letters": "qu ou oi ue er ar", "pron": "كو - أو - أوي - يو - إر - آر"}
-      ]
-    },
-    {
-      "id": 3,
-      "title": "Step 3 - CVC Words",
-      "title_ar": "كلمات من 3 حروف",
-      "items": [
-        {"word": "cat", "pron": "كات", "ar": "قطة"},
-        {"word": "dog", "pron": "دوج", "ar": "كلب"},
-        {"word": "pen", "pron": "بين", "ar": "قلم"},
-        {"word": "sun", "pron": "صن", "ar": "شمس"},
-        {"word": "pig", "pron": "بيج", "ar": "خنزير"},
-        {"word": "bus", "pron": "بس", "ar": "أتوبيس"},
-        {"word": "hen", "pron": "هين", "ar": "فرخة"},
-        {"word": "box", "pron": "بوكس", "ar": "صندوق"},
-        {"word": "map", "pron": "ماب", "ar": "خريطة"},
-        {"word": "cup", "pron": "كب", "ar": "كوباية"}
-      ]
-    },
-    {
-      "id": 4,
-      "title": "Step 4 - Blending",
-      "title_ar": "دمج الأصوات",
-      "items": [
-        {"parts": "c - a - t", "word": "cat", "pron": "كات"},
-        {"parts": "d - o - g", "word": "dog", "pron": "دوج"},
-        {"parts": "p - e - n", "word": "pen", "pron": "بين"},
-        {"parts": "s - u - n", "word": "sun", "pron": "صن"},
-        {"parts": "b - u - s", "word": "bus", "pron": "بس"}
-      ]
-    },
-    {
-      "id": 5,
-      "title": "Step 5 - Sight Words",
-      "title_ar": "الكلمات البصرية",
-      "items": [
-        {"word": "I", "pron": "آي", "ar": "أنا"},
-        {"word": "you", "pron": "يو", "ar": "أنت"},
-        {"word": "the", "pron": "ذا", "ar": "الـ"},
-        {"word": "is", "pron": "إز", "ar": "يكون"},
-        {"word": "are", "pron": "آر", "ar": "يكونوا"},
-        {"word": "this", "pron": "ذيس", "ar": "هذا"},
-        {"word": "that", "pron": "ذات", "ar": "ذلك"},
-        {"word": "my", "pron": "ماي", "ar": "بتاعي"}
-      ]
-    },
-    {
-      "id": 6,
-      "title": "Step 6 - Subject Pronouns",
-      "title_ar": "ضمائر الفاعل",
-      "items": [
-        {"pronoun": "I", "pron": "آي", "ar": "أنا", "ex": "I am happy"},
-        {"pronoun": "You", "pron": "يو", "ar": "أنت", "ex": "You are kind"},
-        {"pronoun": "He", "pron": "هي", "ar": "هو", "ex": "He is a doctor"},
-        {"pronoun": "She", "pron": "شي", "ar": "هي", "ex": "She is a teacher"},
-        {"pronoun": "It", "pron": "إت", "ar": "لغير العاقل", "ex": "It is a cat"},
-        {"pronoun": "We", "pron": "وي", "ar": "نحن", "ex": "We are friends"},
-        {"pronoun": "They", "pron": "ذاي", "ar": "هم", "ex": "They are happy"}
-      ]
-    },
-    {
-      "id": 7,
-      "title": "Step 7 - Short Vowels",
-      "title_ar": "الحروف المتحركة القصيرة",
-      "items": [
-        {"vowel": "a", "pron": "أ", "ex": "cat - map"},
-        {"vowel": "e", "pron": "إ", "ex": "bed - hen"},
-        {"vowel": "i", "pron": "إ", "ex": "pig - fish"},
-        {"vowel": "o", "pron": "أو", "ex": "dog - box"},
-        {"vowel": "u", "pron": "أ", "ex": "sun - cup"}
-      ]
-    },
-    {
-      "id": 8,
-      "title": "Step 8 - Long Vowels",
-      "title_ar": "الحروف الطويلة - Magic E",
-      "items": [
-        {"word": "cake", "pron": "كيك", "rule": "a + e = آي"},
-        {"word": "bike", "pron": "بايك", "rule": "i + e = آي"},
-        {"word": "home", "pron": "هوم", "rule": "o + e = أو"},
-        {"word": "cube", "pron": "كيوب", "rule": "u + e = يو"}
-      ]
-    },
-    {
-      "id": 9,
-      "title": "Step 9 - Digraphs",
-      "title_ar": "الأصوات المركبة",
-      "items": [
-        {"sound": "sh", "pron": "ش", "ex": "fish - ship"},
-        {"sound": "ch", "pron": "تش", "ex": "chair - chick"},
-        {"sound": "th", "pron": "ث / ذ", "ex": "this - three"},
-        {"sound": "ph", "pron": "ف", "ex": "phone"},
-        {"sound": "wh", "pron": "و", "ex": "what - whale"}
-      ]
-    },
-    {
-      "id": 10,
-      "title": "Step 10 - Reading Practice",
-      "title_ar": "أقرا جملة لوحدي",
-      "items": [
-        {"sentence": "I see a cat.", "pron": "آي سي أ كات", "ar": "أنا أرى قطة"},
-        {"sentence": "The dog is big.", "pron": "ذا دوج إز بيج", "ar": "الكلب كبير"},
-        {"sentence": "I like my pen.", "pron": "آي لايك ماي بين", "ar": "أنا أحب قلمي"},
-        {"sentence": "The sun is hot.", "pron": "ذا صن إز هوت", "ar": "الشمس حارة"}
-      ]
-    },
-    {
-      "id": 11,
-      "title": "Step 11 - Silent Letters",
-      "title_ar": "الحروف الصامتة - متقدم",
-      "items": [
-        {"word": "know", "pron": "نو", "rule": "k صامتة"},
-        {"word": "write", "pron": "رايت", "rule": "w صامتة"},
-        {"word": "listen", "pron": "ليسن", "rule": "t صامتة"},
-        {"word": "knife", "pron": "نايف", "rule": "k صامتة"}
-      ]
-    }
-  ]
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كورس Miss Dodo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+body{background:#0f0e2e;color:#fff;display:flex;justify-content:center}
+.app{width:100%;max-width:480px;min-height:100vh;background:#0f0e2e;padding:10px}
+.top{display:flex;justify-content:space-between;align-items:center;background:#1e1b4b;padding:12px;border-radius:12px;margin-bottom:10px;border:2px solid #facc15}
+.top a{background:#2d2a6a;color:#fff;padding:6px 14px;border-radius:8px;text-decoration:none;font-weight:800}
+.top h2{font-size:18px}
+.box{background:#fff;color:#111;border-radius:14px;padding:12px}
+.step{margin-bottom:18px}
+.step-title{font-size:20px;font-weight:900;color:#0d9488;margin-bottom:4px}
+.step-sub{color:#666;font-size:14px;margin-bottom:10px;text-align:right}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.card{background:#FFF3CD;border:2px solid #312e81;border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer;min-height:110px}
+.card:active{transform:scale(.97)}
+.en{font-size:22px;font-weight:900;color:#1e1b4b !important;line-height:1.2;direction:ltr}
+.pron{font-size:15px;font-weight:800;color:#d97706;margin:6px 0}
+.ar{font-size:15px;color:#333;line-height:1.4}
+.note{background:#fef3c7;border:2px solid #facc15;border-radius:10px;padding:10px;font-size:15px;font-weight:800;text-align:right;margin-top:10px;color:#111}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top"><a href="index.html">› رجوع</a><h2>📚 كورس Miss Dodo</h2><span></span></div>
+<div class="box" id="courseBox"><p style="text-align:center;padding:20px">جاري تحميل الكورس...</p></div>
+</div>
+<script>
+function speakEn(t){if(!t)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u);}
+async function loadCourse(){
+  try{
+    let r=await fetch('course.json?t='+Date.now());
+    let data=await r.json();
+    let html='';
+    data.forEach(s=>{
+      html+=`<div class="step"><div class="step-title">${s.title}</div><div class="step-sub">${s.sub||''}</div><div class="grid">`;
+      s.words.forEach(w=>{
+        html+=`<div class="card" onclick="speakEn('${w.en.replace(/'/g,"")}')"><div class="en">${w.en}</div><div class="pron">${w.pron||''}</div><div class="ar">${w.ar||''}</div></div>`;
+      });
+      html+=`</div>`;
+      if(s.note) html+=`<div class="note">💡 ${s.note}</div>`;
+      html+=`</div>`;
+    });
+    document.getElementById('courseBox').innerHTML=html;
+  }catch(e){
+    document.getElementById('courseBox').innerHTML='<p style="text-align:center">مش قادر أحمل الكورس، اتأكد إن ملف course.json موجود جنب course.html</p>';
+  }
 }
+loadCourse();
+</script>
+</body>
+</html>
